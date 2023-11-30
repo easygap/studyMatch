@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 네비게이션 바 -->
+<jsp:include page="../layout/Navbar.jsp"></jsp:include>	
 <h2>회원가입</h2>
 	
 	<form action="join_ok.jsp" method="post">
