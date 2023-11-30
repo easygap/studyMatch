@@ -9,7 +9,7 @@
 <!-- BootStrap css 사용 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <!-- css 가져오기 -->
-<link href="Form.css" rel="stylesheet" type="text/css" />
+<link href="/Form.css" rel="stylesheet" type="{ % static "/Form.css" % }" />
 <style>a{text-decoration:none;}</style>
 </head>
 <body>
@@ -25,24 +25,13 @@
 <!-- 네비게이션 바 -->
 <jsp:include page="../layout/Navbar.jsp"></jsp:include>	
 
+<!-- 사이드 바 -->
+<jsp:include page="../layout/Sidebar.jsp"></jsp:include>	
+
 <!-- 코드 시작 -->		
 	<h2>파일 첨부형 게시판 - 목록 보기(List)</h2>
 	
-	<!-- 검색 폼 -->
-	<form method="get">
-	<table border="1" width="90%">
-	<tr>
-		<td align="center">
-			<select name="searchField">
-				<option value="title">제목</option>
-				<option value="content">내용</option>	
-			</select>
-			<input type="text" name="searchWord" />
-			<input type="submit" value="검색하기" />
-		</td>
-	</tr>
-	</table>
-	</form>
+	
 	
 	<!-- 목록 테이블 -->
 	<table border="1" width="90%">
@@ -96,5 +85,21 @@
 	</td>
 		</tr>	
 	</table>
+	
+	<!-- 검색 폼 -->
+	<form method="get">
+	<table border="1" width="90%">
+	<tr>
+		<td align="center">
+			<select name="searchField">
+				<option value="title">제목</option>
+				<option value="content">내용</option>	
+			</select>
+			<input type="text" name="searchWord" />
+			<input type="submit" value="검색하기" />
+		</td>
+	</tr>
+	</table>
+	</form>
 </body>
 </html>
