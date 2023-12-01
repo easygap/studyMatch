@@ -9,7 +9,7 @@
 <!-- BootStrap css 사용 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <!-- css 가져오기 -->
-<link href="Form.css" rel="stylesheet" type="{ % static "/Form.css" % }" />
+<link href="Form.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	function validateForm(form) {
 		if (form.pass.value == "") {

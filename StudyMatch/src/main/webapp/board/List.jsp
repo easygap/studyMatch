@@ -9,8 +9,8 @@
 <!-- BootStrap css 사용 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <!-- css 가져오기 -->
-<link href="/Form.css" rel="stylesheet" type="{ % static "/Form.css" % }" />
-<style>a{text-decoration:none;}</style>
+<link href="BoardForm.css" rel="stylesheet" type="text/css" />
+<style></style>
 </head>
 <body>
 <!-- Jquery 사용 -->
@@ -26,7 +26,7 @@
 <jsp:include page="../layout/Navbar.jsp"></jsp:include>	
 
 <!-- 사이드 바 -->
-<jsp:include page="../layout/Sidebar.jsp"></jsp:include>	
+<jsp:include page="../layout/Sidebar.jsp"></jsp:include>
 
 <!-- 코드 시작 -->		
 	<h2>파일 첨부형 게시판 - 목록 보기(List)</h2>
@@ -102,4 +102,8 @@
 	</table>
 	</form>
 </body>
+<footer>
+<!-- 푸터 -->
+<jsp:include page="../layout/Footer.jsp"></jsp:include>	
+</footer>
 </html>
