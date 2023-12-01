@@ -10,6 +10,7 @@
 .box-footer {
 	background-color: #000;
 	color: #fff;
+	width: 1730px
 }
 </style>
 </head>
