@@ -21,10 +21,11 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 	crossorigin="anonymous"></script>
-<!-- 네비게이션 바 -->
-<jsp:include page="../layout/Navbar.jsp"></jsp:include>	
 
 <!-- 코드 시작 -->		
+<div>
+<!-- 네비게이션 바 -->
+<jsp:include page="../layout/Main.jsp"></jsp:include>	
 	<h2>파일 첨부형 게시판 - 상세보기(View)</h2>
 	<table border="1" width="90%">
 		<colgroup>
@@ -72,5 +73,6 @@
 			</td>
 		</tr>
 	</table>
+</div>
 </body>
 </html>

@@ -47,8 +47,9 @@
 	crossorigin="anonymous"></script>
 
 <!-- 네비게이션 바 -->
-<jsp:include page="../layout/Navbar.jsp"></jsp:include>	
+<jsp:include page="../layout/Main.jsp"></jsp:include>	
 <!-- 코드 시작 -->	
+<div>
 	<h2>파일 첨부형 게시판 - 글쓰기(write)</h2>
 	<form name="writeFrm" method="post" enctype="multipart/form-data"
 		action="../mvcboard/write.do" onsubmit="return validateForm(this);">
@@ -94,5 +95,6 @@
 		</tr>
 	</table>
 </form>
+</div>
 </body>
 </html>
