@@ -8,8 +8,16 @@
 <!-- BootStrap css 사용 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-<!-- css 가져오기 -->
-<link href="Form.css" rel="stylesheet" type="text/css" />
+<style>
+.navbar {
+	position: fixed;
+	width: 100%;
+	z-index: 5;
+}
+.navbar-nav {
+	font-size: 15px;
+}
+</style>
 </head>
 <body>
 <!-- Jquery 사용 -->

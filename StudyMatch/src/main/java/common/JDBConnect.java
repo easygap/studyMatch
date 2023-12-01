@@ -5,74 +5,46 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletContext;
 
 public class JDBConnect {
-	public Connection con;
-	public Statement stmt;
-	public PreparedStatement psmt;
-	public ResultSet rs;
+	public Connection con; // 데이터베이스 연결
+	public Statement stmt; // 인파라미터 없는 (정적) 쿼리문 실행
+	public PreparedStatement psmt; // 인파라미터 있는 (동적) 쿼리문 실행
+	public ResultSet rs; // 쿼리문 결과 저장
 	
-	public JDBConnect() {
-		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			
-			String url = "jdbc:oracle:thin:@localhost:1521:xe";
-			String id = "c##musthave";
-			String pwd = "1234";
-			con = DriverManager.getConnection(url, id, pwd);
-			
-			System.out.println("DB 연결 성공(기본 생성자)");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public JDBConnect(String driver, String url, String id, String pwd) {
-		try {
-			Class.forName(driver);
-			
-			con = DriverManager.getConnection(url, id, pwd);
-			
-			System.out.println("DB 연결 성공(인수 생성자 1)");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	LocalDateTime now = LocalDateTime.now();
 	
 	public JDBConnect(ServletContext application) {
-		try {
-			// JDBC 드라이버 로드
+		try { // 데이터베이스 연결
 			String driver = application.getInitParameter("OracleDriver");
 			Class.forName(driver);
 			
-			// DB에 연결
 			String url = application.getInitParameter("OracleURL");
 			String id = application.getInitParameter("OracleId");
 			String pwd = application.getInitParameter("OraclePwd");
 			con = DriverManager.getConnection(url, id, pwd);
-			
-			System.out.println("DB연결 성공(인수 생성자 2)");
-		}
-		catch(Exception e) {
+			System.out.println("*** " + date.format(now) + " DB 연결 성공 ***");
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("*** DB 연결 실패 ***");
 		}
 	}
-	
-	public void close() {
+
+	public void close() { // 데이터베이스 연결 해제
 		try {
-			if(rs != null) rs.close();
-			if(stmt != null) stmt.close();
-			if(psmt != null) psmt.close();
-			if(con != null) con.close();
-			
-			System.out.println("JDBC 자원 해제");
-		}
-		catch(Exception e) {
+			if (con != null) con.close();
+			if (stmt != null) stmt.close();
+			if (psmt != null) psmt.close();
+			if (rs != null) rs.close();
+			System.out.println("*** " + date.format(now) + " JDBC 자원 해제 완료 ***");
+		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("*** JDBC 자원 해제 실패! ***");
 		}
 	}
 }
