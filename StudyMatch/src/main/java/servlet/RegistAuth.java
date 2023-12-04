@@ -16,6 +16,7 @@ public class RegistAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("doGet()");
 		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
 	}
 
@@ -25,7 +26,8 @@ public class RegistAuth extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		MemberDAO dao = new MemberDAO(null);
+		System.out.println("doPost()");
+		MemberDAO dao = new MemberDAO();
 
 		String cp = req.getContextPath();
 		String uri = req.getRequestURI();
@@ -56,6 +58,7 @@ public class RegistAuth extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		System.out.println("init()");
 	}
 
 	/**
@@ -72,6 +75,7 @@ public class RegistAuth extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("service()");
 	}
 
 }

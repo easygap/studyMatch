@@ -35,4 +35,13 @@
 		<servlet-name>RegistAuth</servlet-name>
 		<url-pattern>/auth/Regist.mvc</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+	<servlet-name>BoardList</servlet-name>
+	<servlet-class>model.servlet.ListController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>BoardList</servlet-name>
+	<url-pattern>/board/list.do</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -49,7 +49,7 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" action="RegistProcess.jsp" onsubmit="return validateForm(this);">
+	<form name="ResistFrm" method="get" action="../auth/Regist.mvc" onsubmit="return validateForm(this);">
 		아  이   디 :  <input type="text" name="id"><br/>
 		비밀    번호 :  <input type="password" name="pw"><br/>
 		비밀번호 확인 :  <input type="password" name="pwdu"><br/>
