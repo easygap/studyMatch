@@ -58,11 +58,11 @@
 							aria-expanded="false">계정</a>
 							<div class="dropdown-menu dropdown-menu-end"
 								aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#!">로그인</a> <a
+								<a class="dropdown-item" href="../auth/Login.jsp">로그인</a> <a
 									class="dropdown-item" href="#!">아이디 찾기</a> <a
 									class="dropdown-item" href="#!">비밀번호 찾기</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#!">회원가입</a>
+								<a class="dropdown-item" href="../auth/Regist.jsp">회원가입</a>
 							</div></li>
 					</ul>
 				</div>
