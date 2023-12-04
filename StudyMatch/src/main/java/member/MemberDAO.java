@@ -12,7 +12,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class MemberDAO {
+import common.DBConnPool;
+
+public class MemberDAO extends DBConnPool{
 //	public MemberDAO(ServletContext application) {
 //		super(application);
 //	}
@@ -21,7 +23,6 @@ public class MemberDAO {
 	Connection con;
 	PreparedStatement psmt;
 	ResultSet rs;
-
 	
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
@@ -37,7 +38,7 @@ public class MemberDAO {
 	}
 
 	// 회원정보 조회
-	public ArrayList<MemberDTO> Inquiry () {
+	public ArrayList<MemberDTO> Inquiry (String uid, String upass) {
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 
 		try {
@@ -45,6 +46,9 @@ public class MemberDAO {
 			String query = "SELECT * FROM member WHERE id=? AND pwd=?";
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
+			
+			psmt.setString(1, uid);
+			psmt.setString(6, upass);
 
 			while (rs.next()) { // DTO 객체에 회원 정보 저장
 				String id = rs.getString("id");
@@ -63,14 +67,14 @@ public class MemberDAO {
 				
 				MemberDTO dto = new MemberDTO();
 				list.add(dto);
-				System.out.println(date.format(now) + " [ " + id + " ] 정보 조회 성공!");
+				System.out.println(date.format(now) + " [ " + uid + " ] 정보 조회 성공!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("*** 정보 조회 쿼리문 실행 중 예외 발생! ***");
+			System.out.println("*** [ " + uid + " ] 회원정보 조회 쿼리문 실행 중 예외 발생! ***");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 정보 조회 중 예외 발생! ***");
+			System.out.println("*** [ " + uid + " ] 회원정보 조회 중 예외 발생! ***");
 		}
 		
 		return list;
@@ -140,9 +144,9 @@ public class MemberDAO {
 	// 자원 반납
 	public void close() {
 		try {
-			if (rs != null) rs.close();
-			if (psmt != null) psmt.close();
 			if (con != null) con.close();
+			if (psmt != null) psmt.close();
+			if (rs != null) rs.close();
 			System.out.println("DB 커넥션 풀 자원 반납");
 		} catch (Exception e) {
 			e.printStackTrace();

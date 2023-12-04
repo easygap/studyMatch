@@ -33,6 +33,9 @@ public class MemberDTO {
 	private String grTodo;
 	private String grLoca;
 	
+	public MemberDTO() {
+	}
+	
 	public String getName() {
 		return name;
 	}
