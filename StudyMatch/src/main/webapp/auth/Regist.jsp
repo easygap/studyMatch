@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+request.setCharacterEncoding("UTF-8");
+String cp = request.getContextPath();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +54,7 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" action="RegistProcess.jsp" onsubmit="return validateForm(this);">
+	<form name="ResistFrm" method="get" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 		아  이   디 :  <input type="text" name="id"><br/>
 		비밀    번호 :  <input type="password" name="pw"><br/>
 		비밀번호 확인 :  <input type="password" name="pwdu"><br/>
@@ -58,20 +63,24 @@ function validateForm(form){
 		생년    월일 :  <input type="text" name="birth"><br/> 
 		휴 대 폰 번호 :  <input type="text" name="phone" size="13"><br/>
 		주       소 :  <input type="text" name="address"><br/>
-		이   메   일 :  <input type="text" name="Email"><br/>
+		이   메   일 :  <input type="email" name="Email"><br/>
 		직       업 :  <input type="text" name="job"><br/>
 		[관  심  사] <br/>
 		<button type="button" class="interest">JAVA</button>
 		<button type="button" class="interest">PYTHON</button>
 		<button type="button" class="interest">C</button>
 		<button type="button" class="interest">C++</button> <br/>
+		
 		<button type="button" class="interest">영어</button>
 		<button type="button" class="interest">일본어</button>
 		<button type="button" class="interest">중국어</button><br/>
+		
 		<button type="button" class="interest">UI/UX 디자이너</button>
 		<button type="button" class="interest">UI/UX 퍼블리셔</button><br/>
+		
 		<button type="button" class="interest">엑셀/한글/워드</button>
 		<button type="button" class="interest">회계</button><br/>
+		
 		<button type="button" class="interest">부동산</button>
 		<button type="button" class="interest">투자/주식</button><br/>
 		

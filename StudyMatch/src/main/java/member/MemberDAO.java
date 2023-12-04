@@ -12,19 +12,17 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-public class MemberDAO {
+import common.DBConnPool;
+
+public class MemberDAO extends DBConnPool{
 //	public MemberDAO(ServletContext application) {
 //		super(application);
 //	}
 	
 	DataSource dataSource;
-	private Connection con;
+	Connection con;
 	PreparedStatement psmt;
 	ResultSet rs;
-	
-	public MemberDAO(Connection con) {
-		this.con = con;
-	}
 	
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();

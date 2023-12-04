@@ -25,14 +25,4 @@
 		<param-name>OraclePwd</param-name>
 		<param-value>1234</param-value>
 	</context-param>
-
-	<!-- 회원가입 -->
-	<servlet>
-		<servlet-name>RegistAuth</servlet-name>
-		<servlet-class>servlet.RegistAuth</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>RegistAuth</servlet-name>
-		<url-pattern>/auth/Regist.mvc</url-pattern>
-	</servlet-mapping>
 </web-app>
