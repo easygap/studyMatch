@@ -1,32 +1,128 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
+import javax.servlet.ServletContext;
 
-import common.DBConnPool;
+import common.JDBConnect;
 
-public class BoardDAO extends DBConnPool {
-	public BoardDAO() {
-		super();
+public class BoardDAO {
+//	public BoardDAO(ServletContext application) {
+//		super(application);
+//	}
+	
+	public Connection con;
+	public Statement stmt;
+	public PreparedStatement psmt;
+	public ResultSet rs;
+
+	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	LocalDateTime now = LocalDateTime.now();
+	
+	// 글쓰기
+	public int insertWrite(BoardDTO dto) {
+		int result = 0;
+		try {
+			String query = "INSERT INTO board ( "
+					+ " board_num, title, content, img, id, post_date, visit_count, like_count)"
+					+ " VALUES ( "
+					+ " seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getWriter());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시글 작성 중 예외 발생! ***");
+		}
+		return result;
 	}
-
-	// 검색 조건에 맞는 게시물의 개수를 반환합니다.
-	public int selectCount(Map<String, Object> map) {
-		int totalCount = 0;
-		// 쿼리문 준비
-		String query = "SELECT COUNT(*) FROM mvcboard";
-		// 검색 조건이 있다면 WHERE절로 추가
+	
+	// 선택한 게시물 보기
+	public BoardDTO selectView(String num) {
+		BoardDTO dto = new BoardDTO();
+		
+		String query = "SELECT B.*, M.id "
+				+ " FROM member M INNER JOIN board B "
+				+ " ON M.id = B.id "
+				+ " WHERE num=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				dto.setNum(rs.getString(1));
+				dto.setWriter(rs.getString(7));
+				System.out.println("게시물 로드 성공~!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 로드 중 예외 발생! ***");
+		}
+		
+		return dto;
+	}
+	// 검색 조건에 맞는 게시글 수
+	public int selectCount(Map<String, Object> map) { // 게시글 검색
+		int totalCount = 0; // 게시물 수를 담을 변수
+		String query = "SELECT COUNT(*) FROM board";
 		if (map.get("searchWord") != null) {
 			query += " WHERE " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%'";
 		}
 		try {
-			stmt = con.createStatement(); // 쿼리문 생성
-			rs = stmt.executeQuery(query); // 쿼리문 실행
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
 			rs.next();
-			totalCount = rs.getInt(1); // 검색된 게시물 개수 저장
+			totalCount = rs.getInt(1); // 첫 번째 컬럼 값
 		} catch (Exception e) {
-			System.out.println("게시물 카운트 중 예외 발생");
 			e.printStackTrace();
+			System.out.println("*** 게시물 검색 카운트 중 예외 발생! ***");
 		}
 		return totalCount; // 게시물 개수를 서블릿으로 반환
+	}
+	
+	// 검색 조건에 맞는 게시글 목록
+	public List<BoardDTO> selectList(Map<String, Object>map) {
+		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수 
+		
+		String query = "SELECT * FROM board ";
+		if (map.get("searchWord") != null) {
+			query += " WHERE " + map.get("searchFiled") + " "
+					+ " LIKE '%" + map.get("searchWord") + "%' ";
+		}
+		query += " ORDER BY num DESC ";
+		
+		try {
+			stmt = con.createStatement(); // 쿼리문 생성
+			rs = stmt.executeQuery(query); // 쿼리문 실행
+			
+			while (rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				dto.setNum(rs.getString("num")); // 게시물 번호
+				dto.setTitle(rs.getString("title")); // 게시물 제목
+				dto.setContent(rs.getString("content")); // 게시물 내용
+				dto.setWriter(rs.getString("writer")); // 게시물 작성자
+				dto.setVisitcount(rs.getString("visitcount")); // 게시물 조회수
+				dto.setLikecount(rs.getString("likecount")); // 게시물 추천수
+				dto.setCommcount(rs.getString("commcount")); // 게시물 댓글수
+				dto.setPostdate(rs.getDate("postdate")); // 게시물 작성일
+				
+				bbs.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 검색 목록 불러오기 중 예외 발생! ***");
+		}
+		return bbs;
 	}
 }
