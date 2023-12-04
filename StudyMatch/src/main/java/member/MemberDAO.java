@@ -1,5 +1,6 @@
 package member;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +10,8 @@ import javax.servlet.ServletContext;
 import common.JDBConnect;
 
 public class MemberDAO extends JDBConnect {
+	public Connection conn;
+	
 	public MemberDAO(ServletContext application) {
 		super(application);
 	}

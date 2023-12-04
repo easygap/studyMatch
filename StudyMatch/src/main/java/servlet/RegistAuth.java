@@ -1,9 +1,12 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Connection;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,9 +17,14 @@ import member.MemberDTO;
 
 public class RegistAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	protected void forword(HttpServletRequest req, HttpServletResponse resp, String url) throws ServletException, IOException {
+		RequestDispatcher rd = req.getRequestDispatcher(url);
+		rd.forward(req, resp);
+	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
+		doPost(req, resp);
 	}
 
 	/**
@@ -46,6 +54,8 @@ public class RegistAuth extends HttpServlet {
 			dto.setInterest2(req.getParameter("interest"));
 			dto.setInterest3(req.getParameter("interest"));
 			
+			dao.signUp(dto);
+			
 			url = cp+"/Login.jsp";
 			resp.sendRedirect(url);
 		}
@@ -55,7 +65,7 @@ public class RegistAuth extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+		System.out.println("회원가입 성공");
 	}
 
 	/**
