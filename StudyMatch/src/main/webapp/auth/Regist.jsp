@@ -60,10 +60,21 @@ function validateForm(form){
 		주       소 :  <input type="text" name="address"><br/>
 		이   메   일 :  <input type="text" name="Email"><br/>
 		직       업 :  <input type="text" name="job"><br/>
+		[관  심  사] <br/>
+		<button type="button" class="interest">JAVA</button>
+		<button type="button" class="interest">PYTHON</button>
+		<button type="button" class="interest">C</button>
+		<button type="button" class="interest">C++</button> <br/>
+		<button type="button" class="interest">영어</button>
+		<button type="button" class="interest">일본어</button>
+		<button type="button" class="interest">중국어</button><br/>
+		<button type="button" class="interest">UI/UX 디자이너</button>
+		<button type="button" class="interest">UI/UX 퍼블리셔</button>
 		
 		<br/>
 		<input type="radio" name="gender" value="m" checked>남자
 		<input type="radio" name="gender" value="f">여자
+		<br/>
 		<br/>
 		
 		<button type="submit">가입하기</button> 
