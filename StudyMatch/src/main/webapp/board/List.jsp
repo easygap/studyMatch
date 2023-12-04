@@ -62,7 +62,9 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td align="left">
-										<!-- 제목(링크 --> <a href="../board/view.do?idx=${ row.idx }">${ row.title }</a>
+                    
+										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.idx }">${ row.title }</a>
+
 									</td>
 									<td>${ row.name }</td>
 									<!-- 작성자 -->
