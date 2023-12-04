@@ -18,6 +18,9 @@ public class BoardDTO {
 	private String commwriter;
 	private java.sql.Date commdate;
 	
+	public BoardDTO() {
+	}
+	
 	public String getNum() {
 		return num;
 	}

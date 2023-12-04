@@ -3,33 +3,49 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import javax.servlet.ServletContext;
 
-import common.JDBConnect;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import org.apache.tomcat.util.threads.StopPooledThreadException;
 
 public class BoardDAO {
 //	public BoardDAO(ServletContext application) {
 //		super(application);
 //	}
 	
-	public Connection con;
-	public Statement stmt;
-	public PreparedStatement psmt;
-	public ResultSet rs;
+	DataSource dataSource;
+	Connection con;
+	Statement stmt;
+	PreparedStatement psmt;
+	ResultSet rs;
 
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
+	
+	public BoardDAO() {
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource)context.lookup("dbcp_myoracle");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** DB 연동 중 예외 발생 ***");
+			}
+	}
 	
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
 		try {
+			con = dataSource.getConnection();
 			String query = "INSERT INTO board ( "
 					+ " board_num, title, content, img, id, post_date, visit_count, like_count)"
 					+ " VALUES ( "
@@ -42,6 +58,48 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시글 작성 중 예외 발생! ***");
+		} finally {
+			close();
+		}
+		return result;
+	}
+	
+	// 수정하기
+	public int updateEdit(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			con = dataSource.getConnection();
+		String query = "UPDATE board SET "
+				+ " title=?, content=? "
+				+ " WHERE board_num=?";
+		
+		psmt = con.prepareStatement(query);
+		psmt.setString(3, dto.getNum());
+		psmt.setString(4, dto.getTitle());
+		psmt.setString(5, dto.getContent());
+		result = psmt.executeUpdate();
+		System.out.println(dto.getNum() + "번 게시글 수정 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 수정 중 예외 발생 ***");
+		}
+		return result;
+	}
+	
+	// 게시물 삭제
+	public int deletePost(BoardDTO dto) {
+		int result = 0;
+		
+		try {
+			con = dataSource.getConnection();
+			String query = "DELETE FROM board WHERE num=?";
+			psmt = con.prepareStatement(query);
+			psmt.setString(3, dto.getNum());
+			result = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
 		}
 		return result;
 	}
@@ -49,13 +107,13 @@ public class BoardDAO {
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
 		BoardDTO dto = new BoardDTO();
-		
-		String query = "SELECT B.*, M.id "
-				+ " FROM member M INNER JOIN board B "
-				+ " ON M.id = B.id "
-				+ " WHERE num=?";
-		
+	
 		try {
+			con = dataSource.getConnection();
+			String query = "SELECT B.*, M.id "
+					+ " FROM member M INNER JOIN board B "
+					+ " ON M.id = B.id "
+					+ " WHERE num=?";
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
@@ -72,6 +130,7 @@ public class BoardDAO {
 		
 		return dto;
 	}
+	
 	// 검색 조건에 맞는 게시글 수
 	public int selectCount(Map<String, Object> map) { // 게시글 검색
 		int totalCount = 0; // 게시물 수를 담을 변수
