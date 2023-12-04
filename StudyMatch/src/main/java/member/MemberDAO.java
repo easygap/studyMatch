@@ -1,58 +1,81 @@
 package member;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 
-import common.JDBConnect;
-
-public class MemberDAO extends JDBConnect {
-	public MemberDAO(ServletContext application) {
-		super(application);
-	}
-
+public class MemberDAO {
+//	public MemberDAO(ServletContext application) {
+//		super(application);
+//	}
+	
+	DataSource dataSource;
+	Connection con;
+	PreparedStatement psmt;
+	ResultSet rs;
+	
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
+	
+	public MemberDAO() {
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource)context.lookup("dbcp_myoracle");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** DB 연동 중 예외 발생 ***");
+			}
+	}
 
-	public MemberDTO Inquiry (String uid, String upass) {
-		MemberDTO dto = new MemberDTO();
-		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
+	// 회원정보 조회
+	public ArrayList<MemberDTO> Inquiry () {
+		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 
 		try {
+			con = dataSource.getConnection();
+			String query = "SELECT * FROM member WHERE id=? AND pwd=?";
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, uid);
-			psmt.setString(6, upass);
 			rs = psmt.executeQuery();
 
-			if (rs.next()) { // DTO 객체에 회원 정보 저장
-				dto.setId(rs.getString("id"));
-				dto.setPass(rs.getString("pass"));
-				dto.setName(rs.getString(2));
-				dto.setBirth(rs.getString(3));
-				dto.setJob(rs.getString(4));
-				dto.setNick(rs.getString(5));
-				dto.setPhone(rs.getString(7));
-				dto.setEmail(rs.getString(8));
-				dto.setAddress(rs.getString(9));
-				dto.setInterest1(rs.getString(10));
-				dto.setInterest2(rs.getString(11));
-				dto.setInterest3(rs.getString(12));
-				dto.setImage(rs.getString(14));
-				System.out.println(date.format(now) + " [ " + uid + " ] 정보 조회 성공!");
+			while (rs.next()) { // DTO 객체에 회원 정보 저장
+				String id = rs.getString("id");
+				String pass = rs.getString("pass");
+				String name = rs.getString(2);
+				String birth = rs.getString(3);
+				String job = rs.getString(4);
+				String nick = rs.getString(5);
+				String phone = rs.getString(7);
+				String email = rs.getString(8);
+				String address = rs.getString(9);
+				String interest1 = rs.getString(10);
+				String interest2 = rs.getString(11);
+				String interest3 = rs.getString(12);
+				String image = rs.getString(14);
+				
+				MemberDTO dto = new MemberDTO();
+				list.add(dto);
+				System.out.println(date.format(now) + " [ " + id + " ] 정보 조회 성공!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("*** 정보 조회 쿼리문 실행 중 예외 발생! ***");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** [ " + uid + " ] 정보 조회 중 예외 발생! ***");
+			System.out.println("*** 정보 조회 중 예외 발생! ***");
 		}
 		
-		return dto;
+		return list;
 	}
 
+	// 회원가입
 	public boolean signUp(MemberDTO dto) {
 		boolean result = false;
 		String query = "INSERT INTO member (id, name, birth, job, nick, pwd, phone, email, address, interest1, interest2, interest3, img)"
@@ -91,6 +114,7 @@ public class MemberDAO extends JDBConnect {
 		return result;
 	}
 	
+	// 로그인
 	public boolean login (String id, String pass) {
 		boolean result = false;
 		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
@@ -110,5 +134,18 @@ public class MemberDAO extends JDBConnect {
 			System.out.println("*** 로그인 쿼리 실행 중 예외 발생 ***");
 		}
 		return result;
+	}
+	
+	// 자원 반납
+	public void close() {
+		try {
+			if (rs != null) rs.close();
+			if (psmt != null) psmt.close();
+			if (con != null) con.close();
+			System.out.println("DB 커넥션 풀 자원 반납");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** DB 커넥션 풀 자원 반납 중 예외 발생 ***");
+		}
 	}
 }
