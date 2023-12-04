@@ -45,7 +45,7 @@
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
 				<br /> <br />
-				<h1 class="mt-4">파일 첨부형 게시판 - 비밀번호 검증(Pass)</h1>
+				<h1 class="mt-4">비밀번호 검증</h1>
 				<form name="writeFrm" method="post" action="../mvcboard/pass.do"
 					onsubmit="return validateForm(this);">
 					<input type="hidden" name="idx" value="${ param.idx }" /> <input
