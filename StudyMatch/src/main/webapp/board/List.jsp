@@ -62,7 +62,9 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td align="left">
+                    
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.idx }">${ row.title }</a>
+
 									</td>
 									<td>${ row.name }</td>
 									<!-- 작성자 -->
@@ -71,9 +73,9 @@
 									<td>${ row.postdate }</td>
 									<!-- 작성일 -->
 									<td>
-										<!-- 첨푸 파일 --> <c:if test="${ not empty row.ofile }">
+										<!-- 첨부 파일 --> <c:if test="${ not empty row.ofile }">
 											<a
-												href="../mvcboard/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Down]</a>
+												href="../board/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Down]</a>
 										</c:if>
 									</td>
 								</tr>
@@ -87,7 +89,7 @@
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
 						<td width="100"><button type="button"
-								onclick="location.href='./Write.jsp';">글쓰기</button></td>
+								onclick="location.href='../board/write.do';">글쓰기</button></td>
 					</tr>
 				</table>
 

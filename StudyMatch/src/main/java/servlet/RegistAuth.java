@@ -32,6 +32,7 @@ public class RegistAuth extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+  
 //	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		System.out.println("doPost()");
 ////		doGet(req, resp);
@@ -87,7 +88,8 @@ public class RegistAuth extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		System.out.println("회원가입 성공");
+		// TODO Auto-generated method stub
+		System.out.println("init()");
 	}
 
 	/**
@@ -104,6 +106,7 @@ public class RegistAuth extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("service()");
 	}
 
 }
