@@ -62,7 +62,7 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td align="left">
-										<!-- 제목(링크 --> <a href="../mvcboard/view.do?idx=${ row.idx }">${ row.title }</a>
+										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.idx }">${ row.title }</a>
 									</td>
 									<td>${ row.name }</td>
 									<!-- 작성자 -->
@@ -87,7 +87,7 @@
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
 						<td width="100"><button type="button"
-								onclick="location.href='../mvcboard/write.do';">글쓰기</button></td>
+								onclick="location.href='./Write.jsp';">글쓰기</button></td>
 					</tr>
 				</table>
 

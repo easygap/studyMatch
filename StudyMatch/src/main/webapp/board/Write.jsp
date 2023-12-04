@@ -95,7 +95,7 @@
 								<button type="submit">작성 완료</button>
 								<button type="reset">RESET</button>
 								<button type="button"
-									onclick="location.href='../mvcboard/list.do';">목록 바로가기
+									onclick="location.href='./List.jsp';">목록 바로가기
 								</button>
 							</td>
 						</tr>
