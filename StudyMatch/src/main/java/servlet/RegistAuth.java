@@ -6,12 +6,12 @@ import java.sql.Connection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.DBConnPool;
 import member.MemberDAO;
 import member.MemberDTO;
 
@@ -33,7 +33,8 @@ public class RegistAuth extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		MemberDAO dao = new MemberDAO(null);
+		Connection conn = DBConnPool();
+		MemberDAO dao = new MemberDAO(conn);
 
 		String cp = req.getContextPath();
 		String uri = req.getRequestURI();
@@ -59,6 +60,10 @@ public class RegistAuth extends HttpServlet {
 			url = cp+"/Login.jsp";
 			resp.sendRedirect(url);
 		}
+	}
+
+	private Connection DBConnPool() {
+		return null;
 	}
 
 	/**

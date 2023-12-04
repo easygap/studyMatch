@@ -30,7 +30,7 @@ public class DBConnPool {
 			// 커넥션 풀을 통해 연결 얻기
 			con = source.getConnection();
 
-			System.out.println("*** " + date.format(now) + " DB 커넥션 풀 연결 성공 ***");
+			System.out.println(date.format(now) + " DB 커넥션 풀 연결 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 커넥션 풀 연결 실패 ***");
