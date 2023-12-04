@@ -18,9 +18,13 @@ public class MemberDAO {
 //	}
 	
 	DataSource dataSource;
-	Connection con;
+	private Connection con;
 	PreparedStatement psmt;
 	ResultSet rs;
+	
+	public MemberDAO(Connection con) {
+		this.con = con;
+	}
 	
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();

@@ -69,7 +69,11 @@ function validateForm(form){
 		<button type="button" class="interest">일본어</button>
 		<button type="button" class="interest">중국어</button><br/>
 		<button type="button" class="interest">UI/UX 디자이너</button>
-		<button type="button" class="interest">UI/UX 퍼블리셔</button>
+		<button type="button" class="interest">UI/UX 퍼블리셔</button><br/>
+		<button type="button" class="interest">엑셀/한글/워드</button>
+		<button type="button" class="interest">회계</button><br/>
+		<button type="button" class="interest">부동산</button>
+		<button type="button" class="interest">투자/주식</button><br/>
 		
 		<br/>
 		<input type="radio" name="gender" value="m" checked>남자
