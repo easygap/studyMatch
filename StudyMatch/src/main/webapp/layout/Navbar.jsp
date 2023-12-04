@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>네비게이션 바</title>
 <!-- BootStrap css 사용 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
 
 <style>
 .navbar {
@@ -14,34 +18,56 @@
 	width: 100%;
 	z-index: 5;
 }
+
 .navbar-nav {
 	font-size: 15px;
 }
 </style>
 </head>
 <body>
-<!-- Jquery 사용 -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<!-- BootStrap javascript 사용 -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+	<!-- Jquery 사용 -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+		crossorigin="anonymous"></script>
+	<!-- BootStrap javascript 사용 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
 
-<!-- 네비게이션 바 -->
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#"><img src="../img/logo.png" alt="MatchMate" width="250" height="60"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">매칭현황</a>
-        <a class="nav-link" href="#">카페위치찾기</a>
-        <a class="nav-link" href="#">게시판</a>
-        <a class="nav-link" href="#">고객센터</a>
-        <a class="nav-link" href="#">마이페이지</a>
-      </div>
-    </div>
-  </div>
-</nav>
+	<!-- 네비게이션 바 -->
+	
+		<!-- Top navigation-->
+		<nav
+			class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<div class="container-fluid">
+				<button class="btn btn-primary" id="sidebarToggle">게시판</button>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						<li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
+							role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">계정</a>
+							<div class="dropdown-menu dropdown-menu-end"
+								aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="#!">로그인</a> <a
+									class="dropdown-item" href="#!">아이디 찾기</a> <a
+									class="dropdown-item" href="#!">비밀번호 찾기</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#!">회원가입</a>
+							</div></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
 </body>
 </html>
