@@ -27,8 +27,10 @@ public class BoardDAO {
 
 	public BoardDAO() {
 		try {
-			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("dbcp_myoracle");
+	         Context context = new InitialContext();
+	         dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+	         con = dataSource.getConnection();
+	         System.out.println("DB 연동 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 연동 중 예외 발생 ***");

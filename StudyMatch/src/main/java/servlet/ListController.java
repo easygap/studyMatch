@@ -57,7 +57,7 @@ public class ListController extends HttpServlet {
 		dao.close();	// DB 연결 닫기
 		
 		// 뷰에 전달할 매개변수 추가
-		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/List.do");	// 바로가기 영역 HTML 문자열
+		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");	// 바로가기 영역 HTML 문자열
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
