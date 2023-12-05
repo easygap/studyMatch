@@ -105,4 +105,6 @@
 		</div>
 	</div>
 </body>
+<!-- 푸터 -->
+		<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
