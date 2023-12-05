@@ -6,7 +6,7 @@ public class MemberDTO {
 	private String name;
 	private String birth;
 	private String job;
-	private String nick;
+	private String nickname;
 	private String pass;
 	private String phone;
 	private String email;
@@ -54,8 +54,8 @@ public class MemberDTO {
 	public void setJob(String job) {
 		this.job = job;
 	}
-	public String getNick() {
-		return nick;
+	public String getNickname() {
+		return nickname;
 	}
 	public String getAddress() {
 		return address;
@@ -132,8 +132,8 @@ public class MemberDTO {
 	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	public void setAddress(String address) {
 		this.address = address;

@@ -1,6 +1,16 @@
+<%@ page import="java.util.List" %>
+<%@ page import="model.BoardDAO" %>
+<%@ page import="model.BoardDTO" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	BoardDAO dao = new BoardDAO();
+	Map<String, Object> map = new HashMap<>();
+    List<BoardDTO> boardLists = dao.selectList(map);
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,23 +69,22 @@
 							<c:forEach items="${ boardLists }" var="row" varStatus="loop">
 								<tr align="center">
 									<td>
-										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
+										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.board_num)}
 									</td>
 									<td align="left">
-                    
-										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.idx }">${ row.title }</a>
+										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.board_num }">${ row.title }</a>
 
 									</td>
-									<td>${ row.name }</td>
+									<td>${ row.id }</td>
 									<!-- 작성자 -->
-									<td>${ row.visitcount }</td>
+									<td>${ row.visit_count }</td>
 									<!-- 조회수 -->
-									<td>${ row.postdate }</td>
+									<td>${ row.post_date }</td>
 									<!-- 작성일 -->
 									<td>
 										<!-- 첨부 파일 --> <c:if test="${ not empty row.ofile }">
 											<a
-												href="../board/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Down]</a>
+												href="../board/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.board_num }">[Down]</a>
 										</c:if>
 									</td>
 								</tr>

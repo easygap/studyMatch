@@ -14,6 +14,18 @@
         <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
+        
+        <script>
+    $(document).ready(function() {
+        $(".category-link").click(function() {
+            // 클릭한 링크의 부모 요소에 'active' 클래스 추가
+            $(this).parent().toggleClass("active");
+
+            // 다른 카테고리에 대한 'active' 클래스 제거
+            $(".category-link").not(this).parent().removeClass("active");
+        });
+    });
+</script>
 </head>
 
             <!-- Sidebar-->

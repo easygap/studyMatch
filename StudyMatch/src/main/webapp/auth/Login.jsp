@@ -1,3 +1,4 @@
+<%@ page import ="java.sql.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,8 +9,7 @@
 </head>
 <body>
 		<h1> 로그인 </h1>
-				
-		<form action="loginProcess.jsp" method= "post">
+		<form method= "post" action="login.jsp">
 		<table>
 			<tr>
 				<td>
@@ -29,8 +29,8 @@
 			</tr>	
 		</table>
 		
-			<button type="submit"> 로그인 `</button>	
+			<button type="submit"> 로그인 </button>	
 		</form>
-		
+		${not empty alertScript ? alertScript : ''}
 </body>
 </html>

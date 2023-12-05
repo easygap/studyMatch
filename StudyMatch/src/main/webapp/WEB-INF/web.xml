@@ -28,10 +28,23 @@
 	
 	<servlet>
 	<servlet-name>BoardList</servlet-name>
-	<servlet-class>model.servlet.ListController</servlet-class>
+	<servlet-class>servlet.ListController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 	<servlet-name>BoardList</servlet-name>
 	<url-pattern>/board/list.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+	<servlet-name>LoginAuth</servlet-name>
+	<servlet-class>servlet.LoginAuth</servlet-class>
+	<init-param>
+	<param-name>admin_id</param-name>
+	<param-value>matchmate1</param-value>
+	</init-param>
+	</servlet>
+	<servlet-mapping>
+	<servlet-name>LoginAuth</servlet-name>
+	<url-pattern>/servlet/loginAuth.do</url-pattern>
 	</servlet-mapping>
 </web-app>

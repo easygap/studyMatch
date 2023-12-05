@@ -3,7 +3,6 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,9 +14,9 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.apache.tomcat.util.threads.StopPooledThreadException;
+import common.DBConnPool;
 
-public class BoardDAO {
+public class BoardDAO extends DBConnPool {
 
 	DataSource dataSource;
 	Connection con;
@@ -31,7 +30,9 @@ public class BoardDAO {
 	public BoardDAO() {
 		try {
 			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("dbcp_myoracle");
+			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+			con = dataSource.getConnection();
+			System.out.println("DB 연동 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 연동 중 예외 발생 ***");
@@ -49,7 +50,7 @@ public class BoardDAO {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getWriter());
+			psmt.setString(3, dto.getId());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,11 +69,11 @@ public class BoardDAO {
 			String query = "UPDATE board SET " + " title=?, content=? " + " WHERE board_num=?";
 
 			psmt = con.prepareStatement(query);
-			psmt.setString(3, dto.getNum());
+			psmt.setString(3, dto.getBoard_num());
 			psmt.setString(4, dto.getTitle());
 			psmt.setString(5, dto.getContent());
 			result = psmt.executeUpdate();
-			System.out.println(dto.getNum() + "번 게시글 수정 성공");
+			System.out.println(dto.getBoard_num() + "번 게시글 수정 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시물 수정 중 예외 발생 ***");
@@ -86,9 +87,9 @@ public class BoardDAO {
 
 		try {
 			con = dataSource.getConnection();
-			String query = "DELETE FROM board WHERE num=?";
+			String query = "DELETE FROM board WHERE board_num=?";
 			psmt = con.prepareStatement(query);
-			psmt.setString(3, dto.getNum());
+			psmt.setString(3, dto.getBoard_num());
 			result = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -110,8 +111,8 @@ public class BoardDAO {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setNum(rs.getString(1));
-				dto.setWriter(rs.getString(7));
+				dto.setBoard_num(rs.getString("num"));
+				dto.setId(rs.getString(7));
 				System.out.println("게시물 로드 성공~!");
 			}
 		} catch (Exception e) {
@@ -157,15 +158,14 @@ public class BoardDAO {
 			System.out.println("Query: " + query);
 			while (rs.next()) {
 				BoardDTO dto = new BoardDTO();
-				dto.setNum(rs.getString("num")); // 게시물 번호
+				dto.setBoard_num(rs.getString("board_num")); // 게시물 번호
 				dto.setTitle(rs.getString("title")); // 게시물 제목
 				dto.setContent(rs.getString("content")); // 게시물 내용
-				dto.setWriter(rs.getString("writer")); // 게시물 작성자
-				dto.setVisitcount(rs.getString("visitcount")); // 게시물 조회수
-				dto.setLikecount(rs.getString("likecount")); // 게시물 추천수
-				dto.setCommcount(rs.getString("commcount")); // 게시물 댓글수
-				dto.setPostdate(rs.getDate("postdate")); // 게시물 작성일
-
+				dto.setId(rs.getString("Id")); // 게시물 작성자
+				dto.setVisit_count(rs.getString("visit_count")); // 게시물 조회수
+				dto.setLike_count(rs.getString("like_count")); // 게시물 추천수
+//				dto.setCommen_count(rs.getString("commcount")); // 게시물 댓글수
+				dto.setPost_date(rs.getDate("post_date")); // 게시물 작성일
 				bbs.add(dto);
 			}
 		} catch (Exception e) {
@@ -173,7 +173,6 @@ public class BoardDAO {
 			System.out.println("*** 게시물 검색 목록 불러오기 중 예외 발생! ***");
 		}
 		return bbs;
-
 	}
 
 	public void close() {
@@ -186,6 +185,8 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시판 자원 해제 중 예외 발생 ***");
+		} finally {
+			close();
 		}
 	}
 }
