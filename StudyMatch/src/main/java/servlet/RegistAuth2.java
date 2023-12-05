@@ -21,11 +21,14 @@ public class RegistAuth2 extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(req, resp);
 		System.out.println("doPost()");
+		String[] interest = req.getParameterValues("interest");
 		
-		System.out.println("[" + req.getParameter("id") + "]");
+		for(String s : interest) {
+			System.out.println("[ " + s + " ]");
+		}
+		
 		MemberDAO dao = new MemberDAO();
 
-		String cp = req.getContextPath();
 		String uri = req.getRequestURI();
 			
 			try {
@@ -41,15 +44,16 @@ public class RegistAuth2 extends HttpServlet {
 					dto.setAddress(req.getParameter("address"));
 					dto.setEmail(req.getParameter("Email"));
 					dto.setJob(req.getParameter("job"));
-					dto.setInterest1(req.getParameter("interest"));
-					dto.setInterest2(req.getParameter("interest"));
-					dto.setInterest3(req.getParameter("interest"));
+					dto.setInterest1(interest[0]);
+					dto.setInterest2(interest[1]);
+					dto.setInterest3(interest[2]);
+					
+					dao.signUp(dto);
 				}
-				dao.signUp(dto);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			System.out.println("회원가입에 성공하였습니다.");
+			
 	}
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

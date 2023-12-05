@@ -111,7 +111,6 @@ public class MemberDAO extends DBConnPool{
          e.printStackTrace();
          System.out.println("*** 회원가입 중 예외 발생! ***");
       } 
-      
       if (signUpCount > 0) {
          System.out.println(date.format(now) + " [ " + dto.getId() + " ] 회원가입 성공!");
          result = true;
