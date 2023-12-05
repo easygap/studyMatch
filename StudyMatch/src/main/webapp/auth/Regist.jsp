@@ -9,7 +9,7 @@ String cp = request.getContextPath();
 <html>
 <head>
 <meta charset="UTF-8">                                                                 
-<title>Insert title here</title>
+<title>Regist Page</title>
 <script>
 function validateForm(form){
 	if(form.id.value == ""){
@@ -48,50 +48,105 @@ function validateForm(form){
 		alert("직업을 입력하세요.");
 		return false;
 	}
-}
+	}
 </script>
 </head>
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="get" action="../auth/Regist.do" onsubmit="return validateForm(this);">
-		아  이   디 :  <input type="text" name="id"><br/>
-		비밀    번호 :  <input type="password" name="pw"><br/>
-		비밀번호 확인 :  <input type="password" name="pwdu"><br/>
-		이       름 :  <input type="text" name="name"><br/>
-		닉   네   임 :  <input type="text" name="nickname"><br/>
-		생년    월일 :  <input type="text" name="birth"><br/> 
-		휴 대 폰 번호 :  <input type="text" name="phone" size="13"><br/>
-		주       소 :  <input type="text" name="address"><br/>
-		이   메   일 :  <input type="email" name="Email"><br/>
-		직       업 :  <input type="text" name="job"><br/>
-		[관  심  사] <br/>
-		<button type="button" class="interest">JAVA</button>
-		<button type="button" class="interest">PYTHON</button>
-		<button type="button" class="interest">C</button>
-		<button type="button" class="interest">C++</button> <br/>
+	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);">
+	<div align="center">
+	<table>
+			<tr>
+				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
+				<td><input type="text" name="id"></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 비 &nbsp;&nbsp;밀 &nbsp;&nbsp;&nbsp;번 &nbsp;&nbsp;&nbsp;호</td>
+				<td><input type="password" name="pw"></td>
+				<td></td>
+			</tr>
 		
-		<button type="button" class="interest">영어</button>
-		<button type="button" class="interest">일본어</button>
-		<button type="button" class="interest">중국어</button><br/>
-		
-		<button type="button" class="interest">UI/UX 디자이너</button>
-		<button type="button" class="interest">UI/UX 퍼블리셔</button><br/>
-		
-		<button type="button" class="interest">엑셀/한글/워드</button>
-		<button type="button" class="interest">회계</button><br/>
-		
-		<button type="button" class="interest">부동산</button>
-		<button type="button" class="interest">투자/주식</button><br/>
-		
+			<tr>
+				<td>ㆍ 비 밀 번 호 확 인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="password" name="pwcheck"></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
+				<td><input type="text" name="name"></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
+				<td><input type="text" name="nickName"></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
+				<td><input type="text" name="birth"></td>
+				<td></td>
+			</tr>
+			 
+			<tr>
+				<td>ㆍ 연 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처</td>
+				<td><input type="text" name="phone" placeholder="'-' 포함하여 작성해 주세요."></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 주 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
+				<td><input type="text" name="address" placeholder="'~동'까지 입력해 주세요."></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
+				<td><input type="text" name="Email"></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 직 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업</td>
+				<td><input type="text" name="job"></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>[관  심  사] &nbsp;&nbsp;<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
+				<td colspan="5">
+					<input type="checkbox" class="interest" name="interest" value="JAVA " /> JAVA
+					<input type="checkbox" class="interest" name="interest" value="PYTHON"> PYTHON
+					<input type="checkbox" class="interest" name="interest" value="C"> C
+					<input type="checkbox" class="interest" name="interest" value="C++"> C++ <br/>
+					
+					<input type="checkbox" class="interest" name="interest" value="영어"> 영어
+					<input type="checkbox" class="interest" name="interest" value="일본어"> 일본어
+					<input type="checkbox" class="interest" name="interest" value="중국어"> 중국어 <br/>
+			
+					<input type="checkbox" class="interest" name="interest" value="UI/UX"> UI/UX
+					<input type="checkbox" class="interest" name="interest" value="JSP"> JSP
+					<input type="checkbox" class="interest" name="interest" value="디자이너"> 디자이너
+					<input type="checkbox" class="interest" name="interest" value="퍼블리셔"> 퍼블리셔
+					<br/>
+					
+					<input type="checkbox" class="interest" name="interest" value="엑셀/한글/워드"> 엑셀/한글/워드
+					<input type="checkbox" class="interest" name="interest" value="회계"> 회계 <br/>
+				
+					<input type="checkbox" class="interest" name="interest" value="부동산"> 부동산
+					<input type="checkbox" class="interest" name="interest" value="투자/주식"> 투자/주식 <br/>
+				</td>
+			</tr>
+		</table>
 		<br/>
-		<input type="radio" name="gender" value="m" checked>남자
-		<input type="radio" name="gender" value="f">여자
-		<br/>
-		<br/>
-		
 		<button type="submit">가입하기</button> 
 		<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>
+		</div>
 	</form>
 </body>
 </html>

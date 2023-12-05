@@ -23,7 +23,7 @@
 	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
 	crossorigin="anonymous">
 <!-- css 가져오기 -->
-<link href="BoardForm.css" rel="stylesheet" type="text/css" />
+<link href="../css/styles.css" rel="stylesheet" type="text/css" />
 <style></style>
 </head>
 <body>
@@ -72,7 +72,12 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.board_num)}
 									</td>
 									<td align="left">
+<<<<<<< HEAD
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.board_num }">${ row.title }</a>
+=======
+                    
+										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 
 									</td>
 									<td>${ row.id }</td>
@@ -82,9 +87,13 @@
 									<td>${ row.post_date }</td>
 									<!-- 작성일 -->
 									<td>
-										<!-- 첨부 파일 --> <c:if test="${ not empty row.ofile }">
+										<!-- 첨부 파일 --> <c:if test="${ not empty row.img }">
 											<a
+<<<<<<< HEAD
 												href="../board/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.board_num }">[Down]</a>
+=======
+												href="../board/download.do?img=${ row.img }&id=${ row.id }">[Down]</a>
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 										</c:if>
 									</td>
 								</tr>
@@ -118,9 +127,6 @@
 		</div>
 	</div>
 </body>
-<footer>
 	<!-- 푸터 -->
 	<jsp:include page="../layout/Footer.jsp"></jsp:include>
-</footer>
-
 </html>

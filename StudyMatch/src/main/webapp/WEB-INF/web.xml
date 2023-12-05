@@ -26,6 +26,12 @@
 		<param-value>1234</param-value>
 	</context-param>
 	
+	<!-- 세션 -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+	<!-- 회원가입 -->
 	<servlet>
 	<servlet-name>BoardList</servlet-name>
 	<servlet-class>servlet.ListController</servlet-class>

@@ -12,11 +12,19 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public class DBConnPool {
+<<<<<<< HEAD
 	private DataSource dataSource;
 	private Connection con;
 	private Statement stmt;
 	private PreparedStatement psmt;
 	private ResultSet rs;
+=======
+	private Connection con;
+	private Statement stmt;
+	private PreparedStatement psmt;
+	private ResultSet rs;
+	private DataSource dataSource;
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
@@ -26,12 +34,26 @@ public class DBConnPool {
 			// 커넥션 풀(DateSource) 얻기
 			Context iniCtx = new InitialContext();
 			Context ctx = (Context) iniCtx.lookup("java:comp/env");
+<<<<<<< HEAD
 			dataSource = (DataSource) ctx.lookup("dbcp_myoracle");
+=======
+			
+			this.dataSource = (DataSource) ctx.lookup("dbcp_myoracle");
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 
 			// 커넥션 풀을 통해 연결 얻기
+<<<<<<< HEAD
 			con = dataSource.getConnection();
+=======
+			
+			if(con == null || con.isClosed()) {
+				con = this.dataSource.getConnection();
+				System.out.println(date.format(now) + " DB 커넥션 풀 연결 성공");
+			}
+//			con = source.getConnection();
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 
-			System.out.println(date.format(now) + " DB 커넥션 풀 연결 성공");
+//			System.out.println(date.format(now) + " DB 커넥션 풀 연결 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 커넥션 풀 연결 실패 ***");
