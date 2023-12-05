@@ -32,14 +32,14 @@ public class LoginAuth extends HttpServlet {
 
 		// 관리자 ID
 		String admin_id = this.getInitParameter("admin_id");
-		
+
 		// 인증 요청한 계정
 		String id = req.getParameter("id");
 		String pass = req.getParameter("pass");
-		
+
 		// DB에서 인증 요청한 계정 찾기
 		MemberDTO dto = dao.getMemberDTO(id, pass);
-		
+
 		String memberNick = dto.getNickname();
 		if (memberNick != null) {
 			req.setAttribute("autoMessage", memberNick + " 회원님 반갑습니다! (´▽`ʃ♡ƪ)");
@@ -53,7 +53,7 @@ public class LoginAuth extends HttpServlet {
 		req.setAttribute("alertScript", script);
 		req.getRequestDispatcher("/auth/Login.jsp").forward(req, resp);
 	}
-	
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
@@ -66,12 +66,12 @@ public class LoginAuth extends HttpServlet {
 		Context ctx = (Context) iniCtx.lookup("java:comp/env");
 		DataSource dataSource = (DataSource) ctx.lookup("dbcp_myoracle");
 		Connection con = dataSource.getConnection();
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 로그인 - 커넥션 풀 연결 중 예외 발생 ***");
 		}
-		
+
 		dao = new MemberDAO();
 	}
 

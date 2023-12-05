@@ -12,7 +12,6 @@
 		<welcome-file>default.jsp</welcome-file>
 		<welcome-file>default.htm</welcome-file>
 	</welcome-file-list>
-
 	<context-param>
 		<param-name>OracleDriver</param-name>
 		<param-value>oracle.jdbc.OracleDriver</param-value>
@@ -25,13 +24,7 @@
 		<param-name>OraclePwd</param-name>
 		<param-value>1234</param-value>
 	</context-param>
-	
-	<!-- 세션 -->
-	<session-config>
-		<session-timeout>60</session-timeout>
-	</session-config>
 
-	<!-- 회원가입 -->
 	<servlet>
 	<servlet-name>BoardList</servlet-name>
 	<servlet-class>servlet.ListController</servlet-class>
@@ -40,7 +33,7 @@
 	<servlet-name>BoardList</servlet-name>
 	<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 	<servlet-name>LoginAuth</servlet-name>
 	<servlet-class>servlet.LoginAuth</servlet-class>

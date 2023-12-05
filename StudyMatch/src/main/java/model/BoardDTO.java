@@ -12,7 +12,7 @@ public class BoardDTO {
 	private String visit_count;
 	private String like_count;
 	private java.sql.Date post_date;
-	
+
 	// 댓글
 	private String commen_num;
 	private String commen_content;
@@ -20,7 +20,7 @@ public class BoardDTO {
 	private java.sql.Date commen_date;
 	private String commen_like;
 //	private String commen_count;
-	
+
 	public BoardDTO() {
 	}
 
@@ -143,13 +143,5 @@ public class BoardDTO {
 	public void setCommen_like(String commen_like) {
 		this.commen_like = commen_like;
 	}
-
-//	public String getCommen_count() {
-//		return commen_count;
-//	}
-//
-//	public void setCommen_count(String commen_count) {
-//		this.commen_count = commen_count;
-//	}
 	
 }
