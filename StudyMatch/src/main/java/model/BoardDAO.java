@@ -3,7 +3,6 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,8 +13,6 @@ import java.util.Vector;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-
-import org.apache.tomcat.util.threads.StopPooledThreadException;
 
 public class BoardDAO {
 
@@ -175,6 +172,54 @@ public class BoardDAO {
 		}
 		return bbs;
 
+	}
+	
+//  검색 조건에 맞는 게시물 목록을 반환합니다(페이징 기능 지원).
+	public List<BoardDTO> selectListPage(Map<String,Object> map) {
+		List<BoardDTO> board = new Vector<BoardDTO>();
+			// 쿼리문 준비
+			String query = " "
+						+ "SELECT * FROM ( "
+						+ "		SELECT Tb.*, ROWNUM rNum FROM ( "
+						+ "			SELECT * FROM mvcboard ";
+			// 검색 조건이 있다면 WHERE절로 추가
+			if (map.get("searchWord") != null)
+			{
+					query += " WHERE " + map.get("searchField")
+							+ " LIKE '%" + map.get("searchWord") + "%' ";
+			}
+			
+			query += "		ORDER BY idx DESC"
+					+ "		) Tb "
+					+ " ) "
+					+ " WHERE rNum BETWEEN ? AND ?";	// 게시물 구간은 인파라미터로..
+			try {
+				psmt = con.prepareStatement(query);		// 동적 쿼리문 생성
+				psmt.setString(1, map.get("start").toString());	// 인파라미터 설정
+				psmt.setString(2, map.get("end").toString());
+				rs = psmt.executeQuery();	// 쿼리문 실행
+				
+				// 반환된 게시물 목록을 List 컬렉션에 추가
+				while(rs.next()) {
+					BoardDTO dto = new BoardDTO();
+					
+					dto.setNum(rs.getString(1));
+					dto.setTitle(rs.getString(2));
+					dto.setContent(rs.getString(3));
+					dto.setWriter(rs.getString(4));
+					dto.setVisitcount(rs.getString(5));
+					dto.setLikecount(rs.getString(6));
+					dto.setCommcount(rs.getString(7));
+					dto.setPostdate(rs.getDate(8));
+					
+					board.add(dto);
+				}
+			}
+			catch (Exception e) {
+				System.out.println("게시물 조회 중 예외 발생");
+				e.printStackTrace();
+			}
+			return board;	// 목록 반환
 	}
 
 	public void close() {
