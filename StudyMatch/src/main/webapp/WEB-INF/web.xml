@@ -34,7 +34,7 @@
 	<!-- 회원가입 -->
 	<servlet>
 	<servlet-name>BoardList</servlet-name>
-	<servlet-class>model.servlet.ListController</servlet-class>
+	<servlet-class>servlet.ListController</servlet-class>
 	</servlet>
 	<servlet-mapping>
 	<servlet-name>BoardList</servlet-name>

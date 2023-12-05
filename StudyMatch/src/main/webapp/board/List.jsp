@@ -13,7 +13,7 @@
 	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
 	crossorigin="anonymous">
 <!-- css 가져오기 -->
-<link href="BoardForm.css" rel="stylesheet" type="text/css" />
+<link href="../css/styles.css" rel="stylesheet" type="text/css" />
 <style></style>
 </head>
 <body>
@@ -63,19 +63,19 @@
 									</td>
 									<td align="left">
                     
-										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.idx }">${ row.title }</a>
+										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
 
 									</td>
 									<td>${ row.name }</td>
 									<!-- 작성자 -->
-									<td>${ row.visitcount }</td>
+									<td>${ row.visit_count }</td>
 									<!-- 조회수 -->
-									<td>${ row.postdate }</td>
+									<td>${ row.post_date }</td>
 									<!-- 작성일 -->
 									<td>
-										<!-- 첨부 파일 --> <c:if test="${ not empty row.ofile }">
+										<!-- 첨부 파일 --> <c:if test="${ not empty row.img }">
 											<a
-												href="../board/download.do?ofile=${ row.ofile }&sfile=${ row.sfile }&idx=${ row.idx }">[Down]</a>
+												href="../board/download.do?img=${ row.img }&id=${ row.id }">[Down]</a>
 										</c:if>
 									</td>
 								</tr>
