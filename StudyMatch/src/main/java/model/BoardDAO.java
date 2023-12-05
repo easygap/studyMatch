@@ -59,7 +59,7 @@ public class BoardDAO {
 			e.printStackTrace();
 			System.out.println("*** 게시글 작성 중 예외 발생! ***");
 		} finally {
-			close();
+			//close();
 		}
 		return result;
 	}
