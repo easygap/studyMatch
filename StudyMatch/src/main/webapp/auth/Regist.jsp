@@ -54,7 +54,7 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="get" action="../auth/Regist.do" onsubmit="return validateForm(this);">
+	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 		아  이   디 :  <input type="text" name="id"><br/>
 		비밀    번호 :  <input type="password" name="pw"><br/>
 		비밀번호 확인 :  <input type="password" name="pwdu"><br/>
@@ -66,7 +66,7 @@ function validateForm(form){
 		이   메   일 :  <input type="email" name="Email"><br/>
 		직       업 :  <input type="text" name="job"><br/>
 		[관  심  사] <br/>
-		<button type="button" class="interest">JAVA</button>
+		<input type="button" class="interest" value="JAVA"></input>
 		<button type="button" class="interest">PYTHON</button>
 		<button type="button" class="interest">C</button>
 		<button type="button" class="interest">C++</button> <br/>
