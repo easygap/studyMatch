@@ -118,7 +118,8 @@ function validateForm(form){
 			</tr>
 
 			<tr>
-				<td>[관  심  사] &nbsp;&nbsp;<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
+				<td>ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
+				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
 				<td colspan="5">
 					<input type="checkbox" class="interest" name="interest" value="JAVA " /> JAVA
 					<input type="checkbox" class="interest" name="interest" value="PYTHON"> PYTHON
@@ -140,9 +141,16 @@ function validateForm(form){
 				
 					<input type="checkbox" class="interest" name="interest" value="부동산"> 부동산
 					<input type="checkbox" class="interest" name="interest" value="투자/주식"> 투자/주식 <br/>
+					<br/>
 				</td>
 			</tr>
-		</table>
+
+				<tr>
+					<td>ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
+					<td><input type="file" name="img"></td>
+					<td></td>
+				</tr>
+			</table>
 		<br/>
 		<button type="submit">가입하기</button> 
 		<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>

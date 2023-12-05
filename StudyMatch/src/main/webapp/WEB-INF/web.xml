@@ -25,15 +25,27 @@
 		<param-value>1234</param-value>
 	</context-param>
 
+	<!-- 세션 -->
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+
+
 	<servlet>
-	<servlet-name>BoardList</servlet-name>
-	<servlet-class>servlet.ListController</servlet-class>
+		<servlet-name>BoardList</servlet-name>
+		<servlet-class>servlet.ListController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>BoardList</servlet-name>
-	<url-pattern>/board/list.do</url-pattern>
+		<servlet-name>BoardList</servlet-name>
+		<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
 
+	<!-- image 용량 -->
+	<context-param>
+		<param-name>maxPostSize</param-name>
+		<param-value>1024000</param-value>
+	</context-param>
+  
 	<servlet>
 	<servlet-name>LoginAuth</servlet-name>
 	<servlet-class>servlet.LoginAuth</servlet-class>
