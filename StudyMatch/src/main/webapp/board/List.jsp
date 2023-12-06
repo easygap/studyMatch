@@ -62,7 +62,6 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td align="left">
-                    
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
 
 									</td>
@@ -109,6 +108,6 @@
 		</div>
 	</div>
 </body>
-	<!-- 푸터 -->
-	<jsp:include page="../layout/Footer.jsp"></jsp:include>
+<!-- 푸터 -->
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
