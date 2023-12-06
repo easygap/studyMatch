@@ -30,7 +30,6 @@
 		<session-timeout>60</session-timeout>
 	</session-config>
 
-
 	<!-- 게시판 -->
 	<servlet>
 		<servlet-name>BoardList</servlet-name>
@@ -46,14 +45,15 @@
 		<param-name>maxPostSize</param-name>
 		<param-value>1024000</param-value>
 	</context-param>
-  
+
+	<!-- 로그인 -->
 	<servlet>
-	<servlet-name>LoginAuth</servlet-name>
-	<servlet-class>servlet.LoginAuth</servlet-class>
-	<init-param>
-	<param-name>admin_id</param-name>
-	<param-value>matchmate1</param-value>
-	</init-param>
+		<servlet-name>LoginAuth</servlet-name>
+		<servlet-class>servlet.LoginAuth</servlet-class>
+		<init-param>
+			<param-name>admin_id</param-name>
+			<param-value>matchmate1</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 	<servlet-name>LoginAuth</servlet-name>
