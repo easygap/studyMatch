@@ -30,6 +30,8 @@ public class RegistAuth2 extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 
 		String uri = req.getRequestURI();
+		
+		String saveDirectory;
 			
 			try {
 				MemberDTO dto = new MemberDTO();
@@ -38,7 +40,7 @@ public class RegistAuth2 extends HttpServlet {
 					dto.setId(req.getParameter("id"));
 					dto.setPass(req.getParameter("pw"));
 					dto.setName(req.getParameter("name"));
-					dto.setNick(req.getParameter("nickname"));
+					dto.setNickname(req.getParameter("nickname"));
 					dto.setBirth(req.getParameter("birth"));
 					dto.setPhone(req.getParameter("phone"));
 					dto.setAddress(req.getParameter("address"));
@@ -47,6 +49,7 @@ public class RegistAuth2 extends HttpServlet {
 					dto.setInterest1(interest[0]);
 					dto.setInterest2(interest[1]);
 					dto.setInterest3(interest[2]);
+					dto.setImage(req.getParameter("img"));
 					
 					dao.signUp(dto);
 				}
