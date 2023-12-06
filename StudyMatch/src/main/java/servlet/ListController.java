@@ -20,8 +20,6 @@ public class ListController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
-		
-		System.out.println(req.getParameter("interest"));
 
 		BoardDAO dao = new BoardDAO();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -31,6 +29,9 @@ public class ListController extends HttpServlet {
 	        map.put("searchField", searchField);
 	        map.put("searchWord", searchWord);
 	    }
+	    
+		System.out.println(req.getParameter("interest"));
+		
 	    int totalCount = dao.selectCount(map); // 게시물 개수
 	    
 	    // 페이지 처리
@@ -62,7 +63,7 @@ public class ListController extends HttpServlet {
 	    
 	    req.setAttribute("boardLists", boardLists);
 	    req.setAttribute("map", map);
-	    req.getRequestDispatcher("/Board/List.jsp").forward(req, resp);
+	    req.getRequestDispatcher("../board/List.jsp").forward(req, resp);
 	    System.out.println("BoardLists Size: " + boardLists.size());
 	}
 }
