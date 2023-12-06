@@ -64,7 +64,7 @@ public class LoginAuth extends HttpServlet {
 		try {
 		Context iniCtx = new InitialContext();
 		Context ctx = (Context) iniCtx.lookup("java:comp/env");
-		DataSource dataSource = (DataSource) ctx.lookup("dbcp_myoracle");
+		DataSource dataSource = (DataSource) ctx.lookup("java:comp/env/dbcp_myoracle");
 		Connection con = dataSource.getConnection();
 
 		} catch (Exception e) {

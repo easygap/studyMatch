@@ -14,24 +14,17 @@ import model.BoardDAO;
 import model.BoardDTO;
 import utils.BoardPage;
 
-/**
- * Servlet implementation class ListController2
- */
 @WebServlet("/ListController")
 public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		BoardDAO dao = new BoardDAO();
 		Map<String, Object> map = new HashMap<String, Object>();
-	    String searchField = request.getParameter("searchField");
-	    String searchWord = request.getParameter("searchWord");
+	    String searchField = req.getParameter("searchField");
+	    String searchWord = req.getParameter("searchWord");
 	    if (searchWord != null) {
 	        map.put("searchField", searchField);
 	        map.put("searchWord", searchWord);
@@ -45,7 +38,7 @@ public class ListController extends HttpServlet {
 	    
 	    // 현재 페이지
 	    int pageNum = 1; // 기본값
-	    String pageTemp = request.getParameter("pageNum");
+	    String pageTemp = req.getParameter("pageNum");
 	    if (pageTemp != null && !pageTemp.equals(""))
 	        pageNum = Integer.parseInt(pageTemp);
 	    
@@ -64,9 +57,9 @@ public class ListController extends HttpServlet {
 	    map.put("pageSize", pageSize);
 	    map.put("pageNum", pageNum);
 	    
-	    request.setAttribute("boardLists", boardLists);
-	    request.setAttribute("map", map);
-	    request.getRequestDispatcher("/Board/List.jsp").forward(request, response);
+	    req.setAttribute("boardLists", boardLists);
+	    req.setAttribute("map", map);
+	    req.getRequestDispatcher("/Board/List.jsp").forward(req, resp);
 	    System.out.println("BoardLists Size: " + boardLists.size());
 	}
 }
