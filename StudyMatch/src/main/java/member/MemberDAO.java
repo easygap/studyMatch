@@ -47,7 +47,7 @@ public class MemberDAO extends DBConnPool{
 			String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
-			psmt.setString(6, pass);
+			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {

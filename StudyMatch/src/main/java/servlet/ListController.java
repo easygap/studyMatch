@@ -50,7 +50,8 @@ public class ListController extends HttpServlet {
 	    map.put("start", start);
 	    map.put("end", end);
 	    
-	    List<BoardDTO> boardLists = dao.selectList(map);
+	    String interest = req.getParameter("interest");
+	    List<BoardDTO> boardLists = dao.selectList(map, interest);
 	    dao.close();
 	    
 	    String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
