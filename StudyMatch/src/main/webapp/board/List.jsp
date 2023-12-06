@@ -34,17 +34,18 @@ String cp = request.getContextPath();
 		crossorigin="anonymous"></script>
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
-		<!-- 네비게이션 바 -->
+		<!-- 네비게이션 사이드 bar -->
 		<jsp:include page="../layout/Main.jsp"></jsp:include>
 
 		<!-- 페이지 컨텐츠 -->
 		<div id="page-content-wrapper">
-			<!-- 네비게이션 바 -->
+			<!-- 네비게이션 상단 bar -->
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
-			<div class="container-fluid">
+			<div class="container-fluid container">
 				<br /> <br /> <br />
 				<!-- 목록 테이블 -->
-				<table border="1" width="90%">
+				<table class="table table-hover">
+				<thead>
 					<tr>
 						<th width="10%">번호</th>
 						<th width="*">제목</th>
@@ -53,6 +54,7 @@ String cp = request.getContextPath();
 						<th width="15%">작성일</th>
 						<th width="8%">첨부</th>
 					</tr>
+		
 					<c:choose>
 						<c:when test="${ empty boardLists }">
 							<!-- 게시물이 없을 때 -->
@@ -71,7 +73,7 @@ String cp = request.getContextPath();
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
 
 									</td>
-									<td>${ row.name }</td>
+									<td>${ row.id }</td>
 									<!-- 작성자 -->
 									<td>${ row.visit_count }</td>
 									<!-- 조회수 -->
@@ -87,22 +89,23 @@ String cp = request.getContextPath();
 							</c:forEach>
 						</c:otherwise>
 					</c:choose>
+					</thead>
 				</table>
 
 				<!-- 하단 메뉴(바로가기, 글쓰기) -->
-				<table border="1" width="90%">
+				<table class="table table-hover">
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
-						<td width="100"><button type="button"
+						<td width="100"><button type="button" class="btn btn-primary"
 								onclick="location.href='../board/write.do';">글쓰기</button></td>
 					</tr>
 				</table>
 
 				<!-- 검색 폼 -->
 				<form method="get">
-					<table border="1" width="90%">
+					<table class="table table-striped table-bordered table-hover">
 						<tr>
-							<td align="center"><select name="searchField">
+							<td align="center"><select class="selectpicker" style="height:27px" name="searchField">
 									<option value="title">제목</option>
 									<option value="content">내용</option>
 							</select> <input type="text" name="searchWord" /> <input type="submit"

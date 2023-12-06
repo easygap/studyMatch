@@ -7,6 +7,7 @@ String cp = request.getContextPath();
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <!-- Jquery 사용 -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <meta charset="utf-8" />
@@ -55,7 +56,7 @@ String cp = request.getContextPath();
                     <!-- 사무 카테고리 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="aff">사무직 ▶</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=3001" id="aff1" style="display:none;">• 엑셀/한글/워드</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="#../board/list.do?interest=3002" id="aff2" style="display:none;">• 회계</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=3002" id="aff2" style="display:none;">• 회계</a>
                     
                     <!-- 금융 카테고리 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="fin">금융 ▶</a>
