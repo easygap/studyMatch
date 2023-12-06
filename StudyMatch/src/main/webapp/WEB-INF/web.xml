@@ -56,7 +56,7 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LoginAuth</servlet-name>
-		<url-pattern>/servlet/loginAuth.do</url-pattern>
+	<servlet-name>LoginAuth</servlet-name>
+	<url-pattern>/board/loginAuth.do</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -16,10 +16,12 @@ import utils.BoardPage;
 
 @WebServlet("/ListController")
 public class ListController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
+		
+		System.out.println(req.getParameter("interest"));
 
 		BoardDAO dao = new BoardDAO();
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -51,7 +53,7 @@ public class ListController extends HttpServlet {
 	    List<BoardDTO> boardLists = dao.selectList(map);
 	    dao.close();
 	    
-	    String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.jsp");
+	    String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 	    map.put("pagingImg", pagingImg);
 	    map.put("totalCount", totalCount);
 	    map.put("pageSize", pageSize);

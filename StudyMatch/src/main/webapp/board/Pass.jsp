@@ -12,6 +12,8 @@
 	rel="stylesheet"
 	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
 	crossorigin="anonymous">
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- css 가져오기 -->
 <link href="../css/styles.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
