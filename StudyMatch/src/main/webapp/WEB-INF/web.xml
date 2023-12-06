@@ -24,6 +24,14 @@
 		<param-name>OraclePwd</param-name>
 		<param-value>1234</param-value>
 	</context-param>
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
 
 	<!-- 세션 -->
 	<session-config>
@@ -56,7 +64,7 @@
 		</init-param>
 	</servlet>
 	<servlet-mapping>
-	<servlet-name>LoginAuth</servlet-name>
-	<url-pattern>/board/loginAuth.do</url-pattern>
+		<servlet-name>LoginAuth</servlet-name>
+		<url-pattern>/board/loginAuth.do</url-pattern>
 	</servlet-mapping>
 </web-app>
