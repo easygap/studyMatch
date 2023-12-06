@@ -38,9 +38,9 @@ public class RegistAuth2 extends HttpServlet {
 				
 				if (uri.indexOf("Regist.do") != -1) {
 					dto.setId(req.getParameter("id"));
-					dto.setPass(req.getParameter("pwd"));
+					dto.setPass(req.getParameter("pw"));
 					dto.setName(req.getParameter("name"));
-					dto.setNickname(req.getParameter("nickname"));
+					dto.setNick(req.getParameter("nickname"));
 					dto.setBirth(req.getParameter("birth"));
 					dto.setPhone(req.getParameter("phone"));
 					dto.setAddress(req.getParameter("address"));

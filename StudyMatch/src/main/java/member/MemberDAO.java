@@ -1,4 +1,5 @@
 package member;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -6,38 +7,37 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 import common.DBConnPool;
+
 public class MemberDAO extends DBConnPool{
-//	public MemberDAO(ServletContext application) {
-//		super(application);
-//	}
-
-	private Connection con;
-	DataSource dataSource;
-	PreparedStatement psmt;
-	ResultSet rs;
-
-	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-	LocalDateTime now = LocalDateTime.now();
-	
-	public MemberDAO() {
-		try {
-			Context context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
-			con = dataSource.getConnection();
-			System.out.println("DB 연동 성공");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("*** DB 연동 중 예외 발생 ***");
-			}
-	}
-
-	public MemberDAO (Connection con) {
-		this.con = con;
-	}
+//   public MemberDAO(ServletContext application) {
+//      super(application);
+//   }
+   
+   private DataSource dataSource;
+   private Connection con;
+   private PreparedStatement psmt;
+   private ResultSet rs;
+   
+   DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+   LocalDateTime now = LocalDateTime.now();
+   
+   public MemberDAO() {
+	      try {
+	         Context context = new InitialContext();
+	         dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+	         con = dataSource.getConnection();
+	         System.out.println("DB 연동 성공");
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         System.out.println("*** DB 연동 중 예외 발생 ***");
+	         }
+	   }
 
 	// 로그인
 	public MemberDTO getMemberDTO(String id, String pass) {
@@ -52,7 +52,7 @@ public class MemberDAO extends DBConnPool{
 
 			if (rs.next()) {
 				dto = new MemberDTO();
-				dto.setNickname(rs.getString("Nickname"));
+				dto.setNick(rs.getString("nick"));
 				System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공!");
 			}
 		} catch (Exception e) {
@@ -79,7 +79,7 @@ public class MemberDAO extends DBConnPool{
 				String name = rs.getString(2);
 				String birth = rs.getString(3);
 				String job = rs.getString(4);
-				String nickname = rs.getString(5);
+				String nick = rs.getString(5);
 				String phone = rs.getString(7);
 				String email = rs.getString(8);
 				String address = rs.getString(9);
@@ -117,7 +117,7 @@ public class MemberDAO extends DBConnPool{
 			psmt.setString(2, dto.getName());
 			psmt.setString(3, dto.getBirth());
 			psmt.setString(4, dto.getJob());
-			psmt.setString(5, dto.getNickname());
+			psmt.setString(5, dto.getNick());
 			psmt.setString(6, dto.getPass());
 			psmt.setString(7, dto.getPhone());
 			psmt.setString(8, dto.getEmail());
