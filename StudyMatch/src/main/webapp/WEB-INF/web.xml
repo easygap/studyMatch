@@ -54,6 +54,16 @@
 		<param-value>1024000</param-value>
 	</context-param>
 
+	<!-- 페이징 -->
+	<context-param>
+		<param-name>POSTS_PER_PAGE</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<context-param>
+		<param-name>PAGES_PER_BLOCK</param-name>
+		<param-value>5</param-value>
+	</context-param>
+
 	<!-- 로그인 -->
 	<servlet>
 		<servlet-name>LoginAuth</servlet-name>
