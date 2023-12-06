@@ -12,14 +12,15 @@
 <body>
 	<div class="loginbox">
 		<h2>로그인</h2>
-		<form th:action="LoginModal" th:method="POST">
+		<form th:action="../auth/Login.do" th:method="POST">
+
 			<!--작성하지 않아도 문제는 없음-->
 			<fieldset>
 				<legend>로그인 구역</legend>
-				<label for="loginid">아이디(E-mail)</label> <input type="text"
-					id="loginid" placeholder="아이디(E-mail)을 입력해 주세요"> <label
-					for="loginpw">비밀번호</label> <input type="password" id="loginpw"
-					placeholder="비밀번호를 입력해 주세요">
+				<label for="loginid">아이디(E-mail)</label> 
+				<input type="text" id="loginid" name="id" placeholder="아이디(E-mail)을 입력해 주세요"> 
+				<label for="loginpw">비밀번호</label> 
+				<input type="password" id="loginpw" name="pass" placeholder="비밀번호를 입력해 주세요">
 				<ul>
 					<li><a href="#">아이디/비밀번호찾기</a></li>
 					<li><a href="#">회원가입</a></li>
@@ -29,6 +30,5 @@
 			</fieldset>
 		</form>
 	</div>
-
 </body>
 </th:block>
