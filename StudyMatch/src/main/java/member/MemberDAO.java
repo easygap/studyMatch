@@ -16,9 +16,9 @@ public class MemberDAO extends DBConnPool{
 //	}
 
 	private Connection con;
-	DataSource dataSource;
-	PreparedStatement psmt;
-	ResultSet rs;
+	private DataSource dataSource;
+	private PreparedStatement psmt;
+	private ResultSet rs;
 
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
