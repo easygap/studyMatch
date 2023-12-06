@@ -15,29 +15,33 @@ import javax.sql.DataSource;
 import common.DBConnPool;
 
 public class MemberDAO extends DBConnPool{
-//   public MemberDAO(ServletContext application) {
-//      super(application);
-//   }
-   
-   private DataSource dataSource;
-   private Connection con;
-   private PreparedStatement psmt;
-   private ResultSet rs;
-   
-   DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-   LocalDateTime now = LocalDateTime.now();
-   
-   public MemberDAO() {
-	      try {
-	         Context context = new InitialContext();
-	         dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
-	         con = dataSource.getConnection();
-	         System.out.println("DB 연동 성공");
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	         System.out.println("*** DB 연동 중 예외 발생 ***");
-	         }
-	   }
+//	public MemberDAO(ServletContext application) {
+//		super(application);
+//	}
+
+	private Connection con;
+	private DataSource dataSource;
+	private PreparedStatement psmt;
+	private ResultSet rs;
+
+	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	LocalDateTime now = LocalDateTime.now();
+	
+	public MemberDAO() {
+		try {
+			Context context = new InitialContext();
+			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+			con = dataSource.getConnection();
+			System.out.println("DB 연동 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** DB 연동 중 예외 발생 ***");
+			}
+	}
+
+	public MemberDAO (Connection con) {
+		this.con = con;
+	}
 
 	// 로그인
 	public MemberDTO getMemberDTO(String id, String pass) {

@@ -19,6 +19,7 @@ public class ListController extends HttpServlet {
    private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		BoardDAO dao = new BoardDAO();
