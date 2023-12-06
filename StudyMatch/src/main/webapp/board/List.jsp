@@ -71,7 +71,7 @@ String cp = request.getContextPath();
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
 
 									</td>
-									<td>${ row.name }</td>
+									<td>${ row.id }</td>
 									<!-- 작성자 -->
 									<td>${ row.visit_count }</td>
 									<!-- 조회수 -->

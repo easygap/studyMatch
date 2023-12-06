@@ -54,7 +54,7 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);">
+	<form name="ResistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);" >
 	<div align="center">
 	<table>
 			<tr>
@@ -121,26 +121,26 @@ function validateForm(form){
 				<td>ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
 				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
 				<td colspan="5">
-					<input type="checkbox" class="interest" name="interest" value="JAVA " /> JAVA
-					<input type="checkbox" class="interest" name="interest" value="PYTHON"> PYTHON
-					<input type="checkbox" class="interest" name="interest" value="C"> C
-					<input type="checkbox" class="interest" name="interest" value="C++"> C++ <br/>
+					<input type="checkbox" class="interest" name="interests" value="JAVA " /> JAVA
+					<input type="checkbox" class="interest" name="interests" value="PYTHON"> PYTHON
+					<input type="checkbox" class="interest" name="interests" value="C"> C
+					<input type="checkbox" class="interest" name="interests" value="C++"> C++ <br/>
 					
-					<input type="checkbox" class="interest" name="interest" value="영어"> 영어
-					<input type="checkbox" class="interest" name="interest" value="일본어"> 일본어
-					<input type="checkbox" class="interest" name="interest" value="중국어"> 중국어 <br/>
+					<input type="checkbox" class="interest" name="interests" value="영어"> 영어
+					<input type="checkbox" class="interest" name="interests" value="일본어"> 일본어
+					<input type="checkbox" class="interest" name="interests" value="중국어"> 중국어 <br/>
 			
-					<input type="checkbox" class="interest" name="interest" value="UI/UX"> UI/UX
-					<input type="checkbox" class="interest" name="interest" value="JSP"> JSP
-					<input type="checkbox" class="interest" name="interest" value="디자이너"> 디자이너
-					<input type="checkbox" class="interest" name="interest" value="퍼블리셔"> 퍼블리셔
+					<input type="checkbox" class="interest" name="interests" value="UI/UX"> UI/UX
+					<input type="checkbox" class="interest" name="interests" value="JSP"> JSP
+					<input type="checkbox" class="interest" name="interests" value="디자이너"> 디자이너
+					<input type="checkbox" class="interest" name="interests" value="퍼블리셔"> 퍼블리셔
 					<br/>
 					
-					<input type="checkbox" class="interest" name="interest" value="엑셀/한글/워드"> 엑셀/한글/워드
-					<input type="checkbox" class="interest" name="interest" value="회계"> 회계 <br/>
+					<input type="checkbox" class="interest" name="interests" value="엑셀/한글/워드"> 엑셀/한글/워드
+					<input type="checkbox" class="interest" name="interests" value="회계"> 회계 <br/>
 				
-					<input type="checkbox" class="interest" name="interest" value="부동산"> 부동산
-					<input type="checkbox" class="interest" name="interest" value="투자/주식"> 투자/주식 <br/>
+					<input type="checkbox" class="interest" name="interests" value="부동산"> 부동산
+					<input type="checkbox" class="interest" name="interests" value="투자/주식"> 투자/주식 <br/>
 					<br/>
 				</td>
 			</tr>
