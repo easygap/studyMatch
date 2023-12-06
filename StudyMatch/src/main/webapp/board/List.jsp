@@ -6,11 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>파일 첨부형 게시판</title>
 <!-- BootStrap css 사용 -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -19,73 +14,6 @@
 	crossorigin="anonymous">
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-<!-- css 가져오기 -->
-<link href="../css/styles.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript">
-	function validateForm(form) {
-		if (form.pass.value == "") {
-			alert("비밀번호를 입력하세요.");
-			form.pass.focus();
-			return false;
-		}
-	}
-</script>
-</head>
-<body>
-	<!-- Jquery 사용 -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
-	<!-- BootStrap javascript 사용 -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-		crossorigin="anonymous"></script>
-	<!-- 코드 시작 -->
-	<div class="d-flex" id="wrapper">
-		<!-- 네비게이션 바 -->
-		<jsp:include page="../layout/Main.jsp"></jsp:include>
-
-		<!-- 페이지 컨텐츠 -->
-		<div id="page-content-wrapper">
-			<!-- 네비게이션 바 -->
-			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
-			<div class="container-fluid">
-				<br /> <br />
-				<h1 class="mt-4">비밀번호 검증</h1>
-				<form name="writeFrm" method="post" action="../mvcboard/pass.do"
-					onsubmit="return validateForm(this);">
-					<input type="hidden" name="idx" value="${ param.idx }" /> <input
-						type="hidden" name="mode" value="${ param.mode }" />
-					<table border="1" width="90%">
-						<tr>
-							<td>비밀번호</td>
-							<td><input type="password" name="pass" style="width: 100px;" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<button type="submit">검증하기</button>
-								<button type="reset">RESET</button>
-								<button type="button"
-									onclick="location.href='../mvcboard/list.do';">목록 바로가기
-								</button>
-							</td>
-						</tr>
-					</table>
-				</form>
-			</div>
-		</div>
-	</div>
-</body>
-<!-- 푸터 -->
-		<jsp:include page="../layout/Footer.jsp"></jsp:include>
-</html>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
 <!-- css 가져오기 -->
 <link href="../css/styles.css" rel="stylesheet" type="text/css" />
 <style></style>
@@ -136,6 +64,7 @@
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td align="left">
+                    
 										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
 
 									</td>
@@ -182,6 +111,6 @@
 		</div>
 	</div>
 </body>
-<!-- 푸터 -->
-<jsp:include page="../layout/Footer.jsp"></jsp:include>
+	<!-- 푸터 -->
+	<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>

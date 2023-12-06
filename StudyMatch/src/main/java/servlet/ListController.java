@@ -20,6 +20,8 @@ public class ListController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
+		
+		System.out.println(req.getParameter("interest"));
 
 		BoardDAO dao = new BoardDAO();
 		Map<String, Object> map = new HashMap<String, Object>();
