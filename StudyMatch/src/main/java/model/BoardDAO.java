@@ -1,4 +1,5 @@
 package model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,27 +25,29 @@ public class BoardDAO extends DBConnPool {
 	ResultSet rs;
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
+
 	public BoardDAO() {
 		try {
 
-	         Context context = new InitialContext();
-	         dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
-	         con = dataSource.getConnection();
-	         System.out.println("DB 연동 성공");
+			Context context = new InitialContext();
+			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+			con = dataSource.getConnection();
+			System.out.println("DB 연동 성공");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 연동 중 예외 발생 ***");
 		}
 	}
+
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
 		try {
 			con = dataSource.getConnection();
 			String query = "INSERT INTO board ( "
-					+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)" + " VALUES ( "
-					+ " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
+					+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
+					+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 			psmt = con.prepareStatement(query);
 			psmt.setString(3, dto.getTitle());
 			psmt.setString(4, dto.getContent());
@@ -56,6 +59,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return result;
 	}
+
 	// 수정하기
 	public int updateEdit(BoardDTO dto) {
 		int result = 0;
@@ -75,6 +79,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return result;
 	}
+
 	// 게시물 삭제
 	public int deletePost(BoardDTO dto) {
 		int result = 0;
@@ -91,7 +96,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return result;
 	}
-	
+
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
 		BoardDTO dto = new BoardDTO();
@@ -114,7 +119,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return dto;
 	}
-	
+
 	// 검색 조건에 맞는 게시글 수
 	public int selectCount(Map<String, Object> map) { // 게시글 검색
 		int totalCount = 0; // 게시물 수를 담을 변수
@@ -133,6 +138,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return totalCount; // 게시물 개수를 서블릿으로 반환
 	}
+
 	// 게시글 목록
 	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
@@ -141,7 +147,7 @@ public class BoardDAO extends DBConnPool {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		query += "WHERE inter_num=? ORDER BY board_num DESC ";
-		
+
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
@@ -168,14 +174,18 @@ public class BoardDAO extends DBConnPool {
 
 	public void close() {
 		try {
-		if (rs != null) rs.close();
-		if (psmt != null) psmt.close();
-		if (con != null) con.close();
-		if (stmt != null) stmt.close();
-		System.out.println("게시판 자원 해제 성공");
+			if (rs != null)
+				rs.close();
+			if (psmt != null)
+				psmt.close();
+			if (con != null)
+				con.close();
+			if (stmt != null)
+				stmt.close();
+			System.out.println("게시판 자원 해제 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시판 자원 해제 중 예외 발생 ***");
-		} 
+		}
 	}
 }
