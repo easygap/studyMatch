@@ -31,7 +31,7 @@ public class LoginAuth extends HttpServlet {
 
 		// DB에서 인증 요청한 계정 찾기
 		MemberDTO dto = dao.getMemberDTO(id, pass);
-		String memberNick = dto.getNickname();
+		String memberNick = dto.getNick();
 
 		if (id.isEmpty() || pass.isEmpty()) {
 			req.setAttribute("autoMessage", "아이디 혹은 비밀번호를 입력해 주세요.");
