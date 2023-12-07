@@ -50,11 +50,8 @@ public class ListController extends HttpServlet {
 		int end = pageNum * pageSize;
 		map.put("start", start);
 		map.put("end", end);
-		
-		System.out.println("검색 결과는 총" + totalCount + "개 입니다.");
 
 		String interest = req.getParameter("interest");
-		System.out.println("servlet에서 가져온 interest 값 :" + interest);
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
 		dao.close();
 

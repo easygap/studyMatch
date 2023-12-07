@@ -131,7 +131,6 @@ public class BoardDAO extends DBConnPool {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			rs.next();
-			System.out.println("검색창 Query: " + query);
 			totalCount = rs.getInt(1); // 첫 번째 컬럼 값
 		} catch (Exception e) {
 			e.printStackTrace();
