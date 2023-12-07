@@ -4,6 +4,9 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
+
+// 주소창에서 interest 값을 변수에 저장
+String interest = request.getParameter("interest");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,7 +62,7 @@ String cp = request.getContextPath();
 						<c:when test="${ empty boardLists }">
 							<!-- 게시물이 없을 때 -->
 							<tr>
-								<td colspan="6" align="center">게시물이 존재하지 않습니다.•͈⌔•͈⑅</td>
+								<td colspan="6" align="center">게시글이 존재하지 않습니다.•͈⌔•͈⑅</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -103,7 +106,7 @@ String cp = request.getContextPath();
 
 				<!-- 검색 폼 -->
 				<form method="get">
-					<table class="table table-striped table-bordered table-hover">
+					<table class="table table-hover">
 						<tr>
 							<td align="center"><select class="selectpicker" style="height:27px" name="searchField">
 									<option value="title">제목</option>
@@ -112,6 +115,7 @@ String cp = request.getContextPath();
 								value="검색하기" /></td>
 						</tr>
 					</table>
+					<input type="text" style="display:none;" name="interest" value="<%=interest%>" />
 				</form>
 			</div>
 		</div>

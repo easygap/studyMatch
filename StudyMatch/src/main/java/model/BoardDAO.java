@@ -131,6 +131,7 @@ public class BoardDAO extends DBConnPool {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			rs.next();
+			System.out.println("검색창 Query: " + query);
 			totalCount = rs.getInt(1); // 첫 번째 컬럼 값
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,6 +147,7 @@ public class BoardDAO extends DBConnPool {
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
+		System.out.println("쿼리문에서 interest의 값은 : " + interest);
 		query += "WHERE inter_num=? ORDER BY board_num DESC ";
 
 		try {
