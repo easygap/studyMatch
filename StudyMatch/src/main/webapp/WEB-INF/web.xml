@@ -47,4 +47,5 @@
 		<servlet-name>BoardList</servlet-name>
 		<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
+
 </web-app>

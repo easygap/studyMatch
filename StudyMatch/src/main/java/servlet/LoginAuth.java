@@ -2,9 +2,11 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,35 +19,24 @@ import member.MemberDTO;
 @WebServlet("/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	MemberDAO dao;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter out = resp.getWriter();
-		resp.getWriter().append("Served at: ").append(req.getContextPath());
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
-		
+
 		// 인증 요청한 계정 객체에 저장
 		String id = req.getParameter("id");
 		String pass = req.getParameter("pass");
-
-		// DB에서 인증 요청한 계정 찾기
+		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = dao.getMemberDTO(id, pass);
-		String memberNick = dto.getNick();
-
-		if (id.isEmpty() || pass.isEmpty()) {
-			req.setAttribute("autoMessage", "아이디 혹은 비밀번호를 입력해 주세요.");
-			return;
-		} else if (memberNick != null) {
-			req.setAttribute("autoMessage", memberNick + " 회원님 반갑습니다! (´▽`ʃ♡ƪ)");
-			System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공");
+		if (dto != null) {
+			req.setAttribute("user", dto);
+			System.out.println("로그인 성공 - 계정 정보 req 저장 완료");
+			resp.sendRedirect(req.getContextPath() + "/auth/Login.jsp");
+		} else {
+			System.out.println("로그인 실패 - 페이지 이동 안 함");
+			resp.sendRedirect("Login.jsp");
 		}
-		
-		String script = "<script>alert('" + req.getAttribute("autoMessage") + "');</script>";
-		req.setAttribute("alertScript", script);
-		req.getRequestDispatcher("/auth/Login.jsp").forward(req, resp);
-	}
-
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		dao.close();
 	}
 }
