@@ -2,11 +2,9 @@ package servlet;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,80 +15,100 @@ import com.oreilly.servlet.MultipartRequest;
 
 import member.MemberDAO;
 import member.MemberDTO;
-import utils.FileUtil;
 import utils.JSFunction;
 
 @WebServlet("/auth/Regist.do")
 public class RegistAuth2 extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		doGet(req, resp);
-		System.out.println("doPost()");
-		String[] interest = req.getParameterValues("interests");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        doGet(req, resp);
+    	req.setCharacterEncoding("UTF-8");
+    	// 파일 업로드 처리       
+        String saveDirectory = req.getServletContext().getRealPath("/Uploads");
+        // 파일 용량
+        int maxPostSize = 1024 * 1000; // 1MB
+        String encoding = "UTF-8";
+        MultipartRequest mr = new MultipartRequest(req, saveDirectory, maxPostSize, encoding);
+        
+        System.out.println("doPost()");
 
-		System.out.println("[ " + req.getParameter("id") + " ]");
+        System.out.println("[ " + mr.getParameter("id") + " ]");
 
-		for (String s : interest) {
-			System.out.println("[ " + s + " ]");
-		}
+        String[] interest = mr.getParameterValues("interests");
+        if (interest != null) {
+            for (String s : interest) {
+                System.out.println("[ " + s + " ]");
+            }
+        } else {
+            System.out.println("[ No interests selected ]");
+        }
 
-		MemberDAO dao = new MemberDAO();
+        MemberDAO dao = new MemberDAO();
 
-		String uri = req.getRequestURI();
+        String uri = req.getRequestURI();
 
-		String saveDirectory = req.getServletContext().getRealPath("/Uploads");
-		System.out.println("{ " + saveDirectory + " }");
+        
+        
+        try {	
+            MemberDTO dto = new MemberDTO();
+            
+            if (uri.indexOf("Regist.do") != -1) {
+                dto.setId(mr.getParameter("id"));
+                dto.setPass(mr.getParameter("pw"));
+                dto.setName(mr.getParameter("name"));
+                dto.setNick(mr.getParameter("nickName"));
+                dto.setBirth(mr.getParameter("birth"));
+                dto.setPhone(mr.getParameter("phone"));
+                dto.setAddress(mr.getParameter("address"));
+                dto.setEmail(mr.getParameter("Email"));
+                dto.setJob(mr.getParameter("job"));
+                if (interest != null) {
+                	if(interest.length == 1) {
+                    dto.setInterest1(interest[0]);
+                	}else if(interest.length == 2) {
+                		dto.setInterest1(interest[0]);
+                		dto.setInterest2(interest[1]);	
+                	}else if(interest.length == 3) {
+                		dto.setInterest1(interest[0]);
+                		dto.setInterest2(interest[1]);
+                		dto.setInterest2(interest[2]);
+                	}
+                } 
 
-		ServletContext application = getServletContext();
-		int maxPostSize = Integer.parseInt(application.getInitParameter("maxPostSize"));
+                String fileName = mr.getFilesystemName("img");
+                if (fileName != null) {
+                    String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
+                    String ext = fileName.substring(fileName.lastIndexOf("."));
+                    String newFileName = now + ext;
 
-		MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, maxPostSize);
-		if (mr == null || mr.getFilesystemName("img") == null) {
-			JSFunction.alertLocation(resp, "첨부 파일이 제한 용량을 초과합니다.", "../auth/Regist.do");
-		}
+                    File oldFile = new File(saveDirectory + File.separator + fileName);
+                    File newFile = new File(saveDirectory + File.separator + newFileName);
+                    oldFile.renameTo(newFile);
 
-		try {
-			MemberDTO dto = new MemberDTO();
+                    dto.setImage(newFileName);
+                    System.out.println("newFileName : " + newFileName);
+                }
+                boolean result = dao.signUp(dto);
 
-			if (uri.indexOf("Regist.do") != -1) {
-				dto.setId(req.getParameter("id"));
-				dto.setPass(req.getParameter("pw"));
-				dto.setName(req.getParameter("name"));
-				dto.setNick(req.getParameter("nickname"));
-				dto.setBirth(req.getParameter("birth"));
-				dto.setPhone(req.getParameter("phone"));
-				dto.setAddress(req.getParameter("address"));
-				dto.setEmail(req.getParameter("Email"));
-				dto.setJob(req.getParameter("job"));
-				dto.setInterest1(interest[0]);
-				dto.setInterest2(interest[1]);
-				dto.setInterest3(interest[2]);
-
-				String fileName = mr.getFilesystemName("img");
-				if (fileName != null) {
-					String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
-					String ext = fileName.substring(fileName.lastIndexOf("."));
-					String newFileName = now + ext;
-
-					File oldFile = new File(saveDirectory + File.separator + fileName);
-					File newFile = new File(saveDirectory + File.separator + newFileName);
-					oldFile.renameTo(newFile);
-
-					dto.setImage(mr.getParameter("newFileName"));
-					System.out.println("newFileName : " + newFileName);
+				if (result == true) {
+					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.");
+					resp.sendRedirect("../auth/LoginAuth.do");
+				} else {
+					JSFunction.alertRegist(resp, "회원가입에 실패하였습니다.");
+					resp.sendRedirect("../auth/Regist.do");
 				}
-			}
+				dao.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("doGet()");
-
-		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
-	}
-
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("doGet()");
+        req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
+    }
 }
+
+

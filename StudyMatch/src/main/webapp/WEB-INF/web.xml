@@ -48,9 +48,4 @@
 		<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
 
-	<!-- image 용량 -->
-	<context-param>
-		<param-name>maxPostSize</param-name>
-		<param-value>1024000</param-value>
-	</context-param>
 </web-app>

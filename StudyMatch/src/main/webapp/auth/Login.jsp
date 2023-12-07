@@ -4,7 +4,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <meta charset="UTF-8">
-
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- css 가져오기 -->
 <link href="FormLogin.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">

@@ -31,7 +31,7 @@ public class JSFunction {
 		}catch(Exception e) {}
 	}
 	
-	public static void alertRegistSuccess(HttpServletResponse resp, String msg) {
+	public static void alertRegist(HttpServletResponse resp, String msg) {
 		try {
 			resp.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = resp.getWriter();

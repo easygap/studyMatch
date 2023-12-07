@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+encoding//src/main/java/servlet/ListController.java=utf-8
+=======
 encoding//src/main/java/servlet/ListController.java=UTF-8
+encoding//src/main/webapp/auth/Regist.jsp=UTF-8
 encoding//src/main/webapp/board/List.jsp=UTF-8
 encoding//src/main/webapp/layout/Main.jsp=UTF-8
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 encoding/<project>=UTF-8
