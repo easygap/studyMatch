@@ -125,13 +125,11 @@
 					</div>
 					
 					<div class="mybtn">
-						<input type="submit" class="btn btn-primary pull-right"
-							value="글쓰기"> 
-						<input type="reset"
-							class="btn btn-primary pull-right" value="RESET"> 
 						<input
 							type="button" onclick="location.href='./List.jsp';"
-							class="btn btn-primary pull-right" value="목록 바로가기">
+							class="btn btn-secondary pull-right" value="목록 바로가기">
+						<input type="submit" class="btn btn-primary pull-right"
+							value="글쓰기"> 
 					</div>
 				</form>
 			</div>
