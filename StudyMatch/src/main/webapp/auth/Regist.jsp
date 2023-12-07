@@ -49,7 +49,7 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);" enctype="multipart/form-data"  >
+	<form name="ResistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 	<div align="center">
 	<table>
 			<tr>
