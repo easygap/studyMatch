@@ -143,12 +143,11 @@ public class BoardDAO extends DBConnPool {
 	// 게시글 목록
 	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
-		String query = "SELECT * FROM board ";
+		String query = "SELECT * FROM board WHERE inter_num=? ";
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		System.out.println("쿼리문에서 interest의 값은 : " + interest);
-		query += "WHERE inter_num=? ORDER BY board_num DESC ";
+		query += "ORDER BY board_num DESC";
 
 		try {
 			psmt = con.prepareStatement(query);
