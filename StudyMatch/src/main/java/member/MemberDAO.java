@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 import common.DBConnPool;
 
-public class MemberDAO extends DBConnPool{
+public class MemberDAO extends DBConnPool {
 //	public MemberDAO(ServletContext application) {
 //		super(application);
 //	}
@@ -26,55 +26,87 @@ public class MemberDAO extends DBConnPool{
 
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
-	
+
 	public MemberDAO() {
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
-			con = dataSource.getConnection();
 			System.out.println("DB 연동 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 연동 중 예외 발생 ***");
-			}
+		}
 	}
 
-	public MemberDAO (Connection con) {
-		this.con = con;
-	}
-
-	// 로그인
 	public MemberDTO getMemberDTO(String id, String pass) {
 		MemberDTO dto = null;
 		try {
 			con = dataSource.getConnection();
-			String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
+			String query = "SELECT * FROM member WHERE id=? AND pwd=?";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			psmt.setString(2, pass);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				dto = new MemberDTO();
+				// 회원 정보를 DTO에 설정
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setJob(rs.getString("job"));
+				dto.setNick(rs.getString("nick"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddress(rs.getString("address"));
+				dto.setInterest1(rs.getString("interest1"));
+				dto.setInterest2(rs.getString("interest2"));
+				dto.setInterest3(rs.getString("interest3"));
+				dto.setImage(rs.getString("image"));
+
+				System.out.println(date.format(now) + " [ " + id + " ] 정보 조회 성공!");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("*** MemberDAO.getMemberDTO 회원 정보 조회 중 예외 발생 ***");
+		}
+		return dto;
+	}
+
+	// 로그인
+	public boolean login(String id, String pass) {
+		boolean result = false;
+		String query = "SELECT name FROM member WHERE id=? AND pwd=?";
+
+		try {
+			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, pass);
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto = new MemberDTO();
-				dto.setNick(rs.getString("nick"));
+				MemberDTO dto = new MemberDTO();
+				dto.setName(rs.getString("name"));
+				result = true;
 				System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공!");
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("*** 로그인 처리 중 예외 발생 ***");
+			System.out.println("*** 로그인 쿼리 실행 중 예외 발생 ***");
 		}
-		return dto;
+		return result;
 	}
 
 	// 회원정보 조회
-	public ArrayList<MemberDTO> Inquiry (String uid, String upass) {
+	public ArrayList<MemberDTO> Inquiry(String uid, String upass) {
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 		try {
 			con = dataSource.getConnection();
 			String query = "SELECT * FROM member WHERE id=? AND pwd=?";
 			psmt = con.prepareStatement(query);
 			rs = psmt.executeQuery();
-			
+
 			psmt.setString(1, uid);
 			psmt.setString(6, upass);
 			while (rs.next()) { // DTO 객체에 회원 정보 저장
@@ -91,7 +123,7 @@ public class MemberDAO extends DBConnPool{
 				String interest2 = rs.getString(11);
 				String interest3 = rs.getString(12);
 				String image = rs.getString(14);
-				
+
 				MemberDTO dto = new MemberDTO();
 				list.add(dto);
 				System.out.println(date.format(now) + " [ " + uid + " ] 정보 조회 성공!");
@@ -103,7 +135,7 @@ public class MemberDAO extends DBConnPool{
 			e.printStackTrace();
 			System.out.println("*** [ " + uid + " ] 회원정보 조회 중 예외 발생! ***");
 		}
-		
+
 		return list;
 	}
 
@@ -131,7 +163,7 @@ public class MemberDAO extends DBConnPool{
 			psmt.setString(12, dto.getInterest3());
 			psmt.setString(13, dto.getImage());
 			signUpCount = psmt.executeUpdate();
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 회원가입 중 예외 발생! ***");
@@ -146,35 +178,16 @@ public class MemberDAO extends DBConnPool{
 		}
 		return result;
 	}
-	
-	// 로그인
-	public boolean login (String id, String pass) {
-		boolean result = false;
-		String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
 
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, id);
-			psmt.setString(2, pass);
-			rs = psmt.executeQuery();
-			
-			if (rs.next()) {
-				result = true;
-				System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공!");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("*** 로그인 쿼리 실행 중 예외 발생 ***");
-		}
-		return result;
-	}
-	
 	// 자원 반납
 	public void close() {
 		try {
-			if (con != null) con.close();
-			if (psmt != null) psmt.close();
-			if (rs != null) rs.close();
+			if (con != null)
+				con.close();
+			if (psmt != null)
+				psmt.close();
+			if (rs != null)
+				rs.close();
 			System.out.println("DB 커넥션 풀 자원 반납");
 		} catch (Exception e) {
 			e.printStackTrace();
