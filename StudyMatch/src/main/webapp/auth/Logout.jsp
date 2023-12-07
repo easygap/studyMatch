@@ -1,18 +1,9 @@
+<%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	pageEncoding="UTF-8"%>
 <%
-    // 1: 기존의 세션 데이터를 모두 삭제
-    session.invalidate();
-    // 2: 로그인 페이지로 이동시킴.
-    response.sendRedirect("../board/MainPage.jsp");
+String id = (String) session.getAttribute("id");
+session.invalidate();
+response.sendRedirect("../board/MainPage.jsp");
+System.out.println(" [ "+ id + " ] 로그아웃 - session 무효화 완료");
 %>
-</head>
-<body>
-
-</body>
-</html>
