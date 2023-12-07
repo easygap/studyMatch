@@ -12,54 +12,50 @@ String cp = request.getContextPath();
 <title>Regist Page</title>
 <script>
 function validateForm(form){
-	if(form.id.value == ""){
+	if(RegistFrm.id.value == ""){
 		alert("아이디를 입력하세요.");
+		RegistFrm.id.focus();
+	} else if(RegistFrm.duplication.value != "idCheck"){
+		alert("아이디 중복확인을 해주세요.")
 		return false;
-	}
-	if(form.pw.value == ""){
+	} else if(RegistFrm.pw.value == ""){
 		alert("비밀번호를 입력하세요.");
-		return false;
-	}
-	if(form.pwdu.value == ""){
+		RegistFrm.pw.focus();
+	} else if(RegistFrm.pwdu.value == ""){
 		alert("비밀번호와 맞는지 확인해 주세요.");
-		return false;
-	}
-	if(form.name.value == ""){
+		RegistFrm.pwdu.focus();
+	} else if(RegistFrm.name.value == ""){
 		alert("이름을 입력하세요.");
-		return false;
-	}
-	if(form.birth.value == ""){
+		RegistFrm.name.focus();
+	} else if(RegistFrm.birth.value == ""){
 		alert("생일을 입력하세요.");
-		return false;
-	}
-	if(form.phone.value == ""){
+		RegistFrm.birth.focus();
+	} else if(RegistFrm.phone.value == ""){
 		alert("휴대폰 번호를 입력하세요.");
-		return false;
-		}
-	if(form.address.value == ""){
+		RegistFrm.phone.focus();
+	} else if(RegistFrm.address.value == ""){
 		alert("주소를 입력하세요.");
-		return false;
-	}
-	if(form.Email.value == ""){
+		RegistFrm.address.focus();
+	} else if(RegistFrm.Email.value == ""){
 		alert("이메일을 입력하세요.");
-		return false;
-	}
-	if(form.job.value == ""){
+		RegistFrm.Email.focus();
+	} else if(RegistFrm.job.value == ""){
 		alert("직업을 입력하세요.");
-		return false;
+		RegistFrm.job.focus();
 	}
-	}
+}
 </script>
 </head>
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);" >
+	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);" enctype="multipart/form-data"  >
 	<div align="center">
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
 				<td><input type="text" name="id"></td>
+				<td><input type="button" name="duplication" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
@@ -145,16 +141,16 @@ function validateForm(form){
 				</td>
 			</tr>
 
-				<tr>
-					<td>ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
-					<td><input type="file" name="img"></td>
-					<td></td>
-				</tr>
-			</table>
-		<br/>
-		<button type="submit">가입하기</button> 
-		<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>
-		</div>
-	</form>
+			<tr>
+				<td>ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
+				<td><input type="file" name="img"></td>
+				<td></td>
+			</tr>
+		</table>
+	<br/>
+	<button type="submit">가입하기</button> 
+	<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>
+	</div>
+</form>
 </body>
 </html>

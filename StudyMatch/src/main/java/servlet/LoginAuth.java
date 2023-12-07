@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet("/LoginAuth")
+@WebServlet("/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	MemberDAO dao;
