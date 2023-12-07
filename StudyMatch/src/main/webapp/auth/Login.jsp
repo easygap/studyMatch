@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
 
 <meta charset="UTF-8">
 <!-- Favicon-->
@@ -9,12 +9,10 @@
 <!-- css 가져오기 -->
 <link href="FormLogin.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-
-<th:block th:fragment="setLogin(login)">
 	<body>
 		<div class="loginbox">
 			<h2>로그인</h2>
-			<form th:action="@{/auth/LoginAuth.do}" th:method="POST">
+			<form name="LoginFrm" action="../auth/LoginAuth.do" method="post">
 
 				<!--작성하지 않아도 문제는 없음-->
 				<fieldset>
@@ -33,4 +31,4 @@
 			</form>
 		</div>
 	</body>
-</th:block>
+</html>

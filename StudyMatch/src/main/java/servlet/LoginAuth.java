@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -16,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet(urlPatterns = "/auth/LoginAuth.do")
+@WebServlet("/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,8 +35,8 @@ public class LoginAuth extends HttpServlet {
 		MemberDTO dto = dao.getMemberDTO(id, pass);
 		if (dto != null) {
 			req.setAttribute("user", dto);
-			System.out.println("로그인 성공 - 계정 정보 req 저장 완료");
-			resp.sendRedirect(req.getContextPath() + "/auth/Login.jsp");
+			System.out.println("로그인 성공 - 계정 정보 request 저장 완료");
+			resp.sendRedirect(req.getContextPath() + "/auth/MainPage.jsp");
 		} else {
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
 			resp.sendRedirect("Login.jsp");
