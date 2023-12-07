@@ -48,20 +48,4 @@
 		<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
 
-	<!-- image 용량 -->
-	<context-param>
-		<param-name>maxPostSize</param-name>
-		<param-value>1024000</param-value>
-	</context-param>
-
-	<!-- 로그인 -->
-	<servlet>
-		<servlet-name>LoginAuth</servlet-name>
-		<servlet-class>servlet.LoginAuth</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoginAuth</servlet-name>
-		<url-pattern>/auth/LoginAuth.do</url-pattern>
-	</servlet-mapping>
-
 </web-app>

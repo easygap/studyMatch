@@ -15,6 +15,45 @@
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- css 가져오기 -->
 <link href="../css/styles.css" rel="stylesheet" />
+<style>
+/* 업로드 스타일 */
+.filebox label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #f8f9fa;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #0d6efd;
+	cursor: pointer;
+	border: 1px solid #E5E5E5;
+	border-radius: .40em;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.mybtn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 10px;
+    }
+    .mybtn > input {
+        margin-right: 10px;
+    }
+
+</style>
 <!-- 자바 스크립트 -->
 <script type="text/javascript">
 	function validateForm(form) { // 필수 항목 입력 확인}
@@ -52,7 +91,6 @@
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 		crossorigin="anonymous"></script>
 
-
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -60,51 +98,44 @@
 
 		<!-- 페이지 컨텐츠 -->
 		<div id="page-content-wrapper">
-		<!-- 네비게이션 바 -->
-		<jsp:include page="../layout/Navbar.jsp"></jsp:include>
-		<div class="container-fluid"><br/><br/>
-				<h1 class="mt-4">글쓰기</h1>
+			<!-- 네비게이션 바 -->
+			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
+			<div class="container-fluid">
+				<br />
+				<br />
+				<br />
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
 					action="../mvcboard/write.do" onsubmit="return validateForm(this);">
-					<table border="1" width="90%">
-						<tr>
-							<td>작성자</td>
-							<td><input type="text" name="name" style="width: 150px;" />
-							</td>
-						</tr>
-						<tr>
-							<td>제목</td>
-							<td><input type="text" name="title" style="width: 90%;" /></td>
-						</tr>
-						<tr>
-							<td>내용</td>
-							<td><textarea name="content"
-									style="width: 90%; height: 100px;"></textarea></td>
-						</tr>
-						<tr>
-							<td>첨부 파일</td>
-							<td><input type="file" name="ofile" /></td>
-						</tr>
-						<tr>
-							<td>비밀번호</td>
-							<td><input type="password" name="pass" style="width: 100px;" />
-							</td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<button type="submit">작성 완료</button>
-								<button type="reset">RESET</button>
-								<button type="button"
-									onclick="location.href='./List.jsp';">목록 바로가기
-								</button>
-							</td>
-						</tr>
-					</table>
+
+					<div class="filebox">
+						<label for="ofile">업로드</label> <input type="file" name="ofile"
+							id="ofile">
+					</div>
+
+					<div class="mb-3">
+						<label for="title">제목</label> <input type="text"
+							class="form-control" name="title" id="title"
+							placeholder="제목을 입력해 주세요">
+					</div>
+
+					<div class="mb-3">
+						<label for="content">내용</label>
+						<textarea class="form-control" rows="11" name="content"
+							id="content" placeholder="내용을 입력해 주세요"></textarea>
+					</div>
+					
+					<div class="mybtn">
+						<input
+							type="button" onclick="location.href='./List.jsp';"
+							class="btn btn-secondary pull-right" value="목록 바로가기">
+						<input type="submit" class="btn btn-primary pull-right"
+							value="글쓰기"> 
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
 <!-- 푸터 -->
-		<jsp:include page="../layout/Footer.jsp"></jsp:include>
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
