@@ -28,7 +28,6 @@ public class BoardDAO extends DBConnPool {
 
 	public BoardDAO() {
 		try {
-
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
 			con = dataSource.getConnection();
