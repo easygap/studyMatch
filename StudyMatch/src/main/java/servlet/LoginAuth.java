@@ -20,7 +20,6 @@ public class LoginAuth extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		
 		RequestDispatcher dis = req.getRequestDispatcher("Login.jsp");
 		dis.forward(req, resp);
 	}
@@ -35,8 +34,8 @@ public class LoginAuth extends HttpServlet {
 		MemberDTO dto = dao.getMemberDTO(id, pass);
 		if (dto != null) {
 			req.setAttribute("user", dto);
-			System.out.println("로그인 성공 - 계정 정보 request 저장 완료");
-			resp.sendRedirect(req.getContextPath() + "/auth/MainPage.jsp");
+			System.out.println(date.format(now) + " 로그인 성공 - 계정 정보 request 저장 완료");
+			resp.sendRedirect(req.getContextPath() + "/board/MainPage.jsp");
 		} else {
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
 			resp.sendRedirect("Login.jsp");
