@@ -16,10 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet("/auth/LoginAuth.do")
+@WebServlet(urlPatterns = "/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		RequestDispatcher dis = req.getRequestDispatcher("Login.jsp");
+		dis.forward(req, resp);
+	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		LocalDateTime now = LocalDateTime.now();
