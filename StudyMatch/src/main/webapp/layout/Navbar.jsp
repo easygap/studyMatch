@@ -63,8 +63,8 @@
 								
 								<!-- session에 따른 조건문 -->
 								<% 	
-									session.setAttribute("id", "pass");
-									if(session.getAttribute("id") == null) {
+									System.out.println("세션 정보 : " + session.getAttribute("user"));
+									if(session.getAttribute("user") == null) {
 								%>
 								<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a><a
 									class="dropdown-item" href="#!">아이디 찾기</a> <a
