@@ -34,7 +34,7 @@ String cp = request.getContextPath();
 
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">MatchMate</div>
+                <div class="sidebar-heading border-bottom bg-light"><a href="../board/MainPage.jsp" style="text-decoration-line: none; color: #333;">MatchMate</a></div>
                 <div class="list-group list-group-flush">
                 	<!-- 어학 카테고리 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="lan">어학 ▶</a>
