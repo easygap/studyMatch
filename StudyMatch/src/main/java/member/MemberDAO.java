@@ -178,6 +178,24 @@ public class MemberDAO extends DBConnPool {
 		}
 		return result;
 	}
+	
+	// ID 중복체크
+	public int idCheck(String id) {
+		String query = "SELECT id FROM member WHERE id = ?";
+		int value = 0;
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) value = 1;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return value;
+	}
 
 	// 자원 반납
 	public void close() {

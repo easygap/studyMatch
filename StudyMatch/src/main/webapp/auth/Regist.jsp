@@ -54,8 +54,7 @@ function validateForm(form){
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"></td>
-				<td><input type="button" name="duplication" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="duplication" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
