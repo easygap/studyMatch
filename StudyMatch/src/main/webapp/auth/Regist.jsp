@@ -49,13 +49,12 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" action="../auth/Regist.do" onsubmit="return validateForm(this);" enctype="multipart/form-data"  >
+	<form name="ResistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 	<div align="center">
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"></td>
-				<td><input type="button" name="duplication" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="duplication" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
