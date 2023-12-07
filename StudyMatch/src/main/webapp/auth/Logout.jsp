@@ -4,6 +4,6 @@
 <%
 String id = (String) session.getAttribute("id");
 session.invalidate();
-response.sendRedirect("MainPage.jsp");
+response.sendRedirect("../board/MainPage.jsp");
 System.out.println(" [ "+ id + " ] 로그아웃 - session 무효화 완료");
 %>
