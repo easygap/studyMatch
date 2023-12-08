@@ -3,13 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%
 
-//특정 세션 값 삭제
-session.removeAttribute("user");
-
-//모든 세션 값 삭제
 session.invalidate();
-
-
 response.sendRedirect("../board/MainPage.jsp");
-
+System.out.println(" [ "+ session.getId() + " ] 로그아웃 - session 무효화 완료");
 %>
