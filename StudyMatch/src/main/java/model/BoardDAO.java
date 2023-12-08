@@ -43,15 +43,23 @@ public class BoardDAO extends DBConnPool {
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
 		String query = "INSERT INTO board ( "
-				+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
-				+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
+				+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)" + " VALUES ( "
+				+ " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getInter_num());
+			psmt.setString(2, dto.getBoard_num());
 			psmt.setString(3, dto.getTitle());
 			psmt.setString(4, dto.getContent());
-			psmt.setString(6, dto.getId());
+			psmt.setString(4, dto.getImg());
+			psmt.setString(5, dto.getId());
+			psmt.setDate(6, dto.getPost_date());
+			psmt.setString(7, dto.getVisit_count());
+			psmt.setString(8, dto.getLike_count());
+
 			result = psmt.executeUpdate();
+			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시글 작성 중 예외 발생! ***");
@@ -64,12 +72,13 @@ public class BoardDAO extends DBConnPool {
 		int result = 0;
 		try {
 			con = dataSource.getConnection();
-			String query = "UPDATE board SET " + " title=?, content=? " + " WHERE board_num=?";
+			String query = "UPDATE board SET " + " title=?, content=? img=? " + " WHERE board_num=?";
 
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getBoard_num());
+			psmt.setString(3, dto.getImg());
+			psmt.setString(4, dto.getBoard_num());
 			result = psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + "번 게시글 수정 성공");
 		} catch (Exception e) {
@@ -82,13 +91,14 @@ public class BoardDAO extends DBConnPool {
 	// 게시물 삭제
 	public int deletePost(BoardDTO dto) {
 		int result = 0;
+		String query = "DELETE FROM board WHERE board_num=?";
 
 		try {
 			con = dataSource.getConnection();
-			String query = "DELETE FROM board WHERE board_num=?";
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getBoard_num());
 			result = psmt.executeUpdate();
+			System.out.println(dto.getBoard_num() + "번 게시글 삭제 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
@@ -102,15 +112,15 @@ public class BoardDAO extends DBConnPool {
 		String query = "SELECT B.*, M.id " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
 				+ " WHERE board_num=?";
 		try {
+			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
-			con = dataSource.getConnection();
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
 				dto.setBoard_num(rs.getString("num"));
 				dto.setId(rs.getString(1));
-				System.out.println("게시물 로드 성공~!");
+				System.out.println(dto.getBoard_num() + "번 게시물 로드 성공~!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -131,9 +141,10 @@ public class BoardDAO extends DBConnPool {
 			rs = stmt.executeQuery(query);
 			rs.next();
 			totalCount = rs.getInt(1); // 첫 번째 컬럼 값
+			System.out.println("게시판 게시글 수 로드 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 게시물 검색 카운트 중 예외 발생! ***");
+			System.out.println("*** 게시물 카운트 중 예외 발생! ***");
 		}
 		return totalCount; // 게시물 개수를 서블릿으로 반환
 	}
@@ -142,12 +153,13 @@ public class BoardDAO extends DBConnPool {
 	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
 		String query = "SELECT * FROM board WHERE inter_num=? ";
+		query += "ORDER BY board_num DESC";
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		query += "ORDER BY board_num DESC";
 
 		try {
+			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
 			rs = psmt.executeQuery(); // 쿼리문 실행
@@ -163,10 +175,11 @@ public class BoardDAO extends DBConnPool {
 //				dto.setCommen_count(rs.getString("commcount")); // 게시물 댓글수
 				dto.setPost_date(rs.getDate("post_date")); // 게시물 작성일
 				bbs.add(dto);
+				System.out.println("게시글 목록 로드 성공");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 게시물 검색 목록 불러오기 중 예외 발생! ***");
+			System.out.println("*** 게시물 목록 불러오기 중 예외 발생! ***");
 		}
 		return bbs;
 	}
