@@ -109,7 +109,7 @@ public class BoardDAO extends DBConnPool {
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
 		BoardDTO dto = new BoardDTO();
-		String query = "SELECT B.*, M.id " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
+		String query = "SELECT B.*, M.nickname " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
 				+ " WHERE board_num=?";
 		try {
 			con = dataSource.getConnection();
@@ -118,8 +118,16 @@ public class BoardDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setBoard_num(rs.getString("num"));
-				dto.setId(rs.getString(1));
+				dto.setGroud_num(rs.getString("GROUD_NUM"));
+				dto.setInter_num(rs.getString("INTER_NUM"));
+				dto.setBoard_num(rs.getString("BOARD_NUM"));
+				dto.setTitle(rs.getString("TITLE"));
+				dto.setContent(rs.getString("CONTENT"));
+				dto.setImg(rs.getString("IMG"));
+				dto.setId(rs.getString("nickname"));
+				dto.setPost_date(rs.getDate("POST_DATE"));
+				dto.setVisit_count(rs.getString("VISIT_COUNT"));
+				dto.setLike_count(rs.getString("LIKE_COUNT"));
 				System.out.println(dto.getBoard_num() + "번 게시물 로드 성공~!");
 			}
 		} catch (Exception e) {
@@ -127,6 +135,20 @@ public class BoardDAO extends DBConnPool {
 			System.out.println("*** 게시물 로드 중 예외 발생! ***");
 		}
 		return dto;
+	}
+	
+	// 게시물 조회수 +1
+	public void updateVisitCount(String num) {
+		String query = "UPDATE board SET visit_count = visit_count + 1 where board_num=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.executeQuery();
+		}
+		catch (Exception e) {
+			System.out.println("게시물 조회수 증가 중 예외 발생");
+			e.printStackTrace();
+		}
 	}
 
 	// 검색 조건에 맞는 게시글 수
@@ -152,11 +174,12 @@ public class BoardDAO extends DBConnPool {
 	// 게시글 목록
 	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
-		String query = "SELECT * FROM board WHERE inter_num=? ";
+		String query = "SELECT B.*, M.nickname FROM member M INNER JOIN board B ON M.id = B.id WHERE inter_num=? ";
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		query += "ORDER BY board_num DESC";
+
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
@@ -168,7 +191,7 @@ public class BoardDAO extends DBConnPool {
 				dto.setBoard_num(rs.getString("board_num")); // 게시물 번호
 				dto.setTitle(rs.getString("title")); // 게시물 제목
 				dto.setContent(rs.getString("content")); // 게시물 내용
-				dto.setId(rs.getString("Id")); // 게시물 작성자
+				dto.setId(rs.getString("nickname")); // 게시물 작성자
 				dto.setVisit_count(rs.getString("visit_count")); // 게시물 조회수
 				dto.setLike_count(rs.getString("like_count")); // 게시물 추천수
 //				dto.setCommen_count(rs.getString("commcount")); // 게시물 댓글수

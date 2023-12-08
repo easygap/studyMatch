@@ -73,7 +73,7 @@ String interest = request.getParameter("interest");
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td>
-										<!-- 제목(링크) --> <a href="./View.jsp?num=${ row.board_num }">${ row.title }</a>
+										<!-- 제목(링크) --> <a href="../board/view.do?num=${ row.board_num }&interest=<%=interest%>">${ row.title }</a>
 
 									</td>
 									<td>${ row.id }</td>
