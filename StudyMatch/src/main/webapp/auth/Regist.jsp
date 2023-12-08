@@ -12,36 +12,45 @@ String cp = request.getContextPath();
 <title>Regist Page</title>
 <script>
 function validateForm(form){
-	if(RegistFrm.id.value == ""){
+	if(form.id.value == ""){
 		alert("아이디를 입력하세요.");
 		RegistFrm.id.focus();
-	} else if(RegistFrm.duplication.value != "idCheck"){
+	} else if(form.idCheck.value != "idCheck"){
 		alert("아이디 중복확인을 해주세요.")
 		return false;
-	} else if(RegistFrm.pw.value == ""){
+	} else if(form.pw.value == ""){
 		alert("비밀번호를 입력하세요.");
 		RegistFrm.pw.focus();
-	} else if(RegistFrm.pwdu.value == ""){
+	} else if(form.pwdu.value == ""){
 		alert("비밀번호와 맞는지 확인해 주세요.");
 		RegistFrm.pwdu.focus();
-	} else if(RegistFrm.name.value == ""){
+	} else if(form.name.value == ""){
 		alert("이름을 입력하세요.");
 		RegistFrm.name.focus();
-	} else if(RegistFrm.birth.value == ""){
+	} else if(form.birth.value == ""){
 		alert("생일을 입력하세요.");
 		RegistFrm.birth.focus();
-	} else if(RegistFrm.phone.value == ""){
+	} else if(form.phone.value == ""){
 		alert("휴대폰 번호를 입력하세요.");
 		RegistFrm.phone.focus();
-	} else if(RegistFrm.address.value == ""){
+	} else if(form.address.value == ""){
 		alert("주소를 입력하세요.");
 		RegistFrm.address.focus();
-	} else if(RegistFrm.Email.value == ""){
+	} else if(form.Email.value == ""){
 		alert("이메일을 입력하세요.");
 		RegistFrm.Email.focus();
-	} else if(RegistFrm.job.value == ""){
+	} else if(form.job.value == ""){
 		alert("직업을 입력하세요.");
 		RegistFrm.job.focus();
+	}
+}
+
+function winopen(){
+	if(document.RegistFrm.id.value == ""){
+		alert("아이디를 먼저 입력해 주세요.");
+		document.RegistFrm.id.focus();
+	}else{
+		window.open("../auth/idCheckAuth.do?userid=" + document.RegistFrm.id.value,"","width=500, height=300");
 	}
 }
 </script>
@@ -49,12 +58,13 @@ function validateForm(form){
 <body>
 <h2>회원가입</h2>
 	
-	<form name="ResistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
+	<form name="RegistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 	<div align="center">
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="duplication" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" value="중복확인"></td>
+				<td><input type="hidden" name="idDuplication" value="idUncheck" /></td>
 				<td></td>
 			</tr>
 			
