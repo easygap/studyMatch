@@ -79,9 +79,9 @@
 					<tr>
 						<td colspan="4" align="center">
 							<button type="button"
-								onclick="location.href='../mvcboard/pass.do?mode=edit&idx=${ param.num }';">수정하기</button>
+								onclick="location.href='../board/pass.do?mode=edit&idx=${ param.num }';">수정하기</button>
 							<button type="button"
-								onclick="location.href='../mvcboard/pass.do?mode=delete&idx=${ param.num }';">삭제하기</button>
+								onclick="location.href='../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';">삭제하기</button>
 							<button type="button"
 								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>

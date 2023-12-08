@@ -89,22 +89,41 @@ public class BoardDAO extends DBConnPool {
 	}
 
 	// 게시물 삭제
-	public int deletePost(BoardDTO dto) {
-		int result = 0;
-		String query = "DELETE FROM board WHERE board_num=?";
+	public String deletePost(String num) {
+		String filename = null;
+		
+		String query1 = "SELECT img FROM board WHERE board_num=?";
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(query1);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				filename = rs.getString("img");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 첨부파일 삭제 중 예외 발생 ***");
+		}
+		
+		String query2 = "DELETE FROM board WHERE board_num=?";
 
 		try {
 			con = dataSource.getConnection();
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getBoard_num());
-			result = psmt.executeUpdate();
-			System.out.println(dto.getBoard_num() + "번 게시글 삭제 완료");
+			psmt = con.prepareStatement(query2);
+			psmt.setString(1, num);
+			psmt.executeUpdate();
+			System.out.println(num + "번 게시글 삭제 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
 		}
-		return result;
+		
+		return filename;
 	}
+
 
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
