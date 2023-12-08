@@ -19,6 +19,7 @@ public class WriteController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		resp.getWriter().append("Served at: ").append(req.getContextPath());
 		String saveDirectory = req.getServletContext().getRealPath("/업로드");
+		
 	}
 
 }

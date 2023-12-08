@@ -41,7 +41,7 @@ document.forms["LoginFrm"].addEventListener("submit", function(event) {
 <body>
 	<div class="loginbox">
 		<h2>로그인</h2>
-		<form name="LoginFrm" action="../servlet/LoginAuth.do" method="post">
+		<form name="LoginFrm" action="../auth/LoginAuth.do" method="post">
 		
 			<!--작성하지 않아도 문제는 없음-->
 			<fieldset>
