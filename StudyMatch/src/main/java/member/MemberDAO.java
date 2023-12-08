@@ -77,7 +77,7 @@ public class MemberDAO extends DBConnPool {
 	// 로그인
 	public boolean login(String id, String pass) {
 		boolean result = false;
-		String query = "SELECT name FROM member WHERE id=? AND pwd=?";
+		String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
 
 		try {
 			con = dataSource.getConnection();
@@ -88,9 +88,9 @@ public class MemberDAO extends DBConnPool {
 
 			if (rs.next()) {
 				MemberDTO dto = new MemberDTO();
-				dto.setName(rs.getString("name"));
+				dto.setNick(rs.getString("nickname"));
 				result = true;
-				System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공!");
+				System.out.println(date.format(now) + " [ " + dto.getNick() + " ] 로그인 성공!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
