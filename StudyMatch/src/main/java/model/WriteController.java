@@ -13,8 +13,12 @@ public class WriteController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		resp.getWriter().append("Served at: ").append(req.getContextPath());
-		System.out.println("글쓰기 컨트롤러 진입");
 		req.getRequestDispatcher("../board/Write.jsp").forward(req, resp);
+	}
+	
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		resp.getWriter().append("Served at: ").append(req.getContextPath());
+		String saveDirectory = req.getServletContext().getRealPath("/업로드");
 	}
 
 }
