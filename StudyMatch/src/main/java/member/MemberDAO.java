@@ -182,7 +182,7 @@ public class MemberDAO extends DBConnPool {
 	// ID 중복체크
 	public int idCheck(String id) {
 		String query = "SELECT id FROM member WHERE id = ?";
-		int value = 0;
+		int result = 0;
 		
 		try {
 			con = dataSource.getConnection();
@@ -190,11 +190,17 @@ public class MemberDAO extends DBConnPool {
 			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			
-			if(rs.next()) value = 1;
-		}catch(Exception e) {
+			if(rs.next()) {
+				result = 0;
+			}else {
+				result = 1;
+			}
+			System.out.println("아이디 중복체크 결과 : " + result);
+		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println("*** 아이디 중복 검사 쿼리 실행 중 예외 발생 ***");
 		}
-		return value;
+		return result;
 	}
 
 	// 자원 반납
