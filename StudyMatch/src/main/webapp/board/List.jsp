@@ -100,7 +100,18 @@ String interest = request.getParameter("interest");
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
 						<td width="100"><button type="button" class="btn btn-primary"
-								onclick="location.href='../board/write.do';">글쓰기</button></td>
+						<% 
+							if(session.getAttribute("user") != null) { 
+						%>
+							onclick="location.href='../board/write.do';"
+						<%
+							} else {
+						%>		
+							onclick="alert('로그인 후 글쓰기가 가능합니다.')"
+						<%
+							}
+						%>
+						>글쓰기</button></td>
 					</tr>
 				</table>
 
