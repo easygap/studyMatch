@@ -50,12 +50,12 @@ String interest = request.getParameter("interest");
 				<table class="table table-hover">
 				<thead>
 					<tr>
-						<th width="10%">번호</th>
+						<th width="10%" align="center">번호</th>
 						<th width="*">제목</th>
 						<th width="15%">작성자</th>
-						<th width="10%">조회수</th>
 						<th width="15%">작성일</th>
-						<th width="8%">첨부</th>
+						<th width="9%">조회수</th>
+						<th width="9%">좋아요</th>
 					</tr>
 		
 					<c:choose>
@@ -68,26 +68,22 @@ String interest = request.getParameter("interest");
 						<c:otherwise>
 							<!-- 게시물이 있을 때 -->
 							<c:forEach items="${ boardLists }" var="row" varStatus="loop">
-								<tr align="center">
-									<td>
+								<tr>
+									<td style="padding-left: 20px;">
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
-									<td align="left">
-										<!-- 제목(링크 --> <a href="./View.jsp?idx=${ row.id }">${ row.title }</a>
+									<td>
+										<!-- 제목(링크) --> <a href="./View.jsp?num=${ row.board_num }">${ row.title }</a>
 
 									</td>
 									<td>${ row.id }</td>
 									<!-- 작성자 -->
-									<td>${ row.visit_count }</td>
-									<!-- 조회수 -->
 									<td>${ row.post_date }</td>
-									<!-- 작성일 -->
-									<td>
-										<!-- 첨부 파일 --> <c:if test="${ not empty row.img }">
-											<a
-												href="../board/download.do?img=${ row.img }&id=${ row.id }">[Down]</a>
-										</c:if>
-									</td>
+									<!-- 날짜 -->
+									<td style="padding-left: 25px;">${ row.visit_count }</td>
+									<!-- 조회수 -->
+									<td style="padding-left: 25px;">${ row.like_count }</td>
+									<!-- 좋아요 -->
 								</tr>
 							</c:forEach>
 						</c:otherwise>
