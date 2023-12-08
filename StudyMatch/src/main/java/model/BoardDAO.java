@@ -42,11 +42,11 @@ public class BoardDAO extends DBConnPool {
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
+		String query = "INSERT INTO board ( "
+				+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
+				+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 		try {
 			con = dataSource.getConnection();
-			String query = "INSERT INTO board ( "
-					+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
-					+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 			psmt = con.prepareStatement(query);
 			psmt.setString(3, dto.getTitle());
 			psmt.setString(4, dto.getContent());
