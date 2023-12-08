@@ -23,7 +23,7 @@ public class LoginAuth extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		RequestDispatcher dis = req.getRequestDispatcher("Login.jsp");
+		RequestDispatcher dis = req.getRequestDispatcher("../auth/Login.jsp");
 		dis.forward(req, resp);
 	}
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,7 +56,7 @@ public class LoginAuth extends HttpServlet {
 			System.out.println("------------------------------");
 		} else {
 			resp.getWriter().write("fail");
-			resp.sendRedirect("Login.jsp");
+			resp.sendRedirect("../auth/Login.jsp");
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
 		}
 		dao.close();
