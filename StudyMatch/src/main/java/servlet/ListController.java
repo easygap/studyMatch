@@ -1,5 +1,6 @@
 package servlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import model.BoardDAO;
 import model.BoardDTO;
 import utils.BoardPage;
@@ -24,6 +26,18 @@ public class ListController extends HttpServlet {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		BoardDAO dao = new BoardDAO();
+		
+		if(req.getParameter("mode") != null) {
+			String filename = dao.deletePost(req.getParameter("num"));
+						
+			String sDirectory = req.getServletContext().getRealPath("/Uploads");
+			
+			File file = new File(sDirectory + File.separator + filename);
+			if(file.exists()) {
+				file.delete();
+			}
+		}
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		String searchField = req.getParameter("searchField");
 		String searchWord = req.getParameter("searchWord");
