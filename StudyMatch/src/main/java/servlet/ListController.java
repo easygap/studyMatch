@@ -32,8 +32,6 @@ public class ListController extends HttpServlet {
 			map.put("searchWord", searchWord);
 		}
 
-		System.out.println(req.getParameter("interest"));
-
 		int totalCount = dao.selectCount(map); // 게시물 개수
 
 		// 페이지 처리

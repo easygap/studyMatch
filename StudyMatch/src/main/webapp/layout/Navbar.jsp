@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,7 @@
 		<!-- Top navigation-->
 		<nav
 			class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+
 			<div class="container-fluid">
 				<button class="btn btn-primary" id="sidebarToggle">게시판</button>
 				<button class="navbar-toggler" type="button"
@@ -58,9 +60,22 @@
 							aria-expanded="false">계정</a>
 							<div class="dropdown-menu dropdown-menu-end"
 								aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a> <a
+								
+								<!-- session에 따른 조건문 -->
+								<% 	
+									System.out.println("세션 정보 : " + session.getAttribute("user"));
+									if(session.getAttribute("user") == null) {
+								%>
+								<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a><a
 									class="dropdown-item" href="#!">아이디 찾기</a> <a
 									class="dropdown-item" href="#!">비밀번호 찾기</a>
+								<%
+									} else {
+								%>
+								<a class="dropdown-item" href="../auth/Logout.jsp">로그아웃</a>
+								<%
+									}
+								%>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="../auth/Regist.jsp">회원가입</a>
 							</div></li>

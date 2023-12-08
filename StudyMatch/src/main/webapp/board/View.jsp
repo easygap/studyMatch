@@ -40,8 +40,12 @@
 			<div class="container-fluid">
 				<br />
 				<br />
-				<h1 class="mt-4">파일 첨부형 게시판 - 상세보기(View)</h1>
-				<table border="1" width="90%">
+				<br />
+				
+				<!-- View.jsp 코드 시작 -->
+				
+				<table class="table"
+                style="text-align: center; border: 1px solid #dddddd">
 					<colgroup>
 						<col width="15%" />
 						<col width="35%" />

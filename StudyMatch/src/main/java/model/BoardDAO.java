@@ -28,7 +28,6 @@ public class BoardDAO extends DBConnPool {
 
 	public BoardDAO() {
 		try {
-
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
 			con = dataSource.getConnection();
@@ -43,11 +42,11 @@ public class BoardDAO extends DBConnPool {
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
+		String query = "INSERT INTO board ( "
+				+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
+				+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 		try {
 			con = dataSource.getConnection();
-			String query = "INSERT INTO board ( "
-					+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)"
-					+ " VALUES ( " + " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
 			psmt = con.prepareStatement(query);
 			psmt.setString(3, dto.getTitle());
 			psmt.setString(4, dto.getContent());
@@ -142,11 +141,11 @@ public class BoardDAO extends DBConnPool {
 	// 게시글 목록
 	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
-		String query = "SELECT * FROM board ";
+		String query = "SELECT * FROM board WHERE inter_num=? ";
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		query += "WHERE inter_num=? ORDER BY board_num DESC ";
+		query += "ORDER BY board_num DESC";
 
 		try {
 			psmt = con.prepareStatement(query);
