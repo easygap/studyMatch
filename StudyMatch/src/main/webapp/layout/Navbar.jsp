@@ -69,6 +69,8 @@
 								<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a><a
 									class="dropdown-item" href="#!">아이디 찾기</a> <a
 									class="dropdown-item" href="#!">비밀번호 찾기</a>
+									<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="../auth/Regist.jsp">회원가입</a>
 								<%
 									} else {
 								%>
@@ -76,8 +78,7 @@
 								<%
 									}
 								%>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="../auth/Regist.jsp">회원가입</a>
+								
 							</div></li>
 					</ul>
 				</div>
