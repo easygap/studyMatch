@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/* 업로드 스타일 */
+.filebox label {
+	display: inline-block;
+	padding: .5em .75em;
+	color: #f8f9fa;
+	font-size: inherit;
+	line-height: normal;
+	vertical-align: middle;
+	background-color: #0d6efd;
+	cursor: pointer;
+	border: 1px solid #E5E5E5;
+	border-radius: .40em;
+}
+
+.filebox input[type="file"] { /* 파일 필드 숨기기 */
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+}
+
+.mybtn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        margin-top: 10px;
+    }
+    .mybtn > input {
+        margin-right: 10px;
+    }

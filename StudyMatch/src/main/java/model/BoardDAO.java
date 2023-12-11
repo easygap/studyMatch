@@ -210,6 +210,26 @@ public class BoardDAO extends DBConnPool {
 		}
 	}
 
+	// *게시글 수정* board_num, inter_num으로 IMG 바꾸기
+	public String modifyNameIMG(String num, String interest) {
+		String imgNameToDelete = null;
+		String query = "SELECT img FROM board WHERE board_num=? AND inter_num=?";
+		try {
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			rs.next();
+			imgNameToDelete = rs.getString("IMG");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imgNameToDelete;
+	}
+	
+	// *게시글 수정하기*
+	public void modifyBoard(String num, String interest) {
+		String query = "UPDATE board SET AMT=5000 WHERE board_num = ? AND inter_num = ? ";
+	}
+	
 	// 검색 조건에 맞는 게시글 수
 	public int selectCount(Map<String, Object> map) { // 게시글 검색
 		int totalCount = 0; // 게시물 수를 담을 변수
