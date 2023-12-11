@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%
+	request.setCharacterEncoding("UTF-8");
+String cp = request.getContextPath();
+String interest = request.getParameter("interest");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +121,7 @@
 						<input type="submit" class="btn btn-primary pull-right"
 							value="글쓰기"> 
 					</div>
+					<input type="hidden" name="interest" value="<%=interest%>">
 				</form>
 			</div>
 		</div>
