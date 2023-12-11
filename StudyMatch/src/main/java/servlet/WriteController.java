@@ -34,26 +34,47 @@ public class WriteController extends HttpServlet {
 //		resp.getWriter().append("Served at: ").append(req.getContextPath());
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+
+		BoardDAO dao = new BoardDAO();
+		System.out.println("DAO 객체 생성 확인: " + (dao != null));
 		BoardDTO dto = new BoardDTO();
+		System.out.println("DTO 객체 생성 확인: " + (dto != null));
 		
 //		String filePath = req.getParameter("path"); // 이미지 파일 경로
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
-		String uploadPath = "/uploads";
-		File uploadDir = new File(uploadPath);
-		if (!uploadDir.exists()) {
-		    uploadDir.mkdir();
-		}
-		if (fileName != null) {
-		    String now = new SimpleDateFormat("yyyyMMdd_HhsS").format(new Date());
-			String ext = fileName.substring(fileName.lastIndexOf("."));
-			String newFileName = now + ext;
-			
-			File oldFile = new File(uploadDir + File.separator + fileName);
-			File newFile = new File(uploadDir + File.separator + newFileName);
-			oldFile.renameTo(newFile);
-			
-			dto.setImg(newFileName);
+
+		if (fileName != null && !fileName.isEmpty()) {
+		    // 파일이 선택된 경우에만 실행
+		    String uploadPath = "/uploads";
+		    File uploadDir = new File(uploadPath);
+		    if (!uploadDir.exists()) {
+		        uploadDir.mkdir();
+		    }
+
+		    String ext = "";
+		    if (fileName.contains(".")) {
+		        String now = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		        ext = fileName.substring(fileName.lastIndexOf("."));
+		        String newFileName = now + ext;
+
+		        try (OutputStream out = new FileOutputStream(new File(uploadDir, newFileName));
+		             InputStream input = filePart.getInputStream()) {
+		            int read;
+		            byte[] bytes = new byte[1024];
+		            while ((read = input.read(bytes)) != -1) {
+		                out.write(bytes, 0, read);
+		            }
+		            System.out.println("파일명: " + newFileName + " 경로: " + uploadPath + " 생성 완료");
+		            dto.setImg(newFileName);
+		        } catch (FileNotFoundException f) {
+		            f.printStackTrace();
+		            System.out.println("*** 파일 생성 중 예외 발생 ***");
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		            System.out.println("*** 파일 업로드 중 예외 발생 ***");
+		        }
+		    }
 		}
 		
 		// 글쓰기
@@ -61,13 +82,21 @@ public class WriteController extends HttpServlet {
         Object userObject = session.getAttribute("user");
         String userId = null;
         String internum = req.getParameter("interest");
-        System.out.println("controller에서 interest값은 : " + internum);
+        System.out.println("controller에서 interest 값은 : " + internum);
 
-        if (userObject instanceof MemberDTO) {
-            MemberDTO sessionDTO = (MemberDTO) userObject;
-            userId = sessionDTO.getId();
+        if (userObject != null) {
+            if (userObject instanceof MemberDTO) {
+                MemberDTO sessionDTO = (MemberDTO) userObject;
+                userId = sessionDTO.getId();
+                System.out.println("userId 생성 성공");
+            } else {
+                // MemberDTO 타입이 아닌 경우에는 세션에 직접 저장된 id
+                userId = userObject.toString();
+                System.out.println("MemberDTO 아님 - userId 생성 성공");
+            }
         } else {
             resp.sendRedirect("../board/Write.jsp?interest=" + internum);
+            System.out.println("userId 생성 실패");
             return; // 메서드 종료
         }
 
@@ -80,34 +109,20 @@ public class WriteController extends HttpServlet {
 //		java.sql.Date sqlDate = new java.sql.Date(postdate.getTime());
 //		dto.setPost_date(sqlDate);
 		
-		BoardDAO dao = new BoardDAO();
-		int result = dao.insertWrite(dto);
-		dao.close();
+		    int result = dao.insertWrite(dto);
+		    System.out.println("DAO 연결 성공");
+		    dao.close();
+
 		
 		if (result == 1) {
 		    resp.sendRedirect("../board/List.jsp?interest=" + internum);
-		    System.out.println("게시판: " + internum + "게시글 업로드 완료");
+		    System.out.println("게시판: " + internum + " 게시글 업로드 완료");
 		} else {
 		    resp.sendRedirect("../board/Write.jsp?interest=" + internum);
 		    System.out.println("*** 게시글 업로드 실패 ***");
 		}
-		
-		// 파일 저장
-		try (OutputStream out = new FileOutputStream(new File(uploadPath+File.separator + fileName));
-				InputStream input = filePart.getInputStream()) {
-			int read = 0; // input이 읽어들인 바이트 수 저장
-			byte[] bytes = new byte[1024]; // input이 실제로 읽은 데이터 저장할 배열
-			
-			while ((read = input.read(bytes)) != -1) { // 파일 데이터 끝까지 읽기
-				out.write(bytes, 0, read); // 읽은 데이터를 서버에 반환
-			} // inputstream 파일 데이터를 1024 바이트씩 읽고 -> outputstream 쓴다
-			System.out.println("파일명: " + fileName + " 경로: " + uploadPath + " 생성 완료");
-		} catch (FileNotFoundException f) { // 해당 경로에 파일을 생성하지 못할 경우
-			f.printStackTrace();
-			System.out.println("*** 파일 생성 중 예외 발생 ***");
-		}
 	}
-	
+
 	/*
 	private String getInterest(String url) {
 	    int index = url.indexOf("interest=");
