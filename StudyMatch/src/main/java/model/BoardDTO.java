@@ -143,5 +143,4 @@ public class BoardDTO {
 	public void setCommen_like(String commen_like) {
 		this.commen_like = commen_like;
 	}
-	
 }

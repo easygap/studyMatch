@@ -105,7 +105,7 @@
 				<br />
 				<br />
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../model/WriteController.do" onsubmit="return validateForm(this);">
+					action="../board/WriteController.do" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
 						<label for="ofile">업로드</label> <input type="file" name="ofile"
