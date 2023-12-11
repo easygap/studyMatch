@@ -5,16 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<!-- BootStrap css 사용 -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-<!-- css 가져오기 -->
-<link href="../css/styles.css" rel="stylesheet" />
+
 <style>
 /* 업로드 스타일 */
 .filebox label {
