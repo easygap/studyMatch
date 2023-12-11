@@ -63,8 +63,7 @@ function winopen(){
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" value="중복확인"></td>
-				<td><input type="hidden" name="idDuplication" value="idUncheck" /></td>
+				<td><input type="text" name="id"> <input type="button" name="idChecked" onclick="winopen()" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
