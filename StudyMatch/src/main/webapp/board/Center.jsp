@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>고객 센터</title>
+    <title>1:1 문의</title>
     <style>
         table, th, td {
             border: 1px solid #000000;
