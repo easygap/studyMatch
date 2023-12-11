@@ -6,7 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,28 +34,48 @@ public class WriteController extends HttpServlet {
 //		resp.getWriter().append("Served at: ").append(req.getContextPath());
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-		String filePath = req.getParameter("path"); // 이미지 파일 경로
+		BoardDTO dto = new BoardDTO();
+		
+//		String filePath = req.getParameter("path"); // 이미지 파일 경로
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
-		PrintWriter writer = resp.getWriter();
-		
 		String uploadPath = "/uploads";
 		File uploadDir = new File(uploadPath);
 		if (!uploadDir.exists()) {
 		    uploadDir.mkdir();
 		}
+		if (fileName != null) {
+		    String now = new SimpleDateFormat("yyyyMMdd_HhsS").format(new Date());
+			String ext = fileName.substring(fileName.lastIndexOf("."));
+			String newFileName = now + ext;
+			
+			File oldFile = new File(uploadDir + File.separator + fileName);
+			File newFile = new File(uploadDir + File.separator + newFileName);
+			oldFile.renameTo(newFile);
+			
+			dto.setImg(newFileName);
+		}
 		
 		// 글쓰기
-		HttpSession session = req.getSession();
-		MemberDTO sessionDTO = (MemberDTO) session.getAttribute("user");
-		String userId = sessionDTO.getId();
-		String internum = getInterest(req.getRequestURL().toString());
-		BoardDTO dto = new BoardDTO();
+        HttpSession session = req.getSession();
+        Object userObject = session.getAttribute("user");
+        String userId = null;
+        String internum = req.getParameter("interest");
+        System.out.println("controller에서 interest값은 : " + internum);
+
+        if (userObject instanceof MemberDTO) {
+            MemberDTO sessionDTO = (MemberDTO) userObject;
+            userId = sessionDTO.getId();
+        } else {
+            resp.sendRedirect("../board/Write.jsp?interest=" + internum);
+            return; // 메서드 종료
+        }
+
 		dto.setId(userId);
 		dto.setTitle(req.getParameter("title"));
 		dto.setContent(req.getParameter("content"));
 		dto.setInter_num(internum);
-		dto.setImg(fileName);
+
 //		java.util.Date postdate = new java.util.Date();
 //		java.sql.Date sqlDate = new java.sql.Date(postdate.getTime());
 //		dto.setPost_date(sqlDate);
@@ -64,9 +85,11 @@ public class WriteController extends HttpServlet {
 		dao.close();
 		
 		if (result == 1) {
-		    resp.sendRedirect("../board/List.jsp");
+		    resp.sendRedirect("../board/List.jsp?interest=" + internum);
+		    System.out.println("게시판: " + internum + "게시글 업로드 완료");
 		} else {
-		    resp.sendRedirect("../board/Write.jsp");
+		    resp.sendRedirect("../board/Write.jsp?interest=" + dto.getInter_num());
+		    System.out.println("*** 게시글 업로드 실패 ***");
 		}
 		
 		// 파일 저장
@@ -85,6 +108,7 @@ public class WriteController extends HttpServlet {
 		}
 	}
 	
+	/*
 	private String getInterest(String url) {
 	    int index = url.indexOf("interest=");
 	    if (index != -1) {
@@ -97,6 +121,7 @@ public class WriteController extends HttpServlet {
 	    }
 	    return null; // "interest="이 없는 경우
 	}
+	*/
 	
 	private String getFileName(Part part) {
 		String partHeader = part.getHeader("content-disposition");
@@ -112,7 +137,8 @@ public class WriteController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		resp.getWriter().append("Served at: ").append(req.getContextPath());
-		RequestDispatcher dis = req.getRequestDispatcher("../board/Write.jsp");
+        String internum = req.getParameter("interest");
+		RequestDispatcher dis = req.getRequestDispatcher("../board/Write.jsp?interest=" + internum);
 		dis.forward(req, resp);
 	}
 }
