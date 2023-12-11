@@ -18,23 +18,21 @@ public class ViewController extends HttpServlet {
        
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 게시글 불러오기
-				BoardDAO dao = new BoardDAO();
+		BoardDAO dao = new BoardDAO();
+				
+		String num = req.getParameter("num");
+		
+		String result = "N";
 				
 		// 삭제하기 & 수정하기 버튼 visible/invisible 처리
+		String boardID = dao.checkSession(num);
 		HttpSession session = req.getSession();
 		String sessionID = (String) session.getAttribute("user");
-		System.out.println("현재 사용자 ID :" + sessionID + "입니다.");
-		String result = "N";
-		if (session.getAttribute("user") != null) {
-			String checkSession[] = dao.checkSession(sessionID);
-			for( int i = 0; i < checkSession.length; i++ ) {
-				if(checkSession[i] == req.getParameter("num")) {
-						result = "Y";
-				}
-			}
-		}
+		System.out.println("현재 사용자 ID :" + sessionID + " / 게시판 ID : " + boardID +"입니다.");
+		if(sessionID != null && sessionID.equals(boardID)) {
+			result = "Y";
+		}		
 		
-		String num = req.getParameter("num");
 		dao.updateVisitCount(num);	// 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
 		dao.close();
