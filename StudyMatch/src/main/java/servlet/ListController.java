@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.BoardDAO;
 import model.BoardDTO;
@@ -26,6 +28,8 @@ public class ListController extends HttpServlet {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		BoardDAO dao = new BoardDAO();
+		
+		
 		
 		if(req.getParameter("mode") != null) {
 			String filename = dao.deletePost(req.getParameter("num"));

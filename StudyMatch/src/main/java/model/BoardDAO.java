@@ -88,6 +88,31 @@ public class BoardDAO extends DBConnPool {
 		return result;
 	}
 
+	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
+	public String[] checkSession(String sessionID) {
+		String checkBoard[] = null;
+		int count = 0;
+		
+		String query = "SELECT board_num FROM board WHERE id = ?";
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, sessionID);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) 
+				checkBoard[count] = rs.getString("board_num");
+				count++;
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 조회중 에러 발생 ***");
+		}
+		return checkBoard;
+	}
+	
+	
 	// 게시물 삭제
 	public String deletePost(String num) {
 		String filename = null;
