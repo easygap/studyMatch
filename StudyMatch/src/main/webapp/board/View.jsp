@@ -10,6 +10,17 @@
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
+<script>
+function removeCheck() {
+ if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+	 location.href='../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';
+ }
+ else{   //취소
+	
+	 return false;
+	}
+}
+</script>
 </head>
 <body>
 	
@@ -65,9 +76,9 @@
 						<td colspan="4" align="center">
 						<% if ((request.getParameter("result")).equals("Y")) { %>
 							<button type="button"
-								onclick="location.href='../board/pass.do?mode=edit&idx=${ param.num }';">수정하기</button>
+								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }';">수정하기</button>
 							<button type="button"
-								onclick="location.href='../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';">삭제하기</button>
+								onclick="removeCheck();">삭제하기</button>
 						<% } %>
 							<button type="button"
 								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>

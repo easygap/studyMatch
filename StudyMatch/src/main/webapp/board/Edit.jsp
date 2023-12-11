@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	request.setCharacterEncoding("UTF-8");
+	String cp = request.getContextPath();
+	String interest = request.getParameter("interest");
+	String num = request.getParameter("num");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,13 +16,11 @@
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
+<!-- 업로드 css -->
+<link href="../css/upload.css" rel="stylesheet" />
+
 <script type="text/javascript">
 	function validateForm(form) {
-		if (form.name.value == "") {
-			alert("작성자를 입력하세요.");
-			form.name.focus();
-			return false;
-		}
 		if (form.title.value == "") {
 			alert("제목을 입력하세요.");
 			form.title.focus();
@@ -42,46 +46,35 @@
 			<!-- 네비게이션 바 -->
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
-				<br /> <br />
+				<br /> <br /> <br />
 
-				<h1 class="mt-4">파일 첨부형 게시판 - 수정하기(Edit)</h1>
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../mvcboard/edit.do" onsubmit="return validateForm(this);">
-					<input type="hidden" name="idx" value="${ dto.idx }" /> <input
-						type="hidden" name="prevOfile" value="${ dto.ofile }" /> <input
-						type="hidden" name="prevSfile" value="${ dto.sfile }" />
+					action="../board/edit.do?interest=<%=interest%>&num=<%=num%>" onsubmit="return validateForm(this);">
 
-					<table border="1" width="90%">
-						<tr>
-							<td>작성자</td>
-							<td><input type="text" name="name" style="width: 150px;"
-								value="${dto.name}" /></td>
-						</tr>
-						<tr>
-							<td>제목</td>
-							<td><input type="text" name="title" style="width: 90%;"
-								value="${ dto.title }" /></td>
-						</tr>
-						<tr>
-							<td>내용</td>
-							<td><textarea name="content"
-									style="width: 90%; height: 100px;">${ dto.content }</textarea>
-							</td>
-						</tr>
-						<tr>
-							<td>첨부 파일</td>
-							<td><input type="file" name="ofile" /></td>
-						</tr>
-						<tr>
-							<td colspan="2" align="center">
-								<button type="submit">작성 완료</button>
-								<button type="reset">RESET</button>
-								<button type="button"
-									onclick="location.href='../mvcboard/list.do';">목록 바로가기
-								</button>
-							</td>
-						</tr>
-					</table>
+					<div class="filebox">
+						<label for="ofile">업로드</label> <input type="file" name="ofile"
+							id="ofile">
+					</div>
+
+					<div class="mb-3">
+						<label for="title">제목</label> <input type="text"
+							class="form-control" name="title" id="title"
+							placeholder="제목을 입력해 주세요">
+					</div>
+
+					<div class="mb-3">
+						<label for="content">내용</label>
+						<textarea class="form-control" rows="11" name="content"
+							id="content" placeholder="내용을 입력해 주세요"></textarea>
+					</div>
+					
+					<div class="mybtn">
+						<input
+							type="button" onclick="location.href='../board/view.do?interest=<%=interest%>&num=<%=num%>';"
+							class="btn btn-secondary pull-right" value="이전">
+						<input type="submit" class="btn btn-primary pull-right"
+							value="글쓰기"> 
+					</div>
 				</form>
 			</div>
 		</div>
