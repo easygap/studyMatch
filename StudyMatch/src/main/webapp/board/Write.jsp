@@ -1,20 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<%
+	request.setCharacterEncoding("UTF-8");
+String cp = request.getContextPath();
+String interest = request.getParameter("interest");
+ %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<!-- BootStrap css 사용 -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-<!-- css 가져오기 -->
-<link href="../css/styles.css" rel="stylesheet" />
+
 <style>
 /* 업로드 스타일 */
 .filebox label {
@@ -81,16 +80,7 @@
 </script>
 </head>
 <body>
-	<!-- Jquery 사용 -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
-	<!-- BootStrap javascript 사용 -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-		crossorigin="anonymous"></script>
-
+	
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -105,7 +95,7 @@
 				<br />
 				<br />
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../model/WriteController.do" onsubmit="return validateForm(this);">
+					action="../board/WriteController.do" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
 						<label for="ofile">업로드</label> <input type="file" name="ofile"
@@ -131,10 +121,16 @@
 						<input type="submit" class="btn btn-primary pull-right"
 							value="글쓰기"> 
 					</div>
+					<input type="hidden" name="interest" value="<%=interest%>">
 				</form>
 			</div>
 		</div>
 	</div>
+	<!-- BootStrap javascript 사용 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
 </body>
 <!-- 푸터 -->
 <jsp:include page="../layout/Footer.jsp"></jsp:include>

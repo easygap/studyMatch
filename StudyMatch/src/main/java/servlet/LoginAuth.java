@@ -37,7 +37,7 @@ public class LoginAuth extends HttpServlet {
       MemberDTO dto = dao.getMemberDTO(id, pass);
       if (dto != null) {
          HttpSession session = req.getSession();
-         session.setAttribute("user", dto);
+         session.setAttribute("user", dto.getId());
          SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
          long creationTime = session.getCreationTime(); // 최초 요청 시간
          String creationTimeStr = dateFormat.format(new Date(creationTime));

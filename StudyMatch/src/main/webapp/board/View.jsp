@@ -6,28 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-<!-- BootStrap css 사용 -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
-	crossorigin="anonymous">
+
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-<!-- css 가져오기 -->
-<link href="../css/styles.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
-	<!-- Jquery 사용 -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
-	<!-- BootStrap javascript 사용 -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-		crossorigin="anonymous"></script>
-
+	
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -78,10 +63,12 @@
 					<!-- 하단 메뉴(버튼) -->
 					<tr>
 						<td colspan="4" align="center">
+						<% if ((request.getParameter("result")).equals("Y")) { %>
 							<button type="button"
 								onclick="location.href='../board/pass.do?mode=edit&idx=${ param.num }';">수정하기</button>
 							<button type="button"
 								onclick="location.href='../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';">삭제하기</button>
+						<% } %>
 							<button type="button"
 								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>
@@ -90,6 +77,11 @@
 			</div>
 		</div>
 	</div>
+	<!-- BootStrap javascript 사용 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
 </body>
 <!-- 푸터 -->
 		<jsp:include page="../layout/Footer.jsp"></jsp:include>

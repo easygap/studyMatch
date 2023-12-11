@@ -42,21 +42,22 @@ public class BoardDAO extends DBConnPool {
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
+		int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
+		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
 		String query = "INSERT INTO board ( "
-				+ " inter_num, board_num, title, content, img, id, post_date, visit_count, like_count)" + " VALUES ( "
-				+ " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0, 0)";
+				+ " inter_num, board_num, title, content, img, id, visit_count, like_count)" + " VALUES ( "
+				+ " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getInter_num());
-			psmt.setString(2, dto.getBoard_num());
-			psmt.setString(3, dto.getTitle());
-			psmt.setString(4, dto.getContent());
+//			psmt.setString(2, dto.getBoard_num());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
 			psmt.setString(4, dto.getImg());
 			psmt.setString(5, dto.getId());
-			psmt.setDate(6, dto.getPost_date());
-			psmt.setString(7, dto.getVisit_count());
-			psmt.setString(8, dto.getLike_count());
+			psmt.setInt(6, visitCount);
+			psmt.setInt(7, likeCount);
 
 			result = psmt.executeUpdate();
 			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
@@ -88,6 +89,29 @@ public class BoardDAO extends DBConnPool {
 		return result;
 	}
 
+	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
+	public String checkSession(String num) {
+		String checkID = null;
+		
+		String query = "SELECT id FROM board WHERE board_num = ?";
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) 
+				checkID = rs.getString("id");
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 조회중 에러 발생 ***");
+		}
+		return checkID;
+	}
+	
+	
 	// 게시물 삭제
 	public String deletePost(String num) {
 		String filename = null;
