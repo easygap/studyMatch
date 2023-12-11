@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -41,31 +42,46 @@ public class BoardDAO extends DBConnPool {
 
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
-		int result = 0;
-		int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
-		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
-		String query = "INSERT INTO board ( "
-				+ " inter_num, board_num, title, content, img, id, visit_count, like_count)" + " VALUES ( "
-				+ " ?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
-		try {
-			con = dataSource.getConnection();
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getInter_num());
-//			psmt.setString(2, dto.getBoard_num());
-			psmt.setString(2, dto.getTitle());
-			psmt.setString(3, dto.getContent());
-			psmt.setString(4, dto.getImg());
-			psmt.setString(5, dto.getId());
-			psmt.setInt(6, visitCount);
-			psmt.setInt(7, likeCount);
-
-			result = psmt.executeUpdate();
-			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("*** 게시글 작성 중 예외 발생! ***");
-		}
-		return result;
+	    int result = 0;
+	    int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
+	    int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
+	    String query = "INSERT INTO board (inter_num, board_num, title, content, img, id, visit_count, like_count) "
+	    		+ "VALUES (?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+	    
+	    try {
+	        con = dataSource.getConnection();
+	        psmt = con.prepareStatement(query);
+	        psmt.setString(1, dto.getInter_num());
+	        psmt.setString(2, dto.getTitle());
+	        psmt.setString(3, dto.getContent());
+	        psmt.setString(4, dto.getImg());
+	        psmt.setString(5, dto.getId());
+	        psmt.setInt(6, visitCount);
+	        psmt.setInt(7, likeCount);
+	        result = psmt.executeUpdate();
+	        System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println("*** 게시글 작성 쿼리문 예외 발생 ***");
+	        result = 0;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("*** 게시글 작성 중 예외 발생! ***");
+	        result = 0;
+	    } finally {
+	        // 필요에 따라 close 처리 추가
+	        try {
+	            if (psmt != null) {
+	                psmt.close();
+	            }
+	            if (con != null) {
+	                con.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return result;
 	}
 
 	// 수정하기
