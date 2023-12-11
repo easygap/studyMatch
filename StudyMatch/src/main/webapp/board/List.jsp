@@ -84,7 +84,7 @@ String interest = request.getParameter("interest");
 						<% 
 							if(session.getAttribute("user") != null) { 
 						%>
-							onclick="location.href='../board/WriteController.do?interest=<%=interest%>';"
+							onclick="location.href='../board/WriteController.do?interest=';"
 						<%
 							} else {
 						%>		

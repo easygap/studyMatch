@@ -88,7 +88,7 @@ public class WriteController extends HttpServlet {
 		    resp.sendRedirect("../board/List.jsp?interest=" + internum);
 		    System.out.println("게시판: " + internum + "게시글 업로드 완료");
 		} else {
-		    resp.sendRedirect("../board/Write.jsp?interest=" + dto.getInter_num());
+		    resp.sendRedirect("../board/Write.jsp?interest=" + internum);
 		    System.out.println("*** 게시글 업로드 실패 ***");
 		}
 		
