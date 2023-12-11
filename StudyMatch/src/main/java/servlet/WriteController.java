@@ -124,15 +124,14 @@ public class WriteController extends HttpServlet {
 	*/
 	
 	private String getFileName(Part part) {
-		String partHeader = part.getHeader("content-disposition");
-		System.out.println("partHeader : " + partHeader);
-		for (String content: part.getHeader("content-disposition").split(";")) {
-			if (content.trim().startsWith("filename")) {
-				return content.substring(
-						content.indexOf('=') + 1).trim().replace("\"", "");
-			}
-		}
-		return null;
+	    String partHeader = part.getHeader("content-disposition");
+	    System.out.println("partHeader : " + partHeader);
+	    for (String content : part.getHeader("content-disposition").split(";")) {
+	        if (content.trim().startsWith("filename")) {
+	            return content.substring(content.indexOf('=') + 2, content.length() - 1);
+	        }
+	    }
+	    return null;
 	}
 	
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
