@@ -12,42 +12,34 @@ Object result = request.getParameter("idCheck");
 <meta charset="UTF-8">
 <title>idCheck</title>
 <script type="text/javascript">
-	function result() {
-		opener.document.RegistFrm.id.value = document.checkIdFrm.idCheck.value;
-		opener.document.RegistFrm.id.readOnly = true;
-		window.close();
-	}
 </script>
 </head>
 <body>
 	<b>ID 중복 확인</b>
 	<br />
 	<div align="center">
-		<form name="checkIdFrm" action="../auth/idCheckAuth.do" method="get"
-			onsubmit="return validateForm(this);">
+		<form name="checkIdFrm" action="../auth/idCheckAuth.do" method="get" onsubmit="return validateForm(this);">
 			<table>
 				<tr>
-					<td>ㆍ아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-					<td><input type="text" name="idCheck" /></td>
-					<td><input type="submit" value="중복확인" /></td>
+					<td>ㆍ아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디 &nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td><input type="text" name="idCheck" value="<c:if test='${not empty id}'>${id}</c:if>" /></td>
+					<td><input type="submit" name="idCheck" value="중복확인"></td>
 				</tr>
-				
-				<tr>
-					<td></td>
-					<td><input type="button" value="아이디 사용하기" onclick="idCheck();" /></td>
-					<td></td>
+
 			</table>
 			<%
 			if (result.equals("1")) {
 			%>
-			<span style="color: blue">해당 ID는 사용 가능합니다.</span>
+			<span style="color: blue">해당 ID는 사용 가능합니다.</span> <br/>
 			<%
 			} else {
 			%>
-			<span style="color: red">해당 ID는 이미 사용 중입니다.</span>
+			<span style="color: red">해당 ID는 이미 사용 중입니다.</span><br/>
 			<%
 			}
 			%>
+			
+			<input type="button" value="확인" onclick="window.close()" />
 		</form>
 	</div>
 </body>
