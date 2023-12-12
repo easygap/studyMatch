@@ -14,10 +14,8 @@ if(request.getParameter("nullID") != null)
 String pwSearch = request.getParameter("pwId");
 
 String nullPW = "N";
-if(request.getParameter("nullPW") != null){
+if(request.getParameter("nullPW") != null)
 	nullPW = request.getParameter("nullPW");
-	System.out.println("nullPW : " + nullPW);
-}
 	
 %>
 <!DOCTYPE html>
@@ -52,7 +50,7 @@ if(request.getParameter("nullPW") != null){
 	}
 	
 	function winopen() {
-		window.open("../auth/PwSearchPopup.do" , "", "width=500, height=300");
+		window.open("../auth/PwSearchPopup.do?id=" + document.pwSearchFrm.pwId.value, "", "width=500, height=300");
 	}
 </script>
 <style>
@@ -100,7 +98,7 @@ if(request.getParameter("nullPW") != null){
 						if(nullID.equals("N")) {%>
 						<span style="color:blue; font:bold;">[  <%= idSearch %>  ]</span>
 						<% } } else if(nullID.equals("Y")){ %>
-						<span style="color:red; font:bold;">아이디 정보 없음 </span>
+						<span style="color:red; font:bold;">아이디 정보가 없습니다. </span>
 						<% } %>
 						</td>
 				</tr>
@@ -154,7 +152,7 @@ if(request.getParameter("nullPW") != null){
 						<br/>
 						<button type="button" name="pwChange" onclick="winopen()">비밀번호 변경하기</button>
 						<% } else if(nullPW.equals("Y")){ %>
-						<span style="color:red; font:bold;">회원 정보 없음 </span>
+						<span style="color:red; font:bold;">회원 정보가 없습니다. </span>
 						<% }} %>
 						</td>
 				<td></td>
