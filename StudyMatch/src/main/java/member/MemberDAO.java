@@ -206,7 +206,7 @@ public class MemberDAO extends DBConnPool {
 	// 아이디 찾기
 	public String idSearch(String name, String phone) {
 		String query = "SELECT id FROM member WHERE name = ? AND phone = ?";
-		String result = null;
+		String idSearch = null;
 		
 		try {
 			con = dataSource.getConnection();
@@ -216,8 +216,8 @@ public class MemberDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
-				result = rs.getString("id");
-				System.out.println(date.format(now) + " [ " + result + " ] 아이디 찾기 성공!");
+				idSearch = rs.getString("id");
+				System.out.println(date.format(now) + " [ " + idSearch + " ] 아이디 찾기 성공!");
 			}else {
 				System.out.println("아이디 정보 없음");
 			}
@@ -225,13 +225,13 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 아이디 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
-		return result;
+		return idSearch;
 	}
 	
 	// 비밀번호 찾기
 	public String pwSearch(String id, String phone) {
 		String query = "SELECT pwd FROM member WHERE id = ? AND phone = ?";
-		String result = null;
+		String pwSearch = null;
 		
 		try {
 			con = dataSource.getConnection();
@@ -241,8 +241,8 @@ public class MemberDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
-				result = rs.getString("pwd");
-				System.out.println(date.format(now) + " [ " + result + " ] 비밀번호 찾기 성공!");
+				pwSearch = rs.getString("pwd");
+				System.out.println(date.format(now) + " [ " + pwSearch + " ] 비밀번호 찾기 성공!");
 			}else {
 				System.out.println("회원 정보 없음");
 			}
@@ -250,8 +250,7 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 비밀번호 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
-		System.out.println("쿼리문에서 result값 : " + result);
-		return result;
+		return pwSearch;
 	}
 
 	// 자원 반납
