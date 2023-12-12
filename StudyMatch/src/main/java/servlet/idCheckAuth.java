@@ -21,6 +21,7 @@ public class idCheckAuth extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		int result = dao.idCheck(id);
+		dao.close();
 		
 		if(result == 1) {
 			System.out.println("사용 가능한 아이디입니다.");
@@ -29,7 +30,6 @@ public class idCheckAuth extends HttpServlet {
 		}else {
 			System.out.println("에러발생!!!!!!!!!!!!");
 		}
-		dao.close();
 		request.getRequestDispatcher("/auth/idCheck.jsp?idCheck=" + result).forward(request, response);
 	}
 

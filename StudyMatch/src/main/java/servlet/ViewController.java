@@ -17,6 +17,7 @@ public class ViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("안녕 나는 view라고 해");
 		// 게시글 불러오기
 		BoardDAO dao = new BoardDAO();
 				
@@ -36,7 +37,6 @@ public class ViewController extends HttpServlet {
 		
 		dao.updateVisitCount(num);	// 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
-		dao.close();
 		
 		if(dto.getBoard_num().equals("1001")) {
 			dto.setBoard_num("영어");
@@ -46,6 +46,8 @@ public class ViewController extends HttpServlet {
 		
 		// 게시물(dto) 저장 후 뷰로 포워드
 		req.setAttribute("dto", dto);
+		
+		dao.close();
 		req.getRequestDispatcher("../board/View.jsp?result="+result).forward(req, resp);
 	}
 }

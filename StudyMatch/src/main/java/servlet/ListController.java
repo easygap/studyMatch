@@ -33,7 +33,8 @@ public class ListController extends HttpServlet {
 		
 		if(req.getParameter("mode") != null) {
 			String filename = dao.deletePost(req.getParameter("num"));
-						
+			dao.close();
+			
 			String sDirectory = req.getServletContext().getRealPath("uploads");
 			
 			File file = new File(sDirectory + File.separator + filename);
@@ -51,6 +52,7 @@ public class ListController extends HttpServlet {
 		}
 
 		int totalCount = dao.selectCount(map); // 게시물 개수
+		dao.close();
 
 		// 페이지 처리
 		ServletContext application = getServletContext();
