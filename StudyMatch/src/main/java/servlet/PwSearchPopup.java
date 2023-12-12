@@ -17,17 +17,30 @@ public class PwSearchPopup extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("doGet()");
 		req.setCharacterEncoding("UTF-8");
+
+		req.setCharacterEncoding("UTF-8");
+
+		String id = req.getParameter("ID");
+		String pwChan = req.getParameter("pw");
+		String pwCheck = req.getParameter("pwCheck");
+
+		MemberDAO dao = new MemberDAO();
+
+		if (id != null) {
+			if (pwChan.equals(pwCheck)) {
+				dao.pwChange(pwChan, id);
+				System.out.println("[ " + id + " ] 비밀번호 변경 성공!!!!!");
+			} else {
+				System.out.println("[ " + id + " ] 비밀번호 변경 실패,,,,");
+			}
+		}
+
+		req.getRequestDispatcher("/auth/PwSearchPopup.jsp?id=" + id).forward(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
-		
-		String id = req.getParameter("id");
-		String pwChan = req.getParameter("pwChange");
-		
-		MemberDAO dao = new MemberDAO();
-		dao.pwChange(id, pwChan);
-		
-		req.getRequestDispatcher("auth/PwSearchPopup?id=" + id).forward(req, resp);
+		System.out.println("doPost()");
+
 	}
 }

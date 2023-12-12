@@ -268,11 +268,10 @@ public class MemberDAO extends DBConnPool {
 			
 			if(rs.next()) {
 				System.out.println("쿼리문 : 비밀번호 변경 성공!");
-			}else {
-				System.out.println("쿼리문 : 비밀번호 변경 실패...");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
+			System.out.println("비밀번호 변경 진행 시 예외 발생!!!");
 		}
 	}
 
