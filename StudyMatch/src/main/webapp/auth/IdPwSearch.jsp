@@ -13,7 +13,11 @@ String nullID = "N";
 if(request.getParameter("nullID") != null)
 	nullID = request.getParameter("nullID");
 
-String pwIdSearch = request.getParameter("pwId");
+String pwSearch = request.getParameter("pwId");
+
+String nullPW = "N";
+if(request.getParameter("nullPW") != null)
+	nullPW = request.getParameter("nullPW");
 %>
 <!DOCTYPE html>
 <html>
@@ -31,19 +35,20 @@ String pwIdSearch = request.getParameter("pwId");
 		}
 	}
 	
-	function winopen(){
-		if(document.pwSearchFrm.pwId.value == ""){
+	
+	function certifi() {
+		if (document.pwSearchFrm.pwId.value == "") {
 			alert("아이디를 입력해 주세요.");
 			document.pwSearchFrm.pwId.focus();
-		}else if(document.pwSearchFrm.pwPhone.value == ""){
+		} else if (document.pwSearchFrm.pwPhone.value == "") {
 			alert("연락처를 입력해 주세요.");
 			document.pwSearchFrm.pwPhone.focus();
-		}else if(document.pwSearchFrm.pwCertified.value != "pwCertified"){
-			alert("인증을 먼저 진행해 주세요.");
-		}
-		else{
-			window.open("../auth/PwSearchPopup.do?userid=" + document.pwSearchFrm.pwId.value, "" ,"width=500, height=300");
-		}
+			return false;
+		} 
+	}
+	
+	function winopen() {
+		window.open("../auth/PwSearchPopup.do?userid=" + document.pwSearchFrm.pwId.value, "", "width=500, height=300");
 	}
 </script>
 <style>
@@ -73,7 +78,7 @@ String pwIdSearch = request.getParameter("pwId");
 			<table>
 				<tr>
 					<td>ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><input type="text" name="idName" value="<c:if test='${ not empty idSearch }'>${idSearch}</c:if>" /></td>
+					<td><input type="text" name="idName" /></td>
 					<td></td>
 				</tr>
 
@@ -126,17 +131,20 @@ String pwIdSearch = request.getParameter("pwId");
 			<tr>
 				<td>ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 				<td><input type="text" name="pwPhone" placeholder="'-' 포함하여 입력해 주세요." />
-					<button type="submit" name="pwCertified">인증하기</button></td>
+					<button type="submit" name="pwCertified" onclick="certifi()">인증하기</button></td>
 				<td></td>
 			</tr>
 			
 			<tr>
 				<td></td>
 				<td>
-						<% if(pwIdSearch != null){ %>
+						<% if(pwSearch != null){ 
+						if(nullPW.equals("N")){%>
 						<span style="color:blue; font:bold;">[  회원 정보가 확인 되었습니다. <br/> 비밀번호를 변경해 주세요.  ]</span>
-						<% } else { %>
-						<span style="color:red; font:bold;">[ 회원 정보 없음 ]</span>
+						<br/>
+						<button type="button" name="pwChange" onclick="winopen()">비밀번호 변경하기</button>
+						<% } } else if(nullPW.equals("Y")){ %>
+						<span style="color:red; font:bold;">회원 정보 없음 </span>
 						<% } %>
 						</td>
 				<td></td>
@@ -144,7 +152,7 @@ String pwIdSearch = request.getParameter("pwId");
 			</tr>
 			<tr>
 				<td></td>
-				<td><button type="button" name="pwCertified" onclick="winopen()">비밀번호 변경하기</button></td>
+				<td></td>
 				<td></td>
 			</tr>
 			<tr>
