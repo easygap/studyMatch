@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<%
+<%
 	request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
-String interest = request.getParameter("interest");
- %>
+	String cp = request.getContextPath();
+	String interest = request.getParameter("interest");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,53 +14,12 @@ String interest = request.getParameter("interest");
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
-<style>
-/* 업로드 스타일 */
-.filebox label {
-	display: inline-block;
-	padding: .5em .75em;
-	color: #f8f9fa;
-	font-size: inherit;
-	line-height: normal;
-	vertical-align: middle;
-	background-color: #0d6efd;
-	cursor: pointer;
-	border: 1px solid #E5E5E5;
-	border-radius: .40em;
-}
+<!-- 업로드 css -->
+<link href="../css/upload.css" rel="stylesheet" />
 
-.filebox input[type="file"] { /* 파일 필드 숨기기 */
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	border: 0;
-}
-
-.mybtn {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-
-        margin-top: 10px;
-    }
-    .mybtn > input {
-        margin-right: 10px;
-    }
-
-</style>
 <!-- 자바 스크립트 -->
 <script type="text/javascript">
 	function validateForm(form) { // 필수 항목 입력 확인}
-		if (form.name.value == "") {
-			alert("작성자를 입력하세요.");
-			form.name.focus();
-			return false;
-		}
 		if (form.title.value == "") {
 			alert("제목을 입력하세요.");
 			form.title.focus();
@@ -69,11 +28,6 @@ String interest = request.getParameter("interest");
 		if (form.content.value == "") {
 			alert("내용을 입력하세요.");
 			form.content.focus();
-			return false;
-		}
-		if (form.pass.value == "") {
-			alert("비밀번호를 입력하세요.");
-			form.pass.focus();
 			return false;
 		}
 	}
@@ -95,7 +49,7 @@ String interest = request.getParameter("interest");
 				<br />
 				<br />
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../board/WriteController.do" onsubmit="return validateForm(this);">
+					action="../board/WriteController.do?<%=interest%>" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
 						<label for="ofile">업로드</label> <input type="file" name="ofile"
@@ -116,12 +70,11 @@ String interest = request.getParameter("interest");
 					
 					<div class="mybtn">
 						<input
-							type="button" onclick="location.href='./List.jsp';"
+							type="button" onclick="location.href='../board/list.do?interest=<%=interest%>';"
 							class="btn btn-secondary pull-right" value="목록 바로가기">
 						<input type="submit" class="btn btn-primary pull-right"
 							value="글쓰기"> 
 					</div>
-					<input type="hidden" name="interest" value="<%=interest%>">
 				</form>
 			</div>
 		</div>
