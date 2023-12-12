@@ -70,6 +70,9 @@ function removeCheck() {
 						<td>내용</td>
 						<td colspan="5" height="100">${ dto.content }</td>
 					</tr>
+					<div class="inputArea">
+					<img src=${img}" class=""/>
+					</div>
 
 					<!-- 하단 메뉴(버튼) -->
 					<tr>

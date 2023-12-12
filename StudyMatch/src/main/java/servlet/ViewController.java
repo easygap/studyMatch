@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,7 @@ import model.BoardDTO;
 @WebServlet("/board/view.do")
 public class ViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 게시글 불러오기
 		BoardDAO dao = new BoardDAO();
@@ -31,7 +32,7 @@ public class ViewController extends HttpServlet {
 		System.out.println("현재 사용자 ID :" + sessionID + " / 게시판 ID : " + boardID +"입니다.");
 		if(sessionID != null && sessionID.equals(boardID)) {
 			result = "Y";
-		}		
+		}
 		
 		dao.updateVisitCount(num);	// 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
@@ -47,4 +48,11 @@ public class ViewController extends HttpServlet {
 		req.setAttribute("dto", dto);
 		req.getRequestDispatcher("../board/View.jsp?result="+result).forward(req, resp);
 	}
+	
+	
+//    @Override
+//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//    	
+//    }
+	
 }
