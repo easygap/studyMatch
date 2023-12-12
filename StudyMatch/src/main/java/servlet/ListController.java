@@ -51,7 +51,7 @@ public class ListController extends HttpServlet {
 		}
 
 		int totalCount = dao.selectCount(map); // 게시물 개수
-
+		dao.close();
 		// 페이지 처리
 		ServletContext application = getServletContext();
 		int pageSize = Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
@@ -71,7 +71,6 @@ public class ListController extends HttpServlet {
 
 		String interest = req.getParameter("interest");
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
-		dao.close();
 
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 		map.put("pagingImg", pagingImg);
