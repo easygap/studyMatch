@@ -106,15 +106,16 @@ public class BoardDAO extends DBConnPool {
 	}
 
 	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
-	public String checkSession(String num) {
+	public String checkSession(String num, String interest) {
 		String checkID = null;
 		
-		String query = "SELECT id FROM board WHERE board_num = ?";
+		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
 		
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
+			psmt.setString(2, interest);
 			rs = psmt.executeQuery();
 			
 			if (rs.next()) 

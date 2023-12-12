@@ -24,6 +24,9 @@ public class EditController extends HttpServlet {
 		
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
+		String imgNameToDelete = dao.modifyNameIMG(num, interest);
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
 		
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
@@ -45,17 +48,13 @@ public class EditController extends HttpServlet {
 			File newFile = new File(uploadDir + File.separator + newFileName);
 			oldFile.renameTo(newFile);
 			
-			dto.setImg(newFileName);
-			
-			String imgNameToDelete = dao.modifyNameIMG(num, interest);
+			dto.setImg(newFileName);			
 			
 			File toDeleteFile = new File(imgNameToDelete);
 			toDeleteFile.delete();
 		}
-				
-				
-				
-
+		
+		
 	}
 	
 	private String getFileName(Part part) {
