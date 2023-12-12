@@ -22,22 +22,27 @@ public class IdSearch extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 		req.setCharacterEncoding("UTF-8");
-		
+
 		String name = req.getParameter("idName");
 		String phone = req.getParameter("idPhone");
-		
+
 		System.out.println(name);
-		
+
 		MemberDAO dao = new MemberDAO();
-		String result = dao.idSearch(name, phone);
+		String IdSearch = dao.idSearch(name, phone);
 		
-		if(result.equals(result)) {
-			System.out.println("[ " + name + " ] 아이디 찾기 성공");
-		}else if(result.equals("")){
+
+		if (IdSearch != null) {
+			if (IdSearch.equals(IdSearch)) {
+				req.getRequestDispatcher("/auth/IdPwSearch.jsp?id=" + IdSearch).forward(req, resp);
+				System.out.println("[ " + name + " ] 아이디 찾기 성공");
+			}
+		} else{
+			String nullID = "Y";
+			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullID=" + nullID).forward(req, resp);
 			System.out.println("아이디 정보 없음");
 		}
+
 		
-		req.getRequestDispatcher("/auth/IdPwSearch.jsp?id=" + result).forward(req, resp);
 	}
 }
-	 
