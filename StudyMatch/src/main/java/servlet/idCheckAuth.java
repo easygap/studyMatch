@@ -29,7 +29,7 @@ public class idCheckAuth extends HttpServlet {
 		}else {
 			System.out.println("에러발생!!!!!!!!!!!!");
 		}
-		
+		dao.close();
 		request.getRequestDispatcher("/auth/idCheck.jsp?idCheck=" + result).forward(request, response);
 	}
 

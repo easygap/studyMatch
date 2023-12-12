@@ -1,7 +1,11 @@
 package servlet;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -43,28 +47,50 @@ public class EditController extends HttpServlet {
 		
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
-		String uploadPath = "/uploads";
-		File uploadDir = new File(uploadPath);
+		String uploadPath = "uploads";
+		System.out.println("수정 파일 경로 : " + uploadPath);
+	    String realPath = getServletContext().getRealPath(uploadPath);
+	    System.out.println("경로: " + realPath);
+	    File uploadDir = new File(realPath);
 		if (!uploadDir.exists()) {
 		    uploadDir.mkdir();
 		}
+		
+		String ext = "";
 		if (!fileName.equals("")) {
 			String imgNameToDelete = dao.modifyNameIMG(num, interest);
 			
-		    String now = new SimpleDateFormat("yyyyMMdd_HhsS").format(new Date());
-			String ext = fileName.substring(fileName.lastIndexOf("."));
-			String newFileName = now + ext;
-			
-			File oldFile = new File(uploadDir + File.separator + fileName);
-			File newFile = new File(uploadDir + File.separator + newFileName);
-			oldFile.renameTo(newFile);
-			
-			dto.setImg(newFileName);			
-			
 			if(imgNameToDelete != null) {
-				File toDeleteFile = new File(imgNameToDelete);
+				File toDeleteFile = new File(realPath + File.separator + imgNameToDelete);
 				toDeleteFile.delete();
+				System.out.println("수정 - 이미지 삭제 성공 " + imgNameToDelete);
 			}
+			
+		    String now = new SimpleDateFormat("yyyyMMdd_HhsS").format(new Date());
+			ext = fileName.substring(fileName.lastIndexOf("."));
+			String editFileName = now + ext;
+            System.out.println("파일명: " + editFileName + " 경로: " + uploadPath + " 생성 완료");
+			
+			  try (OutputStream out = new FileOutputStream(new File(uploadDir, editFileName));
+			             InputStream input = filePart.getInputStream()) {
+			            int read;
+			            byte[] bytes = new byte[1024];
+			            while ((read = input.read(bytes)) != -1) {
+			                out.write(bytes, 0, read);
+			            }
+			            dto.setImg(editFileName);
+			        } catch (FileNotFoundException f) {
+			            f.printStackTrace();
+			            System.out.println("*** 수정 파일 생성 중 예외 발생 ***");
+			        } catch (IOException e) {
+			            e.printStackTrace();
+			            System.out.println("*** 수정 파일 업로드 중 예외 발생 ***");
+			        }
+			  
+			File oldFile = new File(uploadDir + File.separator + fileName);
+			File newFile = new File(uploadDir + File.separator + editFileName);
+			oldFile.renameTo(newFile);		
+			
 		}
 		
 		dto.setTitle(title);
@@ -73,6 +99,7 @@ public class EditController extends HttpServlet {
 		dto.setBoard_num(num);
 		
 		int result = dao.updateEdit(dto);
+		dao.close();
 		
 		if(result == 1)
 			req.getRequestDispatcher("/board/view.do?interest=" + interest + "&num=" + num).forward(req, resp);
@@ -89,5 +116,11 @@ public class EditController extends HttpServlet {
 	        }
 	    }
 	    return null;
+	}
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		resp.getWriter().append("Served at: ").append(req.getContextPath());
+        String internum = req.getParameter("interest");
+		RequestDispatcher dis = req.getRequestDispatcher("../board/Edit.jsp?interest=" + internum);
+		dis.forward(req, resp);
 	}
 }

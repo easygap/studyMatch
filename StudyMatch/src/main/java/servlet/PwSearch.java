@@ -45,7 +45,7 @@ public class PwSearch extends HttpServlet {
 			System.out.println("일치한 정보가 없습니다.");
 		}
 		
-		
+		dao.close();
 		
 	}
 

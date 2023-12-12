@@ -30,6 +30,7 @@ public class PwSearchPopup extends HttpServlet {
 			if (pwChan.equals(pwCheck)) {
 				dao.pwChange(pwChan, id);
 				System.out.println("[ " + id + " ] 비밀번호 변경 성공!!!!!");
+				dao.close();
 			} else {
 				System.out.println("[ " + id + " ] 비밀번호 변경 실패,,,,");
 			}
@@ -41,6 +42,5 @@ public class PwSearchPopup extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 		System.out.println("doPost()");
-
 	}
 }

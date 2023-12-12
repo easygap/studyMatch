@@ -73,7 +73,8 @@
 							type="button" onclick="location.href='../board/list.do?interest=<%=interest%>';"
 							class="btn btn-secondary pull-right" value="목록 바로가기">
 						<input type="submit" class="btn btn-primary pull-right"
-							value="글쓰기"> 
+							value="글쓰기">
+							<input type="hidden" name="interest" value="<%=interest%>">
 					</div>
 				</form>
 			</div>
