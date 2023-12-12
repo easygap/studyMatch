@@ -33,6 +33,7 @@ public class PwSearch extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		String pwSearch = dao.pwSearch(pwId, pwPhone, pwBirth);
+		dao.close();
 		
 		if(pwSearch != null) {
 			if(pwSearch.equals(pwSearch)) {
@@ -44,8 +45,6 @@ public class PwSearch extends HttpServlet {
 			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullPW=" + nullPW).forward(req, resp);
 			System.out.println("일치한 정보가 없습니다.");
 		}
-		
-		dao.close();
 		
 	}
 

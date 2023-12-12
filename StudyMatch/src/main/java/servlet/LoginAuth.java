@@ -36,6 +36,7 @@ public class LoginAuth extends HttpServlet {
       MemberDAO dao = new MemberDAO();
       MemberDTO dto = dao.getMemberDTO(id, pass);
       dao.close();
+      
       if (dto != null) {
          HttpSession session = req.getSession();
          session.setAttribute("user", dto.getId());
@@ -58,6 +59,6 @@ public class LoginAuth extends HttpServlet {
 			resp.getWriter().write("fail");
 			resp.sendRedirect("../auth/Login.jsp");
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
-		}
+		}		
 	}
 }

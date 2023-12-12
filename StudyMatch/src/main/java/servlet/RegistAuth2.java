@@ -90,7 +90,8 @@ public class RegistAuth2 extends HttpServlet {
                     System.out.println("newFileName : " + newFileName);
                 }
                 boolean result = dao.signUp(dto);
-
+                dao.close();
+                
 				if (result == true) {
 					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.");
 					resp.sendRedirect("../auth/LoginAuth.do");
@@ -98,7 +99,7 @@ public class RegistAuth2 extends HttpServlet {
 					JSFunction.alertRegist(resp, "회원가입에 실패하였습니다.");
 					resp.sendRedirect("../auth/Regist.do");
 				}
-				dao.close();
+				
             }
         } catch (Exception e) {
             e.printStackTrace();
