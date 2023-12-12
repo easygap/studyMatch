@@ -11,19 +11,18 @@
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
 <script>
-function removeCheck() {
- if (confirm("정말 삭제하시겠습니까??") == true){    //확인
-	 location.href='../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';
- }
- else{   //취소
-	
-	 return false;
+	function removeCheck() {
+		if (confirm("정말 삭제하시겠습니까??") == true) { //확인
+			location.href = '../board/list.do?mode=delete&interest=${ param.interest }&num=${ param.num}';
+		} else { //취소
+
+			return false;
+		}
 	}
-}
 </script>
 </head>
 <body>
-	
+
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -34,14 +33,12 @@ function removeCheck() {
 			<!-- 네비게이션 바 -->
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
-				<br />
-				<br />
-				<br />
-				
+				<br /> <br /> <br />
+
 				<!-- View.jsp 코드 시작 -->
-				
+
 				<table class="table"
-                style="text-align: center; border: 1px solid #dddddd">
+					style="text-align: center; border: 1px solid #dddddd">
 					<colgroup>
 						<col width="15%" />
 						<col width="35%" />
@@ -68,14 +65,19 @@ function removeCheck() {
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="5" height="100">${ dto.content }</td>
+						<td colspan="5" height="100">
+						<c:if test="${not empty dto.img}">
+								<img src="../uploads/${dto.img}" alt="첨부 이미지">
+							</c:if>
+							${ dto.content }
+						</td>
 					</tr>
-
 					<!-- 하단 메뉴(버튼) -->
 					<tr>
 						<td colspan="4" align="center">
-						<% if ((request.getParameter("result")).equals("Y")) { %>
-							<button type="button"
+							<%
+							if ((request.getParameter("result")).equals("Y")) {
+							%><button type="button"
 								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
 							<button type="button"
 								onclick="removeCheck();">삭제하기</button>
@@ -95,5 +97,5 @@ function removeCheck() {
 		crossorigin="anonymous"></script>
 </body>
 <!-- 푸터 -->
-		<jsp:include page="../layout/Footer.jsp"></jsp:include>
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>

@@ -46,8 +46,10 @@ public class WriteController extends HttpServlet {
 
 		if (fileName != null && !fileName.isEmpty()) {
 		    // 파일이 선택된 경우에만 실행
-		    String uploadPath = "/uploads";
-		    File uploadDir = new File(uploadPath);
+		    String uploadPath = "uploads";
+		    String realPath = getServletContext().getRealPath(uploadPath);
+		    System.out.println("경로: " + realPath);
+		    File uploadDir = new File(realPath);
 		    if (!uploadDir.exists()) {
 		        uploadDir.mkdir();
 		    }
