@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,17 +18,24 @@ import model.BoardDAO;
 import model.BoardDTO;
 
 @WebServlet("/board/edit.do")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 파일 임시저장 사이즈 (파일 최대 용량 초과 시 사용)
+maxFileSize = 1024 * 1024 * 50, // 개별 최대 파일 사이즈
+maxRequestSize = 1204 * 1204 * 50 * 5) // 서버로 전송되는 파일의 최대 사이즈
 public class EditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		BoardDAO dao = new BoardDAO();
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
-		String imgNameToDelete = dao.modifyNameIMG(num, interest);
+		System.out.println("Edit Controller에서 num값 : " + num + ", interest값 : " + interest);
 		String title = req.getParameter("title");
+		System.out.println("Edit Controller에서 title값 : " + title);
 		String content = req.getParameter("content");
+		System.out.println("Edit Controller에서 content값 : " + content);	
 		
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
@@ -39,7 +48,9 @@ public class EditController extends HttpServlet {
 		if (!uploadDir.exists()) {
 		    uploadDir.mkdir();
 		}
-		if (fileName != null) {
+		if (!fileName.equals("")) {
+			String imgNameToDelete = dao.modifyNameIMG(num, interest);
+			
 		    String now = new SimpleDateFormat("yyyyMMdd_HhsS").format(new Date());
 			String ext = fileName.substring(fileName.lastIndexOf("."));
 			String newFileName = now + ext;
@@ -50,11 +61,23 @@ public class EditController extends HttpServlet {
 			
 			dto.setImg(newFileName);			
 			
-			File toDeleteFile = new File(imgNameToDelete);
-			toDeleteFile.delete();
+			if(imgNameToDelete != null) {
+				File toDeleteFile = new File(imgNameToDelete);
+				toDeleteFile.delete();
+			}
 		}
 		
+		dto.setTitle(title);
+		dto.setContent(content);
+		dto.setInter_num(interest);
+		dto.setBoard_num(num);
 		
+		int result = dao.updateEdit(dto);
+		
+		if(result == 1)
+			req.getRequestDispatcher("/board/view.do?interest=" + interest + "&num=" + num).forward(req, resp);
+		else
+			req.getRequestDispatcher("/board/edit.do?interest=" + interest + "&num=" + num).forward(req, resp);
 	}
 	
 	private String getFileName(Part part) {
