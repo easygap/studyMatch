@@ -250,6 +250,7 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 비밀번호 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
+		System.out.println("쿼리문에서 result값 : " + result);
 		return result;
 	}
 

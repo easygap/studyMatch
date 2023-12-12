@@ -6,11 +6,14 @@
 <%
 request.setCharacterEncoding("UTF-8");
 
-String id = (String) request.getParameter("id");
-Object result = request.getParameter("id");
 
-String pwId = (String) request.getParameter("pwId");
-Object PwId = request.getParameter("pwId");
+String idSearch = request.getParameter("id");
+
+String nullID = "N";
+if(request.getParameter("nullID") != null)
+	nullID = request.getParameter("nullID");
+
+String pwIdSearch = request.getParameter("pwId");
 %>
 <!DOCTYPE html>
 <html>
@@ -70,7 +73,7 @@ Object PwId = request.getParameter("pwId");
 			<table>
 				<tr>
 					<td>ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><input type="text" name="idName" value="<c:if test='${ not empty id }'>${id}</c:if>" /></td>
+					<td><input type="text" name="idName" value="<c:if test='${ not empty idSearch }'>${idSearch}</c:if>" /></td>
 					<td></td>
 				</tr>
 
@@ -84,9 +87,10 @@ Object PwId = request.getParameter("pwId");
 				<tr>
 						<td>ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td>
-						<% if(id != null){ %>
-						<span style="color:blue; font:bold;">[  <%= id %>  ]</span>
-						<% } else { %>
+						<% if(idSearch != null){ 
+						if(nullID.equals("N")) {%>
+						<span style="color:blue; font:bold;">[  <%= idSearch %>  ]</span>
+						<% } } else if(nullID.equals("Y")){ %>
 						<span style="color:red; font:bold;">아이디 정보 없음 </span>
 						<% } %>
 						</td>
@@ -129,7 +133,7 @@ Object PwId = request.getParameter("pwId");
 			<tr>
 				<td></td>
 				<td>
-						<% if(pwId != null){ %>
+						<% if(pwIdSearch != null){ %>
 						<span style="color:blue; font:bold;">[  회원 정보가 확인 되었습니다. <br/> 비밀번호를 변경해 주세요.  ]</span>
 						<% } else { %>
 						<span style="color:red; font:bold;">[ 회원 정보 없음 ]</span>

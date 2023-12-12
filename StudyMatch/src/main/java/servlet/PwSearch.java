@@ -33,9 +33,9 @@ public class PwSearch extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		String result = dao.pwSearch(pwId, pwPhone);
 		
-		if(result.equals(result)) {
+		if(result.equals(result) && result != null) {
 			System.out.println("[ " + pwId + " ] 비밀번호 찾기 성공");
-		}else if(result.equals("") || result.equals(null)){
+		}else if(result == null){
 			System.out.println("일치한 정보가 없습니다.");
 		}
 		
