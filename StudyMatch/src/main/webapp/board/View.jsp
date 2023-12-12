@@ -67,9 +67,9 @@
 						<td>내용</td>
 						<td colspan="5" height="100">
 						<c:if test="${not empty dto.img}">
-								<img src="../uploads/${dto.img}" alt="첨부 이미지">
+								<img src="../uploads/${dto.img}" width="800" height="550" alt="첨부 이미지">
 							</c:if>
-							${ dto.content }
+							<br/>${ dto.content }
 						</td>
 					</tr>
 					<!-- 하단 메뉴(버튼) -->

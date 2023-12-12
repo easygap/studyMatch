@@ -277,7 +277,8 @@ public class MemberDAO extends DBConnPool {
 	}
 
 	// 자원 반납
-	public void close() {
+	public void DBclose() {
+		DBConnPool dbConnPool = new DBConnPool();
 		try {
 			if (con != null)
 				con.close();
@@ -289,7 +290,7 @@ public class MemberDAO extends DBConnPool {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** DB 커넥션 풀 자원 반납 중 예외 발생 ***");
-		}
+		}	
+		dbConnPool.close();
 	}
-
 }

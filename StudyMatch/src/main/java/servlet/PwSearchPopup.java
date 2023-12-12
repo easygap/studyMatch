@@ -27,7 +27,7 @@ public class PwSearchPopup extends HttpServlet {
 		
 		MemberDAO dao = new MemberDAO();
 		dao.pwChange(id, pwChan);
-		
+		dao.close();
 		req.getRequestDispatcher("auth/PwSearchPopup?id=" + id).forward(req, resp);
 	}
 }
