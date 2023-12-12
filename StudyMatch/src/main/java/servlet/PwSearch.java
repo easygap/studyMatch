@@ -31,15 +31,20 @@ public class PwSearch extends HttpServlet {
 		System.out.println(pwId);
 		
 		MemberDAO dao = new MemberDAO();
-		String result = dao.pwSearch(pwId, pwPhone);
+		String pwSearch = dao.pwSearch(pwId, pwPhone);
 		
-		if(result.equals(result) && result != null) {
-			System.out.println("[ " + pwId + " ] 비밀번호 찾기 성공");
-		}else if(result == null){
+		if(pwSearch != null) {
+			if(pwSearch.equals(pwSearch)) {
+				req.getRequestDispatcher("/auth/IdPwSearch.jsp?pwId=" + pwId).forward(req, resp);
+				System.out.println("[ " + pwId + " ] 비밀번호 찾기 성공");
+			}
+		}else{
+			String nullPW = "Y";
+			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullPW=" + nullPW).forward(req, resp);
 			System.out.println("일치한 정보가 없습니다.");
 		}
 		
-		req.getRequestDispatcher("/auth/IdPwSearch.jsp?pwId=" + pwId).forward(req, resp);
+		
 		
 	}
 
