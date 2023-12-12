@@ -195,7 +195,7 @@ public class MemberDAO extends DBConnPool {
 			}else {
 				result = 1;
 			}
-			System.out.println("아이디 중복체크 결과 : " + result);
+			System.out.println("쿼리문 아이디 중복체크 결과 : " + result);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("*** 아이디 중복 검사 쿼리 실행 중 예외 발생 ***");
@@ -217,9 +217,9 @@ public class MemberDAO extends DBConnPool {
 			
 			if(rs.next()) {
 				idSearch = rs.getString("id");
-				System.out.println(date.format(now) + " [ " + idSearch + " ] 아이디 찾기 성공!");
+				System.out.println(date.format(now) + " 쿼리문 : [ " + idSearch + " ] 아이디 찾기 성공!");
 			}else {
-				System.out.println("아이디 정보 없음");
+				System.out.println(" 쿼리문 : 아이디 정보 없음");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -229,8 +229,8 @@ public class MemberDAO extends DBConnPool {
 	}
 	
 	// 비밀번호 찾기
-	public String pwSearch(String id, String phone) {
-		String query = "SELECT pwd FROM member WHERE id = ? AND phone = ?";
+	public String pwSearch(String id, String phone, String birth) {
+		String query = "SELECT pwd FROM member WHERE id = ? AND phone = ? AND birth = ?";
 		String pwSearch = null;
 		
 		try {
@@ -238,19 +238,42 @@ public class MemberDAO extends DBConnPool {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, phone);
+			psmt.setString(3, birth);
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
 				pwSearch = rs.getString("pwd");
-				System.out.println(date.format(now) + " [ " + pwSearch + " ] 비밀번호 찾기 성공!");
+				System.out.println(date.format(now) + " 쿼리문 : [ " + pwSearch + " ] 비밀번호 찾기 성공!");
 			}else {
-				System.out.println("회원 정보 없음");
+				System.out.println("쿼리문 : 회원 정보 없음");
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 비밀번호 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
 		return pwSearch;
+	}
+	
+	// 비밀번호 변경하기
+	public void pwChange(String pw, String id) {
+		String query = "UPDATE member SET pwd = ? WHERE id = ?";
+		
+		
+		try {
+			con = dataSource.getConnection();
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, pw);
+			psmt.setString(2, id);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				System.out.println("쿼리문 : 비밀번호 변경 성공!");
+			}else {
+				System.out.println("쿼리문 : 비밀번호 변경 실패...");
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	// 자원 반납
