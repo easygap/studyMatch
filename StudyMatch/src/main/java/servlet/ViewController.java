@@ -21,11 +21,12 @@ public class ViewController extends HttpServlet {
 		BoardDAO dao = new BoardDAO();
 				
 		String num = req.getParameter("num");
+		String interest = req.getParameter("interest");
 		
 		String result = "N";
 				
 		// 삭제하기 & 수정하기 버튼 visible/invisible 처리
-		String boardID = dao.checkSession(num);
+		String boardID = dao.checkSession(num, interest);
 		HttpSession session = req.getSession();
 		String sessionID = (String) session.getAttribute("user");
 		System.out.println("현재 사용자 ID :" + sessionID + " / 게시판 ID : " + boardID +"입니다.");
