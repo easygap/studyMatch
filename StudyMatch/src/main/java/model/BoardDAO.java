@@ -303,6 +303,7 @@ public class BoardDAO extends DBConnPool {
 	}
 
 	public void close() {
+		DBConnPool dbConnPool = new DBConnPool();
 		try {
 			if (rs != null)
 				rs.close();
@@ -317,5 +318,6 @@ public class BoardDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 게시판 자원 해제 중 예외 발생 ***");
 		}
+		dbConnPool.close();
 	}
 }
