@@ -3,6 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 request.setCharacterEncoding("UTF-8");
+
+String id = request.getParameter("id");
+
+String not = "N";
+if(request.getParameter("not") != not){
+	not = request.getParameter("not");
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -16,10 +23,12 @@ request.setCharacterEncoding("UTF-8");
 		} else if (form.pw.value == "") {
 			alert("비밀번호를 입력해 주세요.");
 		} else if (form.pwCheck.value == "") {
-			alert("비밀번호를 한 번 더 입력해 주세요.");
+			alert("비밀번호를 한 번 더 확인해 주세요.");
 			return false;
 		}
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -45,10 +54,28 @@ request.setCharacterEncoding("UTF-8");
 					<td><input type="password" name="pwCheck"></td>
 					<td></td>
 				</tr>
+				
+				<tr>
+					<td>
+					<script>
+					function compareAndChange(){
+						var pwChange = document.pwChangeFrm.pw.value;
+						var pwCheck = document.pwChangeFrm.pwCheck.value;
+						
+						if(pwChange == pwCheck){
+							alert("비밀번호 변경이 완료되었습니다. 로그인을 해주세요.");
+						}else{
+							alert("비밀번호가 동일하지 않습니다. 다시 작성해 주세요.");
+						}
+					}
+					</script>
+					</td>
+					<td></td>
+				</tr>
 
 				<tr>
 					<td></td>
-					<td><input type="submit" name="Change" value="변경하기" /> <input type="button" name="close" value="닫기" onclick="window.close()" /></td>
+					<td><input type="submit" name="Change" onclick="compareAndChange()" value="변경하기" /> <input type="button" name="close" value="닫기" onclick="window.close()" /></td>
 					<td></td>
 				</tr>
 			</table>
