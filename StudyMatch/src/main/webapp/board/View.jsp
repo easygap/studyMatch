@@ -76,7 +76,7 @@ function removeCheck() {
 						<td colspan="4" align="center">
 						<% if ((request.getParameter("result")).equals("Y")) { %>
 							<button type="button"
-								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }';">수정하기</button>
+								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
 							<button type="button"
 								onclick="removeCheck();">삭제하기</button>
 						<% } %>

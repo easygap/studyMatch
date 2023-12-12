@@ -87,15 +87,29 @@ public class BoardDAO extends DBConnPool {
 	// 수정하기
 	public int updateEdit(BoardDTO dto) {
 		int result = 0;
+		String query = null;
 		try {
 			con = dataSource.getConnection();
-			String query = "UPDATE board SET " + " title=?, content=? img=? " + " WHERE board_num=?";
-
+			if(dto.getImg() != null) {
+			query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getTitle());
 			psmt.setString(2, dto.getContent());
 			psmt.setString(3, dto.getImg());
 			psmt.setString(4, dto.getBoard_num());
+			psmt.setString(5, dto.getInter_num());
+			}
+			else {
+			query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getBoard_num());
+			psmt.setString(4, dto.getInter_num());
+			}
+			
 			result = psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + "번 게시글 수정 성공");
 		} catch (Exception e) {
@@ -216,8 +230,10 @@ public class BoardDAO extends DBConnPool {
 		String imgNameToDelete = null;
 		String query = "SELECT img FROM board WHERE board_num=? AND inter_num=?";
 		try {
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(query);
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.setString(2, interest);
+			rs = psmt.executeQuery();
 			rs.next();
 			imgNameToDelete = rs.getString("IMG");
 		} catch (Exception e) {
