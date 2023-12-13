@@ -30,7 +30,7 @@ public class IdSearch extends HttpServlet {
 
 		MemberDAO dao = new MemberDAO();
 		String IdSearch = dao.idSearch(name, phone);
-		
+		dao.close();
 
 		if (IdSearch != null) {
 			if (IdSearch.equals(IdSearch)) {
@@ -42,7 +42,5 @@ public class IdSearch extends HttpServlet {
 			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullID=" + nullID).forward(req, resp);
 			System.out.println("아이디 정보 없음");
 		}
-		dao.close();
-		
 	}
 }

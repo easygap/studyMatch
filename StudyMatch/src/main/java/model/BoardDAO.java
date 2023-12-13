@@ -32,11 +32,11 @@ public class BoardDAO extends DBConnPool {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
 			con = dataSource.getConnection();
-			System.out.println("DB 연동 성공");
+			System.out.println("BoardDAO DB 연동 성공");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** DB 연동 중 예외 발생 ***");
+			System.out.println("*** BoardDAO DB 연동 중 예외 발생 ***");
 		}
 	}
 
@@ -68,18 +68,6 @@ public class BoardDAO extends DBConnPool {
 	        e.printStackTrace();
 	        System.out.println("*** 게시글 작성 중 예외 발생! ***");
 	        result = 0;
-	    } finally {
-	        // 필요에 따라 close 처리 추가
-	        try {
-	            if (psmt != null) {
-	                psmt.close();
-	            }
-	            if (con != null) {
-	                con.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
 	    }
 	    return result;
 	}
@@ -99,8 +87,7 @@ public class BoardDAO extends DBConnPool {
 			psmt.setString(3, dto.getImg());
 			psmt.setString(4, dto.getBoard_num());
 			psmt.setString(5, dto.getInter_num());
-			}
-			else {
+			} else {
 			query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
 			
 			psmt = con.prepareStatement(query);
