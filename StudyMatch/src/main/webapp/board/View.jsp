@@ -87,6 +87,36 @@
 						</td>
 					</tr>
 				</table>
+				
+				<form method="post" action="replyAction.jsp?bbsID=">
+				<table class="table table-striped"
+					style="text-align: center; border: 1px solid #dddddd">
+					<%-- 홀,짝 행 구분 --%>
+					<thead>
+						<tr>
+							<th colspan="3"
+								style="background-color: #eeeeeee; text-align: center;">댓글</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="text-align: left;"></td>
+							<td style="text-align: right;">
+							<a href="update.jsp?bbsID=" class="btn">수정</a>
+							<a href="update.jsp?bbsID=" class="btn ">삭제</a>
+							</td>
+						</tr>
+				
+						<tr>
+						<td><textarea type="text" class="form-control"
+								placeholder="댓글을 입력하세요." name="replyContent" style="width:100%;" maxlength="1024"></textarea></td>
+						<td style="text-align: left; "></td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="submit" class="btn" value="댓글입력">
+			</form>
+				
 			</div>
 		</div>
 	</div>

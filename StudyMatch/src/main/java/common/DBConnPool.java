@@ -26,9 +26,6 @@ public class DBConnPool {
 			Context ctx = (Context) iniCtx.lookup("java:comp/env");
 			dataSource = (DataSource) ctx.lookup("dbcp_myoracle");
 
-			// 커넥션 풀을 통해 연결 얻기
-			con = dataSource.getConnection();
-
 			System.out.println(date.format(now) + " DB 커넥션 풀 연결 성공");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -24,7 +24,8 @@ public class idCheckAuth extends HttpServlet {
 
 		String id = request.getParameter("idCheck");
 		String idChe = dao.idCheck(id);
-
+		dao.close();
+		
 		if (idChe.equals("Y")) {
 			request.getRequestDispatcher("/auth/idCheck.jsp?idCheck=" + idChe + "&id=" + id).forward(request,
 					response);
@@ -34,7 +35,7 @@ public class idCheckAuth extends HttpServlet {
 					response);
 			System.out.println("중복된 아이디입니다.");
 		}
-		dao.close();
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
