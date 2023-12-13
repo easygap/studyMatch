@@ -10,44 +10,54 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">                                                                 
 <title>Regist Page</title>
+<script src="../js/upload.js"></script>
 <script>
-function validateForm(form){
-	if(form.id.value == ""){
-		alert("아이디를 입력하세요.");
-		RegistFrm.id.focus();
-	} else if(form.idCheck.value != "idCheck"){
-		alert("아이디 중복확인을 해주세요.")
-		return false;
-	} else if(form.pw.value == ""){
-		alert("비밀번호를 입력하세요.");
-		RegistFrm.pw.focus();
-	} else if(form.pwdu.value == ""){
-		alert("비밀번호와 맞는지 확인해 주세요.");
-		RegistFrm.pwdu.focus();
-	} else if(form.name.value == ""){
-		alert("이름을 입력하세요.");
-		RegistFrm.name.focus();
-	} else if(form.birth.value == ""){
-		alert("생일을 입력하세요.");
-		RegistFrm.birth.focus();
-	} else if(form.phone.value == ""){
-		alert("휴대폰 번호를 입력하세요.");
-		RegistFrm.phone.focus();
-	} else if(form.address.value == ""){
-		alert("주소를 입력하세요.");
-		RegistFrm.address.focus();
-	} else if(form.Email.value == ""){
-		alert("이메일을 입력하세요.");
-		RegistFrm.Email.focus();
-	} else if(form.job.value == ""){
-		alert("직업을 입력하세요.");
-		RegistFrm.job.focus();
-	}
-}
 
-function winopen(){
-		window.open("../auth/idCheckAuth.do","","width=500, height=300");
-}
+	function validateForm(form) {
+
+		var Pw = form.pw.value;
+		var pwCheck = form.pwcheck.value;
+		
+		if (form.id.value == "") {
+			alert("아이디를 입력 후 중복확인을 해주세요.");
+			RegistFrm.id.focus();
+			
+		}else if (form.idCheck.value != "idCheck") {
+			alert("아이디 중복확인을 해주세요.")
+			return false;
+		} 
+		else if (form.pw.value == "") {
+			alert("비밀번호를 입력하세요.");
+			RegistFrm.pw.focus();
+		} else if(Pw != pwCheck){
+			alert("비밀번호가 동일하지 않습니다. 다시 확인해 주세요.");
+			RegistFrm.pwcheck.focus();
+		}
+		else if (form.name.value == "") {
+			alert("이름을 입력하세요.");
+			RegistFrm.name.focus();
+		}
+		else if (form.birth.value == "") {
+			alert("생일을 입력하세요.");
+			RegistFrm.birth.focus();
+		}
+		else if (form.phone.value == "") {
+			alert("휴대폰 번호를 입력하세요.");
+			RegistFrm.phone.focus();
+		}
+		else if (form.address.value == "") {
+			alert("주소를 입력하세요.");
+			RegistFrm.address.focus();
+		}
+		else if (form.Email.value == "") {
+			alert("이메일을 입력하세요.");
+			RegistFrm.Email.focus();
+		}
+	}
+
+	function winopen() {
+			window.open("../auth/idCheckAuth.do", "", "width=500, height=300");
+	}
 </script>
 </head>
 <body>
@@ -58,7 +68,7 @@ function winopen(){
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="idCheckedd" onclick="winopen()" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
@@ -146,7 +156,7 @@ function winopen(){
 
 			<tr>
 				<td>ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
-				<td><input type="file" name="img"></td>
+				<td><input type="file" name="img" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"></td>
 				<td></td>
 			</tr>
 		</table>
