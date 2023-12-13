@@ -31,13 +31,12 @@ public class IdSearch extends HttpServlet {
 		MemberDAO dao = new MemberDAO();
 		String IdSearch = dao.idSearch(name, phone);
 		dao.close();
-
 		if (IdSearch != null) {
 			if (IdSearch.equals(IdSearch)) {
 				req.getRequestDispatcher("/auth/IdPwSearch.jsp?id=" + IdSearch).forward(req, resp);
 				System.out.println("[ " + name + " ] 아이디 찾기 성공");
 			}
-		} else{
+		} else {
 			String nullID = "Y";
 			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullID=" + nullID).forward(req, resp);
 			System.out.println("아이디 정보 없음");
