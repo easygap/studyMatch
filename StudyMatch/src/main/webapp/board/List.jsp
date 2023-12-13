@@ -93,6 +93,7 @@ String interest = request.getParameter("interest");
 							}
 						%>
 						>글쓰기</button></td>
+						
 					</tr>
 				</table>
 

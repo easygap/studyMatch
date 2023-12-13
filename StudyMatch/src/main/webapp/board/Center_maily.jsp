@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>게시글 선택</title>
+    <title>내 문의글</title>
     <style>
         table, th, td {
             border: 1px solid #000000;
@@ -169,27 +169,22 @@
 		    
 			<table border="2" width="500">
 				<tr>
-					<th>제목</th>	
-						
+					<th>제목</th>		
 				<td>
-				
-				<textarea name="comments" id="" cols="54"row="6"></textarea>	
+				<textarea name="comments" id="" cols="54"row="10"></textarea>	
 				</td>			
 				</tr>
 	    	<tr> 
 	    	<td colspan='2'>
-	    	<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
+	   		<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
       	     </td>
-      		</tr>
- 		                
-					         
-                         
-                    </div>			
+      	     <tr>
+          </tr>
+ 	
 
 				<tr>
 				<td colspan='2'>
 										
-			<img src="img/추천.png" alt="추천" />
 			<img src="img/댓글.png" alt="댓글" />
 		    <textarea name="title" id="utitle" rows="5" cols="65" placeholder="댓글달기" maxlength="100" required></textarea>
           <div align="right"> 

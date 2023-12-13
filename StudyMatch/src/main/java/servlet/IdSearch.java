@@ -42,7 +42,7 @@ public class IdSearch extends HttpServlet {
 			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullID=" + nullID).forward(req, resp);
 			System.out.println("아이디 정보 없음");
 		}
-
+		dao.close();
 		
 	}
 }

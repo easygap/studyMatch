@@ -53,9 +53,9 @@
         /* 게시글 목록 공통 개별 요소 속성 */
         li{
             list-style:none;
-            border-bottom:solid 1px gray; 
-            float:left; 
-            text-align:center;
+            border-bottom:solid 0px gray; 
+             float:left; 
+             text-align:center;
             /* padding: 0;
             margin: 0; */
         }
@@ -66,8 +66,9 @@
             line-height: 50px;
             background:rgb(233, 233, 233);
             font-weight: bold;
-            border-top:solid 2px rgb(0, 0, 0);
-            border-right:solid 1px gray;
+            border-bottom: #000000 0px solid;
+            border-left:#0000000 0px solid
+            border-right:#0000000 0px solid
         }
 
         /* 게시글 목록 데이터 개별 요소 속성 */
@@ -262,7 +263,7 @@
 
     <div class="container">
   
-     <p style='letter-spacing:1em'>No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자&nbsp;작성일&nbsp;조회수&nbsp;&nbsp;추천</p>
+     <p style='letter-spacing:2px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;&nbsp;&nbsp;추천</p>
       <div class="notice_board">
             <!-- title 열 -->
             <ul class="board_row title_row ">

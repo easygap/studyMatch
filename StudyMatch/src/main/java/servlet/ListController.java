@@ -34,7 +34,7 @@ public class ListController extends HttpServlet {
 		if(req.getParameter("mode") != null) {
 			String filename = dao.deletePost(req.getParameter("num"));
 						
-			String sDirectory = req.getServletContext().getRealPath("/Uploads");
+			String sDirectory = req.getServletContext().getRealPath("uploads");
 			
 			File file = new File(sDirectory + File.separator + filename);
 			if(file.exists()) {

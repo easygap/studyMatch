@@ -46,8 +46,10 @@ public class WriteController extends HttpServlet {
 
 		if (fileName != null && !fileName.isEmpty()) {
 		    // 파일이 선택된 경우에만 실행
-		    String uploadPath = "/uploads";
-		    File uploadDir = new File(uploadPath);
+		    String uploadPath = "uploads";
+		    String realPath = getServletContext().getRealPath(uploadPath);
+		    System.out.println("경로: " + realPath);
+		    File uploadDir = new File(realPath);
 		    if (!uploadDir.exists()) {
 		        uploadDir.mkdir();
 		    }
@@ -104,10 +106,6 @@ public class WriteController extends HttpServlet {
 		dto.setTitle(req.getParameter("title"));
 		dto.setContent(req.getParameter("content"));
 		dto.setInter_num(internum);
-
-//		java.util.Date postdate = new java.util.Date();
-//		java.sql.Date sqlDate = new java.sql.Date(postdate.getTime());
-//		dto.setPost_date(sqlDate);
 		
 		    int result = dao.insertWrite(dto);
 		    System.out.println("DAO 연결 성공");
@@ -122,21 +120,6 @@ public class WriteController extends HttpServlet {
 		    System.out.println("*** 게시글 업로드 실패 ***");
 		}
 	}
-
-	/*
-	private String getInterest(String url) {
-	    int index = url.indexOf("interest=");
-	    if (index != -1) {
-	        int endIndex = url.indexOf("&", index);
-	        if (endIndex != -1) {
-	            return url.substring(index + 9, endIndex);
-	        } else {
-	            return url.substring(index + 9);
-	        }
-	    }
-	    return null; // "interest="이 없는 경우
-	}
-	*/
 	
 	private String getFileName(Part part) {
 	    String partHeader = part.getHeader("content-disposition");

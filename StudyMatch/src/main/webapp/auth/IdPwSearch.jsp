@@ -1,5 +1,3 @@
-<%@ page import="member.MemberDTO" %>
-<%@ page import="member.MemberDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -16,8 +14,11 @@ if(request.getParameter("nullID") != null)
 String pwSearch = request.getParameter("pwId");
 
 String nullPW = "N";
-if(request.getParameter("nullPW") != null)
+if(request.getParameter("nullPW") != null){
 	nullPW = request.getParameter("nullPW");
+	System.out.println("nullPW : " + nullPW);
+}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -44,11 +45,14 @@ if(request.getParameter("nullPW") != null)
 			alert("연락처를 입력해 주세요.");
 			document.pwSearchFrm.pwPhone.focus();
 			return false;
-		} 
+		} else if(document.pwSearchFrm.pwBirth.value == ""){
+			alert("생년월일을 입력해 주세요.");
+			return false;
+		}
 	}
 	
 	function winopen() {
-		window.open("../auth/PwSearchPopup.do?userid=" + document.pwSearchFrm.pwId.value, "", "width=500, height=300");
+		window.open("../auth/PwSearchPopup.do" , "", "width=500, height=300");
 	}
 </script>
 <style>
@@ -130,7 +134,13 @@ if(request.getParameter("nullPW") != null)
 			</tr>
 			<tr>
 				<td>ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" name="pwPhone" placeholder="'-' 포함하여 입력해 주세요." />
+				<td><input type="text" name="pwPhone" placeholder="'-' 포함하여 입력해 주세요." /></td>
+				<td></td>
+			</tr>
+			
+			<tr>
+				<td>ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
+				<td><input type="text" name="pwBirth" placeholder="ex)20000101" />
 					<button type="submit" name="pwCertified" onclick="certifi()">인증하기</button></td>
 				<td></td>
 			</tr>
@@ -143,9 +153,9 @@ if(request.getParameter("nullPW") != null)
 						<span style="color:blue; font:bold;">[  회원 정보가 확인 되었습니다. <br/> 비밀번호를 변경해 주세요.  ]</span>
 						<br/>
 						<button type="button" name="pwChange" onclick="winopen()">비밀번호 변경하기</button>
-						<% } } else if(nullPW.equals("Y")){ %>
+						<% } else if(nullPW.equals("Y")){ %>
 						<span style="color:red; font:bold;">회원 정보 없음 </span>
-						<% } %>
+						<% }} %>
 						</td>
 				<td></td>
 				<td></td>

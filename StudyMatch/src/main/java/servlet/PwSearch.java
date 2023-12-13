@@ -27,11 +27,12 @@ public class PwSearch extends HttpServlet {
 		
 		String pwId = req.getParameter("pwId");
 		String pwPhone = req.getParameter("pwPhone");
+		String pwBirth = req.getParameter("pwBirth");
 		
 		System.out.println(pwId);
 		
 		MemberDAO dao = new MemberDAO();
-		String pwSearch = dao.pwSearch(pwId, pwPhone);
+		String pwSearch = dao.pwSearch(pwId, pwPhone, pwBirth);
 		
 		if(pwSearch != null) {
 			if(pwSearch.equals(pwSearch)) {
@@ -44,7 +45,7 @@ public class PwSearch extends HttpServlet {
 			System.out.println("일치한 정보가 없습니다.");
 		}
 		
-		
+		dao.close();
 		
 	}
 

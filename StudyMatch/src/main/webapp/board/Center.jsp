@@ -29,7 +29,7 @@
             <tr>
                 <th>제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</th>
                
-                <th><input type = "text" title = "title" size = "30"><br/></th>
+                <th><input type = "text" title = "title" size = "40"><br/></th>
                 
             </tr>
         </thead>
@@ -46,25 +46,33 @@
             </tr>
             <tr>
                <td>이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
-                 <th><input type = "text" name = "name" size = "30"><br/></th>
+                 <th><input type = "text" name = "name" size = "35"><br/></th>
             </tr>
             <tr>
                 <td>연&nbsp;&nbsp;락&nbsp;&nbsp;처</td>
-                 <th><input type = "text" tel-pon = "tel-pon" size = "30"><br/></th>
+                <td name="telname" action="telpon" method="post">
+                <input type='tel' name='phone1' size=7 maxlength=6 /> -
+                <input type='tel' name='phone2' size=7 maxlength=6 /> -
+                <input type='tel' name='phone3' size=7 maxlength=6 />
+                 </td>
+
             </tr>
             <tr>
                 <td>이&nbsp;&nbsp;메&nbsp;&nbsp;일</td>
-                <th><input type = "text" email-one = "email-one" size = "30"><br/></th>
+                <th><input type = "text" email-one = "email-one" size = "35"><br/></th>
             </tr>
             <tr>
                 <td>내&nbsp;&nbsp;&nbsp;&nbsp;용</td>
-                <td><textarea mess="message" rows="5" cols="30"></textarea></td>
+                <td><textarea mess="message" rows="5" cols="40"></textarea></td>
             </tr>
             <tr>
+            
                 <td colspan="0"></td>
                 <td>
-                    <input type='button' value='reset'/>
+                <div align="center">
+                    <input type='button' value='초기화'/>
                     <input type='button' value='문의하기'/>
+                     </div> 
                 </td>
             </tr>
         </tbody>

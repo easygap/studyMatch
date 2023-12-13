@@ -6,6 +6,8 @@
 	String cp = request.getContextPath();
 	String interest = request.getParameter("interest");
 	String num = request.getParameter("num");
+	String title = request.getParameter("title");
+	String content = request.getParameter("content");
  %>
 <!DOCTYPE html>
 <html>
@@ -59,13 +61,13 @@
 					<div class="mb-3">
 						<label for="title">제목</label> <input type="text"
 							class="form-control" name="title" id="title"
-							placeholder="제목을 입력해 주세요">
+							value="<%out.println(title);%>">
 					</div>
 
 					<div class="mb-3">
 						<label for="content">내용</label>
 						<textarea class="form-control" rows="11" name="content"
-							id="content" placeholder="내용을 입력해 주세요"></textarea>
+							id="content" ><%out.println(content);%></textarea>
 					</div>
 					
 					<div class="mybtn">
@@ -75,6 +77,8 @@
 						<input type="submit" class="btn btn-primary pull-right"
 							value="글쓰기"> 
 					</div>
+					<input type="hidden" id="interest" name="interest" value="<%=interest%>">
+					<input type="hidden" id="num" name="num" value="<%=num%>">
 				</form>
 			</div>
 		</div>
