@@ -18,20 +18,8 @@
 <link href="../css/upload.css" rel="stylesheet" />
 
 <!-- 자바 스크립트 -->
-<script type="text/javascript">
-	function validateForm(form) { // 필수 항목 입력 확인}
-		if (form.title.value == "") {
-			alert("제목을 입력하세요.");
-			form.title.focus();
-			return false;
-		}
-		if (form.content.value == "") {
-			alert("내용을 입력하세요.");
-			form.content.focus();
-			return false;
-		}
-	}
-</script>
+<script src="../js/upload.js"></script>
+
 </head>
 <body>
 	
@@ -52,7 +40,7 @@
 					action="../board/WriteController.do?<%=interest%>" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
-						<label for="ofile">업로드</label> <input type="file" name="ofile"
+						<label for="ofile">업로드</label> <input type="file" name="ofile" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"
 							id="ofile">
 					</div>
 
