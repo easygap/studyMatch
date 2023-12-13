@@ -29,9 +29,10 @@ public class EditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		BoardDAO dao = new BoardDAO();
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
+		BoardDAO dao = new BoardDAO();
+		BoardDTO dto = new BoardDTO();
 
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
@@ -40,10 +41,6 @@ public class EditController extends HttpServlet {
 		System.out.println("Edit Controller에서 title값 : " + title);
 		String content = req.getParameter("content");
 		System.out.println("Edit Controller에서 content값 : " + content);
-
-		req.setCharacterEncoding("UTF-8");
-		resp.setCharacterEncoding("UTF-8");
-		BoardDTO dto = new BoardDTO();
 
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명

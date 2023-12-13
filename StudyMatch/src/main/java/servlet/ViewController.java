@@ -37,9 +37,6 @@ public class ViewController extends HttpServlet {
 
 		dao.updateVisitCount(num); // 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
-		if (dto.getBoard_num().equals("1001")) {
-			dto.setBoard_num("영어");
-		}
 		dao.close();
 		
 		// 줄 바꿈 처리

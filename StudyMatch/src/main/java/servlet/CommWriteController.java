@@ -13,8 +13,8 @@ import model.CommentDAO;
 import model.CommentDTO;
 
 
-@WebServlet("/ComentController")
-public class CommentController extends HttpServlet {
+@WebServlet("/CommWriteController.do")
+public class CommWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,10 +33,10 @@ public class CommentController extends HttpServlet {
         
         if (userObject != null) {
         	userId = userObject.toString();
-            System.out.println("댓글 작성할 아이디 : " + userId);
+            System.out.println("댓글 작성 아이디 불러오기 완");
         } else {
         	resp.sendRedirect("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
-            System.out.println("*** 댓글 작성할 아이디 : 생성 실패 ***");
+            System.out.println("*** 댓글 작성 아이디 생성 실패 ***");
         	return;
         }
         dto.setInter_num(internum);
@@ -45,14 +45,14 @@ public class CommentController extends HttpServlet {
 		dto.setContent(req.getParameter("content"));
 		
 		int result = dao.insertComm(dto);
+		dao.close();
 
 		if (result == 1) {
-			resp.sendRedirect("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
+			req.getRequestDispatcher("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
 		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
 		} else {
-		    resp.sendRedirect("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
+			req.getRequestDispatcher("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
 		    System.out.println("*** 댓글 업로드 실패 ***");
 		}
 	}
-
 }
