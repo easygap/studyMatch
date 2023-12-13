@@ -102,46 +102,6 @@ public class MemberDAO extends DBConnPool {
 		return result;
 	}
 
-	// 회원정보 조회
-//	public ArrayList<MemberDTO> Inquiry(String uid, String upass) {
-//		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
-//		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
-//		try {
-//			
-//			psmt = con.prepareStatement(query);
-//			rs = psmt.executeQuery();
-//
-//			psmt.setString(1, uid);
-//			psmt.setString(6, upass);
-//			while (rs.next()) { // DTO 객체에 회원 정보 저장
-//				String id = rs.getString("id");
-//				String pass = rs.getString("pwd");
-//				String name = rs.getString(2);
-//				String birth = rs.getString(3);
-//				String job = rs.getString(4);
-//				String nick = rs.getString(5);
-//				String phone = rs.getString(7);
-//				String email = rs.getString(8);
-//				String address = rs.getString(9);
-//				String interest1 = rs.getString(10);
-//				String interest2 = rs.getString(11);
-//				String interest3 = rs.getString(12);
-//				String image = rs.getString(14);
-//
-//				MemberDTO dto = new MemberDTO();
-//				list.add(dto);
-//				System.out.println(date.format(now) + " [ " + uid + " ] 정보 조회 성공!");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("*** [ " + uid + " ] 회원정보 조회 쿼리문 실행 중 예외 발생! ***");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("*** [ " + uid + " ] 회원정보 조회 중 예외 발생! ***");
-//		}
-//		return list;
-//	}
-
 	// 회원가입
 	public boolean signUp(MemberDTO dto) throws SQLException {
 		
@@ -184,9 +144,9 @@ public class MemberDAO extends DBConnPool {
 	}
 	
 	// ID 중복체크
-	public int idCheck(String id) {
+	public String idCheck(String id) {
 		String query = "SELECT id FROM member WHERE id = ?";
-		int result = 0;
+		String idCheck = null;
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -194,17 +154,16 @@ public class MemberDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 			
 			if(rs.next()) {
-				result = 0;
+				idCheck = "N";		// 아이디 중복
 			}else {
-				result = 1;
+				idCheck = "Y";			// 아이디 등록 가능
 			}
-			System.out.println("쿼리문 아이디 중복체크 결과 : " + result);
+			System.out.println("쿼리문 아이디 중복체크 결과 : " + idCheck);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("*** 아이디 중복 검사 쿼리 실행 중 예외 발생 ***");
 		}
-		
-		return result;
+		return idCheck;
 	}
 	
 	// 아이디 찾기
