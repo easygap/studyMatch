@@ -34,7 +34,7 @@ public class JSFunction {
 		}catch(Exception e) {}
 	}
 	
-	// 회원가입 알람창
+	// 회원가입 성공 알람창
 	public static void alertRegist(HttpServletResponse resp, String msg, String url) {
 		try {
 			resp.setContentType("text/html;charset=UTF-8");
@@ -48,6 +48,34 @@ public class JSFunction {
 		}catch(Exception e) {}
 	}
 	
+	// 회원가입 실패 알람창
+	public static void alertRegistFail(HttpServletResponse resp, String msg) {
+		try {
+			resp.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = resp.getWriter();
+			String script = ""
+					+ "<script>"
+					+ " 	alert('" + msg + "');"
+					+ " 	history.back();"
+					+ "</script>";
+			writer.print(script);
+		}catch(Exception e) {}
+	}
+	
+	// 비밀번호 동일하지 않을 때 알람창
+	public static void alertRegistPWDFail(HttpServletResponse resp, String msg) {
+		try {
+			resp.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = resp.getWriter();
+			String script = ""
+					+ "<script>"
+					+ " 	alert('" + msg + "');"
+					+ " 	history.back();"
+					+ "</script>";
+			writer.print(script);
+		}catch(Exception e) {}
+	}
+
 	// 로그인 알람창
 	public static void alertLogin(HttpServletResponse resp, String msg, String url) {
 		try {
