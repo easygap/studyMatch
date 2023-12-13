@@ -23,7 +23,10 @@ public class RegistAuth2 extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        doGet(req, resp);
+    	System.out.println("doPost()");
+    	
     	req.setCharacterEncoding("UTF-8");
+    	
     	// 파일 업로드 처리       
         String saveDirectory = req.getServletContext().getRealPath("/Profile");
         // 파일 용량
@@ -31,8 +34,6 @@ public class RegistAuth2 extends HttpServlet {
         String encoding = "UTF-8";
         MultipartRequest mr = new MultipartRequest(req, saveDirectory, maxPostSize, encoding);
         
-        System.out.println("doPost()");
-
         System.out.println("[ " + mr.getParameter("id") + " ]");
 
         String[] interest = mr.getParameterValues("interests");
@@ -48,11 +49,10 @@ public class RegistAuth2 extends HttpServlet {
 
         String uri = req.getRequestURI();
 
-        
-        
         try {	
             MemberDTO dto = new MemberDTO();
             
+            // 회원가입 DB 연결
             if (uri.indexOf("Regist.do") != -1) {
                 dto.setId(mr.getParameter("id"));
                 dto.setPass(mr.getParameter("pw"));
@@ -76,6 +76,7 @@ public class RegistAuth2 extends HttpServlet {
                 	}
                 } 
 
+                // 이미지 저장 경로 파일명 변경
                 String fileName = mr.getFilesystemName("img");
                 if (fileName != null) {
                     String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
@@ -89,14 +90,14 @@ public class RegistAuth2 extends HttpServlet {
                     dto.setImage(newFileName);
                     System.out.println("newFileName : " + newFileName);
                 }
+
+                // 회원가입 성공/실패 알람창
                 boolean result = dao.signUp(dto);
 
 				if (result == true) {
-					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.");
-					resp.sendRedirect("../auth/LoginAuth.do");
+					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.", "../auth/LoginAuth.do");
 				} else {
-					JSFunction.alertRegist(resp, "회원가입에 실패하였습니다.");
-					resp.sendRedirect("../auth/Regist.do");
+					JSFunction.alertRegist(resp, "회원가입에 실패하였습니다.", "../auth/Regist.do");
 				}
 				dao.close();
             }

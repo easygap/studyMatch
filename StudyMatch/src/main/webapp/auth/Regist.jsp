@@ -46,12 +46,7 @@ function validateForm(form){
 }
 
 function winopen(){
-	if(document.RegistFrm.id.value == ""){
-		alert("아이디를 먼저 입력해 주세요.");
-		document.RegistFrm.id.focus();
-	}else{
-		window.open("../auth/idCheckAuth.do?userid=" + document.RegistFrm.id.value,"","width=500, height=300");
-	}
+		window.open("../auth/idCheckAuth.do","","width=500, height=300");
 }
 </script>
 </head>
@@ -63,7 +58,7 @@ function winopen(){
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="idChecked" onclick="winopen()" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="idCheckedd" onclick="winopen()" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
@@ -156,7 +151,7 @@ function winopen(){
 			</tr>
 		</table>
 	<br/>
-	<button type="submit">가입하기</button> 
+	<button type="submit" name="signUp">가입하기</button>
 	<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>
 	</div>
 </form>
