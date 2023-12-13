@@ -13,14 +13,6 @@ public class BoardDTO {
 	private String like_count;
 	private java.sql.Date post_date;
 
-	// 댓글
-	private String commen_num;
-	private String commen_content;
-	private String commen_id;
-	private java.sql.Date commen_date;
-	private String commen_like;
-//	private String commen_count;
-
 	public BoardDTO() {
 	}
 
@@ -64,26 +56,6 @@ public class BoardDTO {
 		return post_date;
 	}
 
-	public String getCommen_num() {
-		return commen_num;
-	}
-
-	public String getCommen_content() {
-		return commen_content;
-	}
-
-	public String getCommen_id() {
-		return commen_id;
-	}
-
-	public java.sql.Date getCommen_date() {
-		return commen_date;
-	}
-
-	public String getCommen_like() {
-		return commen_like;
-	}
-
 	public void setGroud_num(String groud_num) {
 		this.groud_num = groud_num;
 	}
@@ -122,25 +94,5 @@ public class BoardDTO {
 
 	public void setPost_date(java.sql.Date post_date) {
 		this.post_date = post_date;
-	}
-
-	public void setCommen_num(String commen_num) {
-		this.commen_num = commen_num;
-	}
-
-	public void setCommen_content(String commen_content) {
-		this.commen_content = commen_content;
-	}
-
-	public void setCommen_id(String commen_id) {
-		this.commen_id = commen_id;
-	}
-
-	public void setCommen_date(java.sql.Date commen_date) {
-		this.commen_date = commen_date;
-	}
-
-	public void setCommen_like(String commen_like) {
-		this.commen_like = commen_like;
 	}
 }

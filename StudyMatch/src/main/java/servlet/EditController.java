@@ -117,10 +117,10 @@ public class EditController extends HttpServlet {
 	    }
 	    return null;
 	}
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.getWriter().append("Served at: ").append(req.getContextPath());
-        String internum = req.getParameter("interest");
-		RequestDispatcher dis = req.getRequestDispatcher("../board/Edit.jsp?interest=" + internum);
-		dis.forward(req, resp);
-	}
+//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+////		resp.getWriter().append("Served at: ").append(req.getContextPath());
+//        String internum = req.getParameter("interest");
+//		RequestDispatcher dis = req.getRequestDispatcher("../board/Edit.jsp?interest=" + internum);
+//		dis.forward(req, resp);
+//	}
 }

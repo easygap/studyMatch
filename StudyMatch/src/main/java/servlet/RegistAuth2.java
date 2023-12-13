@@ -93,13 +93,14 @@ public class RegistAuth2 extends HttpServlet {
 
                 // 회원가입 성공/실패 알람창
                 boolean result = dao.signUp(dto);
-
+                dao.close();
+                
 				if (result == true) {
 					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.", "../auth/LoginAuth.do");
 				} else {
 					JSFunction.alertRegist(resp, "회원가입에 실패하였습니다.", "../auth/Regist.do");
 				}
-				dao.close();
+				
             }
         } catch (Exception e) {
             e.printStackTrace();

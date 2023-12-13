@@ -36,6 +36,8 @@ public class LoginAuth extends HttpServlet {
       String pass = req.getParameter("pass");
       MemberDAO dao = new MemberDAO();
       MemberDTO dto = dao.getMemberDTO(id, pass);
+      dao.close();
+      
       if (dto != null) {
          HttpSession session = req.getSession();
          session.setAttribute("user", dto.getId());
@@ -59,7 +61,6 @@ public class LoginAuth extends HttpServlet {
 			// 로그인 실패 알람창
 			JSFunction .alertLogin(resp, "일치하는 회원 정보를 찾지 못했어요.（；´д｀）ゞ", "../auth/Login.jsp");
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
-		}
-		dao.close();
+		}		
 	}
 }

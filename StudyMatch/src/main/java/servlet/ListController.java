@@ -29,11 +29,9 @@ public class ListController extends HttpServlet {
 
 		BoardDAO dao = new BoardDAO();
 		
-		
-		
 		if(req.getParameter("mode") != null) {
 			String filename = dao.deletePost(req.getParameter("num"));
-						
+			
 			String sDirectory = req.getServletContext().getRealPath("uploads");
 			
 			File file = new File(sDirectory + File.separator + filename);
@@ -51,6 +49,7 @@ public class ListController extends HttpServlet {
 		}
 
 		int totalCount = dao.selectCount(map); // 게시물 개수
+		dao.close();
 
 		// 페이지 처리
 		ServletContext application = getServletContext();
@@ -71,7 +70,6 @@ public class ListController extends HttpServlet {
 
 		String interest = req.getParameter("interest");
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
-		dao.close();
 
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 		map.put("pagingImg", pagingImg);
