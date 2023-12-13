@@ -33,7 +33,6 @@ public class BoardDAO extends DBConnPool {
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
 			con = dataSource.getConnection();
 			System.out.println("BoardDAO DB 연동 성공");
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** BoardDAO DB 연동 중 예외 발생 ***");
@@ -42,34 +41,33 @@ public class BoardDAO extends DBConnPool {
 
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
-	    int result = 0;
-	    int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
-	    int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
-	    String query = "INSERT INTO board (inter_num, board_num, title, content, img, id, visit_count, like_count) "
-	    		+ "VALUES (?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
-	    
-	    try {
-	        con = dataSource.getConnection();
-	        psmt = con.prepareStatement(query);
-	        psmt.setString(1, dto.getInter_num());
-	        psmt.setString(2, dto.getTitle());
-	        psmt.setString(3, dto.getContent());
-	        psmt.setString(4, dto.getImg());
-	        psmt.setString(5, dto.getId());
-	        psmt.setInt(6, visitCount);
-	        psmt.setInt(7, likeCount);
-	        result = psmt.executeUpdate();
-	        System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        System.out.println("*** 게시글 작성 쿼리문 예외 발생 ***");
-	        result = 0;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        System.out.println("*** 게시글 작성 중 예외 발생! ***");
-	        result = 0;
-	    }
-	    return result;
+		int result = 0;
+		int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
+		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
+		String query = "INSERT INTO board (inter_num, board_num, title, content, img, id, visit_count, like_count) "
+				+ "VALUES (?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getInter_num());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getImg());
+			psmt.setString(5, dto.getId());
+			psmt.setInt(6, visitCount);
+			psmt.setInt(7, likeCount);
+			result = psmt.executeUpdate();
+			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("*** 게시글 작성 쿼리문 예외 발생 ***");
+			result = 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시글 작성 중 예외 발생! ***");
+			result = 0;
+		}
+		return result;
 	}
 
 	// 수정하기
@@ -77,26 +75,26 @@ public class BoardDAO extends DBConnPool {
 		int result = 0;
 		String query = null;
 		try {
-			con = dataSource.getConnection();
-			if(dto.getImg() != null) {
-			query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
-			
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getTitle());
-			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getImg());
-			psmt.setString(4, dto.getBoard_num());
-			psmt.setString(5, dto.getInter_num());
+
+			if (dto.getImg() != null) {
+				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
+
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, dto.getTitle());
+				psmt.setString(2, dto.getContent());
+				psmt.setString(3, dto.getImg());
+				psmt.setString(4, dto.getBoard_num());
+				psmt.setString(5, dto.getInter_num());
 			} else {
-			query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
-			
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getTitle());
-			psmt.setString(2, dto.getContent());
-			psmt.setString(3, dto.getBoard_num());
-			psmt.setString(4, dto.getInter_num());
+				query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
+
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, dto.getTitle());
+				psmt.setString(2, dto.getContent());
+				psmt.setString(3, dto.getBoard_num());
+				psmt.setString(4, dto.getInter_num());
 			}
-			
+
 			result = psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + "번 게시글 수정 성공");
 		} catch (Exception e) {
@@ -109,39 +107,38 @@ public class BoardDAO extends DBConnPool {
 	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
 	public String checkSession(String num, String interest) {
 		String checkID = null;
-		
+
 		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
-		
+
 		try {
-			con = dataSource.getConnection();
+
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			psmt.setString(2, interest);
 			rs = psmt.executeQuery();
-			
-			if (rs.next()) 
+
+			if (rs.next())
 				checkID = rs.getString("id");
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 조회중 에러 발생 ***");
 		}
 		return checkID;
 	}
-	
-	
+
 	// 게시물 삭제
 	public String deletePost(String num) {
 		String filename = null;
-		
+
 		String query1 = "SELECT img FROM board WHERE board_num=?";
-		
+
 		try {
-			con = dataSource.getConnection();
+
 			psmt = con.prepareStatement(query1);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
-			
+
 			if (rs.next()) {
 				filename = rs.getString("img");
 			}
@@ -149,11 +146,11 @@ public class BoardDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 첨부파일 삭제 중 예외 발생 ***");
 		}
-		
+
 		String query2 = "DELETE FROM board WHERE board_num=?";
 
 		try {
-			con = dataSource.getConnection();
+
 			psmt = con.prepareStatement(query2);
 			psmt.setString(1, num);
 			psmt.executeUpdate();
@@ -162,10 +159,8 @@ public class BoardDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
 		}
-		
 		return filename;
 	}
-
 
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
@@ -173,7 +168,7 @@ public class BoardDAO extends DBConnPool {
 		String query = "SELECT B.*, M.nickname " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
 				+ " WHERE board_num=?";
 		try {
-			con = dataSource.getConnection();
+
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
@@ -197,16 +192,16 @@ public class BoardDAO extends DBConnPool {
 		}
 		return dto;
 	}
-	
+
 	// 게시물 조회수 +1
 	public void updateVisitCount(String num) {
 		String query = "UPDATE board SET visit_count = visit_count + 1 where board_num=?";
 		try {
+
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
-			psmt.executeQuery();
-		}
-		catch (Exception e) {
+			psmt.executeUpdate();
+		} catch (Exception e) {
 			System.out.println("게시물 조회수 증가 중 예외 발생");
 			e.printStackTrace();
 		}
@@ -228,12 +223,7 @@ public class BoardDAO extends DBConnPool {
 		}
 		return imgNameToDelete;
 	}
-	
-	// *게시글 수정하기*
-	public void modifyBoard(String num, String interest) {
-		String query = "UPDATE board SET AMT=5000 WHERE board_num = ? AND inter_num = ? ";
-	}
-	
+
 	// 검색 조건에 맞는 게시글 수
 	public int selectCount(Map<String, Object> map) { // 게시글 검색
 		int totalCount = 0; // 게시물 수를 담을 변수
@@ -264,7 +254,7 @@ public class BoardDAO extends DBConnPool {
 		query += "ORDER BY board_num DESC";
 
 		try {
-			con = dataSource.getConnection();
+
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
 			rs = psmt.executeQuery(); // 쿼리문 실행
