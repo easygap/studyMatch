@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import member.MemberDAO;
 import member.MemberDTO;
+import utils.JSFunction;
 
 @WebServlet("/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
@@ -45,9 +46,10 @@ public class LoginAuth extends HttpServlet {
          String creationTimeStr = dateFormat.format(new Date(creationTime));
 			long lastTime = session.getLastAccessedTime(); // 마지막 요청 시간
 			String lastTimeStr = dateFormat.format(new Date(lastTime));			
-			resp.getWriter().write("success");
-			resp.sendRedirect(req.getContextPath() + "/board/MainPage.jsp");
 			
+			// 로그인 성공 알람창
+			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/MainPage.jsp");
+
 			System.out.println("------------------------------");
 			System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공 - session 저장 완료");
 			System.out.println("세션 아이디: " + session.getId());
@@ -56,8 +58,8 @@ public class LoginAuth extends HttpServlet {
 			System.out.println("마지막 요청 시간: " + lastTimeStr);
 			System.out.println("------------------------------");
 		} else {
-			resp.getWriter().write("fail");
-			resp.sendRedirect("../auth/Login.jsp");
+			// 로그인 실패 알람창
+			JSFunction .alertLogin(resp, "일치하는 회원 정보를 찾지 못했어요.（；´д｀）ゞ", "../auth/Login.jsp");
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
 		}		
 	}
