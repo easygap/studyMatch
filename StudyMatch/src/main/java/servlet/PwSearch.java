@@ -17,35 +17,34 @@ public class PwSearch extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("doGet()");
 		req.setCharacterEncoding("UTF-8");
-		
+
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 		System.out.println("doPost()");
 		req.setCharacterEncoding("UTF-8");
-		
+
 		String pwId = req.getParameter("pwId");
 		String pwPhone = req.getParameter("pwPhone");
 		String pwBirth = req.getParameter("pwBirth");
-		
+
 		System.out.println(pwId);
-		
+
 		MemberDAO dao = new MemberDAO();
 		String pwSearch = dao.pwSearch(pwId, pwPhone, pwBirth);
 		dao.close();
-		
-		if(pwSearch != null) {
-			if(pwSearch.equals(pwSearch)) {
+		if (pwSearch != null) {
+			if (pwSearch.equals(pwSearch)) {
 				req.getRequestDispatcher("/auth/IdPwSearch.jsp?pwId=" + pwId).forward(req, resp);
 				System.out.println("[ " + pwId + " ] 비밀번호 찾기 성공");
 			}
-		}else{
+		} else {
 			String nullPW = "Y";
 			req.getRequestDispatcher("/auth/IdPwSearch.jsp?nullPW=" + nullPW).forward(req, resp);
 			System.out.println("일치한 정보가 없습니다.");
 		}
-		
+
 	}
 
 }

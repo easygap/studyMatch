@@ -30,12 +30,11 @@ public class PwSearchPopup extends HttpServlet {
 			if (pwChan.equals(pwCheck)) {
 				dao.pwChange(pwChan, id);
 				System.out.println("[ " + id + " ] 비밀번호 변경 성공!!!!!");
-				dao.close();
 			} else {
 				System.out.println("[ " + id + " ] 비밀번호 변경 실패,,,,");
 			}
 		}
-
+		dao.close();
 		req.getRequestDispatcher("/auth/PwSearchPopup.jsp?id=" + id).forward(req, resp);
 	}
 

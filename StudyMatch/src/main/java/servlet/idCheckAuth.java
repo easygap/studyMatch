@@ -18,7 +18,9 @@ public class idCheckAuth extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("doGet()");
 
+
 		MemberDAO dao = new MemberDAO();
+
 
 		String id = request.getParameter("idCheck");
 		String idChe = dao.idCheck(id);

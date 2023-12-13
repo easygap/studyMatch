@@ -31,6 +31,7 @@ public class MemberDAO extends DBConnPool {
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
+			con = dataSource.getConnection();
 			System.out.println("DB 연동 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -42,7 +43,7 @@ public class MemberDAO extends DBConnPool {
 		MemberDTO dto = null;
 		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, pass);
@@ -71,6 +72,7 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** MemberDAO.getMemberDTO 회원 정보 조회 중 예외 발생 ***");
 		}
+		
 		return dto;
 	}
 
@@ -80,7 +82,7 @@ public class MemberDAO extends DBConnPool {
 		String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
 
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, pass);
@@ -96,52 +98,13 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 로그인 쿼리 실행 중 예외 발생 ***");
 		}
+		
 		return result;
 	}
 
-	// 회원정보 조회
-//	public ArrayList<MemberDTO> Inquiry(String uid, String upass) {
-//		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
-//		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
-//		try {
-//			con = dataSource.getConnection();
-//			psmt = con.prepareStatement(query);
-//			rs = psmt.executeQuery();
-//
-//			psmt.setString(1, uid);
-//			psmt.setString(6, upass);
-//			while (rs.next()) { // DTO 객체에 회원 정보 저장
-//				String id = rs.getString("id");
-//				String pass = rs.getString("pwd");
-//				String name = rs.getString(2);
-//				String birth = rs.getString(3);
-//				String job = rs.getString(4);
-//				String nick = rs.getString(5);
-//				String phone = rs.getString(7);
-//				String email = rs.getString(8);
-//				String address = rs.getString(9);
-//				String interest1 = rs.getString(10);
-//				String interest2 = rs.getString(11);
-//				String interest3 = rs.getString(12);
-//				String image = rs.getString(14);
-//
-//				MemberDTO dto = new MemberDTO();
-//				list.add(dto);
-//				System.out.println(date.format(now) + " [ " + uid + " ] 정보 조회 성공!");
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			System.out.println("*** [ " + uid + " ] 회원정보 조회 쿼리문 실행 중 예외 발생! ***");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("*** [ " + uid + " ] 회원정보 조회 중 예외 발생! ***");
-//		}
-//		return list;
-//	}
-
 	// 회원가입
 	public boolean signUp(MemberDTO dto) throws SQLException {
-		con = dataSource.getConnection();
+		
 		boolean result = false;
 		String query = "INSERT INTO member (id, name, birth, job, nickname, pwd, phone, email, address, interest1, interest2, interest3, img)"
 				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -176,6 +139,7 @@ public class MemberDAO extends DBConnPool {
 			System.out.println("*** " + date.format(now) + " 회원가입 실패 ***");
 			result = false;
 		}
+		
 		return result;
 	}
 	
@@ -185,7 +149,6 @@ public class MemberDAO extends DBConnPool {
 		String idCheck = null;
 		
 		try {
-			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			rs = psmt.executeQuery();
@@ -209,7 +172,7 @@ public class MemberDAO extends DBConnPool {
 		String idSearch = null;
 		
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, name);
 			psmt.setString(2, phone);
@@ -225,6 +188,7 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 아이디 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
+		
 		return idSearch;
 	}
 	
@@ -234,7 +198,7 @@ public class MemberDAO extends DBConnPool {
 		String pwSearch = null;
 		
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, phone);
@@ -251,6 +215,7 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 비밀번호 찾기 쿼리문 실행 중 예외 발생 ***");
 		}
+		
 		return pwSearch;
 	}
 	
@@ -260,7 +225,7 @@ public class MemberDAO extends DBConnPool {
 		
 		
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, pw);
 			psmt.setString(2, id);
@@ -273,10 +238,11 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("비밀번호 변경 진행 시 예외 발생!!!");
 		}
+		
 	}
 
 	// 자원 반납
-	public void DBclose() {
+	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
 		try {
 			if (con != null)
@@ -285,10 +251,10 @@ public class MemberDAO extends DBConnPool {
 				psmt.close();
 			if (rs != null)
 				rs.close();
-			System.out.println("DB 커넥션 풀 자원 반납");
+			System.out.println("member DB 커넥션 풀 자원 반납");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** DB 커넥션 풀 자원 반납 중 예외 발생 ***");
+			System.out.println("*** member DB 커넥션 풀 자원 반납 중 예외 발생 ***");
 		}	
 		dbConnPool.close();
 	}

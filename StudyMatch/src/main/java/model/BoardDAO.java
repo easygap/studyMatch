@@ -49,7 +49,7 @@ public class BoardDAO extends DBConnPool {
 	    		+ "VALUES (?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 	    
 	    try {
-	        con = dataSource.getConnection();
+	        
 	        psmt = con.prepareStatement(query);
 	        psmt.setString(1, dto.getInter_num());
 	        psmt.setString(2, dto.getTitle());
@@ -77,7 +77,7 @@ public class BoardDAO extends DBConnPool {
 		int result = 0;
 		String query = null;
 		try {
-			con = dataSource.getConnection();
+			
 			if(dto.getImg() != null) {
 			query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
 			
@@ -113,7 +113,7 @@ public class BoardDAO extends DBConnPool {
 		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
 		
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			psmt.setString(2, interest);
@@ -137,7 +137,7 @@ public class BoardDAO extends DBConnPool {
 		String query1 = "SELECT img FROM board WHERE board_num=?";
 		
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query1);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
@@ -153,7 +153,7 @@ public class BoardDAO extends DBConnPool {
 		String query2 = "DELETE FROM board WHERE board_num=?";
 
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query2);
 			psmt.setString(1, num);
 			psmt.executeUpdate();
@@ -162,7 +162,6 @@ public class BoardDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
 		}
-		
 		return filename;
 	}
 
@@ -173,7 +172,7 @@ public class BoardDAO extends DBConnPool {
 		String query = "SELECT B.*, M.nickname " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
 				+ " WHERE board_num=?";
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
@@ -202,9 +201,10 @@ public class BoardDAO extends DBConnPool {
 	public void updateVisitCount(String num) {
 		String query = "UPDATE board SET visit_count = visit_count + 1 where board_num=?";
 		try {
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
-			psmt.executeQuery();
+			psmt.executeUpdate();
 		}
 		catch (Exception e) {
 			System.out.println("게시물 조회수 증가 중 예외 발생");
@@ -227,11 +227,6 @@ public class BoardDAO extends DBConnPool {
 			e.printStackTrace();
 		}
 		return imgNameToDelete;
-	}
-	
-	// *게시글 수정하기*
-	public void modifyBoard(String num, String interest) {
-		String query = "UPDATE board SET AMT=5000 WHERE board_num = ? AND inter_num = ? ";
 	}
 	
 	// 검색 조건에 맞는 게시글 수
@@ -264,7 +259,7 @@ public class BoardDAO extends DBConnPool {
 		query += "ORDER BY board_num DESC";
 
 		try {
-			con = dataSource.getConnection();
+			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
 			rs = psmt.executeQuery(); // 쿼리문 실행

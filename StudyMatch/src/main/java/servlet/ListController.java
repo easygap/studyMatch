@@ -28,18 +28,18 @@ public class ListController extends HttpServlet {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		BoardDAO dao = new BoardDAO();
-		
-		if(req.getParameter("mode") != null) {
+
+		if (req.getParameter("mode") != null) {
 			String filename = dao.deletePost(req.getParameter("num"));
-			
+
 			String sDirectory = req.getServletContext().getRealPath("uploads");
-			
+
 			File file = new File(sDirectory + File.separator + filename);
-			if(file.exists()) {
+			if (file.exists()) {
 				file.delete();
 			}
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		String searchField = req.getParameter("searchField");
 		String searchWord = req.getParameter("searchWord");
@@ -49,7 +49,6 @@ public class ListController extends HttpServlet {
 		}
 
 		int totalCount = dao.selectCount(map); // 게시물 개수
-		dao.close();
 
 		// 페이지 처리
 		ServletContext application = getServletContext();
@@ -70,7 +69,7 @@ public class ListController extends HttpServlet {
 
 		String interest = req.getParameter("interest");
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
-
+		dao.close();
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);

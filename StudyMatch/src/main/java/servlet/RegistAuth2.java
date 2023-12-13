@@ -112,5 +112,3 @@ public class RegistAuth2 extends HttpServlet {
         req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
     }
 }
-
-
