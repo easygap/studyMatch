@@ -11,6 +11,22 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
+<style>
+#blah{
+
+position: absolute;
+
+left: 700px;
+
+top: 100px;
+
+width: 300px;
+
+border: 1px solid black;
+
+}
+</style>
+
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 

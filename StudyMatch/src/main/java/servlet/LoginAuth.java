@@ -48,7 +48,7 @@ public class LoginAuth extends HttpServlet {
 			String lastTimeStr = dateFormat.format(new Date(lastTime));			
 			
 			// 로그인 성공 알람창
-			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/MainPage.jsp");
+			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/Main.do");
 
 			System.out.println("------------------------------");
 			System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공 - session 저장 완료");
