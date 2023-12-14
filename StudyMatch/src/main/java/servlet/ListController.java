@@ -29,14 +29,24 @@ public class ListController extends HttpServlet {
 
 		BoardDAO dao = new BoardDAO();
 
-		if (req.getParameter("mode") != null) {
-			String filename = dao.deletePost(req.getParameter("num"));
+		// sessionID 와 deleteID와 같은지 확인 후 삭제 가능하도록 구현
+		String num = req.getParameter("num");
+		String interest = req.getParameter("interest");
 
-			String sDirectory = req.getServletContext().getRealPath("uploads");
+		String DeleteID = dao.checkSession(num, interest);
+		HttpSession session = req.getSession();
+		String sessionID = (String) session.getAttribute("user");
+		System.out.println("현재 삭제 페이지 sessionID : " + sessionID);
+		if (sessionID != null && sessionID.equals(DeleteID)) {
+			if (req.getParameter("mode") != null) {
+				String filename = dao.deletePost(req.getParameter("num"));
 
-			File file = new File(sDirectory + File.separator + filename);
-			if (file.exists()) {
-				file.delete();
+				String sDirectory = req.getServletContext().getRealPath("uploads");
+
+				File file = new File(sDirectory + File.separator + filename);
+				if (file.exists()) {
+					file.delete();
+				}
 			}
 		}
 
@@ -67,7 +77,6 @@ public class ListController extends HttpServlet {
 		map.put("start", start);
 		map.put("end", end);
 
-		String interest = req.getParameter("interest");
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
 		dao.close();
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");

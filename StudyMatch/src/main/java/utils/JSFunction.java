@@ -61,20 +61,6 @@ public class JSFunction {
 			writer.print(script);
 		}catch(Exception e) {}
 	}
-	
-	// 비밀번호 동일하지 않을 때 알람창
-	public static void alertRegistPWDFail(HttpServletResponse resp, String msg) {
-		try {
-			resp.setContentType("text/html;charset=UTF-8");
-			PrintWriter writer = resp.getWriter();
-			String script = ""
-					+ "<script>"
-					+ " 	alert('" + msg + "');"
-					+ " 	history.back();"
-					+ "</script>";
-			writer.print(script);
-		}catch(Exception e) {}
-	}
 
 	// 로그인 알람창
 	public static void alertLogin(HttpServletResponse resp, String msg, String url) {
