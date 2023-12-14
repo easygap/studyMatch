@@ -28,32 +28,30 @@ public class RegistAuth2 extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		// 파일 업로드 처리
-		String saveDirectory = req.getServletContext().getRealPath("/Profile");
+		String saveDirectory = req.getServletContext().getRealPath("/MyProfile");
 		// 파일 용량
 		int maxPostSize = 1024 * 1000; // 1MB
 		String encoding = "UTF-8";
 		MultipartRequest mr = new MultipartRequest(req, saveDirectory, maxPostSize, encoding);
-
-		System.out.println("[ " + mr.getParameter("id") + " ]");
 
 		// 비밀번호 동일한지 확인
 		String pw = mr.getParameter("pw");
 		String pwcheck = mr.getParameter("pwcheck");
 
 		String[] interest = mr.getParameterValues("interests");
-		if (interest != null) {
-			for (String s : interest) {
-				System.out.println("[ " + s + " ]");
-			}
-		} else {
-			System.out.println("[ No interests selected ]");
+		
+		// 콘솔 확인
+		System.out.println("[ " + mr.getParameter("id") + " ]");
+		for (String s : interest) {
+			System.out.println("[ " + s + " ]");
 		}
+		System.out.println("---------------------- Regist ----------------------");
 
 		boolean Regist = false;
 
 		try {
 
-			// 회원가입 DB 연결
+			// id, pw, name, nickName, birth, phone, address, job Not NULL 일 때만 아래 조건문이 실행되도록 구현.
 			if (!mr.getParameter("id").equals("") && !pw.equals("") && !mr.getParameter("name").equals("")
 					&& !mr.getParameter("nickName").equals("") && !mr.getParameter("birth").equals("")
 					&& !mr.getParameter("phone").equals("") && !mr.getParameter("address").equals("")
@@ -61,13 +59,16 @@ public class RegistAuth2 extends HttpServlet {
 				MemberDTO dto = new MemberDTO();
 				MemberDAO dao = new MemberDAO();
 				String uri = req.getRequestURI();
+				
+				// 회원가입 DB 연결
 				if (uri.indexOf("Regist.do") != -1) {
 					dto.setId(mr.getParameter("id"));
+					
+					// 비밀번호 같은지 다른지 확인
 					if (pw.equals(pwcheck)) {
 						dto.setPass(mr.getParameter("pw"));
 						System.out.println("비밀번호 동일");
 					} else {
-//						JSFunction.alertRegistPWDFail(resp, "비밀번호가 일치하지 않습니다. 다시 확인해 주세요.");
 						System.out.println("비밀번호 다름");
 					}
 					dto.setName(mr.getParameter("name"));
