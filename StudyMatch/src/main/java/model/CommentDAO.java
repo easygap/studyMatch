@@ -41,23 +41,19 @@ public class CommentDAO extends DBConnPool {
 	public int insertComm(CommentDTO dto) {
 		int result = 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
-		String query = "INSERT INTO comments (board_num, commen_num, content, id, like_count) "
-				+ "VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO comments (inter_num, board_num, commen_num, content, id, like_count) "
+				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
 
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getBoard_num());
-			psmt.setString(2, dto.getCommen_num());
+			psmt.setString(1, dto.getInter_num());
+			psmt.setString(2, dto.getBoard_num());
 			psmt.setString(3, dto.getContent());
 			psmt.setString(4, dto.getId());
 			psmt.setInt(5, likeCount);
 			result = psmt.executeUpdate();
-			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 댓긇 DB 업로드 완료");
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("*** 댓글 업데이트 쿼리문 예외 발생 ***");
-			result = 0;
+			System.out.println(date.format(now) + " [ " + dto.getCommen_num() + " ] 댓긇 DB 업로드 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 댓글 업데이트 중 예외 발생! ***");
@@ -69,14 +65,15 @@ public class CommentDAO extends DBConnPool {
 	// 수정하기
 	public int updateComm(CommentDTO dto) {
 		int result = 0;
-		String query = "UPDATE comments SET " + "board_num=?, commen_num=?, content=?";
+		String query = "UPDATE comments SET " + "inter_num=?, board_num=?, commen_num=?, content=?";
 
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getBoard_num());
-			psmt.setString(2, dto.getCommen_num());
-			psmt.setString(3, dto.getContent());
+			psmt.setString(1, dto.getInter_num());
+			psmt.setString(2, dto.getBoard_num());
+			psmt.setString(3, dto.getCommen_num());
+			psmt.setString(4, dto.getContent());
 			result = psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + " 번 게시글, " + dto.getCommen_num() + " 번 댓글 수정 완료");
 		} catch (Exception e) {
@@ -89,11 +86,13 @@ public class CommentDAO extends DBConnPool {
 	// 삭제하기
 	public void deleteCommen() {
 		CommentDTO dto = new CommentDTO();
-		String query = "DELETE FROM comments WHERE commen_num=?";
+		String query = "DELETE FROM comments WHERE inter_num=?, board_num=?, commen_num=?";
 		try {
 			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getCommen_num());
+			psmt.setString(1, dto.getInter_num());
+			psmt.setString(2, dto.getBoard_num());
+			psmt.setString(3, dto.getCommen_num());
 			psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + " 번 게시글 " + dto.getCommen_num() + " 번 댓글 삭제 완료");
 		} catch (Exception e) {

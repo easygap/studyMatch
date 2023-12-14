@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+request.setCharacterEncoding("UTF-8");
+String cp = request.getContextPath();
+String interest = request.getParameter("interest");
+String num = request.getParameter("num");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,12 +71,11 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="5" height="100">
-						<c:if test="${not empty dto.img}">
-								<img src="../uploads/${dto.img}" width="800" height="550" alt="첨부 이미지">
-							</c:if>
-							<br/>${ dto.content }
-						</td>
+						<td colspan="5" height="100"><c:if
+								test="${not empty dto.img}">
+								<img src="../uploads/${dto.img}" width="800" height="550"
+									alt="첨부 이미지">
+							</c:if> <br />${ dto.content }</td>
 					</tr>
 					<!-- 하단 메뉴(버튼) -->
 					<tr>
@@ -79,44 +84,47 @@
 							if ((request.getParameter("result")).equals("Y")) {
 							%><button type="button"
 								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
+							<button type="button" onclick="removeCheck();">삭제하기</button> <%
+ }
+ %>
 							<button type="button"
-								onclick="removeCheck();">삭제하기</button>
-						<% } %>
-							<button type="button"
-								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
+								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록
+								바로가기</button>
 						</td>
 					</tr>
 				</table>
-				
-				<form method="post" action="replyAction.jsp?bbsID=">
-				<table class="table table-striped"
-					style="text-align: center; border: 1px solid #dddddd">
-					<%-- 홀,짝 행 구분 --%>
-					<thead>
-						<tr>
-							<th colspan="3"
-								style="background-color: #eeeeeee; text-align: center;">댓글</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td style="text-align: left;"></td>
-							<td style="text-align: right;">
-							<a href="update.jsp?bbsID=" class="btn">수정</a>
-							<a href="update.jsp?bbsID=" class="btn ">삭제</a>
-							</td>
-						</tr>
-				
-						<tr>
-						<td><textarea type="text" class="form-control"
-								placeholder="댓글을 입력하세요." name="replyContent" style="width:100%;" maxlength="1024"></textarea></td>
-						<td style="text-align: left; "></td>
-						</tr>
-					</tbody>
-				</table>
-				<input type="submit" class="btn" value="댓글입력">
-			</form>
-				
+
+				<form method="post" action="../board/CommWrite.do">
+					<table class="table table-striped"
+						style="text-align: center; border: 1px solid #dddddd">
+						<%-- 홀,짝 행 구분 --%>
+						<thead>
+							<tr>
+								<th colspan="3"
+									style="background-color: #eeeeeee; text-align: center;">댓글</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align: left;"></td>
+								<td style="text-align: right;"><a
+									href="/board/CommEdit.do?action=edit" class="btn">수정</a> <a
+									href="/board/CommEdit.do?action=delete" class="btn ">삭제</a></td>
+							</tr>
+
+							<tr>
+								<td><textarea type="text" class="form-control"
+										placeholder="댓글을 입력하세요." id="commContent" name="commContent"
+										style="width: 100%;" maxlength="1024"></textarea></td>
+								<td style="text-align: left;"></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="submit" class="btn" value="댓글입력"> <input
+						type="hidden" name="interest" value="<%=interest%>">
+						<input type="hidden" id="num" name="num" value="<%=num%>">
+				</form>
+
 			</div>
 		</div>
 	</div>

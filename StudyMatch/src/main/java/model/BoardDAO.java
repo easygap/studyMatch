@@ -78,7 +78,6 @@ public class BoardDAO extends DBConnPool {
 
 			if (dto.getImg() != null) {
 				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
-
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
@@ -87,7 +86,6 @@ public class BoardDAO extends DBConnPool {
 				psmt.setString(5, dto.getInter_num());
 			} else {
 				query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
-
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
@@ -174,7 +172,7 @@ public class BoardDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setGroud_num(rs.getString("GROUD_NUM"));
+				dto.setGroup_num(rs.getString("Group_NUM"));
 				dto.setInter_num(rs.getString("INTER_NUM"));
 				dto.setBoard_num(rs.getString("BOARD_NUM"));
 				dto.setTitle(rs.getString("TITLE"));

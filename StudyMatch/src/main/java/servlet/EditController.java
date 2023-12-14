@@ -36,23 +36,28 @@ public class EditController extends HttpServlet {
 
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
-		System.out.println("Edit Controller에서 num값 : " + num + ", interest값 : " + interest);
 		String title = req.getParameter("title");
-		System.out.println("Edit Controller에서 title값 : " + title);
 		String content = req.getParameter("content");
-		System.out.println("Edit Controller에서 content값 : " + content);
 
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
 		String uploadPath = "uploads";
-		System.out.println("수정 파일 경로 : " + uploadPath);
 		String realPath = getServletContext().getRealPath(uploadPath);
-		System.out.println("경로: " + realPath);
 		File uploadDir = new File(realPath);
 		if (!uploadDir.exists()) {
 			uploadDir.mkdir();
 		}
+		
 
+		System.out.println("---------------file edit-------------------");
+		System.out.println("Edit Controller에서 num값 : " + num + ", interest값 : " + interest);
+		System.out.println("Edit Controller에서 title값 : " + title);
+		System.out.println("Edit Controller에서 content값 : " + content);
+		System.out.println("수정 파일 경로 : " + uploadPath);
+		System.out.println("경로: " + realPath);
+		System.out.println("---------------file edit-------------------");
+		
+		
 		String ext = "";
 		if (!fileName.equals("")) {
 			String imgNameToDelete = dao.modifyNameIMG(num, interest);
@@ -113,10 +118,4 @@ public class EditController extends HttpServlet {
 		}
 		return null;
 	}
-//	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-////		resp.getWriter().append("Served at: ").append(req.getContextPath());
-//        String internum = req.getParameter("interest");
-//		RequestDispatcher dis = req.getRequestDispatcher("../board/Edit.jsp?interest=" + internum);
-//		dis.forward(req, resp);
-//	}
 }

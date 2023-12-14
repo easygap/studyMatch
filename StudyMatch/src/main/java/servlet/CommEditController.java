@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.CommentDAO;
 import model.CommentDTO;
 
-@WebServlet("/CommEdit.do")
+@WebServlet("/board/CommEdit.do")
 public class CommEditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,11 +39,11 @@ public class CommEditController extends HttpServlet {
 				dao.deleteCommen();
 				dao.close();
 				req.getRequestDispatcher("../board/View.jsp?num=" + num + "&interest=" + interest);
-				System.out.println(interest + " 게시판 " + num + "번 게시글 : " + comm_num + "번 댓글 삭제 완");
+				System.out.println("Controller 댓글 삭제 완");
 			} catch (Exception e) {
 				req.getRequestDispatcher("../board/View.jsp?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
-				System.out.println("*** 댓글 삭제 실패 ***");
+				System.out.println("*** Controller 댓글 삭제 실패 ***");
 			}
 		} else if ("edit".equals(action)) {
 			dto.setInter_num(interest);
@@ -55,11 +55,11 @@ public class CommEditController extends HttpServlet {
 				dao.updateComm(dto);
 				dao.close();
 				req.getRequestDispatcher("../board/View.jsp?num=" + num + "&interest=" + interest);
-				System.out.println(interest + " 게시판 " + num + "번 게시글 : " + comm_num + "번 댓글 수정 완");
+				System.out.println("Controller 댓글 수정 완");
 			} catch (Exception e) {
 				req.getRequestDispatcher("../board/View.jsp?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
-				System.out.println("*** 댓글 수정 실패 ***");
+				System.out.println("*** Controller 댓글 수정 실패 ***");
 			}
 		}
 	}
