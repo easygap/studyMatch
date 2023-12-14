@@ -10,6 +10,7 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">                                                                 
 <title>Regist Page</title>
+<link href="../css/Regist.css" rel="stylesheet"/>
 <script src="../js/upload.js"></script>
 <script>
 
@@ -21,11 +22,7 @@ String cp = request.getContextPath();
 		if (form.id.value == "") {
 			alert("아이디를 입력 후 중복확인을 해주세요.");
 			RegistFrm.id.focus();
-			
-		}else if (form.idCheck.value != "idCheck") {
-			alert("아이디 중복확인을 해주세요.")
-			return false;
-		} 
+		}
 		else if (form.pw.value == "") {
 			alert("비밀번호를 입력하세요.");
 			RegistFrm.pw.focus();
@@ -60,15 +57,15 @@ String cp = request.getContextPath();
 	}
 </script>
 </head>
+
 <body>
-<h2>회원가입</h2>
-	
 	<form name="RegistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
 	<div align="center">
+	<h2>회원가입</h2>
 	<table>
 			<tr>
 				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" value="중복확인"></td>
+				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" class="RegistButton" value="중복확인"></td>
 				<td></td>
 			</tr>
 			
@@ -161,8 +158,8 @@ String cp = request.getContextPath();
 			</tr>
 		</table>
 	<br/>
-	<button type="submit" name="signUp">가입하기</button>
-	<button type="button" onclick="location.href='Login.jsp';">로그인하기</button>
+	<button type="submit" name="signUp" class="RegistButton" >가입하기</button>
+	<button type="button" onclick="location.href='Login.jsp';" class="RegistButton" >로그인하기</button>
 	</div>
 </form>
 </body>

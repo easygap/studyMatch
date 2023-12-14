@@ -87,7 +87,7 @@ public class RegistAuth2 extends HttpServlet {
 						} else if (interest.length == 3) {
 							dto.setInterest1(interest[0]);
 							dto.setInterest2(interest[1]);
-							dto.setInterest2(interest[2]);
+							dto.setInterest3(interest[2]);
 						}
 					}
 

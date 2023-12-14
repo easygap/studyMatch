@@ -6,15 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>MyPage</title>
+<link href="../css/Regist.css" rel="stylesheet"/>
 <script type="text/javascript">
-
 </script>
 </head>
 <body>
-
-<h2>마이페이지</h2>
 <form name="MyPageFrm" method="post" action="../auth/MyPage.do" onsubmit="return validateForm(this);">
 <div align="center">
+<h2>마이페이지</h2>
 		<table>
 				<tr>
 					<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
@@ -113,8 +112,8 @@
 
 			</table>
 			<br/>
-			<input type="reset" name="reset" value="RESET"> 
-			<input type="submit" name="save" value="저장하기">
+			<input type="reset" class="myPage" name="reset" value="RESET"> 
+			<input type="submit" class="myPage" name="save" value="저장하기">
 		</div>
 	</form>
 </body>
