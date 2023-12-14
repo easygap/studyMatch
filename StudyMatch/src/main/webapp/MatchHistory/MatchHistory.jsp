@@ -12,13 +12,14 @@
 <script src="MatchHistoryScript.js"></script>
 </head>
 <body>
+<form name="historyFrm" method="post" action="../match/MatchHistory.do" onsubmit="return validateForm(this);">
 	<h1>매 칭 현 황</h1>
 
 	<div class="MyStudyGruop-Back">
 		<h2>MY STUDY GROUP</h2>
-		<img src="Your Image1" alt="Mem1" class="round-image"> 
-		<img src="Your Image2" alt="Mem2" class="round-image"> 
-		<img src="Your Image3" alt="Mem3" class="round-image"> 
+		<img src="${pageContext.request.contextPath}/MyProfile/logo.png" alt="Mem1" class="round-image">
+		<img src="${pageContext.request.contextPath}/MyProfile/${imageName}" alt="Mem2" class="round-image">
+		<img src="${pageContext.request.contextPath}/MyProfile/20231214_173817900.jpg" alt="Mem3" class="round-image">
 		<img src="Your Image4" alt="Mem4" class="round-image">
 		<p class="font">신짱구 한유리 김철수 이훈이</p>
 	</div>
@@ -27,7 +28,8 @@
 	<div class="MatchHistory">
 	<h2>Match History</h2>
 		<h4>매칭 진행되고자 했던 날짜</h4>
-		<img src="Your Image1" alt="Mem1" class="round-image"> 
+
+		<img src="Your Image1" alt="Mem1" class="round-image">
 		<img src="Your Image2" alt="Mem2" class="round-image"> 
 		<img src="Your Image3" alt="Mem3" class="round-image"> 
 		<img src="Your Image4" alt="Mem4" class="round-image">
@@ -47,5 +49,6 @@
 		
 		<h4>더 보 기..</h4>
 	</div>
+</form>
 </body>
 </html>
