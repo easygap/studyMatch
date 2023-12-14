@@ -1,7 +1,6 @@
 /**
  * 
  */
-
  function validateForm(form) { // 필수 항목 입력 확인}
 		if (form.title.value == "") {
 			alert("제목을 입력하세요.");
