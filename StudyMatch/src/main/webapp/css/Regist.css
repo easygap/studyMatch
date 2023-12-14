@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body {
+	background-color: #F4EAE0;
+}
+
+h1,
+h2, h3 {
+	color: #5174BE;
+	font-weight: bold;
+}
+
+.RegistButton, .IdCheck, .pwChange, .IdPwSearch, .myPage{
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;	
+	font-weight: bold;
+	border-radius: 10px;
+}

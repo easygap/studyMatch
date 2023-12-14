@@ -16,6 +16,7 @@ if(request.getParameter("not") != not){
 <head>
 <meta charset="UTF-8">
 <title>PW Change</title>
+<link href="../css/Regist.css" rel="stylesheet"/>
 <script>
 	function validateForm(form) {
 		if (form.id.value == "") {
@@ -44,8 +45,8 @@ if(request.getParameter("not") != not){
 	<form name="pwChangeFrm" method="post"
 		action="../auth/PwSearchPopup.do"
 		onsubmit="return validateForm(this);">
-		<h2>비밀번호 변경하기</h2>
 		<div align="center">
+		<h2>비밀번호 변경하기</h2>
 			<table>
 				<tr>
 					<td>ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -69,13 +70,8 @@ if(request.getParameter("not") != not){
 					<td></td>
 					<td></td>
 				</tr>
-
-				<tr>
-					<td></td>
-					<td><input type="submit" name="Change" onclick="compareAndChange()" value="변경하기" /> <input type="button" name="close" value="닫기" onclick="window.close()" /></td>
-					<td></td>
-				</tr>
 			</table>
+			<input type="submit" name="Change" class="pwChange" onclick="compareAndChange()" value="변경하기" /> <input type="button" name="close" class="pwChange" value="닫기" onclick="window.close()" />
 		</div>
 	</form>
 </body>

@@ -12,13 +12,16 @@ String IDcheck = request.getParameter("idCheck");
 <head>
 <meta charset="UTF-8">
 <title>idCheck</title>
+<link href="../css/Regist.css" rel="stylesheet"/>
 <script type="text/javascript">
 </script>
 </head>
 <body>
-	<b>ID 중복 확인</b>
-	<br />
+	
+	
 	<div align="center">
+	<h2>ID 중복 확인</h2>
+	<br />
 		<form name="checkIdFrm" action="../auth/idCheckAuth.do" method="get" onsubmit="return validateForm(this);">
 			<table>
 				<tr>
@@ -30,7 +33,7 @@ String IDcheck = request.getParameter("idCheck");
 					<%} else{ %>
 					<td><input type="text" name="idCheck" value="<%= idCheck %>" /></td>
 					<%} %>
-					<td><input type="submit" name="idChecked" value="중복확인"></td>
+					<td><input type="submit" name="idChecked" class="IdCheck" value="중복확인"></td>
 				</tr>
 
 			</table>
@@ -47,7 +50,7 @@ String IDcheck = request.getParameter("idCheck");
 			}}
 			%>
 			
-			<input type="button" value="확인" onclick="window.close()" />
+			<input type="button" value="확인" class="IdCheck" onclick="window.close()" />
 		</form>
 	</div>
 </body>
