@@ -175,8 +175,9 @@ td {
 
 				<!-- import 끝 -->
 				<!-- 본문 -->
+				<div style="position: absolute; width:1280px; height:1300px">
 				<form action="../board/" method="post">
-				<div class="wrap">
+				<div class="wrap" style="position: relative; width: 1280px; height: 100px;">
 					<div class="jumbotron" style="text-align: left;">
 						<% if(id != "") { %>
 						<h1 class="display-4">${requestScope.dto.nickName}님, 환영합니다!</h1>
@@ -185,20 +186,24 @@ td {
 							<%=nowTime%>
 						</p>
 					</div>	
-					<div class="jumbotron" style="text-align: center; background=#F4EAE0;">
+					<div class="jumbotron" style="position: relative; width: 1280px; height: 100px;" >
+						<div style="position: relative; width: 1280px; height: 10px;" align="center">
 						<p>VS</p>
-						<p class="lead" align="left">
+						</div>
+						<div class="lead" style="position: relative; left: 300px; top: 1px;">
 							<input type="submit" class="btn" value="상세보기">
 							<input type="submit" class="btn" value="매치하기">
-						<p class="lead" align="right">
+						</div>
+						<div class="lead" style="position: relative; left: 800px; top: -40px;">	
 							<input type="submit" class="btn" value="상세보기">
 							<input type="submit" class="btn" value="매치하기">
-						</p>
+						</div>
 					</div>
 				</div>
 				</form>
 				<hr class="my-4">
 					<!-- 캘린더 -->
+					<div style="position: relative;" align="center">
 					<table class="Calendar">
 						<thead>
 							<tr>
@@ -221,6 +226,8 @@ td {
 						<tbody>
 						</tbody>
 					</table>
+					</div>
+				</div>
 				</div>
 			</div>
 		</div>
