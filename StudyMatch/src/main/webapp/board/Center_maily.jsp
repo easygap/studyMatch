@@ -185,7 +185,7 @@
 				<tr>
 				<td colspan='2'>
 										
-			<img src="img/댓글.png" alt="댓글" />
+			<img src="../img/댓글.png" alt="댓글" />
 		    <textarea name="title" id="utitle" rows="5" cols="65" placeholder="댓글달기" maxlength="100" required></textarea>
           <div align="right"> 
 	    <input type='button' value='작성하기'/>
@@ -217,5 +217,10 @@
 	<script>
 	</script>
 	</div>
+		<!-- BootStrap javascript 사용 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
 </body>
 </html>
