@@ -17,6 +17,18 @@
     </style>
 </head>
 <body style="background-color:#F5F6CE">
+   	<!-- 코드 시작 -->
+	<div class="d-flex" id="wrapper">
+		<!-- 네비게이션 바 -->
+		<jsp:include page="../layout/Main.jsp"></jsp:include>
+
+		<!-- 페이지 컨텐츠 -->
+		<div id="page-content-wrapper">
+			<!-- 네비게이션 바 -->
+			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
+			<div class="container-fluid">
+				<br /> <br /> <br />
+
 
 <h2>고객센터</h2>
 <input type='button' value='자주 묻는 질문'/>
@@ -185,7 +197,7 @@
 				<tr>
 				<td colspan='2'>
 										
-			<img src="img/댓글.png" alt="댓글" />
+			<img src="../img/댓글.png" alt="댓글" />
 		    <textarea name="title" id="utitle" rows="5" cols="65" placeholder="댓글달기" maxlength="100" required></textarea>
           <div align="right"> 
 	    <input type='button' value='작성하기'/>
@@ -217,5 +229,10 @@
 	<script>
 	</script>
 	</div>
+		<!-- BootStrap javascript 사용 -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+		crossorigin="anonymous"></script>
 </body>
 </html>
