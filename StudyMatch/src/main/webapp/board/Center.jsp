@@ -17,6 +17,17 @@
     </style>
 </head>
 <body style="background-color:#F5F6CE">
+	<!-- 코드 시작 -->
+	<div class="d-flex" id="wrapper">
+		<!-- 네비게이션 바 -->
+		<jsp:include page="../layout/Main.jsp"></jsp:include>
+
+		<!-- 페이지 컨텐츠 -->
+		<div id="page-content-wrapper">
+			<!-- 네비게이션 바 -->
+			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
+			<div class="container-fluid">
+				<br /> <br /> <br />
 
 <h2>고객센터</h2>
 <input type='button' value='자주 묻는 질문'/>
