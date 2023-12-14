@@ -28,7 +28,8 @@ public class RegistAuth2 extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		// 파일 업로드 처리
-		String saveDirectory = req.getServletContext().getRealPath("/MyProfile");
+		String saveDirectory = "C:/Users/allis/git/studyMatch/StudyMatch/src/main/webapp/MyProfile";
+		System.out.println(saveDirectory);
 		// 파일 용량
 		int maxPostSize = 1024 * 1000; // 1MB
 		String encoding = "UTF-8";
