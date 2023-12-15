@@ -48,10 +48,10 @@ public class CommWriteController extends HttpServlet {
 		dao.close();
 
 		if (result == 1) {
-			req.getRequestDispatcher("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
+			resp.sendRedirect("../board/view.do?num=" + boardnum + "&interest=" + internum);
 		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
 		} else {
-			req.getRequestDispatcher("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
+			resp.sendRedirect("../board/view.do?num=" + boardnum + "&interest=" + internum);
 		    System.out.println("*** 댓글 업로드 실패 ***");
 		}
 	}

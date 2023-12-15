@@ -20,6 +20,9 @@ public class CommEditController extends HttpServlet {
 
 		CommentDAO dao = new CommentDAO();
 		CommentDTO dto = new CommentDTO();
+		
+		// session에서 id 받기
+//		String id = dao.;
 
 		String action = req.getParameter("action");
 		String num = req.getParameter("num");

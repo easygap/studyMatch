@@ -69,7 +69,7 @@ public class CommentDAO extends DBConnPool {
 		return list;
 	}
 
-	// 댓긇 쓰기
+	// 댓글 쓰기
 	public int insertComm(CommentDTO dto) {
 		int result = 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
@@ -85,13 +85,21 @@ public class CommentDAO extends DBConnPool {
 			psmt.setString(4, dto.getId());
 			psmt.setInt(5, likeCount);
 			result = psmt.executeUpdate();
-			System.out.println(date.format(now) + " [ " + dto.getCommen_num() + " ] 댓긇 DB 업로드 완료");
+			System.out.println(date.format(now) + " [ " + dto.getCommen_num() + " ] 댓글 DB 업로드 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 댓글 업데이트 중 예외 발생! ***");
 			result = 0;
 		}
 		return result;
+	}
+	
+	// 아이디 조회
+	public String idCheck (String num, String commNum) {
+		String commId = null;
+		String query = "SELECT id FROM comments WHERE board_num=?, commen_num=?";
+		
+		return commId;
 	}
 
 	// 수정하기
