@@ -37,6 +37,33 @@ public class CommentDAO extends DBConnPool {
 		}
 	}
 	
+//	public CommentDTO getCommentDTO (String id) {
+//		CommentDTO dto = null;
+//		String query = "SELECT * FROM comments WHERE id=?";
+//		try {
+//			psmt = con.prepareStatement(query);
+//			psmt.setString(1, id);
+//			rs = psmt.executeQuery();
+//			
+//			while (rs.next()) {
+//				dto = new CommentDTO();
+//				dto.setInter_num(rs.getString("inter_num"));
+//				dto.setBoard_num(rs.getString("board_num"));
+//				dto.setCommen_num(rs.getString("commen_num"));
+//				dto.setContent(rs.getString("content"));
+//				dto.setId(rs.getString("id"));
+//				dto.setCommen_date(rs.getDate("commen_date"));
+//				dto.setLike_count(rs.getString("like_count"));
+//				System.out.println("dao.getCommenDTO 댓글 조회 성공");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			System.out.println("*** dao.getCommenDTO 댓글 조회 예외 발생 ***");
+//		}
+//		
+//		return dto;
+//	}
+	
 	// 댓글 조회
 	public ArrayList<CommentDTO> getList (String num) {
 		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
@@ -77,7 +104,6 @@ public class CommentDAO extends DBConnPool {
 				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
 
 		try {
-			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getInter_num());
 			psmt.setString(2, dto.getBoard_num());
@@ -97,23 +123,32 @@ public class CommentDAO extends DBConnPool {
 	// 아이디 조회
 	public String idCheck (String num, String commNum) {
 		String commId = null;
-		String query = "SELECT id FROM comments WHERE board_num=?, commen_num=?";
+		String query = "SELECT id FROM comments WHERE board_num=? AND commen_num=?";
 		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			psmt.setString(2, commNum);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) commId = rs.getString("id");
+			System.out.println("CommentDAO DB 댓글 작성자 : " + commId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("CommentDAO DB 댓글 작성자 조회 중 예외 발생");
+		}
 		return commId;
 	}
 
 	// 수정하기
 	public int updateComm(CommentDTO dto) {
 		int result = 0;
-		String query = "UPDATE comments SET " + "inter_num=?, board_num=?, commen_num=?, content=?";
+		String query = "UPDATE comments SET content=? WHERE commen_num=?";
 
 		try {
-			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getInter_num());
-			psmt.setString(2, dto.getBoard_num());
-			psmt.setString(3, dto.getCommen_num());
-			psmt.setString(4, dto.getContent());
+			psmt.setString(1, dto.getContent());
+			psmt.setString(2, dto.getCommen_num());
 			result = psmt.executeUpdate();
 			System.out.println(dto.getBoard_num() + " 번 게시글, " + dto.getCommen_num() + " 번 댓글 수정 완료");
 		} catch (Exception e) {
@@ -124,21 +159,36 @@ public class CommentDAO extends DBConnPool {
 	}
 	
 	// 삭제하기
-	public void deleteCommen() {
-		CommentDTO dto = new CommentDTO();
-		String query = "DELETE FROM comments WHERE inter_num=?, board_num=?, commen_num=?";
+	public void deleteCommen(String commNum) {
+		String query = "DELETE FROM comments WHERE commen_num=?";
 		try {
-			con = dataSource.getConnection();
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getInter_num());
-			psmt.setString(2, dto.getBoard_num());
-			psmt.setString(3, dto.getCommen_num());
+			psmt.setString(1, commNum);
 			psmt.executeUpdate();
-			System.out.println(dto.getBoard_num() + " 번 게시글 " + dto.getCommen_num() + " 번 댓글 삭제 완료");
+
+			System.out.println("DAO " + commNum + "번 댓글 삭제 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 댓글 삭제 중 예외 발생  ***");
 		}
 	}
 	
+	public void close() {
+		DBConnPool dbConnPool = new DBConnPool();
+		try {
+			if (rs != null)
+				rs.close();
+			if (psmt != null)
+				psmt.close();
+			if (con != null)
+				con.close();
+			if (stmt != null)
+				stmt.close();
+			System.out.println("댓글 자원 해제 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 댓글 자원 해제 중 예외 발생 ***");
+		}
+		dbConnPool.close();
+	}
 }

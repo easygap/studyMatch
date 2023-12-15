@@ -1,6 +1,7 @@
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="model.CommentDAO" %>
-<%@ page import="model.CommentDTO" %>
+<%@ page isELIgnored="false"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="model.CommentDAO"%>
+<%@ page import="model.CommentDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -84,7 +85,7 @@ String num = request.getParameter("num");
 					<tr>
 						<td colspan="4" align="center">
 							<%
-							if ((request.getParameter("result")).equals("Y")) {
+							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
 							%><button type="button"
 								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
 							<button type="button" onclick="removeCheck();">삭제하기</button> <%
@@ -117,8 +118,11 @@ String num = request.getParameter("num");
 							<tr>
 								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
 								<td style="text-align: right;"><%=list.get(i).getId()%> <%=list.get(i).getCommen_date()%>
-									<a href="/board/CommEdit.do?action=edit" class="btn">수정</a> <a
-									href="/board/CommEdit.do?action=delete" class="btn ">삭제</a></td>
+									<a
+									href="../board/CommEdit?action=edit&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
+									class="btn">수정</a> <a
+									href="../board/CommEdit?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
+									class="btn">삭제</a></td>
 							</tr>
 
 							<%
@@ -132,9 +136,11 @@ String num = request.getParameter("num");
 							</tr>
 						</tbody>
 					</table>
-					<input type="submit" class="btn" value="댓글입력"> <input
-						type="hidden" name="interest" value="<%=interest%>"> <input
-						type="hidden" id="num" name="num" value="<%=num%>">
+					<input type="hidden" name="interest" value="<%=interest%>"> 
+					<input type="hidden" id="num" name="num" value="<%=num%>">
+					<input type="hidden" name="commContent" value="${list.get(i).getContent()}"> 
+					<input type="hidden" name="commNum" value="${list.get(i).getCommen_num()}"> 
+					<input type="submit" class="btn" value="댓글입력">
 				</form>
 
 			</div>

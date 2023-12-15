@@ -39,6 +39,7 @@ public class CommWriteController extends HttpServlet {
             System.out.println("*** 댓글 작성 아이디 생성 실패 ***");
         	return;
         }
+        
         dto.setInter_num(internum);
         dto.setBoard_num(boardnum);
         dto.setId(userId);
@@ -48,10 +49,10 @@ public class CommWriteController extends HttpServlet {
 		dao.close();
 
 		if (result == 1) {
-			resp.sendRedirect("../board/view.do?num=" + boardnum + "&interest=" + internum);
+			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
 		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
 		} else {
-			resp.sendRedirect("../board/view.do?num=" + boardnum + "&interest=" + internum);
+			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
 		    System.out.println("*** 댓글 업로드 실패 ***");
 		}
 	}
