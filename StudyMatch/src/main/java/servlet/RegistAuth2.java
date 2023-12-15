@@ -28,7 +28,7 @@ public class RegistAuth2 extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 
 		// 파일 업로드 처리
-		String saveDirectory = "C:/Users/apf_temp_admin/git/studymatch/src/main/webapp/MyProfile";
+		String saveDirectory = req.getServletContext().getRealPath("/MyProfile");
 		System.out.println(saveDirectory);
 		// 파일 용량
 		int maxPostSize = 1024 * 1000; // 1MB
@@ -39,20 +39,17 @@ public class RegistAuth2 extends HttpServlet {
 		String pw = mr.getParameter("pw");
 		String pwcheck = mr.getParameter("pwcheck");
 
-		String[] interest = mr.getParameterValues("interests");
-		
 		// 콘솔 확인
 		System.out.println("[ " + mr.getParameter("id") + " ]");
-		for (String s : interest) {
-			System.out.println("[ " + s + " ]");
-		}
 		System.out.println("---------------------- Regist ----------------------");
 
 		boolean Regist = false;
+		String idC = null;
 
 		try {
 
-			// id, pw, name, nickName, birth, phone, address, job Not NULL 일 때만 아래 조건문이 실행되도록 구현.
+			// id, pw, name, nickName, birth, phone, address, job Not NULL 일 때만 아래 조건문이
+			// 실행되도록 구현.
 			if (!mr.getParameter("id").equals("") && !pw.equals("") && !mr.getParameter("name").equals("")
 					&& !mr.getParameter("nickName").equals("") && !mr.getParameter("birth").equals("")
 					&& !mr.getParameter("phone").equals("") && !mr.getParameter("address").equals("")
@@ -60,11 +57,11 @@ public class RegistAuth2 extends HttpServlet {
 				MemberDTO dto = new MemberDTO();
 				MemberDAO dao = new MemberDAO();
 				String uri = req.getRequestURI();
-				
+
 				// 회원가입 DB 연결
 				if (uri.indexOf("Regist.do") != -1) {
 					dto.setId(mr.getParameter("id"));
-					
+
 					// 비밀번호 같은지 다른지 확인
 					if (pw.equals(pwcheck)) {
 						dto.setPass(mr.getParameter("pw"));
@@ -79,7 +76,11 @@ public class RegistAuth2 extends HttpServlet {
 					dto.setAddress(mr.getParameter("address"));
 					dto.setEmail(mr.getParameter("Email"));
 					dto.setJob(mr.getParameter("job"));
-					if (interest != null) {
+					if (mr.getParameter("interests") != null) {
+						String[] interest = mr.getParameterValues("interests");
+						for (String s : interest) {
+							System.out.println("[ " + s + " ]");
+						}
 						if (interest.length == 1) {
 							dto.setInterest1(interest[0]);
 						} else if (interest.length == 2) {
@@ -91,7 +92,6 @@ public class RegistAuth2 extends HttpServlet {
 							dto.setInterest3(interest[2]);
 						}
 					}
-
 					// 이미지 저장 경로 파일명 변경
 					String fileName = mr.getFilesystemName("img");
 					if (fileName != null) {
@@ -108,17 +108,22 @@ public class RegistAuth2 extends HttpServlet {
 					}
 
 					Regist = dao.signUp(dto);
+					idC = dao.idCheck(mr.getParameter("id"));
 
 					// 회원가입 성공 알람창
 					if (Regist == true) {
 						JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.", "../auth/LoginAuth.do");
+					}else if(idC.equals("N")) {					// 아이디 중복 알림창
+						JSFunction.alertRegistFail(resp, "해당 ID는 이미 사용 중 입니다. 다시 중복확인 후 가입해 주세요.");
+					}else if (Regist == false) {				// 회원가입 실패 알람창
+						JSFunction.alertRegistFail(resp, "회원가입에 실패하였습니다. 다시 확인해 주세요.");
 					}
 				}
 				dao.close();
-			}
-			// 회원가입 실패 알람창
-			if (Regist == false) {
-				JSFunction.alertRegistFail(resp, "회원가입에 실패하였습니다. 다시 확인해 주세요.");
+			}				
+			// 빈 칸으로 그냥 둘 때는 그냥 다시 원래 페이지로 백
+			if (Regist == false) {				
+				JSFunction.alertRegistEmpty(resp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

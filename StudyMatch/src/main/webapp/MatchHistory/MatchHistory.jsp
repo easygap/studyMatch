@@ -19,12 +19,12 @@
 		<div class="MyStudyGruop-Back">
 			<h2>MY STUDY GROUP</h2>
 			<div class="image" align="center">
-				<img src="${pageContext.request.contextPath}/MyProfile/20231214_173544822.jpg" alt="Mem1" class="noMargin"> 
-				<img src="${pageContext.request.contextPath}/MyProfile/20231214_173624370.jpg" alt="Mem2" class="profile"> 
-				<img src="${pageContext.request.contextPath}/MyProfile/20231214_173817900.jpg" alt="Mem3" class="profile"> 
-				<img src="${pageContext.request.contextPath}/MyProfile/20231214_173656184.jpg" alt="Mem4" class="profile"> 
+				<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="noMargin"> 
+				<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
+				<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile"> 
+				<img src="${pageContext.request.contextPath}/MyProfile/20231215_115559628.jpg" alt="Mem4" class="profile"> 
 				<img src="${pageContext.request.contextPath}/MyProfile/logo2.jpg" alt="Mem5" class="profile">
-				<p class="font">신짱구 한유리 김철수 이훈이</p>
+				<p class="font">신짱구&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 한유리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 김철수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 이훈이</p>
 			</div>
 		</div>
 

@@ -35,6 +35,7 @@ if(request.getParameter("not") != not){
 		
 		if(pwChange == pwCheck){
 			alert("비밀번호 변경이 완료되었습니다. 로그인을 해주세요.");
+			close();
 		}else{
 			alert("비밀번호가 동일하지 않습니다. 다시 작성해 주세요.");
 		}
