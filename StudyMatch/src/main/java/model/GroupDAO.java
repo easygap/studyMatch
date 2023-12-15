@@ -3,10 +3,12 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -55,6 +57,81 @@ public class GroupDAO extends DBConnPool {
 			System.out.println("*** 조회중 에러 발생 ***");
 		}
 		return NickName;
+	}
+	
+	
+	// 현재 회원 ID의 interest 정보 가져오기
+	public ArrayList<String> getGroupData(String id) {		
+		int count = 0;
+		String query1 ="SELECT COUNT(INTEREST1) + COUNT(INTEREST2) + COUNT(INTEREST3) AS interest FROM MEMBER WHERE id=?";
+		
+		try {
+			psmt = con.prepareStatement(query1);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt("interest");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		ArrayList<String> interest = new ArrayList<String>(count);
+
+		String query2 = "SELECT INTEREST1, INTEREST2, INTEREST3 FROM member WHERE id=?";
+	
+		try {
+			psmt = con.prepareStatement(query2);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				if(count == 1) 
+					interest.add(rs.getString("interest1"));
+				else if(count == 2) {
+					interest.add(rs.getString("interest1"));
+					interest.add(rs.getString("interest2"));
+				} else if(count == 3) {
+					interest.add(rs.getString("interest1"));
+					interest.add(rs.getString("interest2"));
+					interest.add(rs.getString("interest3"));
+				} else {
+					interest.add("error");
+				}
+			}
+			Collections.shuffle(interest);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return interest;
+		
+	}
+	
+	
+	
+	// 현재 회원 ID의 주소 정보 가져오기
+	public String getaddress(String id) {
+		String address = null;
+		
+		String query="SELECT address FROM member WHERE id=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				address = rs.getString("address");
+			}
+			
+			StringTokenizer st = new StringTokenizer(address);
+			
+			st.nextToken();
+			
+			address = st.nextToken();
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return address;
 	}
 	
 	// DB 연결 해제
