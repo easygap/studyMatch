@@ -38,7 +38,82 @@ public class MemberDAO extends DBConnPool {
 			System.out.println("*** DB 연동 중 예외 발생 ***");
 		}
 	}
+	
+	// 마이페이지 업데이트
+	public boolean updateMypage (MemberDTO dto) throws SQLException {
+		
+		boolean result = false;
+		String query = "INSERT INTO member (job, nickname, pwd, phone, email, address, interest1, interest2, interest3, img)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		int mypageCount = 0;
 
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getJob());
+			psmt.setString(2, dto.getNick());
+			psmt.setString(3, dto.getPass());
+			psmt.setString(4, dto.getPhone());
+			psmt.setString(5, dto.getEmail());
+			psmt.setString(6, dto.getAddress());
+			psmt.setString(7, dto.getInterest1());
+			psmt.setString(8, dto.getInterest2());
+			psmt.setString(9, dto.getInterest3());
+			psmt.setString(10, dto.getImage());
+			mypageCount = psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 마이페이지 업데이트 중 예외 발생! ***");
+		}
+
+		if (mypageCount > 0) {
+			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 마이페이지 업데이트 성공!");
+			result = true;
+		} else {
+			System.out.println("*** " + date.format(now) + " 정보 업데이트 실패 ***");
+			result = false;
+		}
+		return result;
+	}
+	
+	
+	// 마이페이지 조회
+	public MemberDTO mypage (String id) {
+		MemberDTO dto = null;
+		String query = "SELECT * FROM member WHERE id=?";
+		try {
+			
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				dto = new MemberDTO();
+				// 회원 정보를 DTO에 설정
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setPass(rs.getString("pwd"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setJob(rs.getString("job"));
+				dto.setNick(rs.getString("nickname"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddress(rs.getString("address"));
+				dto.setInterest1(rs.getString("interest1"));
+				dto.setInterest2(rs.getString("interest2"));
+				dto.setInterest3(rs.getString("interest3"));
+				dto.setImage(rs.getString("img"));
+
+				System.out.println(date.format(now) + " [ " + id + " ] 정보 조회 성공!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** MemberDAO.getMemberDTO 회원 정보 조회 중 예외 발생 ***");
+		}
+		
+		return dto;
+	}
+
+	// 로그인
 	public MemberDTO getMemberDTO(String id, String pass) {
 		MemberDTO dto = null;
 		String query = "SELECT * FROM member WHERE id=? AND pwd=?";
@@ -76,7 +151,7 @@ public class MemberDAO extends DBConnPool {
 		return dto;
 	}
 
-	// 로그인
+	// 로그인 알림용
 	public boolean login(String id, String pass) {
 		boolean result = false;
 		String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";

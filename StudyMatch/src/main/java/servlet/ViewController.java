@@ -11,6 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import model.BoardDAO;
 import model.BoardDTO;
+import model.CommentDAO;
+import model.CommentDTO;
 
 @WebServlet("/board/view.do")
 public class ViewController extends HttpServlet {
@@ -20,6 +22,7 @@ public class ViewController extends HttpServlet {
 		System.out.println("안녕 나는 view라고 해");
 		// 게시글 불러오기
 		BoardDAO dao = new BoardDAO();
+		CommentDAO cDao = new CommentDAO();
 
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
@@ -38,7 +41,7 @@ public class ViewController extends HttpServlet {
 		dao.updateVisitCount(num); // 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
 		dao.close();
-		
+		cDao.close();
 		// 줄 바꿈 처리
 		dto.setContent(dto.getContent().replace("\r\n", "<br/>"));
 

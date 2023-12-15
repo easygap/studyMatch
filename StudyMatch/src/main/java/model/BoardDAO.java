@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
+import member.MemberDTO;
 
 public class BoardDAO extends DBConnPool {
 
@@ -78,7 +79,6 @@ public class BoardDAO extends DBConnPool {
 
 			if (dto.getImg() != null) {
 				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
-
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
@@ -87,7 +87,6 @@ public class BoardDAO extends DBConnPool {
 				psmt.setString(5, dto.getInter_num());
 			} else {
 				query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
-
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
@@ -165,25 +164,24 @@ public class BoardDAO extends DBConnPool {
 	// 선택한 게시물 보기
 	public BoardDTO selectView(String num) {
 		BoardDTO dto = new BoardDTO();
-		String query = "SELECT B.*, M.nickname " + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
-				+ " WHERE board_num=?";
+		String query = "SELECT B.*, M.nickname" + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
+				+ "WHERE board_num=?";
 		try {
-
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				dto.setGroud_num(rs.getString("GROUD_NUM"));
-				dto.setInter_num(rs.getString("INTER_NUM"));
-				dto.setBoard_num(rs.getString("BOARD_NUM"));
-				dto.setTitle(rs.getString("TITLE"));
-				dto.setContent(rs.getString("CONTENT"));
-				dto.setImg(rs.getString("IMG"));
+				dto.setGroup_num(rs.getString("group_num"));
+				dto.setInter_num(rs.getString("inter_num"));
+				dto.setBoard_num(rs.getString("board_num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setImg(rs.getString("img"));
 				dto.setId(rs.getString("nickname"));
-				dto.setPost_date(rs.getDate("POST_DATE"));
-				dto.setVisit_count(rs.getString("VISIT_COUNT"));
-				dto.setLike_count(rs.getString("LIKE_COUNT"));
+				dto.setPost_date(rs.getDate("post_date"));
+				dto.setVisit_count(rs.getString("visit_count"));
+				dto.setLike_count(rs.getString("like_count"));
 				System.out.println(dto.getBoard_num() + "번 게시물 로드 성공~!");
 			}
 		} catch (Exception e) {

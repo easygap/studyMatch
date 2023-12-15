@@ -2,7 +2,7 @@ package model;
 
 public class BoardDTO {
 	// 게시글
-	private String groud_num;
+	private String group_num;
 	private String inter_num;
 	private String board_num;
 	private String title;
@@ -16,8 +16,8 @@ public class BoardDTO {
 	public BoardDTO() {
 	}
 
-	public String getGroud_num() {
-		return groud_num;
+	public String getGroup_num() {
+		return group_num;
 	}
 
 	public String getInter_num() {
@@ -56,8 +56,8 @@ public class BoardDTO {
 		return post_date;
 	}
 
-	public void setGroud_num(String groud_num) {
-		this.groud_num = groud_num;
+	public void setGroup_num(String group_num) {
+		this.group_num = group_num;
 	}
 
 	public void setInter_num(String inter_num) {
