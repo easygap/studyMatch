@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="model.CommentDAO" %>
+<%@ page import="model.CommentDTO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -105,13 +108,22 @@ String num = request.getParameter("num");
 							</tr>
 						</thead>
 						<tbody>
+							<%
+							CommentDAO dao = new CommentDAO();
+							ArrayList<CommentDTO> list = dao.getList(num);
+
+							for (int i = list.size() - 1; i >= 0; i--) {
+							%>
 							<tr>
-								<td style="text-align: left;"></td>
-								<td style="text-align: right;"><a
-									href="/board/CommEdit.do?action=edit" class="btn">수정</a> <a
+								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
+								<td style="text-align: right;"><%=list.get(i).getId()%> <%=list.get(i).getCommen_date()%>
+									<a href="/board/CommEdit.do?action=edit" class="btn">수정</a> <a
 									href="/board/CommEdit.do?action=delete" class="btn ">삭제</a></td>
 							</tr>
 
+							<%
+							}
+							%>
 							<tr>
 								<td><textarea type="text" class="form-control"
 										placeholder="댓글을 입력하세요." id="commContent" name="commContent"
@@ -121,8 +133,8 @@ String num = request.getParameter("num");
 						</tbody>
 					</table>
 					<input type="submit" class="btn" value="댓글입력"> <input
-						type="hidden" name="interest" value="<%=interest%>">
-						<input type="hidden" id="num" name="num" value="<%=num%>">
+						type="hidden" name="interest" value="<%=interest%>"> <input
+						type="hidden" id="num" name="num" value="<%=num%>">
 				</form>
 
 			</div>
