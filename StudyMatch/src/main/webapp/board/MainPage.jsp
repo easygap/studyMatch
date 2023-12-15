@@ -186,24 +186,62 @@ td {
 							<%=nowTime%>
 						</p>
 					</div>	
-					<div class="jumbotron" style="position: relative; width: 1280px; height: 100px;" >
-						<div style="position: relative; width: 1280px; height: 10px;" align="center">
-						<p>VS</p>
+				</div>
+				
+					<div class="jumbotron" style="position: relative; width: 1280px; height: 150px;" >		
+						<div style="position: relative; left: -250px; top: 0.1px; margin-left: 5px; text-align: center;">
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
 						</div>
-						<div class="lead" style="position: relative; left: 300px; top: 1px;">
+						<div style="position: relative; left: 100px; top: 0.1px; margin-left: 5px; text-align: center; width:400px; height: 30px;">
+						<div style="position: relative; left: 100px; top: -5px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">신짱구</p>
+						<p style="width:20px; height: 10px; display: inline-block;">남</p>
+						</div>
+						<div style="position: relative; left: 150px; top: -20px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">한유리</p>
+						<p style="width:20px; height: 10px; display: inline-block;" >여</p>
+						</div>
+						<div style="position: relative; left: 200px; top: -35px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">김철수</p>
+						<p style="width:20px; height: 10px; display: inline-block;">남</p>
+						</div>
+						</div>
+						<div style="position: relative; width: 30px; height: 10px;" align="center">
+						<p>VS</p>
+						<div style="position: relative; left: 250px; top: -118px; margin-left: 5px; text-align: center; width:400px; height: 100px;">
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+						</div>
+						<div style="position: relative; left: 100px; top: 0.1px; margin-left: 5px; text-align: center; width:400px; height: 30px;">
+						<div style="position: relative; left: 100px; top: -5px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">신짱구</p>
+						<p style="width:20px; height: 10px; display: inline-block;">남</p>
+						</div>
+						<div style="position: relative; left: 150px; top: -20px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">한유리</p>
+						<p style="width:20px; height: 10px; display: inline-block;" >여</p>
+						</div>
+						<div style="position: relative; left: 200px; top: -35px; text-align: center; width:100px; height: 15px;">
+						<p style="width:50px; height: 10px; display: inline-block;">김철수</p>
+						<p style="width:20px; height: 10px; display: inline-block;">남</p>
+						</div>
+						</div>
+						<div class="lead" style="position: relative; left: -250px; top: -50px; width: 300px;">
 							<input type="submit" class="btn" value="상세보기">
 							<input type="submit" class="btn" value="매치하기">
 						</div>
-						<div class="lead" style="position: relative; left: 800px; top: -40px;">	
+						<div class="lead" style="position: relative; left: 250px; top: -90px; width: 300px;">	
 							<input type="submit" class="btn" value="상세보기">
 							<input type="submit" class="btn" value="매치하기">
 						</div>
 					</div>
 				</div>
 				</form>
-				<hr class="my-4">
 					<!-- 캘린더 -->
-					<div style="position: relative;" align="center">
+					<div style="position: relative; top: 150px" align="center">
 					<table class="Calendar">
 						<thead>
 							<tr>
