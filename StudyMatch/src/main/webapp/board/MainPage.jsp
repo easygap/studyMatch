@@ -23,47 +23,7 @@
 <head>
 <meta charset="UTF-8">
 <title>달력</title>
-<style>
-td {
-	width: 50px;
-	height: 50px;
-}
-
-.Calendar {
-	text-align: center;
-	margin: 0 auto;
-}
-
-.Calendar>thead>tr:first-child>td {
-	font-weight: bold;
-}
-
-.Calendar>thead>tr:last-child>td {
-	background-color: gray;
-	color: white;
-}
-
-.pastDay {
-	background-color: lightgray;
-}
-
-.today {
-	background-color: #FFCA64;
-	cursor: pointer;
-}
-
-.futureDay {
-	background-color: #FFFFFF;
-	cursor: pointer;
-}
-
-.futureDay.choiceDay, .today.choiceDay {
-	background-color: #3E85EF;
-	color: #fff;
-	cursor: pointer;
-}
-</style>
-
+<link rel="stylesheet" href="../css/MainPage.css">
 <script>
 	window.onload = function() {
 		buildCalendar();
@@ -176,72 +136,44 @@ td {
 				<!-- import 끝 -->
 				<!-- 본문 -->
 				<div style="position: absolute; width:1280px; height:1300px">
-				<form action="../board/" method="post">
-				<div class="wrap" style="position: relative; width: 1280px; height: 100px;">
-					<div class="jumbotron" style="text-align: left;">
-						<% if(id != "") { %>
-						<h1 class="display-4">${requestScope.dto.nickName}님, 환영합니다!</h1>
-						<% } %>
-						<p class="lead">
-							<%=nowTime%>
-						</p>
-					</div>	
-				</div>
-				
-					<div class="jumbotron" style="position: relative; width: 1280px; height: 150px;" >		
-						<div style="position: relative; left: -250px; top: 0.1px; margin-left: 5px; text-align: center;">
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
+					<form action="../board/" method="post">
+						<div class="wrap"
+							style="position: relative; width: 1280px; height: 100px;">
+							<div class="jumbotron" style="text-align: left;">
+								<% if(id != "") { %>
+								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
+								<% } %>
+								<p class="lead">
+									<%=nowTime%>
+								</p>
+							</div>
 						</div>
-						<div style="position: relative; left: 100px; top: 0.1px; margin-left: 5px; text-align: center; width:400px; height: 30px;">
-						<div style="position: relative; left: 100px; top: -5px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">신짱구</p>
-						<p style="width:20px; height: 10px; display: inline-block;">남</p>
+						<!-- 매칭하기 -->
+						<div class="NewMatch">
+						<p class="matchfont">NEW MATCH ! ! !</p>
+							<div class="Match1" align="center">
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
+								<br/>
+								<p class="Member1">신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
+								<p class="content1">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+							</div>
+							<div class="VS" align="center">
+								<p class="matchfont" id="vs">VS</p>
+							</div>
+							<div class="Match2" align="center">
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="noMargin"> 
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
+								<br/>
+								<p class="Member2"> 신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
+								<p class="content2">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+							</div>
 						</div>
-						<div style="position: relative; left: 150px; top: -20px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">한유리</p>
-						<p style="width:20px; height: 10px; display: inline-block;" >여</p>
-						</div>
-						<div style="position: relative; left: 200px; top: -35px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">김철수</p>
-						<p style="width:20px; height: 10px; display: inline-block;">남</p>
-						</div>
-						</div>
-						<div style="position: relative; width: 30px; height: 10px;" align="center">
-						<p>VS</p>
-						<div style="position: relative; left: 250px; top: -118px; margin-left: 5px; text-align: center; width:400px; height: 100px;">
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
-						<div style="width: 70px; height: 70px; border-radius: 70%; overflow: hidden; background: #BDBDBD; display: inline-block;"></div>
-						</div>
-						<div style="position: relative; left: 100px; top: 0.1px; margin-left: 5px; text-align: center; width:400px; height: 30px;">
-						<div style="position: relative; left: 100px; top: -5px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">신짱구</p>
-						<p style="width:20px; height: 10px; display: inline-block;">남</p>
-						</div>
-						<div style="position: relative; left: 150px; top: -20px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">한유리</p>
-						<p style="width:20px; height: 10px; display: inline-block;" >여</p>
-						</div>
-						<div style="position: relative; left: 200px; top: -35px; text-align: center; width:100px; height: 15px;">
-						<p style="width:50px; height: 10px; display: inline-block;">김철수</p>
-						<p style="width:20px; height: 10px; display: inline-block;">남</p>
-						</div>
-						</div>
-						<div class="lead" style="position: relative; left: -250px; top: -50px; width: 300px;">
-							<input type="submit" class="btn" value="상세보기">
-							<input type="submit" class="btn" value="매치하기">
-						</div>
-						<div class="lead" style="position: relative; left: 250px; top: -90px; width: 300px;">	
-							<input type="submit" class="btn" value="상세보기">
-							<input type="submit" class="btn" value="매치하기">
-						</div>
-					</div>
-				</div>
-				</form>
+					</form>
 					<!-- 캘린더 -->
-					<div style="position: relative; top: 150px" align="center">
+					<div id="Calendar" align="center">
 					<table class="Calendar">
 						<thead>
 							<tr>
