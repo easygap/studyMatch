@@ -76,7 +76,6 @@ public class BoardDAO extends DBConnPool {
 		int result = 0;
 		String query = null;
 		try {
-
 			if (dto.getImg() != null) {
 				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
 				psmt = con.prepareStatement(query);
@@ -110,7 +109,6 @@ public class BoardDAO extends DBConnPool {
 		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
 
 		try {
-
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			psmt.setString(2, interest);
@@ -133,7 +131,6 @@ public class BoardDAO extends DBConnPool {
 		String query1 = "SELECT img FROM board WHERE board_num=?";
 
 		try {
-
 			psmt = con.prepareStatement(query1);
 			psmt.setString(1, num);
 			rs = psmt.executeQuery();
@@ -149,7 +146,6 @@ public class BoardDAO extends DBConnPool {
 		String query2 = "DELETE FROM board WHERE board_num=?";
 
 		try {
-
 			psmt = con.prepareStatement(query2);
 			psmt.setString(1, num);
 			psmt.executeUpdate();
@@ -194,8 +190,8 @@ public class BoardDAO extends DBConnPool {
 	// 게시물 조회수 +1
 	public void updateVisitCount(String num) {
 		String query = "UPDATE board SET visit_count = visit_count + 1 where board_num=?";
+		
 		try {
-
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
 			psmt.executeUpdate();
@@ -252,7 +248,6 @@ public class BoardDAO extends DBConnPool {
 		query += "ORDER BY board_num DESC";
 
 		try {
-
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
 			rs = psmt.executeQuery(); // 쿼리문 실행
