@@ -46,12 +46,11 @@
 								<option value="engese">영어</option>
 								<option value="japanese">일본어</option>
 								<option value="chinese">중국어</option>
-								<option value="front_end">프론트/백앤드</option>
-								<option value="Project01">프로젝트</option>
+								<option value="front_end">UI/UX</option>
+								<option value="Project01">JSP</option>
 								<option value="designer">디자이너</option>
 								<option value="Publishers">퍼블리셔</option>
-								<option value="Project02">프로젝트</option>
-								<option value="Words">엑셀/한글/워드</option>
+     							<option value="Words">엑셀/한글/워드</option>
 								<option value="go_sjcu">회계</option>
 								<option value="Property">부동산</option>
 								<option value="investment">투자</option>
