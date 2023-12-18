@@ -180,6 +180,15 @@ public class GroupDAO extends DBConnPool {
 	    }
 	    return profiles;
 	}
+	
+	// 그룹 멤버 이름 가져오기
+//	public List<String> getGroupName(String id){
+//		String query = " SELECT m.name as member_name"
+//				+ "FROM matchgroup mg"
+//				+ "JOIN member m ON"
+//				+ "    (mg.id1 = m.id OR mg.id2 = m.id OR mg.id3 = m.id OR mg.id4 = m.id OR mg.id5 = m.id)"
+//				+ "WHERE mg.id1 = ? OR mg.id2 = ? OR mg.id3 = ? OR mg.id4 = ? OR mg.id5 = ?";
+//	}
 
 	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
 	public String[] getGroupData1(String interest, String address, String id) {
