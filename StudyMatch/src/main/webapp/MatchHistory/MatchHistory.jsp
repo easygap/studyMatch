@@ -38,7 +38,7 @@ String img = request.getParameter("img");
 			<p class="matching" id="group">MY STUDY GROUP</p>
 				<div class="image" align="center">
 				<%
-				if(img != null){
+				if(!img.equals("null")){
 				%>
 				<img src="${pageContext.request.contextPath}/MyProfile/<%= img %>" name="profile" alt="Mem1" class="noMargin"> 
 				<img src="${pageContext.request.contextPath}/MyProfile/<%= img %>" name="profile" alt="Mem2" class="profile"> 
