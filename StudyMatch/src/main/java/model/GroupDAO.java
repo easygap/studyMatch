@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.naming.Context;
@@ -152,23 +153,32 @@ public class GroupDAO extends DBConnPool {
 	}
 
 	// 프로필 사진 가져오기
-	public String getProfile(String id) {
-		String profile = null;
-		String query = "SELECT img FROM member WHERE id=?";
+	public List<String> getProfile(String id) {
+	    List<String> profiles = new ArrayList<>();
+	    String query = "SELECT m.img " +
+	            "FROM member m " +
+	            "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 " +
+	            "WHERE mg.group_num IN " +
+	            "    (SELECT group_num FROM matchgroup WHERE id1 = ? OR id2 = ? OR id3 = ? OR id4 = ? OR id5 = ?)";
 
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				profile = rs.getString("img");
-				System.out.println("쿼리문에서 : " + profile);
-			}
-		} catch (Exception e) {
-			System.out.println("DB 이미지 불러오기 실패");
-			e.printStackTrace();
-		}
-		return profile;
+	    try {
+	        psmt = con.prepareStatement(query);
+	        psmt.setString(1, id);
+	        psmt.setString(2, id);
+	        psmt.setString(3, id);
+	        psmt.setString(4, id);
+	        psmt.setString(5, id);
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            String profile = rs.getString("img");
+	            profiles.add(profile);
+	            System.out.println("쿼리문에서 : " + profile);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("DB 이미지 불러오기 실패");
+	        e.printStackTrace();
+	    }
+	    return profiles;
 	}
 
 	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
