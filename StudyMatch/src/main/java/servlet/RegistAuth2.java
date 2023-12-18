@@ -23,25 +23,25 @@ public class RegistAuth2 extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        doGet(req, resp);
-		System.out.println("doPost()");
-
 		req.setCharacterEncoding("UTF-8");
 
 		// 파일 업로드 처리
 		String saveDirectory = req.getServletContext().getRealPath("/MyProfile");
-		System.out.println(saveDirectory);
+		
 		// 파일 용량
 		int maxPostSize = 1024 * 1000; // 1MB
 		String encoding = "UTF-8";
 		MultipartRequest mr = new MultipartRequest(req, saveDirectory, maxPostSize, encoding);
+		
+		// 콘솔 확인
+		System.out.println("---------------------- Regist ----------------------");
+		System.out.println("doPost()");
+		System.out.println(saveDirectory);
+		System.out.println("[ " + mr.getParameter("id") + " ]");
 
 		// 비밀번호 동일한지 확인
 		String pw = mr.getParameter("pw");
 		String pwcheck = mr.getParameter("pwcheck");
-
-		// 콘솔 확인
-		System.out.println("[ " + mr.getParameter("id") + " ]");
-		System.out.println("---------------------- Regist ----------------------");
 
 		boolean Regist = false;
 		String idC = null;
@@ -132,6 +132,7 @@ public class RegistAuth2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("doGet()");
+		System.out.println("----------------------------------------------------");
 		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
 	}
 }
