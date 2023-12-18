@@ -32,6 +32,7 @@
                 <form name="historyFrm" method="post" action="../match/MatchHistory.do" onsubmit="return validateForm(this);">
                     <p class="matching" id="Matching">매 칭 현 황</p>
 
+					<!-- 현재 내 그룹 -->
                     <div class="MyStudyGruop-Back">
                         <p class="matching" id="group">MY STUDY GROUP</p>
                         <div class="image" align="center">
@@ -46,7 +47,7 @@
                         </div>
                     </div>
 
-                    <p></p>
+					<!-- 이전에 매칭될뻔한 그룹 -->
                     <div class="MatchHistory">
                         <p class="matching" id="history">Match History</p>
                         <p class="font">매칭 진행되고자 했던 날짜</p>
