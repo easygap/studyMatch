@@ -4,7 +4,19 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Calendar" %>
 <%@ page import="model.GroupDTO" %>
+<%@ page import= "java.util.ArrayList" %>
 <%
+
+request.setCharacterEncoding("UTF-8");
+
+Object groupList1 = request.getAttribute("groupList1");
+ArrayList<String> firstGroup = (ArrayList<String>) groupList1;
+System.out.println("First Group IN MainPage.jsp : " + firstGroup + "]");
+
+Object groupList2 = request.getAttribute("groupList2");
+ArrayList<String> secondGroup = (ArrayList<String>) groupList1;
+System.out.println("Second Group IN MainPage.jsp : " + secondGroup + "]");
+
 	GroupDTO dto = (GroupDTO)request.getAttribute("dto");
 
 	String id = "";
@@ -154,7 +166,7 @@
 						<p class="matchfont" id="newmatch">로그인 후 커뮤니티 이용이 가능합니다.</p>
 						<h3 class="display-4">로그인 하러 가기</h3>
 						<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a>
-							<% } else if (dto.getGR1id1() == null) { %>
+							<% } else if (firstGroup == null) { %>
 							<p class="matchfont" id="newmatch">매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 							<h3 class="display-4">${requestScope.dto.nickName}님이 직접 그룹을 만들 수 있습니다. 그룹을 생성하시겠습니까?</h3>
 							<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
