@@ -29,7 +29,9 @@ public class CommWriteController extends HttpServlet {
         String userId = null;
         String internum = req.getParameter("interest");
         String boardnum = req.getParameter("num");
+        String content = req.getParameter("commContent");
         System.out.println("댓글 interest 값 : " + internum + ", boardnum 값 : " + boardnum);
+        System.out.println("댓글 내용 : " + content);
         
         if (userObject != null) {
         	userId = userObject.toString();
@@ -43,17 +45,33 @@ public class CommWriteController extends HttpServlet {
         dto.setInter_num(internum);
         dto.setBoard_num(boardnum);
         dto.setId(userId);
-		dto.setContent(req.getParameter("commContent"));
-		
-		int result = dao.insertComm(dto);
+//		dto.setContent(req.getParameter("commContent"));
+        dto.setContent(content);
+        
+        try {
+            int result = dao.insertComm(dto);
+            dao.close();
+
+            if (result == 1) {
+                req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
+                System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
+            } else {
+                req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
+                System.out.println("*** 댓글 업로드 실패 ***");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("댓글 입력 서블릿 실행 실패");
+        }
+//		int result = dao.insertComm(dto);
 		dao.close();
 
-		if (result == 1) {
-			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
-		} else {
-			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-		    System.out.println("*** 댓글 업로드 실패 ***");
-		}
+//		if (result == 1) {
+//			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
+//		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
+//		} else {
+//			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
+//		    System.out.println("*** 댓글 업로드 실패 ***");
+//		}
 	}
 }

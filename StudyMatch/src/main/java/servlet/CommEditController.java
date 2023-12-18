@@ -18,7 +18,7 @@ import model.CommentDTO;
 public class CommEditController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
@@ -48,6 +48,7 @@ public class CommEditController extends HttpServlet {
 		
 		if (sessionId != null && sessionId.equals(id)) {
 			if ("delete".equals(action)) {
+				System.out.println("댓글 삭제 요청");
 				try {
 					dao.deleteCommen(commNum);
 					dao.close();
@@ -59,6 +60,10 @@ public class CommEditController extends HttpServlet {
 					System.out.println("*** Controller 댓글 삭제 실패 ***");
 				}
 			} else if ("edit".equals(action)) {
+				System.out.println("댓글 수정 요청");
+				if ("true".equals(req.getParameter("isModified"))) {
+			        dto.setModified(true);
+			    }
 				dto.setCommen_num(commNum);
 				dto.setContent(content);
 				
@@ -74,6 +79,5 @@ public class CommEditController extends HttpServlet {
 				}
 			}
 		}
-
 	}
 }
