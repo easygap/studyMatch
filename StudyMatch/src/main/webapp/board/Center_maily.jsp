@@ -27,9 +27,10 @@
 
 
 <h2>고객센터</h2>
-<input type='button' value='자주 묻는 질문'/>
-<input type='button' value='1:1 문의'/>
-<input type='button' value='내 문의'/>
+	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
+	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
+	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
