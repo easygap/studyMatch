@@ -87,6 +87,10 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+#mainbody{
+	background-color: #F4EAE0;
+}
+
 p {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -3391,6 +3395,7 @@ textarea.form-control-lg {
 }
 
 #sidebar-wrapper {
+  background-color: #F4EAE0;
   min-height: 100vh;
   margin-left: -15rem;
   transition: margin 0.25s ease-out;

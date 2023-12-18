@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 
-body {
+#matchbody {
 	/* display: flex;  
 	align-items: center; */
 	justify-content: center; 
@@ -45,23 +45,51 @@ body {
 /* 내 스터디 매칭된 그룸 뒷 배경 */
 .MyStudyGruop-Back {
 	position: absolute;
-	background-color: #C0C0C0;
+	background: rgba(192, 192, 192, 0.13);
 	width: 850px;
 	height: 250px;
 	left: 352px;
 	top: 214px;
 }
 
+#mygroup{
+	background: rgba(81, 116, 190, 0.4);
+	border-radius: 10px;
+	color: #ffffff;	
+	font-weight: bold;
+	font-size: 18px;
+	float: right;
+	margin-right: 40px;
+}
+
 .MatchHistory {
 	position: absolute;
-	background-color: #C0C0C0;
+	background: rgba(192, 192, 192, 0.13);
 	width: 850px;
 	height: 540px;
 	left: 352px;
 	top: 500px;
 }
 
-h1,
-h2 {
+.matching {
+	margin-left: 10px;
 	color: #5174BE;
+}
+
+#Matching{
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#group, #history{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.font{
+	margin-left: 10px;
+}
+
+#plus{
+	font-weight: bold;
 }
