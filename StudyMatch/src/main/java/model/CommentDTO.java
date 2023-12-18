@@ -8,7 +8,16 @@ public class CommentDTO {
 	private String id;
 	private java.sql.Date commen_date;
 	private String like_count;
-	
+	private boolean isModified;
+	 
+	public boolean isModified() {
+		return isModified;
+	}
+
+	public void setModified(boolean isModified) {
+		this.isModified = isModified;
+	}
+
 	public CommentDTO() {
 	}
 
