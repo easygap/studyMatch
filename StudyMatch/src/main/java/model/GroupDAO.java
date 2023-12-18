@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.naming.Context;
@@ -152,66 +153,97 @@ public class GroupDAO extends DBConnPool {
 	}
 
 	// 프로필 사진 가져오기
-	public String getProfile(String id) {
-		String profile = null;
-		String query = "SELECT img FROM member WHERE id=?";
+	public List<String> getProfile(String id) {
+	    List<String> profiles = new ArrayList<>();
+	    String query = "SELECT m.img " +
+	            "FROM member m " +
+	            "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 " +
+	            "WHERE mg.group_num IN " +
+	            "    (SELECT group_num FROM matchgroup WHERE id1 = ? OR id2 = ? OR id3 = ? OR id4 = ? OR id5 = ?)";
 
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				profile = rs.getString("img");
-				System.out.println("쿼리문에서 : " + profile);
-			}
-		} catch (Exception e) {
-			System.out.println("DB 이미지 불러오기 실패");
-			e.printStackTrace();
-		}
-		return profile;
+	    try {
+	        psmt = con.prepareStatement(query);
+	        psmt.setString(1, id);
+	        psmt.setString(2, id);
+	        psmt.setString(3, id);
+	        psmt.setString(4, id);
+	        psmt.setString(5, id);
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            String profile = rs.getString("img");
+	            profiles.add(profile);
+	            System.out.println("쿼리문에서 : " + profile);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("DB 이미지 불러오기 실패");
+	        e.printStackTrace();
+	    }
+	    return profiles;
 	}
 
 	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
-	public String getGroupData1(String interest, String address) {
-		String groupNum = null;
-		String query = "SELECT group_num FROM MATCHGROUP WHERE IMPORT= ? AND ADDRESS LIKE ? order by DBMS_RANDOM.RANDOM";
+	public String[] getGroupData1(String interest, String address, String id) {
+		String[] group = new String[6]; 
+		String query = "SELECT * "
+				+ "FROM MATCHGROUP "
+				+ "WHERE IMPORT=? AND ADDRESS LIKE ? "
+				+ "  AND NOT EXISTS ( "
+				+ "    SELECT 1 "
+				+ "    FROM DUAL "
+				+ "    WHERE ? IN (id1, id2, id3, id4, id5) "
+				+ "  )"
+				+ "ORDER BY DBMS_RANDOM.RANDOM ";
 		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
 			psmt.setString(2, "%" + address + "%");
+			/** 현재 사용자가 가입한 그룹은 보여주지 않기 */
+			psmt.setString(3, id);
 			rs = psmt.executeQuery();
 			
 			if (rs.next()) {
-				groupNum = rs.getString("group_num");
+				group[0] = rs.getString("group_num");
+				group[1] = rs.getString("id1");
+				group[2] = rs.getString("id2");
+				group[3] = rs.getString("id3");
+				group[4] = rs.getString("id4");
+				group[5] = rs.getString("id5");
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return groupNum;
+		System.out.println("DAO에서 매칭 group의 첫번째 id 값은 : " + group[1]);
+		return group;
 	}
 	
 	// 본인 관심사, 주소와 맞는 그룹 중 매칭되지 않은 Group_num 조회
-	public String getGroupData2(String interest, String address, String groupNum1) {
-		String groupNum = null;
-		String query = "SELECT group_num FROM MATCHGROUP WHERE group_num != ? AND IMPORT= ? AND ADDRESS LIKE ? order by DBMS_RANDOM.RANDOM";
+	public String[] getGroupData2(String interest, String address, String id, String groupNum1) {
+		String[] group = new String[6];
+		String query = "SELECT group_num FROM MATCHGROUP WHERE group_num != ? AND IMPORT= ? AND ADDRESS LIKE ? AND NOT EXISTS(SELECT 1 FROM DUAL WHERE ? IN (id1, id2, id3, id4, id5)) order by DBMS_RANDOM.RANDOM";
 		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, groupNum1);
 			psmt.setString(2, interest);
 			psmt.setString(3, "%" + address + "%");
+			psmt.setString(4, id);
 			rs = psmt.executeQuery();
 			
 			if (rs.next()) {
-				groupNum = rs.getString("group_num");
+				group[0] = rs.getString("group_num");
+				group[1] = rs.getString("id1");
+				group[2] = rs.getString("id2");
+				group[3] = rs.getString("id3");
+				group[4] = rs.getString("id4");
+				group[5] = rs.getString("id5");
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return groupNum;
+		return group;
 	}
 
 	// DB 연결 해제

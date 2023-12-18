@@ -29,7 +29,53 @@ String num = request.getParameter("num");
 			return false;
 		}
 	}
+    // 댓글 수정 버튼을 클릭했을 때 호출되는 함수
+   function populateTextarea(content, commNum) {
+    document.getElementById("commContent").value = content;
+    document.getElementById("commNum").value = commNum;
+    // "수정하기" 버튼으로 변경
+    document.getElementById("commSubmitButton").value = "수정하기";
+    // 수정하기 버튼 클릭 시 form의 action 변경
+    document.getElementById("commentForm").action = "../board/CommEdit.do"; // CommEdit.do로 변경
+    // 댓글 내용도 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("content", content));
+    // "수정하기" 버튼 클릭 시 action 파라미터 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("action", "edit"));
+    // "수정하기" 버튼 클릭 시 commNum 파라미터 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("commNum", commNum));
+}
+    
+   function submitCommentForm() {
+       // 댓글 번호 가져오기
+       var commNum = document.getElementById("commNum").value;
+
+       if (commNum !== null) {
+           // 기존 댓글 수정
+           var modifiedContent = document.getElementById("commContent").value;
+           // 수정된 내용과 번호를 form에 설정
+           document.getElementById("commContent").value = modifiedContent;
+           document.getElementById("commentForm").action = "../board/CommEdit.do";
+           // "댓글입력" 버튼을 "수정하기"로 변경
+           document.getElementById("commSubmitButton").value = "수정하기";
+           // 수정 내용도 전송
+           document.getElementById("commentForm").appendChild(createHiddenElement("content", modifiedContent));
+           // "수정하기" 버튼 클릭 시 action 파라미터 전송
+           document.getElementById("commentForm").appendChild(createHiddenElement("action", "edit"));
+       }
+
+       // form을 서버로 전송
+       document.getElementById("commentForm").submit();
+   }
+
+       function createHiddenElement(name, value) {
+           var hiddenElement = document.createElement("input");
+           hiddenElement.type = "hidden";
+           hiddenElement.name = name;
+           hiddenElement.value = value;
+           return hiddenElement;
+       }
 </script>
+
 </head>
 <body>
 
@@ -91,14 +137,12 @@ String num = request.getParameter("num");
 							<button type="button" onclick="removeCheck();">삭제하기</button> <%
  }
  %>
-							<button type="button"
-								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록
-								바로가기</button>
+							<button type="button" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>
 
-				<form method="post" action="../board/CommWrite.do">
+				<form name="commentForm" id="commentForm" method="post" action="../board/CommWrite.do">
 					<table class="table table-striped"
 						style="text-align: center; border: 1px solid #dddddd">
 						<%-- 홀,짝 행 구분 --%>
@@ -118,10 +162,8 @@ String num = request.getParameter("num");
 							<tr>
 								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
 								<td style="text-align: right;"><%=list.get(i).getId()%> <%=list.get(i).getCommen_date()%>
-									<a
-									href="../board/CommEdit?action=edit&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
-									class="btn">수정</a> <a
-									href="../board/CommEdit?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
+									<a href="javascript:void(0);" onclick="populateTextarea('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>');" class="btn">수정</a> <a
+									href="../board/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
 									class="btn">삭제</a></td>
 							</tr>
 
@@ -138,11 +180,9 @@ String num = request.getParameter("num");
 					</table>
 					<input type="hidden" name="interest" value="<%=interest%>"> 
 					<input type="hidden" id="num" name="num" value="<%=num%>">
-					<input type="hidden" name="commContent" value="${list.get(i).getContent()}"> 
-					<input type="hidden" name="commNum" value="${list.get(i).getCommen_num()}"> 
-					<input type="submit" class="btn" value="댓글입력">
+					<input type="hidden" id="commNum" name="commNum" value=""> 
+					<input type="submit" class="btn" id="commSubmitButton" value="댓글입력">
 				</form>
-
 			</div>
 		</div>
 	</div>
