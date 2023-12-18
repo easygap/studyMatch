@@ -149,26 +149,32 @@
 							</div>
 						</div>
 						<!-- 매칭하기 -->
-						<div class="NewMatch">
-						<p class="matchfont">NEW MATCH ! ! !</p>
+						<div id="NewMatch">
+						<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<div class="Match1" align="center">
 								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
 								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
 								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
 								<br/>
 								<p class="Member1">신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
 								<p class="content1">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
 							</div>
 							<div class="VS" align="center">
 								<p class="matchfont" id="vs">VS</p>
 							</div>
 							<div class="Match2" align="center">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="noMargin"> 
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
 								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
 								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
+								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
 								<br/>
 								<p class="Member2"> 신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
 								<p class="content2">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
 							</div>
 						</div>
 					</form>
