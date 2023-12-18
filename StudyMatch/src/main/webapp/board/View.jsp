@@ -16,12 +16,6 @@ String num = request.getParameter("num");
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-<!-- 댓글 내용 불러오기 -->
-<script>
-	function populateTextarea(commentContent) {
-		document.getElementById("commContent").value = commentContent;
-	}
-</script>
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
@@ -35,7 +29,53 @@ String num = request.getParameter("num");
 			return false;
 		}
 	}
+    // 댓글 수정 버튼을 클릭했을 때 호출되는 함수
+   function populateTextarea(content, commNum) {
+    document.getElementById("commContent").value = content;
+    document.getElementById("commNum").value = commNum;
+    // "수정하기" 버튼으로 변경
+    document.getElementById("commSubmitButton").value = "수정하기";
+    // 수정하기 버튼 클릭 시 form의 action 변경
+    document.getElementById("commentForm").action = "../board/CommEdit.do"; // CommEdit.do로 변경
+    // 댓글 내용도 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("content", content));
+    // "수정하기" 버튼 클릭 시 action 파라미터 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("action", "edit"));
+    // "수정하기" 버튼 클릭 시 commNum 파라미터 전송
+    document.getElementById("commentForm").appendChild(createHiddenElement("commNum", commNum));
+}
+    
+   function submitCommentForm() {
+       // 댓글 번호 가져오기
+       var commNum = document.getElementById("commNum").value;
+
+       if (commNum !== null) {
+           // 기존 댓글 수정
+           var modifiedContent = document.getElementById("commContent").value;
+           // 수정된 내용과 번호를 form에 설정
+           document.getElementById("commContent").value = modifiedContent;
+           document.getElementById("commentForm").action = "../board/CommEdit.do";
+           // "댓글입력" 버튼을 "수정하기"로 변경
+           document.getElementById("commSubmitButton").value = "수정하기";
+           // 수정 내용도 전송
+           document.getElementById("commentForm").appendChild(createHiddenElement("content", modifiedContent));
+           // "수정하기" 버튼 클릭 시 action 파라미터 전송
+           document.getElementById("commentForm").appendChild(createHiddenElement("action", "edit"));
+       }
+
+       // form을 서버로 전송
+       document.getElementById("commentForm").submit();
+   }
+
+       function createHiddenElement(name, value) {
+           var hiddenElement = document.createElement("input");
+           hiddenElement.type = "hidden";
+           hiddenElement.name = name;
+           hiddenElement.value = value;
+           return hiddenElement;
+       }
 </script>
+
 </head>
 <body>
 
@@ -97,14 +137,12 @@ String num = request.getParameter("num");
 							<button type="button" onclick="removeCheck();">삭제하기</button> <%
  }
  %>
-							<button type="button"
-								onclick="location.href='../board/list.do?interest=${ param.interest }';">목록
-								바로가기</button>
+							<button type="button" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>
 
-				<form method="post" id="commFrm">
+				<form name="commentForm" id="commentForm" method="post" action="../board/CommWrite.do">
 					<table class="table table-striped"
 						style="text-align: center; border: 1px solid #dddddd">
 						<%-- 홀,짝 행 구분 --%>
@@ -120,21 +158,17 @@ String num = request.getParameter("num");
 							ArrayList<CommentDTO> list = dao.getList(num);
 
 							for (int i = list.size() - 1; i >= 0; i--) {
-								CommentDTO comment = list.get(i);
 							%>
 							<tr>
-    <td style="text-align: left;"><%=comment.getContent()%></td>
-    <td style="text-align: right;"><%=comment.getId()%> <%=comment.getCommen_date()%>
-       <a href="javascript:void(0);" onclick="populateTextareaAndForm('<%=comment.getContent()%>', '<%=comment.getCommen_num()%>');" class="btn">수정</a>
-        <a href="../board/CommEdit?action=delete&commNum=<%=comment.getCommen_num()%>&id=<%=comment.getId()%>&num=<%=num%>&interest=<%=interest%>" class="btn">삭제</a>    </td>
+								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
+								<td style="text-align: right;"><%=list.get(i).getId()%> <%=list.get(i).getCommen_date()%>
+									<a href="javascript:void(0);" onclick="populateTextarea('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>');" class="btn">수정</a> <a
+									href="../board/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
+									class="btn">삭제</a></td>
+							</tr>
 
 							<%
 							}
-							%>
-
-							<%
-							String buttonText = "댓글입력";
-							CommentDTO dto = new CommentDTO();
 							%>
 							<tr>
 								<td><textarea type="text" class="form-control"
@@ -144,126 +178,11 @@ String num = request.getParameter("num");
 							</tr>
 						</tbody>
 					</table>
-					<input type="hidden" name="interest" value="<%=interest%>">
-    <input type="hidden" id="num" name="num" value="<%=num%>">
-    <input type="hidden" id="commNum" name="commNum" value="">
-    <input type="button" class="btn" id="submitButton" value="<%= buttonText %>" onclick="submitFrm()">
-    <input type="hidden" name="isModified" id="isModified" value="<%= dto.isModified() %>">
+					<input type="hidden" name="interest" value="<%=interest%>"> 
+					<input type="hidden" id="num" name="num" value="<%=num%>">
+					<input type="hidden" id="commNum" name="commNum" value=""> 
+					<input type="submit" class="btn" id="commSubmitButton" value="댓글입력">
 				</form>
-<%
-    if (dto.isModified()) {
-%>
-   <form method="post" id="modifiedCommFrm" name="modifiedCommFrm">
-       <input type="hidden" name="interest" value="<%=interest%>">
-        <input type="hidden" id="num" name="num" value="<%=num%>">
-        <input type="hidden" name="commContent" id="modifiedCommContent" value="">
-        <input type="hidden" name="commNum" id="modifiedCommNum" value="">
-        <input type="button" class="btn" id="modifiedSubmitButton" value="수정하기" onclick="setModifiedFlag(); submitModifiedFrm()">
-        <input type="hidden" name="isModified" id="isModified" value="true"> 
-    
-    </form>
-<%
-    }
-%>
-<!-- 초기 버튼 설정 -->
-<script>
-    function updateButton() {
-        var buttonText = "댓글입력";
-        document.getElementById("submitButton").value = buttonText;
-    }
-
-    // 수정 버튼을 눌렀을 때 호출하는 함수
-function updateModifiedButton() {
-    console.log("updateModifiedButton 실행");
-    // isModified 값에 따라 버튼 텍스트를 동적으로 변경
-    var isModified = document.getElementById("isModified").value === "true";
-    var buttonText = isModified ? "수정하기" : "댓글입력";
-    var modifiedSubmitButton = document.getElementById("modifiedSubmitButton");
-
-    if (modifiedSubmitButton) {
-        modifiedSubmitButton.value = buttonText;
-    }
-}
-
-    // 수정 버튼의 클릭 이벤트 리스너 등록
-document.addEventListener("DOMContentLoaded", function () {
-    var modifiedButton = document.getElementById("modifiedSubmitButton");
-    if (modifiedButton) {
-        modifiedButton.addEventListener("click", function () {
-            console.log("modifiedSubmitButton 실행");
-            updateModifiedButton();
-            submitModifiedFrm(); // 수정된 내용 서버로 전송
-        });
-    } else {
-        console.error("modifiedSubmitButton를 찾을 수 없습니다.");
-    }
-});
-
-
-// 페이지 로드 시 초기 버튼 설정
-window.onload = function () {
-    console.log("updateButton function called");
-    console.log("updateModifiedButton function called");
-    updateButton();
-    setTimeout(function () {
-        updateModifiedButton(); // setTimeout으로 지연 호출
-    }, 0);
-};
-
-
-    function submitFrm() { // 새 댓글 작성
-    	console.log("submitFrm function 실행");
-        var commFrm = document.getElementById("commFrm");
-        if (commFrm) {
-            commFrm.action = "../board/CommWrite.do";
-            commFrm.submit();
-        }
-    }
-
-    function submitModifiedFrm() {
-    	console.log("submitModifiedFrm 실행");
-        var modifiedContent = document.getElementById("commContent").value;
-        var commNum = document.getElementById("commNum").value;
-        var modifiedCommFrm = document.getElementById("modifiedCommFrm");
-        if (modifiedCommFrm) {
-            modifiedCommFrm.action = "../board/CommEdit.do?action=edit&commNum=" + commNum + "&content=" + modifiedContent;
-            modifiedCommFrm.submit();
-        }
-    }
-
-    function setModifiedFlag() {
-    	console.log("setModifiedFlag 실행");
-        document.getElementById("isModified").value = "true";
-    }
-
-    function populateTextareaAndForm(commentContent, commNum) {
-        var commContentElement = document.getElementById("commContent");
-        var commNumElement = document.getElementById("commNum");
-        var modifiedCommContentElement = document.getElementById("modifiedCommContent");
-        var modifiedCommNumElement = document.getElementById("modifiedCommNum");
-        var submitButton = document.getElementById("submitButton");
-        var modifiedSubmitButton = document.getElementById("modifiedSubmitButton");
-
-        if (commContentElement && commNumElement && modifiedCommContentElement && modifiedCommNumElement && submitButton && modifiedSubmitButton) {
-            commContentElement.value = commentContent;
-            commNumElement.value = commNum;
-            modifiedCommContentElement.value = commentContent;
-            modifiedCommNumElement.value = commNum;
-
-            // "댓글입력" 버튼을 "수정하기"로 변경
-            submitButton.value = "수정하기";
-            modifiedSubmitButton.value = "수정하기";
-
-            setModifiedFlag();
-            updateModifiedButton();
-        } else {
-            console.error("One or more elements not found.");
-        }
-    }
-
-
-
-</script>
 			</div>
 		</div>
 	</div>
