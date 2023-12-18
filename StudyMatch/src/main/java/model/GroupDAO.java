@@ -58,10 +58,9 @@ public class GroupDAO extends DBConnPool {
 		}
 		return NickName;
 	}
-	
-	
+		
 	// 현재 회원 ID의 interest 정보 가져오기
-	public ArrayList<String> getGroupData(String id) {		
+	public ArrayList<String> getMemberInterest(String id) {		
 		int count = 0;
 		String query1 ="SELECT COUNT(INTEREST1) + COUNT(INTEREST2) + COUNT(INTEREST3) AS interest FROM MEMBER WHERE id=?";
 		
@@ -106,8 +105,6 @@ public class GroupDAO extends DBConnPool {
 		
 	}
 	
-	
-	
 	// 현재 회원 ID의 주소 정보 가져오기
 	public String getaddress(String id) {
 		String address = null;
@@ -133,6 +130,50 @@ public class GroupDAO extends DBConnPool {
 		}
 		return address;
 	}
+	
+	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
+	public String getGroupData1(String interest, String address) {
+		String groupNum = null;
+		String query = "SELECT group_num FROM MATCHGROUP WHERE IMPORT= ? AND ADDRESS LIKE ? order by DBMS_RANDOM.RANDOM";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, interest);
+			psmt.setString(2, "%" + address + "%");
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				groupNum = rs.getString("group_num");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return groupNum;
+	}
+	
+	// 본인 관심사, 주소와 맞는 그룹 중 매칭되지 않은 Group_num 조회
+	public String getGroupData2(String interest, String address, String groupNum1) {
+		String groupNum = null;
+		String query = "SELECT group_num FROM MATCHGROUP WHERE group_num != ? AND IMPORT= ? AND ADDRESS LIKE ? order by DBMS_RANDOM.RANDOM";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, groupNum1);
+			psmt.setString(2, interest);
+			psmt.setString(3, "%" + address + "%");
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				groupNum = rs.getString("group_num");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return groupNum;
+	}
+
 	
 	// DB 연결 해제
 	public void close() {
