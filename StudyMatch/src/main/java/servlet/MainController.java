@@ -72,8 +72,7 @@ public class MainController extends HttpServlet {
 				interest1 = interest1.trim();
 				interest2 = interest.get(1);
 				interest2 = interest2.trim();
-				
-				
+					
 				System.out.println("흥미 : " + interest1 + " 그리고 " + interest2);
 				/** 흥미 저장 1 */
 				dto.setInterest1(interest1);
@@ -91,11 +90,21 @@ public class MainController extends HttpServlet {
 				dto.setFirstGroup(groupNum1);
 				
 				/** 첫번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				dto.setGR1id1(groupArr1[1]);
-				dto.setGR1id2(groupArr1[2]);
-				dto.setGR1id3(groupArr1[3]);
-				dto.setGR1id4(groupArr1[4]);
-				dto.setGR1id5(groupArr1[5]);
+				ArrayList<String> groupList1 = new ArrayList<>();
+				groupList1.add(groupArr1[1]);
+				groupList1.add(groupArr1[2]);
+				groupList1.add(groupArr1[3]);
+				groupList1.add(groupArr1[4]);
+				groupList1.add(groupArr1[5]);
+				
+//				dto.setGR1id1(groupArr1[1]);
+//				dto.setGR1id2(groupArr1[2]);
+//				dto.setGR1id3(groupArr1[3]);
+//				dto.setGR1id4(groupArr1[4]);
+//				dto.setGR1id5(groupArr1[5]);
+				
+				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
+				req.setAttribute("GR1", groupList1);
 				
 				/** 두번째 그룹 매치 - 흥미가 2개 이상일 때 interest2 값으로도 그룹 매치 */ 
 				String groupArr2[] = dao.getGroupData2(interest2, address, sessionID, groupNum1);
@@ -106,13 +115,22 @@ public class MainController extends HttpServlet {
 				dto.setSecondGroup(groupNum2);
 				
 				/** 두번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				dto.setGR2id1(groupArr2[1]);
-				dto.setGR2id2(groupArr2[2]);
-				dto.setGR2id3(groupArr2[3]);
-				dto.setGR2id4(groupArr2[4]);
-				dto.setGR2id5(groupArr2[5]);
+				ArrayList<String> groupList2 = new ArrayList<>();
+				groupList2.add(groupArr2[1]);
+				groupList2.add(groupArr2[2]);
+				groupList2.add(groupArr2[3]);
+				groupList2.add(groupArr2[4]);
+				groupList2.add(groupArr2[5]);
 				
+//				dto.setGR2id1(groupArr2[1]);
+//				dto.setGR2id2(groupArr2[2]);
+//				dto.setGR2id3(groupArr2[3]);
+//				dto.setGR2id4(groupArr2[4]);
+//				dto.setGR2id5(groupArr2[5]);
 				
+				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
+				req.setAttribute("GR2", groupList2);
+
 				if("null".equals(groupNum1) || groupNum1 == null) {
 					createGR1 = "Y";
 					/** 흥미1에 대한 그룹 생성 여부 저장 */
@@ -143,19 +161,28 @@ public class MainController extends HttpServlet {
 				System.out.println("관심사 : " + interest1 +", 주소 : " + address);
 				
 				// 첫번째 그룹 매치 - 관심사, 주소와 맞는 Group_num 추천
-				String groupArr[] = dao.getGroupData1(interest1, address, sessionID);
+				String groupArr1[] = dao.getGroupData1(interest1, address, sessionID);
 				
 				/** 첫번째 그룹 매치 - 그룹 번호 */
-				String groupNum1 = groupArr[0];
+				String groupNum1 = groupArr1[0];
 				dto.setFirstGroup(groupNum1);
 
 				/** 첫번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				dto.setGR1id1(groupArr[1]);
-				System.out.println("Controller에서 매칭 group의 첫번째 id 값은 : " + groupArr[1]);
-				dto.setGR1id2(groupArr[2]);
-				dto.setGR1id3(groupArr[3]);
-				dto.setGR1id4(groupArr[4]);
-				dto.setGR1id5(groupArr[5]);
+				ArrayList<String> groupList1 = new ArrayList<>();
+				groupList1.add(groupArr1[1]);
+				groupList1.add(groupArr1[2]);
+				groupList1.add(groupArr1[3]);
+				groupList1.add(groupArr1[4]);
+				groupList1.add(groupArr1[5]);
+				
+//				dto.setGR1id1(groupArr[1]);
+//				dto.setGR1id2(groupArr[2]);
+//				dto.setGR1id3(groupArr[3]);
+//				dto.setGR1id4(groupArr[4]);
+//				dto.setGR1id5(groupArr[5]);
+				
+				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
+				req.setAttribute("GR1", groupList1);
 								
 				
 				// 두번째 그룹 매치 - 흥미가 1개일 때 interest1 값으로만 그룹 매치
@@ -165,19 +192,27 @@ public class MainController extends HttpServlet {
 				dto.setSecondGroup(groupNum2);
 
 				/** 두번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				dto.setGR2id1(groupArr2[1]);
-				dto.setGR2id2(groupArr2[2]);
-				dto.setGR2id3(groupArr2[3]);
-				dto.setGR2id4(groupArr2[4]);
-				dto.setGR2id5(groupArr2[5]);
+				ArrayList<String> groupList2 = new ArrayList<>();
+				groupList2.add(groupArr2[1]);
+				groupList2.add(groupArr2[2]);
+				groupList2.add(groupArr2[3]);
+				groupList2.add(groupArr2[4]);
+				groupList2.add(groupArr2[5]);
+				
+//				dto.setGR2id1(groupArr2[1]);
+//				dto.setGR2id2(groupArr2[2]);
+//				dto.setGR2id3(groupArr2[3]);
+//				dto.setGR2id4(groupArr2[4]);
+//				dto.setGR2id5(groupArr2[5]);
+				
+				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
+				req.setAttribute("GR2", groupList2);
 			}
 
 		}
 
 		// request 영역에 DTO 담기
 		req.setAttribute("dto", dto);
-		
-		System.out.println("그룹의 첫번째 아이디 : " + dto.getGR1id1());
 				
 		// jsp 페이지로 forward 이동
 		req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
