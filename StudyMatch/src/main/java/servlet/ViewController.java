@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +23,6 @@ public class ViewController extends HttpServlet {
 		System.out.println("안녕 나는 view라고 해");
 		// 게시글 불러오기
 		BoardDAO dao = new BoardDAO();
-		CommentDAO cDao = new CommentDAO();
 
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
@@ -37,6 +37,15 @@ public class ViewController extends HttpServlet {
 		if (sessionID != null && sessionID.equals(boardID)) {
 			result = "Y";
 		}
+		
+		// 댓글 삭제 & 수정
+		CommentDAO cDao = new CommentDAO();
+		ArrayList<String> commIds = cDao.idCheck(num);
+		String cRight = "N";
+		
+		if (sessionID != null && commIds.contains(sessionID)) {
+			cRight = "Y";
+		}
 
 		dao.updateVisitCount(num); // 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
@@ -47,6 +56,7 @@ public class ViewController extends HttpServlet {
 
 		// 게시물(dto) 저장 후 뷰로 포워드
 		req.setAttribute("dto", dto);
+		req.setAttribute("cRight", cRight);
 
 		req.getRequestDispatcher("../board/View.jsp?result=" + result).forward(req, resp);
 	}

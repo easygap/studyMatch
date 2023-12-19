@@ -69,7 +69,7 @@ public class CommentDAO extends DBConnPool {
 		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
 				+ "INNER JOIN BOARD B ON C.board_num = B.board_num "
 				+ "INNER JOIN MEMBER M ON C.id = M.id "
-				+ "WHERE B.board_num = ?";
+				+ "WHERE B.board_num = ? ORDER BY C.commen_date ASC";
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
 		try {
 			psmt = con.prepareStatement(query);
@@ -121,23 +121,24 @@ public class CommentDAO extends DBConnPool {
 	}
 	
 	// 아이디 조회
-	public String idCheck (String num, String commNum) {
-		String commId = null;
-		String query = "SELECT id FROM comments WHERE board_num=? AND commen_num=?";
+	public ArrayList<String> idCheck(String num) {
+	    ArrayList<String> commIds = new ArrayList<>();
+		String query = "SELECT id FROM comments WHERE board_num=?";
 		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
-			psmt.setString(2, commNum);
 			rs = psmt.executeQuery();
 			
-			if (rs.next()) commId = rs.getString("id");
-			System.out.println("CommentDAO DB 댓글 작성자 : " + commId);
+			   while (rs.next()) {
+		            String commId = rs.getString("id");
+		            commIds.add(commId);
+			   }
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("CommentDAO DB 댓글 작성자 조회 중 예외 발생");
 		}
-		return commId;
+		return commIds;
 	}
 
 	// 수정하기

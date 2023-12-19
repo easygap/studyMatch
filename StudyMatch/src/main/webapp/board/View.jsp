@@ -10,6 +10,8 @@ request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
 String interest = request.getParameter("interest");
 String num = request.getParameter("num");
+String cRight = (String) request.getAttribute("cRight");
+System.out.println("포워딩된 : " + cRight);
 %>
 <!DOCTYPE html>
 <html>
@@ -134,7 +136,7 @@ String num = request.getParameter("num");
 							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
 							%><button type="button"
 								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
-							<button type="button" onclick="removeCheck();">삭제하기</button> <%
+							<button type="button" onclick="removeCheck();">삭제하기</button> <%	
  }
  %>
 							<button type="button" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
@@ -162,12 +164,14 @@ String num = request.getParameter("num");
 							<tr>
 								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
 								<td style="text-align: right;"><%=list.get(i).getId()%> <%=list.get(i).getCommen_date()%>
+								<%
+							if ((!"null".equals(cRight)) && "Y".equals(cRight)) {
+							%>
 									<a href="javascript:void(0);" onclick="populateTextarea('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>');" class="btn">수정</a> <a
 									href="../board/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
 									class="btn">삭제</a></td>
 							</tr>
-
-							<%
+							<% }
 							}
 							%>
 							<tr>

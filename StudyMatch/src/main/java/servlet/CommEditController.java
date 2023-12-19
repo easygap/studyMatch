@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +33,7 @@ public class CommEditController extends HttpServlet {
 		String commNum = req.getParameter("commNum");
 		
 		// session에서 id 받기
-		String id = dao.idCheck(num, commNum);
+		String id = dao.idCheck(num);
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("user");
 
@@ -93,7 +91,7 @@ public class CommEditController extends HttpServlet {
 		String commNum = req.getParameter("commNum");
 		
 		// session에서 id 받기
-		String id = dao.idCheck(num, commNum);
+		String id = dao.idCheck(num);
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("user");
 
