@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.naming.Context;
@@ -210,17 +212,19 @@ public class GroupDAO extends DBConnPool {
 	}
 
 	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
-	public String[] getGroupData1(String interest, String address, String id) {
-		String[] group = new String[6]; 
-		String query = "SELECT * "
-				+ "FROM MATCHGROUP "
-				+ "WHERE IMPORT=? AND ADDRESS LIKE ? "
-				+ "  AND NOT EXISTS ( "
-				+ "    SELECT 1 "
-				+ "    FROM DUAL "
-				+ "    WHERE ? IN (id1, id2, id3, id4, id5) "
-				+ "  )"
-				+ "ORDER BY DBMS_RANDOM.RANDOM ";
+	public Map<String, List<String>> getGroupData(String interest, String address, String id) {
+		Map<String, List<String>> firstGroup = new HashMap<>();
+		List<String> groupName = new ArrayList<>();
+		List<String> groupImg = new ArrayList<>();
+		String query = "SELECT m.NAME, m.IMG "
+				+ "FROM member m "
+				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
+				+ "WHERE mg.group_num IN ( "
+				+ "    SELECT group_num "
+				+ "    FROM matchgroup "
+				+ "    WHERE import = ? AND ADDRESS LIKE ? "
+				+ ") "
+				+ "AND m.id != ? ";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -230,20 +234,19 @@ public class GroupDAO extends DBConnPool {
 			psmt.setString(3, id);
 			rs = psmt.executeQuery();
 			
-			if (rs.next()) {
-				group[0] = rs.getString("group_num");
-				group[1] = rs.getString("id1");
-				group[2] = rs.getString("id2");
-				group[3] = rs.getString("id3");
-				group[4] = rs.getString("id4");
-				group[5] = rs.getString("id5");
-			}
+			while (rs.next()) {
+	            groupName.add(rs.getString("name"));
+	            groupImg.add(rs.getString("IMG"));
+	        }
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DAO에서 매칭 group의 첫번째 id 값은 : " + group[1]);
-		return group;
+		
+		firstGroup.put("groupName", groupName);
+		firstGroup.put("groupImg", groupImg);
+		System.out.println("DAO에서 매칭 group의 이름 : " + groupName + ", 이미지 : " +groupImg);
+		return firstGroup;
 	}
 	
 	// 본인 관심사, 주소와 맞는 그룹 중 매칭되지 않은 Group_num 조회
