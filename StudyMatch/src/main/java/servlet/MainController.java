@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.ServletException;
@@ -60,11 +62,17 @@ public class MainController extends HttpServlet {
 			ArrayList<String> interest = dao.getMemberInterest(sessionID);
 			
 			/** 그룹을 생성해야 하는지 확인하는 변수 */
-			String createGR1 = "N";
-			String createGR2 = "N";
+			String createGR = "N";
+
 			
 			/** 본인이 가입되어있는 그룹인지 확인하는 변수 */
 			String invited = "N";
+			
+			/** 그룹 매칭 관련 변수 전역변수로 만들기 */
+			List<String> groupNameList1;
+			List<String> groupImgList1;
+			List<String> groupNameList2;
+			List<String> groupImgList2;
 			
 			/** 현 로그인 계정의 관심사가 2개 이상일 경우 */
 			if (interest.size() != 1) {
@@ -82,74 +90,32 @@ public class MainController extends HttpServlet {
 				System.out.println("관심사 : " + interest1 +", 주소 : " + address);
 				
 				/** 첫번째 그룹 매치 - 관심사, 주소와 맞는 Group_num 추천 */
-				String groupArr1[] = dao.getGroupData1(interest1, address, sessionID);
+				Map<String, List<String>> groupArr1 = dao.getGroupData(interest1, address, sessionID);
 				
-				/** 첫번째 그룹 매치 - 그룹 번호 */
-				String groupNum1 = groupArr1[0];
-				
-				dto.setFirstGroup(groupNum1);
-				
-				/** 첫번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				ArrayList<String> groupList1 = new ArrayList<>();
-				groupList1.add(groupArr1[1]);
-				groupList1.add(groupArr1[2]);
-				groupList1.add(groupArr1[3]);
-				groupList1.add(groupArr1[4]);
-				groupList1.add(groupArr1[5]);
-				
-//				dto.setGR1id1(groupArr1[1]);
-//				dto.setGR1id2(groupArr1[2]);
-//				dto.setGR1id3(groupArr1[3]);
-//				dto.setGR1id4(groupArr1[4]);
-//				dto.setGR1id5(groupArr1[5]);
+				/** 첫번째 그룹 매치 - 그룹원 이름 */
+				groupNameList1 = groupArr1.get("groupName");
+
+				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
+				groupImgList1 = groupArr1.get("groupImg");
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
-				req.setAttribute("GR1", groupList1);
+				req.setAttribute("nameGR1", groupNameList1);
+				req.setAttribute("imgGR1", groupImgList1);
 				
 				/** 두번째 그룹 매치 - 흥미가 2개 이상일 때 interest2 값으로도 그룹 매치 */ 
-				String groupArr2[] = dao.getGroupData2(interest2, address, sessionID, groupNum1);
+				Map<String, List<String>> groupArr2 = dao.getGroupData(interest2, address, sessionID);
 				
-				/** 두번째 그룹 매치 - 그룹 번호 */
-				String groupNum2 = groupArr2[0];
+				/** 두번째 그룹 매치 - 그룹원 이름 */
+				groupNameList2 = groupArr2.get("groupName");
+
+				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
+				groupImgList2 = groupArr2.get("groupImg");
 				
-				dto.setSecondGroup(groupNum2);
-				
-				/** 두번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				ArrayList<String> groupList2 = new ArrayList<>();
-				groupList2.add(groupArr2[1]);
-				groupList2.add(groupArr2[2]);
-				groupList2.add(groupArr2[3]);
-				groupList2.add(groupArr2[4]);
-				groupList2.add(groupArr2[5]);
-				
-//				dto.setGR2id1(groupArr2[1]);
-//				dto.setGR2id2(groupArr2[2]);
-//				dto.setGR2id3(groupArr2[3]);
-//				dto.setGR2id4(groupArr2[4]);
-//				dto.setGR2id5(groupArr2[5]);
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
-				req.setAttribute("GR2", groupList2);
-
-				if("null".equals(groupNum1) || groupNum1 == null) {
-					createGR1 = "Y";
-					/** 흥미1에 대한 그룹 생성 여부 저장 */
-					dto.setCreateFirstGroup(createGR1);
-				/**	추후 추가 예정 - 매칭되는 그룹이 없다면 새로운 그룹을 생성해준다. 이때 만들어질 group_num의 이름값을 만드는 요소.	
-				// 랜덤으로 선택할 그룹 번호 생성
-		        String selectedGroupNum = getRandomGroupNum(groupNum1, groupNum2);
-				
-		        // interestCode에 할당
-		        String MemberInterest = MemberInterest(selectedGroupNum);
-		        }
-		        **/	
-				}
-				if("null".equals(groupNum2) || groupNum2 == null){
-					createGR2 = "Y";
-					/** 흥미2에 대한 그룹 생성 여부 저장 2 */
-					dto.setCreateFirstGroup(createGR2);
-				}
-				
+				req.setAttribute("nameGR2", groupNameList2);
+				req.setAttribute("imgGR2", groupImgList2);
+	
 			} else {	
 				/** 현 로그인 계정의 관심사가 한개일 경우 */
 				interest1 = interest.get(0);
@@ -161,56 +127,51 @@ public class MainController extends HttpServlet {
 				System.out.println("관심사 : " + interest1 +", 주소 : " + address);
 				
 				// 첫번째 그룹 매치 - 관심사, 주소와 맞는 Group_num 추천
-				String groupArr1[] = dao.getGroupData1(interest1, address, sessionID);
+				Map<String, List<String>> groupArr1 = dao.getGroupData(interest1, address, sessionID);
 				
-				/** 첫번째 그룹 매치 - 그룹 번호 */
-				String groupNum1 = groupArr1[0];
-				dto.setFirstGroup(groupNum1);
+				/** 첫번째 그룹 매치 - 그룹원 이름 */
+				groupNameList1 = groupArr1.get("groupName");
 
-				/** 첫번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				ArrayList<String> groupList1 = new ArrayList<>();
-				groupList1.add(groupArr1[1]);
-				groupList1.add(groupArr1[2]);
-				groupList1.add(groupArr1[3]);
-				groupList1.add(groupArr1[4]);
-				groupList1.add(groupArr1[5]);
-				
-//				dto.setGR1id1(groupArr[1]);
-//				dto.setGR1id2(groupArr[2]);
-//				dto.setGR1id3(groupArr[3]);
-//				dto.setGR1id4(groupArr[4]);
-//				dto.setGR1id5(groupArr[5]);
-				
+				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
+				groupImgList1 = groupArr1.get("groupImg");
+	
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
-				req.setAttribute("GR1", groupList1);
+				req.setAttribute("nameGR1", groupNameList1);
+				req.setAttribute("imgGR1", groupImgList1);
 								
-				
 				// 두번째 그룹 매치 - 흥미가 1개일 때 interest1 값으로만 그룹 매치
-				String groupArr2[] = dao.getGroupData2(interest1, address, sessionID, groupNum1);
-				/** 두번째 그룹 매치 - 그룹 번호 */
-				String groupNum2 = groupArr2[0];
-				dto.setSecondGroup(groupNum2);
+				Map<String, List<String>> groupArr2;
+				do {
+					groupArr2 = dao.getGroupData(interest1, address, sessionID);
+				}
+				while(groupArr2 != groupArr1 && groupArr2 != null);
+					
+				/** 두번째 그룹 매치 - 그룹원 이름 */
+				groupNameList2 = groupArr1.get("groupName");
 
-				/** 두번째 그룹 매치 - 1번 ~ 5번에 해당하는 id */
-				ArrayList<String> groupList2 = new ArrayList<>();
-				groupList2.add(groupArr2[1]);
-				groupList2.add(groupArr2[2]);
-				groupList2.add(groupArr2[3]);
-				groupList2.add(groupArr2[4]);
-				groupList2.add(groupArr2[5]);
-				
-//				dto.setGR2id1(groupArr2[1]);
-//				dto.setGR2id2(groupArr2[2]);
-//				dto.setGR2id3(groupArr2[3]);
-//				dto.setGR2id4(groupArr2[4]);
-//				dto.setGR2id5(groupArr2[5]);
+				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
+				groupImgList2 = groupArr1.get("groupImg");
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
-				req.setAttribute("GR2", groupList2);
+				req.setAttribute("nameGR2", groupNameList2);
+				req.setAttribute("imgGR2", groupImgList2);
+			}
+			if("null".equals(groupNameList1) || groupNameList1 == null) {
+				createGR = "Y";
+				/** 흥미1에 대한 그룹 생성 여부 저장 */
+				dto.setCreateGroup(createGR);
+			/**	추후 추가 예정 - 매칭되는 그룹이 없다면 새로운 그룹을 생성해준다. 이때 만들어질 group_num의 이름값을 만드는 요소.	
+			// 랜덤으로 선택할 그룹 번호 생성
+	        String selectedGroupNum = getRandomGroupNum(groupNum1, groupNum2);
+			
+	        // interestCode에 할당
+	        String MemberInterest = MemberInterest(selectedGroupNum);
+	        }
+	        **/	
 			}
 
 		}
-
+		
 		// request 영역에 DTO 담기
 		req.setAttribute("dto", dto);
 				
