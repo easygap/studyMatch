@@ -30,11 +30,14 @@
 			<div class="container-fluid">
 				<br /> <br /> <br />
 <h2>고객센터</h2>
-<input type='button' value='자주 묻는 질문'/>
-<input type='button' value='1:1 문의'/>
-<input type='button' value='내 문의'/>
+
+	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
+	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
+	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
+
 
 <!--<form name = "form">  -->  
+<div align="center">
 
   <table border="1" width="100" bgcolor="#F5F6CE" align="center" cellspacing="0" cellpadding="3"
   bordercolor="#0000000" bordercolordark="#F5F6CE" bordercolorlight="#F5F6CE">  
@@ -46,34 +49,40 @@
 								<option value="engese">영어</option>
 								<option value="japanese">일본어</option>
 								<option value="chinese">중국어</option>
-								<option value="front_end">프론트/백앤드</option>
-								<option value="Project01">프로젝트</option>
+								<option value="front_end">UI/UX</option>
+								<option value="Project01">JSP</option>
 								<option value="designer">디자이너</option>
 								<option value="Publishers">퍼블리셔</option>
-								<option value="Project02">프로젝트</option>
-								<option value="Words">엑셀/한글/워드</option>
+     							<option value="Words">엑셀/한글/워드</option>
 								<option value="go_sjcu">회계</option>
 								<option value="Property">부동산</option>
 								<option value="investment">투자</option>
 								</select>															
-							<input type="text" placeholder="과정을 입력하세요!" style="width:350px;height:30px;">
+  					<input type="text" placeholder="과정을 입력하세요!" style="width:350px;height:30px;">
 						</td>	
 					</tr>
+	
 					<td>		
+					<textarea name = "ta2" rows = "20" cols = "65"
+					wrap = "virtual">내용을 입력하세요!</textarea>		
 					
-									<textarea name = "ta2" rows = "20" cols = "65"
-							wrap = "virtual">내용을 입력하세요!</textarea>		
 							<div align="right">
-						<button class="btn btn-primary">작성하기</button>			
-							
-					</tr>					
-		
-			</table>				
 					
-					
-			<form>
+					  funtion doSaveAs(){
+						  document.execCommand("SaveAs")
+					  
+					  }
+					       <input type=  
+							<input type="submit" class="btn btn-primary pull-right"
+							value="작성하기" onClick=doSaveAs()">
+					</td>
+		          </div>
+		          </div>
+	</table>				
 			
-			</div>
+			
+			
+			
 	<!-- BootStrap javascript 사용 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
