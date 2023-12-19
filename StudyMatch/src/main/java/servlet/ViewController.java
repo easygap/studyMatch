@@ -40,11 +40,13 @@ public class ViewController extends HttpServlet {
 		
 		// 댓글 삭제 & 수정
 		CommentDAO cDao = new CommentDAO();
-		ArrayList<String> commIds = cDao.idCheck(num);
-		String cRight = "N";
-		
-		if (sessionID != null && commIds.contains(sessionID)) {
-			cRight = "Y";
+		ArrayList<CommentDTO> commList = cDao.getList(num);
+		ArrayList<Boolean> permissions = new ArrayList<>();
+
+		for (CommentDTO comment : commList) {
+		    String commId = comment.getId();
+		    boolean permission = (sessionID != null && commId.equals(sessionID));
+		    permissions.add(permission);
 		}
 
 		dao.updateVisitCount(num); // 조회수 1 증가
@@ -56,7 +58,7 @@ public class ViewController extends HttpServlet {
 
 		// 게시물(dto) 저장 후 뷰로 포워드
 		req.setAttribute("dto", dto);
-		req.setAttribute("cRight", cRight);
+		req.setAttribute("permissions", permissions);
 
 		req.getRequestDispatcher("../board/View.jsp?result=" + result).forward(req, resp);
 	}

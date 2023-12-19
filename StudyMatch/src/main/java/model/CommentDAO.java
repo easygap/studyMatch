@@ -67,9 +67,9 @@ public class CommentDAO extends DBConnPool {
 	// 댓글 조회
 	public ArrayList<CommentDTO> getList (String num) {
 		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
-				+ "INNER JOIN BOARD B ON C.board_num = B.board_num "
-				+ "INNER JOIN MEMBER M ON C.id = M.id "
-				+ "WHERE B.board_num = ? ORDER BY C.commen_date ASC";
+	            + "INNER JOIN BOARD B ON C.board_num = B.board_num "
+	            + "INNER JOIN MEMBER M ON C.id = M.id "
+	            + "WHERE B.board_num = ? ORDER BY C.commen_date ASC";
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
 		try {
 			psmt = con.prepareStatement(query);
@@ -82,7 +82,8 @@ public class CommentDAO extends DBConnPool {
 				dto.setBoard_num(rs.getString(2));
 				dto.setCommen_num(rs.getString(3));
 				dto.setContent(rs.getString(4));
-				dto.setId(rs.getString("nickname"));
+				dto.setId(rs.getString(5));
+				dto.setNickname(rs.getString("nickname"));
 				dto.setCommen_date(rs.getDate(6));
 				dto.setLike_count(rs.getString(7));
 				
@@ -120,10 +121,31 @@ public class CommentDAO extends DBConnPool {
 		return result;
 	}
 	
-	// 아이디 조회
+	// 댓글 목록 아이디 조회
 	public ArrayList<String> idCheck(String num) {
 	    ArrayList<String> commIds = new ArrayList<>();
-		String query = "SELECT id FROM comments WHERE board_num=?";
+		String query = "SELECT id FROM comments WHERE board_num=? ORDER BY commen_date ASC";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+			
+			   while (rs.next()) {
+				   String commId = rs.getString("id");
+		           commIds.add(commId);
+			   }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("CommentDAO idCheck 댓글 작성자 조회 중 예외 발생");
+		}
+		return commIds;
+	}
+	
+	// 수정&삭제용 댓글 작성자 조회
+	public ArrayList<String> checkId (String num) {
+		ArrayList<String> commIds = new ArrayList<>();
+		String query = "SELECT id, commen_num, content FROM comments WHERE board_num=?";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -132,11 +154,15 @@ public class CommentDAO extends DBConnPool {
 			
 			   while (rs.next()) {
 		            String commId = rs.getString("id");
+		            String commNum = rs.getString("commen_num");
+		            String content = rs.getString("content");
 		            commIds.add(commId);
+		            commIds.add(commNum);
+		            commIds.add(content);
 			   }
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("CommentDAO DB 댓글 작성자 조회 중 예외 발생");
+			System.out.println("CommentDAO checkId 댓글 작성자, 번호 조회 중 예외 발생");
 		}
 		return commIds;
 	}
