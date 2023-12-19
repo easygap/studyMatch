@@ -8,16 +8,8 @@ public class CommentDTO {
 	private String id;
 	private java.sql.Date commen_date;
 	private String like_count;
-	private boolean isModified;
-	 
-	public boolean isModified() {
-		return isModified;
-	}
-
-	public void setModified(boolean isModified) {
-		this.isModified = isModified;
-	}
-
+	private String nickname;
+	
 	public CommentDTO() {
 	}
 
@@ -49,6 +41,10 @@ public class CommentDTO {
 		return like_count;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
 	public void setInter_num(String inter_num) {
 		this.inter_num = inter_num;
 	}
@@ -76,4 +72,9 @@ public class CommentDTO {
 	public void setLike_count(String like_count) {
 		this.like_count = like_count;
 	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 }
