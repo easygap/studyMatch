@@ -37,11 +37,18 @@
                         <p class="matching" id="group">MY STUDY GROUP</p>
                         <div class="image" align="center">
                             <c:forEach var="img" items="${profileImages}">
-                                <img src="${pageContext.request.contextPath}/MyProfile/${img}" name="profile" alt="Member" class="profile"> 
-                            </c:forEach>
-                            <c:if test="${empty profileImages}">
-                                <p>No images available</p>
-                            </c:if>
+					            <c:choose>
+					                <c:when test="${not empty img}">
+					                    <img src="${pageContext.request.contextPath}/MyProfile/${img}" name="profile" alt="Member" class="profile">
+					                </c:when>
+					                <c:otherwise>
+					                    <img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+					                </c:otherwise>
+					            </c:choose>
+					        </c:forEach>
+					        <c:if test="${empty profileImages}">
+					            <p>No images available</p>
+					        </c:if>
                             <p class="font">신짱구&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 한유리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 김철수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 이훈이</p>
                             <input type="submit" name="mygroup" id="mygroup" value="  그 룹 게 시 판 이 동  " />
                         </div>
