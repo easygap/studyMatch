@@ -172,8 +172,8 @@ public class GroupDAO extends DBConnPool {
 	        while (rs.next()) {
 	            String profile = rs.getString("img");
 	            profiles.add(profile);
-	            System.out.println("쿼리문에서 : " + profile);
 	        }
+            System.out.println("쿼리문에서 : " + profiles);
 	    } catch (Exception e) {
 	        System.out.println("DB 이미지 불러오기 실패");
 	        e.printStackTrace();
@@ -182,13 +182,32 @@ public class GroupDAO extends DBConnPool {
 	}
 	
 	// 그룹 멤버 이름 가져오기
-//	public List<String> getGroupName(String id){
-//		String query = " SELECT m.name as member_name"
-//				+ "FROM matchgroup mg"
-//				+ "JOIN member m ON"
-//				+ "    (mg.id1 = m.id OR mg.id2 = m.id OR mg.id3 = m.id OR mg.id4 = m.id OR mg.id5 = m.id)"
-//				+ "WHERE mg.id1 = ? OR mg.id2 = ? OR mg.id3 = ? OR mg.id4 = ? OR mg.id5 = ?";
-//	}
+	public List<String> getGroupName(String id){
+		List<String> Names = new ArrayList<>();
+		String query = " SELECT m.name "
+				+ " FROM matchgroup mg "
+				+ " JOIN member m ON "
+				+ "    (mg.id1 = m.id OR mg.id2 = m.id OR mg.id3 = m.id OR mg.id4 = m.id OR mg.id5 = m.id) "
+				+ " WHERE mg.id1 = ? OR mg.id2 = ? OR mg.id3 = ? OR mg.id4 = ? OR mg.id5 = ? ";
+		try {
+	        psmt = con.prepareStatement(query);
+	        psmt.setString(1, id);
+	        psmt.setString(2, id);
+	        psmt.setString(3, id);
+	        psmt.setString(4, id);
+	        psmt.setString(5, id);
+	        rs = psmt.executeQuery();
+	        while (rs.next()) {
+	            String name = rs.getString("name");
+	            Names.add(name);
+	        }
+	        System.out.println("쿼리문에서 : " + Names + "\n");
+	    } catch (Exception e) {
+	        System.out.println("DB 이름 불러오기 실패");
+	        e.printStackTrace();
+	    }
+	    return Names;
+	}
 
 	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
 	public String[] getGroupData1(String interest, String address, String id) {

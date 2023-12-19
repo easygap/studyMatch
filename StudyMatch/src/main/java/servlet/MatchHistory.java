@@ -29,9 +29,13 @@ public class MatchHistory extends HttpServlet {
 		// DB 연결
 		if (MatchID != null) {
 			List<String> profileImages = dao.getProfile(MatchID);
+			List<String> getGroupName = dao.getGroupName(MatchID);
+			
 			req.setAttribute("profileImages", profileImages);
+			req.setAttribute("getGroupName", getGroupName);
 
 			System.out.println("서블렛에서 : " + profileImages);
+			System.out.println("서블렛에서 : " + getGroupName + "\n");
 			System.out.println("match hitory DB연결 성공 ! ! !");
 		} else {
 			System.out.println("match hitory DB연결 실패 . . .");
