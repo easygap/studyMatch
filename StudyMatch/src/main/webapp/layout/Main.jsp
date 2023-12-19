@@ -29,7 +29,7 @@ String cp = request.getContextPath();
     });
 </script>
 </head>
-
+<body id="mainbody">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light"><a href="../board/Main.do" style="text-decoration-line: none; color: #333;">MatchMate</a></div>
@@ -70,4 +70,5 @@ String cp = request.getContextPath();
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="../js/scripts.js"></script>
+</body>
 </html>

@@ -9,12 +9,12 @@ body{
 
 #Calendar{
 	position: relative; 
-	top: 350px;
+	top: 400px;
 }
 
 td {
-	width: 50px;
-	height: 50px;
+	width: 75px;
+	height: 75px;
 }
 
 .Calendar {
@@ -52,10 +52,10 @@ td {
 	cursor: pointer;
 }
 
-.NewMatch {
+#NewMatch {
 	position: absolute;
-	width: 1015px;
-	height: 300px;
+	width: 1090px;
+	height: 350px;
 	left: 100px;
 	top: 130px;
 
@@ -68,9 +68,13 @@ td {
 }
 
 .VS{
-	width: 200px;
+	width: 120px;
 	height: 150px;	
 	margin-top: 30px;
+}
+
+#newmatch{
+	margin-left: 10px;
 }
 
 .matchfont {
@@ -84,7 +88,7 @@ td {
 }
 
 .Match1, .Match2{
-	width : 400px;
+	width : 475px;
 	height: 265px;
 }
 
@@ -97,35 +101,29 @@ td {
 	
 	overflow: hidden;
 	border-radius: 50%;
-	width: 95px;
+	width: 88px;
 	/* 이미지 크기에 맞게 조절하세요 */
-	height: 95px;
+	height: 88px;
 	/* 이미지 크기에 맞게 조절하세요 */
 	
-	 margin-left: 30px;
+	 margin-left: 25px;
 }
 
-.noMargin{
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	/* 이미지 비율 유지 */
-	border-radius: 50%;
-	
-	overflow: hidden;
-	border-radius: 50%;
-	width: 95px;
-	/* 이미지 크기에 맞게 조절하세요 */
-	height: 95px;
-	/* 이미지 크기에 맞게 조절하세요 */
+.Member1, .Member2{
+	margin-top : 30px;
 }
 
-.Member1, .content1 {
+.Member1, .content1, .Member2, .content2 {
 	display: inline-block;
 	margin-left: 35px;
+	margin-right: 30px;
 }
 
-.Member2, .content2 {
-	display: inline-block;
-	margin-left: 20px;
+.Mainbutton{
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;	
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 10px;
 }
