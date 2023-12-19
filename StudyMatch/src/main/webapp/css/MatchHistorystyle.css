@@ -24,22 +24,8 @@
 	height: 110px;
 	/* 이미지 크기에 맞게 조절하세요 */
 	
-	 margin-left: 45px;
-}
-
-.noMargin{
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	/* 이미지 비율 유지 */
-	border-radius: 50%;
-	
-	overflow: hidden;
-	border-radius: 50%;
-	width: 110px;
-	/* 이미지 크기에 맞게 조절하세요 */
-	height: 110px;
-	/* 이미지 크기에 맞게 조절하세요 */
+	 margin-left: 5%;
+	 margin-bottom: 10px;
 }
 
 /* 내 스터디 매칭된 그룸 뒷 배경 */
@@ -88,6 +74,14 @@
 
 .font{
 	margin-left: 10px;
+}
+
+#name{
+	word-spacing:95px;
+	margin-left: 50px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-right: 10px;
 }
 
 #plus{

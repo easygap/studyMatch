@@ -6,7 +6,11 @@
 
     Object attribute = request.getAttribute("profileImages");
     List<String> profileImages = (List<String>) attribute;
-    System.out.println("history.jsp : " + profileImages + "]");
+    System.out.println("history.jsp : " + profileImages);
+    
+    Object GroupNames = request.getAttribute("getGroupName");
+    List<String> Group_names = (List<String>) GroupNames;
+    System.out.println("history.jsp : " + Group_names);
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +18,23 @@
     <meta charset="UTF-8">
     <title>Match History</title>
     <link rel="stylesheet" href="../css/MatchHistorystyle.css">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var groupNames = ${Group_names != null ? Group_names : 'null'}; // 서버에서 받은 그룹 이름 저장
+
+        console.log("Group_names:", groupNames);
+
+        // TODO: JavaScript로 groupNames를 이용하여 출력 로직 작성
+        // 예시로 콘솔에 출력하는 로직을 작성하였습니다.
+        if (groupNames !== null) {
+            for (var i = 0; i < groupNames.length; i++) {
+                console.log("Group Name " + (i + 1) + ": " + groupNames[i]);
+            }
+        } else {
+            console.log("Group_names 값이 존재하지 않습니다.");
+        }
+    });
+</script>
 </head>
 <body id="matchbody">
 
@@ -49,7 +70,18 @@
 					        <c:if test="${empty profileImages}">
 					            <p>No images available</p>
 					        </c:if>
-                            <p class="font">신짱구&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 한유리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 김철수&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 이훈이</p>
+
+							<% if (Group_names != null && Group_names.size() > 0) { %>
+							    <p id="name">
+							        <% for (int i = 0; i < Group_names.size(); i++) { %>
+							            <%= Group_names.get(i) %>
+							            <% if (i < Group_names.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %>
+							        <% } %>
+							    </p>
+							<% } else { %>
+							    <p>Group_names 값이 존재하지 않습니다.</p>
+							<% } %>
+
                             <input type="submit" name="mygroup" id="mygroup" value="  그 룹 게 시 판 이 동  " />
                         </div>
                     </div>
