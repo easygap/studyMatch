@@ -115,54 +115,56 @@ function setEditMode(content, commNum, commId) {
 				</table>
 
 				<form name="commentForm" id="commentForm" method="post" action="../board/CommWrite.do">
-					<table class="table table-striped"
-						style="text-align: center; border: 1px solid #dddddd">
-						<%-- 홀,짝 행 구분 --%>
-						<thead>
-							<tr>
-								<th colspan="3"
-									style="background-color: #eeeeeee; text-align: center;">댓글</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%
-							CommentDAO dao = new CommentDAO();
-							ArrayList<CommentDTO> list = dao.getList(num);
-							ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions");
-
-							if (permissions != null) {
-							for (int i = 0; i < list.size(); i++) {
-							%>
-							<tr>
-								<td style="text-align: left;"><%=list.get(i).getContent()%></td>
-								<td style="text-align: right;"><%=list.get(i).getNickname()%> <%=list.get(i).getCommen_date()%>
-								<%
-								boolean hasPermission = permissions.get(i);
-							if (hasPermission == true) {
-							%>
-									  <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>', '<%=list.get(i).getId()%>');"
-            class="btn">수정</a>  <a href="../board/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
-            class="btn">삭제</a></td>
-							</tr>
-							<% }
-							}
-							}
-							%>
-							<tr>
-								<td><textarea type="text" class="form-control"
-										placeholder="댓글을 입력하세요." id="commContent" name="commContent"
-										style="width: 100%;" maxlength="1024"></textarea></td>
-								<td style="text-align: left;"></td>
-							</tr>
-						</tbody>
-					</table>
-					<input type="hidden" name="interest" value="<%=interest%>"> 
-					<input type="hidden" id="num" name="num" value="<%=num%>">
-					<input type="hidden" id="commNum" name="commNum" value="">
-					<input type="hidden" id="commAction" name="action" value="">
-					<input type="hidden" id="commId" name="id" value="">
-					<input type="submit" class="btn" id="commSubmitButton" value="댓글입력">
-				</form>
+    <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd; width: 100%;">
+        <%-- 홀,짝 행 구분 --%>
+        <thead>
+            <tr>
+                <th colspan="3" style="background-color: #eeeeeee; text-align: center;">댓글</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% 
+            CommentDAO dao = new CommentDAO(); 
+            ArrayList<CommentDTO> list = dao.getList(num); 
+            ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions"); 
+            if (permissions != null) { 
+            	for (int i = 0; i < list.size(); i++) { 
+            	%>
+                <tr>
+                    <td style="text-align: left;"><%=list.get(i).getContent()%></td>
+                    <td style="text-align: right;"><%=list.get(i).getNickname()%> <%=list.get(i).getCommen_date()%>
+                        <%
+                            boolean hasPermission = permissions.get(i);
+                            if (hasPermission == true) {
+                        %>
+                            <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>', '<%=list.get(i).getId()%>');"
+                                class="btn">수정</a>
+                            <a href="../board/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&interest=<%=interest%>"
+                                class="btn">삭제</a>
+                    </td>
+                </tr>
+                <%
+                    }
+                }
+            }
+            %>
+              <tr>
+                <td style="text-align: left; width: 80%;">
+                    <textarea type="text" class="form-control" placeholder="댓글을 입력하세요." id="commContent" name="commContent"
+                        style="width: 100%;" maxlength="1024"></textarea>
+                </td>
+                <td style="text-align: center; vertical-align: middle;">
+                    <input type="hidden" name="interest" value="<%=interest%>">
+                    <input type="hidden" id="num" name="num" value="<%=num%>">
+                    <input type="hidden" id="commNum" name="commNum" value="">
+                    <input type="hidden" id="commAction" name="action" value="">
+                    <input type="hidden" id="commId" name="id" value="">
+                   <input type="submit" class="btn btn-sm" id="commSubmitButton" value="댓글입력">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
 			</div>
 		</div>
 	</div>
