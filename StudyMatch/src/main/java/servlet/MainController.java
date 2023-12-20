@@ -73,8 +73,8 @@ public class MainController extends HttpServlet {
 			List<String> groupImgList1;
 			List<String> groupNameList2;
 			List<String> groupImgList2;
-			String firstGroup;
-			String secondGroup;
+			String firstGroup = null;
+			String secondGroup = null;
 		
 			
 			/** 현 로그인 계정의 관심사가 2개 이상일 경우 */
@@ -103,7 +103,8 @@ public class MainController extends HttpServlet {
 				
 				/** 첫번째 그룹 매치 - Group_Num 값 */
 				List<String> groupNum1 = groupArr1.get("groupNum");
-				firstGroup = groupNum1.get(0);
+				if(!groupNum1.isEmpty())
+					firstGroup = groupNum1.get(0);
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
@@ -120,7 +121,8 @@ public class MainController extends HttpServlet {
 				
 				/** 두번째 그룹 매치 - Group_Num 값 */
 				List<String> groupNum2 = groupArr2.get("groupNum");
-				secondGroup = groupNum2.get(0);				
+				if(!groupNum2.isEmpty())
+					secondGroup = groupNum2.get(0);				
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
@@ -147,7 +149,8 @@ public class MainController extends HttpServlet {
 				
 				/** 첫번째 그룹 매치 - Group_Num 값 */
 				List<String> groupNum1 = groupArr1.get("groupNum");
-				firstGroup = groupNum1.get(0);
+				if(!groupNum1.isEmpty())
+					firstGroup = groupNum1.get(0);
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
@@ -168,7 +171,8 @@ public class MainController extends HttpServlet {
 				
 				/** 두번째 그룹 매치 - Group_Num 값 */
 				List<String> groupNum2 = groupArr2.get("groupNum");
-				secondGroup = groupNum2.get(0);
+				if(!groupNum2.isEmpty())
+					secondGroup = groupNum2.get(0);
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);

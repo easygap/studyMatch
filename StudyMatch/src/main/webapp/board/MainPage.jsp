@@ -34,6 +34,10 @@ for(int i = 0; i < secondGroupImg.size(); i++){
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
+String firstGroup = dto.getFirstGroup();
+
+String secondGroup = dto.getSecondGroup();
+
 System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
 
 
@@ -254,8 +258,8 @@ String nowTime = sdf.format(now.getTime());
 								<% } %>
 							</div>
 						</div>
-						<input type="text" style="display:none;" name="groupNum1" value="${ dto.getfirstGroup }" />
-						<input type="text"  name="groupNum2" value="${ dto.getsecondGroup }" />
+						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null) %>${ dto.getfirstGroup }" />
+						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null) %>${ dto.getsecondGroup }" />
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
