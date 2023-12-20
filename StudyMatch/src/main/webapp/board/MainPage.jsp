@@ -34,17 +34,16 @@ for(int i = 0; i < secondGroupImg.size(); i++){
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
-String firstGroup = dto.getFirstGroup();
-
-String secondGroup = dto.getSecondGroup();
-
-System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
-
-
 String id = "";
+
+String firstGroup = ""; 
+
+String secondGroup = "";
 
 if (dto != null) {
 	id = dto.getId();
+	firstGroup = dto.getFirstGroup();
+	secondGroup = dto.getSecondGroup();
 }
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -170,7 +169,7 @@ String nowTime = sdf.format(now.getTime());
 				<!-- import 끝 -->
 				<!-- 본문 -->
 				<div style="position: absolute; width: 1280px; height: 1300px">
-					<form action="../board/" method="post">
+					<form action="../board/Match.do" method="post">
 						<div class="wrap"
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
@@ -208,7 +207,7 @@ String nowTime = sdf.format(now.getTime());
 								<% 
 									for(int i = 0; i < firstGroupName.size(); i++) { %>
 									<%=firstGroupName.get(i)%>
-									<% if (i < firstGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+									<% if (i < firstGroupName.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %>
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
@@ -243,7 +242,7 @@ String nowTime = sdf.format(now.getTime());
 								<% 
 									for(int i = 0; i < secondGroupName.size(); i++) { %>
 									<%=secondGroupName.get(i)%>
-									<% if (i < secondGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+									<% if (i < secondGroupName.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %>
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
@@ -258,8 +257,8 @@ String nowTime = sdf.format(now.getTime());
 								<% } %>
 							</div>
 						</div>
-						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null || !"null".equals(firstGroup)) { %>${ dto.getfirstGroup }<% } %>" />
-						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null || !"null".equals(secondGroup)) { %>${ dto.getsecondGroup }<% } %>" />
+						<input type="text" style="display:none;" name="groupNum1" value="<% if(!firstGroup.equals("")) { out.print(firstGroup);  } %>" />
+						<input type="text" style="display:none;" name="groupNum2" value="<% if(!secondGroup.equals("")) { out.print(secondGroup); } %>" />
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
