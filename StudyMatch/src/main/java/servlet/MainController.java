@@ -156,11 +156,10 @@ public class MainController extends HttpServlet {
 				req.setAttribute("nameGR2", groupNameList2);
 				req.setAttribute("imgGR2", groupImgList2);
 			}
-			if("null".equals(groupNameList1) || groupNameList1 == null) {
+			if(groupNameList1.isEmpty() || groupNameList2.isEmpty()) {
 				createGR = "Y";
 				/** 흥미1에 대한 그룹 생성 여부 저장 */
-				dto.setCreateGroup(createGR);
-			/**	추후 추가 예정 - 매칭되는 그룹이 없다면 새로운 그룹을 생성해준다. 이때 만들어질 group_num의 이름값을 만드는 요소.	
+				/**	추후 추가 예정 - 매칭되는 그룹이 없다면 새로운 그룹을 생성해준다. 이때 만들어질 group_num의 이름값을 만드는 요소.	
 			// 랜덤으로 선택할 그룹 번호 생성
 	        String selectedGroupNum = getRandomGroupNum(groupNum1, groupNum2);
 			
@@ -169,7 +168,7 @@ public class MainController extends HttpServlet {
 	        }
 	        **/	
 			}
-
+			dto.setCreateGroup(createGR);
 		}
 		
 		// request 영역에 DTO 담기

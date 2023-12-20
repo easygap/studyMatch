@@ -10,21 +10,32 @@ request.setCharacterEncoding("UTF-8");
 
 Object groupNameList1 = request.getAttribute("nameGR1");
 List<String> firstGroupName = (List<String>) groupNameList1;
-System.out.println("First Group Name IN MainPage.jsp : " + firstGroupName + "]");
+for(int i = 0; i < firstGroupName.size(); i++){
+	System.out.println("First Group Name IN MainPage.jsp : " + firstGroupName.get(i));
+}
 
 Object groupImgList1 = request.getAttribute("imgGR1");
 List<String> firstGroupImg = (List<String>) groupImgList1;
-System.out.println("First Group IMG IN MainPage.jsp : " + firstGroupImg + "]");
+for(int i = 0; i < firstGroupImg.size(); i++){
+	System.out.println("First Group IMG IN MainPage.jsp : " + firstGroupImg.get(i));
+}
 
 Object groupNameList2 = request.getAttribute("nameGR2");
 List<String> secondGroupName = (List<String>) groupNameList2;
-System.out.println("First Group Name IN MainPage.jsp : " + secondGroupName + "]");
+for(int i = 0; i < secondGroupName.size(); i++){
+	System.out.println("Second Group Name IN MainPage.jsp : " + secondGroupName.get(i));
+}
 
 Object groupImgList2 = request.getAttribute("imgGR2");
 List<String> secondGroupImg = (List<String>) groupImgList2;
-System.out.println("First Group IMG IN MainPage.jsp : " + secondGroupImg + "]");
+for(int i = 0; i < secondGroupImg.size(); i++){
+	System.out.println("Second Group IMG IN MainPage.jsp : " + secondGroupImg.get(i));
+}
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
+
+System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
+
 
 String id = "";
 
@@ -176,96 +187,71 @@ String nowTime = sdf.format(now.getTime());
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
 							<div class="Match1" align="center">
-								<c:forEach var="img" items="${firstGroupImg}">
-									<c:choose>
-										<c:when test="${not empty img}">
-											<img
-												src="${pageContext.request.contextPath}/MyProfile/${img}"
-												name="profile" alt="Mem" class="profile">
-										</c:when>
-										<c:otherwise>
-											<img
-												src="${pageContext.request.contextPath}/MyProfile/default.png"
-												name="profile" alt="Default" class="profile">
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<c:if test="${empty firstGroupImg}">
-									<p>No images available</p>									
-								</c:if>
+
+								<% if( !firstGroupImg.isEmpty() ) { 
+									for(int i = 0; i < firstGroupName.size(); i++) {
+										if("null".equals(firstGroupImg.get(0))) { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/<%=firstGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% 	} else { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								
+								<% } } } else { %>
+									<p>No images available</p>
+								<% } %>
 								<br />
-								<c:forEach var="name" items="${firstGroupName}">
-									<c:choose>
-										<c:when test="${not empty name}">
-											<p class="Member1">${ firstGroupName }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-										</c:when>
-									</c:choose>
-								</c:forEach>
-								<c:choose>
-									<c:when test="${empty firstGroupName}">
+								<% if( !firstGroupName.isEmpty() ) { %>
+								<p id="name">
+								<% 
+									for(int i = 0; i < firstGroupName.size(); i++) { %>
+									<%=firstGroupName.get(i)%>
+									<% if (i < firstGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+								<% } %></p>
+									<p class="content1">설정하신 {${dto.getAddress()},
+											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+										<input type="submit" name="imformation" class="Mainbutton"
+											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  매 치 하 기  " />
+								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="Match" class="Mainbutton"
-										value="  그 룹 생 성  " />
-									</c:when>
-									<c:when test="${not empty name}">
-										<p class="content1">설정하신 {${dto.getAddress()},
-											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-									</c:when>
-								</c:choose>
-								<c:if test="${not empty name}">
-									<input type="submit" name="imformation" class="Mainbutton"
-										value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton"
-										value="  매 치 하 기  " />
-								</c:if>
+											value="  그 룹 생 성  " />
+								<% } %>
 							</div>
 							<div class="VS" align="center">
 								<p class="matchfont" id="vs">VS</p>
 							</div>
 							<!-- 그룹2 매칭 -->
 							<div class="Match2" align="center">
-								<c:forEach var="img" items="${secondGroupImg}">
-									<c:choose>
-										<c:when test="${not empty img}">
-											<img
-												src="${pageContext.request.contextPath}/MyProfile/${img}"
-												name="profile" alt="Mem" class="profile">
-										</c:when>
-										<c:otherwise>
-											<img
-												src="${pageContext.request.contextPath}/MyProfile/default.png"
-												name="profile" alt="Default" class="profile">
-										</c:otherwise>
-									</c:choose>
-								</c:forEach>
-								<c:if test="${empty firstGroupImg}">
-									<p>No images available</p>		
-								</c:if>
+								<% if( !secondGroupImg.isEmpty() ) { 
+									for(int i = 0; i < secondGroupName.size(); i++) {
+										if("null".equals(secondGroupImg.get(0))) { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/<%=secondGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% 	} else { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								
+								<% } } } else { %>
+									<p>No images available</p>
+								<% } %>
 								<br />
-								<c:forEach var="name" items="${secondGroupName}">
-									<c:choose>
-										<c:when test="${not empty name}">
-											<p class="Member1">${ secondGroupName }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
-										</c:when>
-									</c:choose>
-								</c:forEach>
-								<c:choose>
-									<c:when test="${empty firstGroupName}">
+								<% if( !secondGroupName.isEmpty() ) { %>
+								<p id="name">
+								<% 
+									for(int i = 0; i < secondGroupName.size(); i++) { %>
+									<%=secondGroupName.get(i)%>
+									<% if (i < secondGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+								<% } %></p>
+									<p class="content1">설정하신 {${dto.getAddress()},
+											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
+										<input type="submit" name="imformation" class="Mainbutton"
+											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  매 치 하 기  " />
+								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="Match" class="Mainbutton"
-										value="  그 룹 생 성  " />
-									</c:when>
-									<c:when test="${not empty name}">
-										<p class="content1">설정하신 {${dto.getAddress()},
-											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-									</c:when>
-								</c:choose>
-								<c:if test="${not empty name}">
-									<input type="submit" name="imformation" class="Mainbutton"
-										value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton"
-										value="  매 치 하 기  " />
-								</c:if>
+											value="  그 룹 생 성  " />
+								<% } %>
 							</div>
 						</div>
 					</form>
