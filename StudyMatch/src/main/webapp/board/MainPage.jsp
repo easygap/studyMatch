@@ -258,8 +258,8 @@ String nowTime = sdf.format(now.getTime());
 								<% } %>
 							</div>
 						</div>
-						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null) { %>${ dto.getfirstGroup }<% } %>" />
-						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null) { %>${ dto.getsecondGroup }<% } %>" />
+						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null || !"null".equals(firstGroup)) { %>${ dto.getfirstGroup }<% } %>" />
+						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null || !"null".equals(secondGroup)) { %>${ dto.getsecondGroup }<% } %>" />
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
