@@ -73,6 +73,9 @@ public class MainController extends HttpServlet {
 			List<String> groupImgList1;
 			List<String> groupNameList2;
 			List<String> groupImgList2;
+			String firstGroup;
+			String secondGroup;
+		
 			
 			/** 현 로그인 계정의 관심사가 2개 이상일 경우 */
 			if (interest.size() != 1) {
@@ -98,6 +101,10 @@ public class MainController extends HttpServlet {
 				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList1 = groupArr1.get("groupImg");
 				
+				/** 첫번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum1 = groupArr1.get("groupNum");
+				firstGroup = groupNum1.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
 				req.setAttribute("imgGR1", groupImgList1);
@@ -111,6 +118,9 @@ public class MainController extends HttpServlet {
 				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList2 = groupArr2.get("groupImg");
 				
+				/** 두번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum2 = groupArr2.get("groupNum");
+				secondGroup = groupNum2.get(0);				
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
@@ -134,7 +144,11 @@ public class MainController extends HttpServlet {
 
 				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList1 = groupArr1.get("groupImg");
-	
+				
+				/** 첫번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum1 = groupArr1.get("groupNum");
+				firstGroup = groupNum1.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
 				req.setAttribute("imgGR1", groupImgList1);
@@ -152,6 +166,10 @@ public class MainController extends HttpServlet {
 				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList2 = groupArr1.get("groupImg");
 				
+				/** 두번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum2 = groupArr2.get("groupNum");
+				secondGroup = groupNum2.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
 				req.setAttribute("imgGR2", groupImgList2);
@@ -168,11 +186,15 @@ public class MainController extends HttpServlet {
 	        }
 	        **/	
 			}
+			dto.setFirstGroup(firstGroup);
+			dto.setSecondGroup(secondGroup);
 			dto.setCreateGroup(createGR);
 		}
 		
 		// request 영역에 DTO 담기
 		req.setAttribute("dto", dto);
+		
+		dao.close();
 				
 		// jsp 페이지로 forward 이동
 		req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
