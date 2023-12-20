@@ -1,15 +1,6 @@
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="model.BoardDAO"%>
-<%@ page import="model.BoardDTO"%>
-<%@ page import="utils.BoardPage"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 선택</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <title>게시글 선택시</title>
     <style>
         table, th, td {
             border: 1px solid #000000;
@@ -39,10 +30,8 @@
 	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
 	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
 	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
-<table board="1" width="90%">
-     
-     
-</table>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -171,7 +160,12 @@
 
     </head>
     <body>
-  
+    <div class="container">
+    <table>
+    <tr>
+    <td>
+    <table>
+    <tr>
     <div class="card-write">
     <div class="myinfo">
  
@@ -181,104 +175,56 @@
 		    <input type="hidden" name="depth" value="${article.depth}">
 		    <input type="hidden" name="pos" value="${article.pos}">
 		    <input type="hidden" name="groupId" value="${article.groupId}">
-		    <div style="position: absolute; width:1280px; height:1300px">
-					<form action="../board/" method="post">
-						<div class="wrap"
-							style="position: relative; width: 1280px; height: 100px;">
-							<div class="jumbotron" style="text-align: left;">
-								<% if(id != "") { %>
-								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
-								<% } %>
-								<p class="lead">
-									<%=nowTime%>
-								</p>
-							</div>
-						</div>
-						<!-- 매칭하기 -->
-						<div id="NewMatch">
-						<% if(dto == null) {%>
-						<p class="matchfont" id="newmatch">로그인 후 커뮤니티 이용이 가능합니다.</p>
-						<h3 class="display-4">로그인 하러 가기</h3>
-						<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a>
-							<% } else if (firstGroup == null) { %>
-							<p class="matchfont" id="newmatch">매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-							<h3 class="display-4">${requestScope.dto.nickName}님이 직접 그룹을 만들 수 있습니다. 그룹을 생성하시겠습니까?</h3>
-							<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
-							<%} else { %>
-								<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
-								<div class="Match1" align="center">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
-								<br/>
-								<p class="Member1">신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
-								<p class="content1">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
-							</div>
-							<div class="VS" align="center">
-								<p class="matchfont" id="vs">VS</p>
-							</div>
-							<div class="Match2" align="center">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
-								<br/>
-								<p class="Member2"> 신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
-								<p class="content2">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
-								<%} %>
-							</div>
-						</div>
 		    
 			<table border="2" width="500">
 				<tr>
-					<th>제목</th>	
-						
+					<th>제목</th>		
 				<td>
-				
-				<textarea name="comments" id="" cols="54"row="6"></textarea>	
+				<textarea name="comments" id="" cols="54"row="10"></textarea>	
 				</td>			
 				</tr>
 	    	<tr> 
 	    	<td colspan='2'>
-	    	<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
+	   		<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
       	     </td>
-      		</tr>
-               
-					         
-                         
-                    </div>			
+      	     <tr>
+          </tr>
+ 	
 
 				<tr>
 				<td colspan='2'>
 										
-			<img src="../img/추천.png" alt="추천" />
 			<img src="../img/댓글.png" alt="댓글" />
 		    <textarea name="title" id="utitle" rows="5" cols="65" placeholder="댓글달기" maxlength="100" required></textarea>
           <div align="right"> 
 	    <input type='button' value='작성하기'/>
 	    </div>
+		    </td> 
 
-		          
-	</table>	
-	
-	<div class="page-control">
-	 <align : center>	
-       <div>
-       
 
-		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
+                       </td>
+            
+                    </tr>
       
-			
-		<a href="../board/List.jsp">목록 바로가기</a>	
-       
-		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
-        </div>					
-				
+          <tbody>          
+           <tr>
+          
+           <td colspan='2'>              
+           <div align="center">  
+            <input type='button' value='이전글'/>
+             <input type='button' value='목록가기'/>
+             <input type='button' value='다음글'/>
+               </div>
+          </td>
+	      </tr>  
+	      </tbody>
+	     </div> 
+			</table>
+		</div>
+	</form>
+
+	<script>
+	</script>
 	</div>
 		<!-- BootStrap javascript 사용 -->
 	<script
