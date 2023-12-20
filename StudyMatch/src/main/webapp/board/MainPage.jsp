@@ -1,34 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="model.GroupDTO" %>
-<%@ page import= "java.util.ArrayList" %>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="model.GroupDTO"%>
+<%@ page import="java.util.List"%>
 <%
-
 request.setCharacterEncoding("UTF-8");
 
-Object groupList1 = request.getAttribute("GR1");
-ArrayList<String> firstGroup = (ArrayList<String>) groupList1;
-System.out.println("First Group IN MainPage.jsp : " + firstGroup + "]");
+Object groupNameList1 = request.getAttribute("nameGR1");
+List<String> firstGroupName = (List<String>) groupNameList1;
+for(int i = 0; i < firstGroupName.size(); i++){
+	System.out.println("First Group Name IN MainPage.jsp : " + firstGroupName.get(i));
+}
 
-Object groupList2 = request.getAttribute("GR2");
-ArrayList<String> secondGroup = (ArrayList<String>) groupList1;
-System.out.println("Second Group IN MainPage.jsp : " + secondGroup + "]");
+Object groupImgList1 = request.getAttribute("imgGR1");
+List<String> firstGroupImg = (List<String>) groupImgList1;
+for(int i = 0; i < firstGroupImg.size(); i++){
+	System.out.println("First Group IMG IN MainPage.jsp : " + firstGroupImg.get(i));
+}
 
-	GroupDTO dto = (GroupDTO)request.getAttribute("dto");
+Object groupNameList2 = request.getAttribute("nameGR2");
+List<String> secondGroupName = (List<String>) groupNameList2;
+for(int i = 0; i < secondGroupName.size(); i++){
+	System.out.println("Second Group Name IN MainPage.jsp : " + secondGroupName.get(i));
+}
 
-	String id = "";
+Object groupImgList2 = request.getAttribute("imgGR2");
+List<String> secondGroupImg = (List<String>) groupImgList2;
+for(int i = 0; i < secondGroupImg.size(); i++){
+	System.out.println("Second Group IMG IN MainPage.jsp : " + secondGroupImg.get(i));
+}
 
-	if(dto != null){
-		id = dto.getId();
-	}
-	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-	
-	Calendar now = Calendar.getInstance();
-	String nowTime = sdf.format(now.getTime());
+GroupDTO dto = (GroupDTO) request.getAttribute("dto");
+
+System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
+
+
+String id = "";
+
+if (dto != null) {
+	id = dto.getId();
+}
+
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+
+Calendar now = Calendar.getInstance();
+String nowTime = sdf.format(now.getTime());
 %>
 <!DOCTYPE html>
 <html>
@@ -147,14 +165,18 @@ System.out.println("Second Group IN MainPage.jsp : " + secondGroup + "]");
 
 				<!-- import 끝 -->
 				<!-- 본문 -->
-				<div style="position: absolute; width:1280px; height:1300px">
+				<div style="position: absolute; width: 1280px; height: 1300px">
 					<form action="../board/" method="post">
 						<div class="wrap"
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
-								<% if(id != "") { %>
+								<%
+								if (id != "") {
+								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
-								<% } %>
+								<%
+								}
+								%>
 								<p class="lead">
 									<%=nowTime%>
 								</p>
@@ -162,74 +184,107 @@ System.out.println("Second Group IN MainPage.jsp : " + secondGroup + "]");
 						</div>
 						<!-- 매칭하기 -->
 						<div id="NewMatch">
-						<% if(dto == null) {%>
-						<p class="matchfont" id="newmatch">로그인 후 커뮤니티 이용이 가능합니다.</p>
-						<h3 class="display-4">로그인 하러 가기</h3>
-						<a class="dropdown-item" href="../auth/Login.jsp?#pop1">로그인</a>
-							<% } else if ( "null".equals(groupList1) || "null".equals(groupList2) ) { %>
-							<p class="matchfont" id="newmatch">매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-							<h3 class="display-4">${requestScope.dto.nickName}님이 직접 그룹을 만들 수 있습니다. 그룹을 생성하시겠습니까?</h3>
-							<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
-							<%} else { %>
-								<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
-								<div class="Match1" align="center">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
-								<br/>	
-								<p class="Member1"> <% for(String i : firstGroup) { if( i != null )out.print(i); %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<% } %></p>
-								<p class="content1">설정하신 {${dto.getAddress()}, ${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
+							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
+							<!-- 그룹1 매칭 -->
+							<div class="Match1" align="center">
+
+								<% if( !firstGroupImg.isEmpty() ) { 
+									for(int i = 0; i < firstGroupName.size(); i++) {
+										if("null".equals(firstGroupImg.get(0))) { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/<%=firstGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% 	} else { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								
+								<% } } } else { %>
+									<p>No images available</p>
+								<% } %>
+								<br />
+								<% if( !firstGroupName.isEmpty() ) { %>
+								<p id="name">
+								<% 
+									for(int i = 0; i < firstGroupName.size(); i++) { %>
+									<%=firstGroupName.get(i)%>
+									<% if (i < firstGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+								<% } %></p>
+									<p class="content1">설정하신 {${dto.getAddress()},
+											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+										<input type="submit" name="imformation" class="Mainbutton"
+											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  매 치 하 기  " />
+								<% } else { %>
+										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  그 룹 생 성  " />
+								<% } %>
 							</div>
 							<div class="VS" align="center">
 								<p class="matchfont" id="vs">VS</p>
 							</div>
+							<!-- 그룹2 매칭 -->
 							<div class="Match2" align="center">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1150926.jpg" alt="Mem1" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11541414.jpg" alt="Mem2" class="profile"> 
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_11559378.jpg" alt="Mem3" class="profile">
-								<img src="${pageContext.request.contextPath}/MyProfile/20231215_1660408.jpg" alt="Mem4" class="profile">
-								<br/>
-								<p class="Member2"> 신짱구(남)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;한유리(여)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;김철수(남)</p>
-								<p class="content2">설정하신 {의정부동, JAVA, 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-								<input type="submit" name="imformation" class="Mainbutton" value="  상 세 보 기  "/>&nbsp;&nbsp;&nbsp;&nbsp;
-								<input type="submit" name="Match" class="Mainbutton" value="  매 치 하 기  "/>
-								<%} %>
+								<% if( !secondGroupImg.isEmpty() ) { 
+									for(int i = 0; i < secondGroupName.size(); i++) {
+										if("null".equals(secondGroupImg.get(0))) { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/<%=secondGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% 	} else { %>
+											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								
+								<% } } } else { %>
+									<p>No images available</p>
+								<% } %>
+								<br />
+								<% if( !secondGroupName.isEmpty() ) { %>
+								<p id="name">
+								<% 
+									for(int i = 0; i < secondGroupName.size(); i++) { %>
+									<%=secondGroupName.get(i)%>
+									<% if (i < secondGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+								<% } %></p>
+									<p class="content1">설정하신 {${dto.getAddress()},
+											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
+										<input type="submit" name="imformation" class="Mainbutton"
+											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  매 치 하 기  " />
+								<% } else { %>
+										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
+										<input type="submit" name="Match" class="Mainbutton"
+											value="  그 룹 생 성  " />
+								<% } %>
 							</div>
 						</div>
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
-					<table class="Calendar">
-						<thead>
-							<tr>
-								<td onClick="prevCalendar();" style="cursor: pointer;">&#60;</td>
-								<td colspan="5"><span id="calYear"></span>년 <span
-									id="calMonth"></span>월</td>
-								<td onClick="nextCalendar();" style="cursor: pointer;">&#62;</td>
-							</tr>
-							<tr>
-								<td>일</td>
-								<td>월</td>
-								<td>화</td>
-								<td>수</td>
-								<td>목</td>
-								<td>금</td>
-								<td>토</td>
-							</tr>
-						</thead>
+						<table class="Calendar">
+							<thead>
+								<tr>
+									<td onClick="prevCalendar();" style="cursor: pointer;">&#60;</td>
+									<td colspan="5"><span id="calYear"></span>년 <span
+										id="calMonth"></span>월</td>
+									<td onClick="nextCalendar();" style="cursor: pointer;">&#62;</td>
+								</tr>
+								<tr>
+									<td>일</td>
+									<td>월</td>
+									<td>화</td>
+									<td>수</td>
+									<td>목</td>
+									<td>금</td>
+									<td>토</td>
+								</tr>
+							</thead>
 
-						<tbody>
-						</tbody>
-					</table>
+							<tbody>
+							</tbody>
+						</table>
 					</div>
-				</div>
 				</div>
 			</div>
 		</div>
-		<!-- BootStrap javascript 사용 -->
+	</div>
+	<!-- BootStrap javascript 사용 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"

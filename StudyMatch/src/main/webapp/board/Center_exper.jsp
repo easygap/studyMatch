@@ -1,5 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="model.BoardDAO"%>
+<%@ page import="model.BoardDTO"%>
+<%@ page import="utils.BoardPage"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +39,10 @@
 	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
 	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
 	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
-
+<table board="1" width="90%">
+     
+     
+</table>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -163,12 +171,7 @@
 
     </head>
     <body>
-    <div class="container">
-    <table>
-    <tr>
-    <td>
-    <table>
-    <tr>
+  
     <div class="card-write">
     <div class="myinfo">
  
@@ -178,6 +181,8 @@
 		    <input type="hidden" name="depth" value="${article.depth}">
 		    <input type="hidden" name="pos" value="${article.pos}">
 		    <input type="hidden" name="groupId" value="${article.groupId}">
+		    <div style="position: absolute; width:1280px; height:1300px">
+					<form action="../board/" method="post">
 		    
 			<table border="2" width="500">
 				<tr>
@@ -193,7 +198,7 @@
 	    	<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
       	     </td>
       		</tr>
- 		                
+               
 					         
                          
                     </div>			
@@ -207,32 +212,23 @@
           <div align="right"> 
 	    <input type='button' value='작성하기'/>
 	    </div>
-		    </td> 
 
+		          
+	</table>	
+	
+	<div class="page-control">
+	 <align : center>	
+       <div>
+       
 
-                       </td>
-            
-                    </tr>
+		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
       
-          <tbody>          
-           <tr>
-          
-           <td colspan='2'>              
-           <div align="center">  
-            <input type='button' value='이전글'/>
-             <input type='button' value='목록가기'/>
-             <input type='button' value='다음글'/>
-               </div>
-          </td>
-	      </tr>  
-	      </tbody>
-	     </div> 
-			</table>
-		</div>
-	</form>
-
-	<script>
-	</script>
+			
+		<a href="../board/List.jsp">목록 바로가기</a>	
+       
+		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
+        </div>					
+				
 	</div>
 		<!-- BootStrap javascript 사용 -->
 	<script
