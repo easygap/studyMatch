@@ -26,7 +26,7 @@ String img = dao.MyProfile(SessionId);
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/styles.css" rel="stylesheet" />
 
-        <script>
+ <script>
     $(document).ready(function() {
         $(".category-link").click(function() {
             // 클릭한 링크의 부모 요소에 'active' 클래스 추가
@@ -40,7 +40,7 @@ String img = dao.MyProfile(SessionId);
 <body id="mainbody">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light" id="sidebar-heading"><a href="../board/Main.do" style="text-decoration-line: none; color: #333;">MatchMate</a></div>
+                <div class="sidebar-heading border-bottom bg-light" id="sidebar-heading"><a href="../board/Main.do" ><img src="${pageContext.request.contextPath}/MyProfile/logo.png" alt="logo" id="logo"></a></div>
                 <div align="center" id="img">
                 <% if(img != null) { %>
                 <img src="${pageContext.request.contextPath}/MyProfile/<%= img %>" name="MyProfile" alt="Me" id="MyProfile" />

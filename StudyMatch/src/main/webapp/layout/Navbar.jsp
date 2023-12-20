@@ -36,6 +36,7 @@
 	font-weight: bold;
 	font-size: 18px;
 	width: 90px; height: 34px;
+	border: none;
 }
 </style>
 </head>
