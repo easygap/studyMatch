@@ -130,28 +130,6 @@ public class GroupDAO extends DBConnPool {
 		return address;
 	}
 
-	//그룹 id 세션
-	public String GroupSession(String num) {
-		String checkID = null;
-
-		String query = "SELECT id1, id2, id3, id4, id5 FROM MATCHGROUP WHERE group_num";
-
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, num);
-			rs = psmt.executeQuery();
-
-			if (rs.next()) {
-				checkID = rs.getString("id");
-				System.out.println("Group DB : " + checkID);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("*** 조회중 에러 발생 ***");
-		}
-		return checkID;
-	}
-
 	// 프로필 사진 가져오기
 	public List<String> getProfile(String id) {
 	    List<String> profiles = new ArrayList<>();
