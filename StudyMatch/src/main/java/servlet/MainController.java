@@ -73,8 +73,8 @@ public class MainController extends HttpServlet {
 			List<String> groupImgList1;
 			List<String> groupNameList2;
 			List<String> groupImgList2;
-			String firstGroup = null;
-			String secondGroup = null;
+			String firstGroup = "";
+			String secondGroup = "";
 		
 			
 			/** 현 로그인 계정의 관심사가 2개 이상일 경우 */

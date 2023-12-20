@@ -15,14 +15,14 @@ function validateForm(form){
 }
 </script>
 </head>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- css 가져오기 -->
 <link href="FormLogin.css" rel="stylesheet" type="text/css" />
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<body>
+<body id="loginbody">
 	<div class="loginbox">
-		<h2>로그인</h2>
+		<h2>로 그 인</h2>
 		<form name="LoginFrm" action="../auth/LoginAuth.do" method="post">
 		
 			<!--작성하지 않아도 문제는 없음-->
