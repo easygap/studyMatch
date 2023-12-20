@@ -24,8 +24,18 @@
 	font-size: 15px;
 }
 
-#navbody {
-background-color: #F4EAE0;
+#navbody, .navbar, .collapse {
+	background-color: #F4EAE0 !important;
+}
+
+#sidebarToggle {
+	background: #5174BE;
+	opacity: 0.7;
+	border-radius: 10px;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 18px;
+	width: 90px; height: 34px;
 }
 </style>
 </head>
@@ -38,7 +48,7 @@ background-color: #F4EAE0;
 			class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 
 			<div class="container-fluid">
-				<button class="btn btn-primary" id="sidebarToggle">게시판</button>
+				<button id="sidebarToggle">게 시 판</button>
 				<button class="navbar-toggler" type="button"
 					data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
