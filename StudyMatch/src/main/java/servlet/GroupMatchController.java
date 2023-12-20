@@ -26,5 +26,9 @@ public class GroupMatchController extends HttpServlet {
 		HttpSession session = req.getSession();
 		String sessionID = (String) session.getAttribute("user");
 		
+		String mode = "";
+		
+		//if() {}
+		
 	}
 }
