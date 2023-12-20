@@ -1,8 +1,16 @@
+<%@ page import="javax.servlet.http.HttpSession" %>
+<%@ page import="member.MemberDAO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
+
+HttpSession sessionID = request.getSession();
+String SessionId = (String) sessionID.getAttribute("user");
+
+MemberDAO dao = new MemberDAO();
+String img = dao.MyProfile(SessionId);
 %>
 <!DOCTYPE html>
 <html>
@@ -32,8 +40,15 @@ String cp = request.getContextPath();
 <body id="mainbody">
             <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light"><a href="../board/Main.do" style="text-decoration-line: none; color: #333;">MatchMate</a></div>
-                <div class="list-group list-group-flush">
+                <div class="sidebar-heading border-bottom bg-light" id="sidebar-heading"><a href="../board/Main.do" style="text-decoration-line: none; color: #333;">MatchMate</a></div>
+                <div align="center" id="img">
+                <% if(img != null) { %>
+                <img src="${pageContext.request.contextPath}/MyProfile/<%= img %>" name="MyProfile" alt="Me" id="MyProfile" />
+                <%} else{ %>
+                <img src="${pageContext.request.contextPath}/MyProfile/default.png" name="MyProfile" alt="Me" id="MyProfile" />
+                <% } %>
+                </div>
+                <div class="list-group list-group-flush" id="list-group">
                 	<!-- 어학 카테고리 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="lan">어학 ▶</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=1001" id="lan1" style="display:none;">• 영어</a>

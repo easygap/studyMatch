@@ -74,8 +74,7 @@
 					   }
 		  </script>
 		  <form>	  
-					   <input type="button" 
-							value="작성하기" onClick=doSaveAs()">
+					   <input type="button" value="작성하기" onClick=doSaveAs()">
           </form>						
 					</td>
 					
