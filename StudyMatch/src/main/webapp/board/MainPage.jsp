@@ -34,6 +34,10 @@ for(int i = 0; i < secondGroupImg.size(); i++){
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
+String firstGroup = dto.getFirstGroup();
+
+String secondGroup = dto.getSecondGroup();
+
 System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
 
 
@@ -210,11 +214,11 @@ String nowTime = sdf.format(now.getTime());
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
 										<input type="submit" name="imformation" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="Match" class="Mainbutton"
+										<input type="submit" name="match" class="Mainbutton"
 											value="  매 치 하 기  " />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="Match" class="Mainbutton"
+										<input type="submit" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " />
 								<% } %>
 							</div>
@@ -245,15 +249,17 @@ String nowTime = sdf.format(now.getTime());
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
 										<input type="submit" name="imformation" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="Match" class="Mainbutton"
+										<input type="submit" name="match" class="Mainbutton"
 											value="  매 치 하 기  " />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="Match" class="Mainbutton"
+										<input type="submit" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " />
 								<% } %>
 							</div>
 						</div>
+						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null) %>${ dto.getfirstGroup }" />
+						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null) %>${ dto.getsecondGroup }" />
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">

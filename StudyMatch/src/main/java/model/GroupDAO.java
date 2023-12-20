@@ -194,7 +194,8 @@ public class GroupDAO extends DBConnPool {
 		Map<String, List<String>> firstGroup = new HashMap<>();
 		List<String> groupName = new ArrayList<>();
 		List<String> groupImg = new ArrayList<>();
-		String query = "SELECT m.NAME, m.IMG "
+		List<String> groupNum = new ArrayList<>();
+		String query = "SELECT m.NAME, m.IMG, Group_num "
 				+ "FROM member m "
 				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
 				+ "WHERE mg.group_num IN ( "
@@ -215,46 +216,20 @@ public class GroupDAO extends DBConnPool {
 			while (rs.next()) {
 	            groupName.add(rs.getString("name"));
 	            groupImg.add(rs.getString("IMG"));
+	            groupNum.add(rs.getString("group_num"));
 	        }
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		firstGroup.put("groupName", groupName);
 		firstGroup.put("groupImg", groupImg);
+		firstGroup.put("groupNum", groupNum);
+		
 		System.out.println("DAO에서 매칭 group의 이름 : " + groupName + ", 이미지 : " +groupImg);
 		return firstGroup;
 	}
 	
-	// 본인 관심사, 주소와 맞는 그룹 중 매칭되지 않은 Group_num 조회
-	public String[] getGroupData2(String interest, String address, String id, String groupNum1) {
-		String[] group = new String[6];
-		String query = "SELECT group_num FROM MATCHGROUP WHERE group_num != ? AND IMPORT= ? AND ADDRESS LIKE ? AND NOT EXISTS(SELECT 1 FROM DUAL WHERE ? IN (id1, id2, id3, id4, id5)) order by DBMS_RANDOM.RANDOM";
-		
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, groupNum1);
-			psmt.setString(2, interest);
-			psmt.setString(3, "%" + address + "%");
-			psmt.setString(4, id);
-			rs = psmt.executeQuery();
-			
-			if (rs.next()) {
-				group[0] = rs.getString("group_num");
-				group[1] = rs.getString("id1");
-				group[2] = rs.getString("id2");
-				group[3] = rs.getString("id3");
-				group[4] = rs.getString("id4");
-				group[5] = rs.getString("id5");
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		return group;
-	}
-
 	// DB 연결 해제
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
