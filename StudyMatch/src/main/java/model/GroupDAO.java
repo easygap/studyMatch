@@ -29,7 +29,7 @@ public class GroupDAO extends DBConnPool {
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
 
-	// 생성자, DB 연결
+	/** 생성자, DB 연결 */
 	public GroupDAO() {
 		try {
 			Context context = new InitialContext();
@@ -42,7 +42,7 @@ public class GroupDAO extends DBConnPool {
 		}
 	}
 
-	// 사용자 정보 가져오기
+	/** 사용자 정보 가져오기 */
 	public String getUserName(String id) {
 		String NickName = null;
 		String query = "SELECT nickname FROM member WHERE id=?";
@@ -106,7 +106,7 @@ public class GroupDAO extends DBConnPool {
 
 	}
 
-	// 현재 회원 ID의 주소 정보 가져오기
+	/** 현재 회원 ID의 주소 정보 가져오기 */
 	public String getaddress(String id) {
 		String address = null;
 
@@ -132,7 +132,7 @@ public class GroupDAO extends DBConnPool {
 		return address;
 	}
 
-	// 프로필 사진 가져오기
+	/** 프로필 사진 가져오기 */
 	public List<String> getProfile(String id) {
 	    List<String> profiles = new ArrayList<>();
 	    String query = "SELECT m.img " +
@@ -161,7 +161,7 @@ public class GroupDAO extends DBConnPool {
 	    return profiles;
 	}
 	
-	// 그룹 멤버 이름 가져오기
+	/** 그룹 멤버 이름 가져오기 */
 	public List<String> getGroupName(String id){
 		List<String> Names = new ArrayList<>();
 		String query = " SELECT m.name "
@@ -189,7 +189,7 @@ public class GroupDAO extends DBConnPool {
 	    return Names;
 	}
 
-	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
+	/** 본인 관심사, 주소와 맞는 그룹의 그룹원, 그룹원 프로필, Group_num 조회 */
 	public Map<String, List<String>> getGroupData(String interest, String address, String id) {
 		Map<String, List<String>> firstGroup = new HashMap<>();
 		List<String> groupName = new ArrayList<>();
@@ -230,7 +230,39 @@ public class GroupDAO extends DBConnPool {
 		return firstGroup;
 	}
 	
-	// DB 연결 해제
+	/** 그룹에 몇명이 들어와 있는지 count하는 쿼리문 */
+	public int countGroupMember(String groupnum) {
+		int total_count = 0;
+		String query = "SELECT COUNT(ID1) + COUNT(ID2) + COUNT(ID3) + COUNT(ID4) + COUNT(ID5) AS total_count FROM MATCHGROUP WHERE group_num = ? ";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, groupnum);
+
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				total_count = rs.getInt("total_count");
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return total_count;
+	}
+	
+	/** 매칭 상세 보기를 눌렀을 때 group_num 값을 받아와서 그룹원 list의 정보를 뿌려주기 */
+	public List<String> showGroupMember(String groupNum){
+		Map<String, List<String>> firstGroup = new HashMap<>();
+		List<String> groupName = new ArrayList<>();
+		List<String> groupImg = new ArrayList<>();
+		List<String> groupJob = new ArrayList<>();
+		
+		
+		return null;
+	}
+	
+	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
 		try {
