@@ -49,6 +49,7 @@ public class CommEditController extends HttpServlet {
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				System.out.println("Controller 댓글 삭제 완");
 			} catch (Exception e) {
+				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
 				System.out.println("*** Controller 댓글 삭제 실패 ***");
@@ -94,6 +95,7 @@ public class CommEditController extends HttpServlet {
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				System.out.println("Controller 댓글 수정 완");
 			} catch (Exception e) {
+				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
 				System.out.println("*** Controller 댓글 수정 실패 ***");

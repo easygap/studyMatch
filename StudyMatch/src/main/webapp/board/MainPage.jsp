@@ -211,7 +211,7 @@ String nowTime = sdf.format(now.getTime());
 									<p>No images available</p>
 								<% } %>
 								<br />
-								<% if( !firstGroupName.isEmpty() ) { %>
+								<% if( firstGroupName != null && !firstGroupName.isEmpty() ) { %>
 								<p id="name">
 								<% 
 									for(int i = 0; i < firstGroupName.size(); i++) { %>
@@ -220,9 +220,9 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-										<input type="submit" name="imformation" class="Mainbutton"
+										<input type="submit" name="information1" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="match" class="Mainbutton"
+										<input type="submit" name="match1" class="Mainbutton"
 											value="  매 치 하 기  " />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
@@ -246,7 +246,7 @@ String nowTime = sdf.format(now.getTime());
 									<p>No images available</p>
 								<% } %>
 								<br />
-								<% if( !secondGroupName.isEmpty() ) { %>
+								<% if( secondGroupName != null && !secondGroupName.isEmpty() ) { %>
 								<p id="name">
 								<% 
 									for(int i = 0; i < secondGroupName.size(); i++) { %>
@@ -255,9 +255,9 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
-										<input type="submit" name="imformation" class="Mainbutton"
+										<input type="submit" name="information2" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="match" class="Mainbutton"
+										<input type="submit" name="match2" class="Mainbutton"
 											value="  매 치 하 기  " />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
@@ -266,8 +266,8 @@ String nowTime = sdf.format(now.getTime());
 								<% } } %>
 							</div>
 						</div>
-						<input type="text" style="display:none;" name="groupNum1" value="<% if(!firstGroup.equals("")) { out.print(firstGroup);  } %>" />
-						<input type="text" style="display:none;" name="groupNum2" value="<% if(!secondGroup.equals("")) { out.print(secondGroup); } %>" />
+						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
+						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
 					</form>
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
