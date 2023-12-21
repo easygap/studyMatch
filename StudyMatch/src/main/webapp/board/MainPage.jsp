@@ -10,27 +10,33 @@ request.setCharacterEncoding("UTF-8");
 
 Object groupNameList1 = request.getAttribute("nameGR1");
 List<String> firstGroupName = (List<String>) groupNameList1;
+/*
 for(int i = 0; i < firstGroupName.size(); i++){
 	System.out.println("First Group Name IN MainPage.jsp : " + firstGroupName.get(i));
 }
-
+*/
 Object groupImgList1 = request.getAttribute("imgGR1");
 List<String> firstGroupImg = (List<String>) groupImgList1;
+/*
 for(int i = 0; i < firstGroupImg.size(); i++){
 	System.out.println("First Group IMG IN MainPage.jsp : " + firstGroupImg.get(i));
 }
-
+*/
 Object groupNameList2 = request.getAttribute("nameGR2");
 List<String> secondGroupName = (List<String>) groupNameList2;
+/*
 for(int i = 0; i < secondGroupName.size(); i++){
 	System.out.println("Second Group Name IN MainPage.jsp : " + secondGroupName.get(i));
 }
+*/
 
 Object groupImgList2 = request.getAttribute("imgGR2");
 List<String> secondGroupImg = (List<String>) groupImgList2;
+/*
 for(int i = 0; i < secondGroupImg.size(); i++){
 	System.out.println("Second Group IMG IN MainPage.jsp : " + secondGroupImg.get(i));
 }
+*/
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
@@ -174,7 +180,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (id != "") {
+								if (!"".equals(id)) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -191,9 +197,12 @@ String nowTime = sdf.format(now.getTime());
 							<!-- 그룹1 매칭 -->
 							<div class="Match1" align="center">
 
-								<% if( !firstGroupImg.isEmpty() ) { 
+								<% if("".equals(id)) { %>
+								<p>로그인 후 이용할 수 있는 기능입니다.</p>
+								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
+									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
 									for(int i = 0; i < firstGroupName.size(); i++) {
-										if("null".equals(firstGroupImg.get(0))) { %>
+										if(firstGroupImg.get(i) != null && !firstGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=firstGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
@@ -226,9 +235,9 @@ String nowTime = sdf.format(now.getTime());
 							</div>
 							<!-- 그룹2 매칭 -->
 							<div class="Match2" align="center">
-								<% if( !secondGroupImg.isEmpty() ) { 
+								<% if( secondGroupImg != null && !secondGroupImg.isEmpty() ) { 
 									for(int i = 0; i < secondGroupName.size(); i++) {
-										if("null".equals(secondGroupImg.get(0))) { %>
+										if(secondGroupImg.get(i) != null && !secondGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=secondGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
@@ -254,7 +263,7 @@ String nowTime = sdf.format(now.getTime());
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " />
-								<% } %>
+								<% } } %>
 							</div>
 						</div>
 						<input type="text" style="display:none;" name="groupNum1" value="<% if(!firstGroup.equals("")) { out.print(firstGroup);  } %>" />
