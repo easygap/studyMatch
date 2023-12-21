@@ -178,7 +178,7 @@ public class MemberDAO extends DBConnPool {
 	}
 
 	// 회원가입
-	public boolean signUp(MemberDTO dto) throws SQLException {
+	public boolean signUp(MemberDTO dto) {
 		
 		boolean result = false;
 		String query = "INSERT INTO member (id, name, birth, job, nickname, pwd, phone, email, address, interest1, interest2, interest3, img)"

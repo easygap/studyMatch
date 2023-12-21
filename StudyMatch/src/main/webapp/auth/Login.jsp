@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
 	function validateForm(form) {
 		if (form.id.value == "") {
@@ -39,60 +38,48 @@
 				</ul>
 				<!--데이터를 서버로 전송-->
 				<button type="submit">로그인</button>
-
-				<ul>
-					<li onclick="kakaoLogin();"><a href="javascript:void(0)">
-							<img src="../img/kakao_login.png" alt="카카오 로그인">
-					</a></li>
-				</ul>
 				<!-- 카카오 스크립트 -->
+				<a href="javascript:kakaoLogin();"><img
+					src="../img/kakao_login.png"></a>
 				<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 				<script>
-					Kakao.init('1679ead944a73eda9c0a535810405446');
-					console.log(Kakao.isInitialized()); // sdk 초기화 여부 판단
-					//카카오 로그인
-					function kakaoLogin() {
-						// 로그인 요청 - 회원가입
-						Kakao.Auth.login({
-							// 회원 정보 가져오기
-							success : function(resp) {
-								Kakao.API.request({
-									url : '/v2/user/me',
-									success : function(resp) { // 호출 실패
-										console.log(resp);
-									var nick = resp.nickname;
-									scope : 'profile_nickname';
-									var id = resp.id;
-									scope : 'account_email';
-									var birthyear = resp.birthyear;
-									scope : 'birthyear';
-									var birthday = resp.birthday;
-									scope : 'birthday';
-									var birth = birthyear + birthday;
-									var phone = resp.phone;
-									scope : 'phone_number';
-									var address = resp.address;
-									scope : 'shipping_address';
-									var url = '../회원가입컨트롤러URL?nick=' + encodeURIComponent(nick) + '&id=' + encodeURIComponent(id)
-									+ '&birth=' + encodeURIComponent(birth) + '&phone=' + encodeURIComponent(phone) + '&address=' + encodeURIComponent(address);
-									alert(nick + "님 카카오 로그인하셨습니다. (●'◡'●)");
-									location.href="../board/MainPage.jsp";
-									},
-									fail : function(error) {
-										console.log(error)
-										alert("로그인 정보 조회에 실패했습니다. 정보를 다시 확인해 주세요.);
-										location.href="../auth/Login.jsp";
-									},
-								})
-							},
-							fail : function(error) {
-								console.log(error)
-								alert("로그인에 실패했습니다. 다시 로그인해 주세요.);
-								location.href="../auth/Login.jsp";
-							},
-						})
-					}
-				</script>
+				window.Kakao.init('bb8b6ca34d06454a9c045ccd122b2902');
+				//카카오 로그인
+				function kakaoLogin() {
+					window.Kakao.Auth.login({
+						scope: 'profile_nickname, account_email, name, birthyear, birthday, phone_number, shipping_address',
+						success: function(authObj) {
+							console.log(authObj);
+							Kakao.Auth.setAccessToken(authObj.access_token);
+							window.Kakao.API.request({
+								url:'/v2/user/me',
+								success: function(res) {
+									const kakao_account = res.kakao_account;
+				                    var nickname = kakao_account.profile.nickname;
+				                    var email = kakao_account.email;
+				                    var name = kakao_account.name;
+				                    var birthyear = kakao_account.birthyear;
+				                    var birthday = kakao_account.birthday;
+				                    var birth = birthyear + birthday;
+				                    var phone_number = kakao_account.phone_number;
+				                    var shipping_address = kakao_account.shipping_address;
+				                    
+									alert('카카오 로그인 성공');
+									window.Kakao.Auth.authorize({
+									    redirectUri: 'http://localhost:8081/StudyMatch/board/MainPage.jsp',
+									});
+				                    console.log('로그인 계정:', email);
+				                    console.log('이름:', name);
+				                    console.log('닉네임: ', nickname);
+				                    console.log('생년월일: ', birth);
+				                    console.log('핸드폰:', phone_number);
+				                    console.log('주소:', shipping_address);
+								}
+							});
+						}
+					});
+				}
+</script>
 			</fieldset>
 		</form>
 	</div>
