@@ -42,10 +42,13 @@ String img = dao.MyProfile(SessionId);
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="sidebar-heading border-bottom bg-light" id="sidebar-heading"><a href="../board/Main.do" ><img src="${pageContext.request.contextPath}/MyProfile/logo.png" alt="logo" id="logo"></a></div>
                 <div align="center" id="img">
-                <% if(img != null) { %>
+                <% if(SessionId != null){ 
+                if(img != null) { %>
                 <img src="${pageContext.request.contextPath}/MyProfile/<%= img %>" name="MyProfile" alt="Me" id="MyProfile" />
                 <%} else{ %>
                 <img src="${pageContext.request.contextPath}/MyProfile/default.png" name="MyProfile" alt="Me" id="MyProfile" />
+                <% } } else{ %>
+                <img src="${pageContext.request.contextPath}/MyProfile/logout.jpg" name="MyProfile" alt="Me" id="MyProfile" />
                 <% } %>
                 </div>
                 <div class="list-group list-group-flush" id="list-group">
