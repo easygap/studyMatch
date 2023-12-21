@@ -12,6 +12,14 @@ body{
 	top: 400px;
 }
 
+#name{
+	word-spacing:3.9em;
+	margin-left: 1.2em;
+	font-weight: bold;
+	font-size: 1em;
+	margin-right: 0.5em;
+}
+
 td {
 	width: 75px;
 	height: 75px;

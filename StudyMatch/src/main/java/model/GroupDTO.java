@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 public class GroupDTO {
 	private String NickName;
 	private String id;
@@ -11,8 +9,7 @@ public class GroupDTO {
 	private String address;
 	private String firstGroup;
 	private String secondGroup;
-	private String createFirstGroup;
-	private String createSecondGroup;
+	private String createGroup;
 
 //	private String GR1id1;
 //	private String GR1id2;
@@ -89,20 +86,12 @@ public class GroupDTO {
 		this.secondGroup = secondGroup;
 	}
 
-	public String getCreateFirstGroup() {
-		return createFirstGroup;
+	public String getCreateGroup() {
+		return createGroup;
 	}
 
-	public void setCreateFirstGroup(String createFirstGroup) {
-		this.createFirstGroup = createFirstGroup;
+	public void setCreateGroup(String createGroup) {
+		this.createGroup = createGroup;
 	}
 
-	public String getCreateSecondGroup() {
-		return createSecondGroup;
-	}
-
-	public void setCreateSecondGroup(String createSecondGroup) {
-		this.createSecondGroup = createSecondGroup;
-	}
-	
 }

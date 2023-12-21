@@ -17,6 +17,12 @@ String interest = request.getParameter("interest");
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
+<style>
+body, #wrapper, #page-content-wrapper, .container, .table, thead, tr, th, td, table{
+background-color : #F4EAE0 !important;
+}
+
+</style>
 </head>
 <body>
 	
@@ -77,7 +83,7 @@ String interest = request.getParameter("interest");
 				</table>
 
 				<!-- 하단 메뉴(바로가기, 글쓰기) -->
-				<table class="table table-hover">
+				<table class="table">
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
 						<td width="100"><button type="button" class="btn btn-primary"
@@ -99,7 +105,7 @@ String interest = request.getParameter("interest");
 
 				<!-- 검색 폼 -->
 				<form method="get">
-					<table class="table table-hover">
+					<table class="table">
 						<tr>
 							<td align="center"><select class="selectpicker" style="height:27px" name="searchField">
 									<option value="title">제목</option>

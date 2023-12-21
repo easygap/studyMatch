@@ -31,11 +31,12 @@
 /* 내 스터디 매칭된 그룸 뒷 배경 */
 .MyStudyGruop-Back {
 	position: absolute;
-	background: rgba(192, 192, 192, 0.13);
 	width: 850px;
-	height: 250px;
+	height: 270px;
 	left: 352px;
 	top: 214px;
+	
+	background: rgba(192, 192, 192, 0.13);
 }
 
 #mygroup{
@@ -48,27 +49,27 @@
 	margin-right: 40px;
 }
 
+/* 이전에 매칭됐던 현황 */ 
 .MatchHistory {
 	position: absolute;
 	background: rgba(192, 192, 192, 0.13);
 	width: 850px;
-	height: 540px;
+	height: 700px;
 	left: 352px;
-	top: 500px;
+	top: 520px;
 }
 
 .matching {
 	margin-left: 10px;
 	color: #5174BE;
+	
+	font-style: italic;
+	font-size: 23px;
+	font-weight: 900;
 }
 
 #Matching{
 	font-size: 40px;
-	font-weight: bold;
-}
-
-#group, #history{
-	font-size: 25px;
 	font-weight: bold;
 }
 

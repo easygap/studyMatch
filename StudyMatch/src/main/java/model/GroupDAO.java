@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.naming.Context;
@@ -27,7 +29,7 @@ public class GroupDAO extends DBConnPool {
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
 
-	// 생성자, DB 연결
+	/** 생성자, DB 연결 */
 	public GroupDAO() {
 		try {
 			Context context = new InitialContext();
@@ -40,7 +42,7 @@ public class GroupDAO extends DBConnPool {
 		}
 	}
 
-	// 사용자 정보 가져오기
+	/** 사용자 정보 가져오기 */
 	public String getUserName(String id) {
 		String NickName = null;
 		String query = "SELECT nickname FROM member WHERE id=?";
@@ -104,7 +106,7 @@ public class GroupDAO extends DBConnPool {
 
 	}
 
-	// 현재 회원 ID의 주소 정보 가져오기
+	/** 현재 회원 ID의 주소 정보 가져오기 */
 	public String getaddress(String id) {
 		String address = null;
 
@@ -130,29 +132,7 @@ public class GroupDAO extends DBConnPool {
 		return address;
 	}
 
-	//그룹 id 세션
-	public String GroupSession(String num) {
-		String checkID = null;
-
-		String query = "SELECT id1, id2, id3, id4, id5 FROM MATCHGROUP WHERE group_num";
-
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, num);
-			rs = psmt.executeQuery();
-
-			if (rs.next()) {
-				checkID = rs.getString("id");
-				System.out.println("Group DB : " + checkID);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("*** 조회중 에러 발생 ***");
-		}
-		return checkID;
-	}
-
-	// 프로필 사진 가져오기
+	/** 프로필 사진 가져오기 */
 	public List<String> getProfile(String id) {
 	    List<String> profiles = new ArrayList<>();
 	    String query = "SELECT m.img " +
@@ -181,7 +161,7 @@ public class GroupDAO extends DBConnPool {
 	    return profiles;
 	}
 	
-	// 그룹 멤버 이름 가져오기
+	/** 그룹 멤버 이름 가져오기 */
 	public List<String> getGroupName(String id){
 		List<String> Names = new ArrayList<>();
 		String query = " SELECT m.name "
@@ -209,18 +189,21 @@ public class GroupDAO extends DBConnPool {
 	    return Names;
 	}
 
-	// 본인 관심사, 주소와 맞는 그룹의 Group_num 조회
-	public String[] getGroupData1(String interest, String address, String id) {
-		String[] group = new String[6]; 
-		String query = "SELECT * "
-				+ "FROM MATCHGROUP "
-				+ "WHERE IMPORT=? AND ADDRESS LIKE ? "
-				+ "  AND NOT EXISTS ( "
-				+ "    SELECT 1 "
-				+ "    FROM DUAL "
-				+ "    WHERE ? IN (id1, id2, id3, id4, id5) "
-				+ "  )"
-				+ "ORDER BY DBMS_RANDOM.RANDOM ";
+	/** 본인 관심사, 주소와 맞는 그룹의 그룹원, 그룹원 프로필, Group_num 조회 */
+	public Map<String, List<String>> getGroupData(String interest, String address, String id) {
+		Map<String, List<String>> firstGroup = new HashMap<>();
+		List<String> groupName = new ArrayList<>();
+		List<String> groupImg = new ArrayList<>();
+		List<String> groupNum = new ArrayList<>();
+		String query = "SELECT m.NAME, m.IMG, Group_num "
+				+ "FROM member m "
+				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
+				+ "WHERE mg.group_num IN ( "
+				+ "    SELECT group_num "
+				+ "    FROM matchgroup "
+				+ "    WHERE import = ? AND ADDRESS LIKE ? "
+				+ ") "
+				+ "AND m.id != ? ";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -230,51 +213,83 @@ public class GroupDAO extends DBConnPool {
 			psmt.setString(3, id);
 			rs = psmt.executeQuery();
 			
-			if (rs.next()) {
-				group[0] = rs.getString("group_num");
-				group[1] = rs.getString("id1");
-				group[2] = rs.getString("id2");
-				group[3] = rs.getString("id3");
-				group[4] = rs.getString("id4");
-				group[5] = rs.getString("id5");
-			}
+			while (rs.next()) {
+	            groupName.add(rs.getString("name"));
+	            groupImg.add(rs.getString("IMG"));
+	            groupNum.add(rs.getString("group_num"));
+	        }
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DAO에서 매칭 group의 첫번째 id 값은 : " + group[1]);
-		return group;
+		firstGroup.put("groupName", groupName);
+		firstGroup.put("groupImg", groupImg);
+		firstGroup.put("groupNum", groupNum);
+		
+		System.out.println("DAO에서 매칭 group의 이름 : " + groupName + ", 이미지 : " +groupImg);
+		return firstGroup;
 	}
 	
-	// 본인 관심사, 주소와 맞는 그룹 중 매칭되지 않은 Group_num 조회
-	public String[] getGroupData2(String interest, String address, String id, String groupNum1) {
-		String[] group = new String[6];
-		String query = "SELECT group_num FROM MATCHGROUP WHERE group_num != ? AND IMPORT= ? AND ADDRESS LIKE ? AND NOT EXISTS(SELECT 1 FROM DUAL WHERE ? IN (id1, id2, id3, id4, id5)) order by DBMS_RANDOM.RANDOM";
+	/** 그룹에 몇명이 들어와 있는지 count하는 쿼리문 */
+	public int countGroupMember(String groupnum) {
+		int total_count = 0;
+		String query = "SELECT COUNT(ID1) + COUNT(ID2) + COUNT(ID3) + COUNT(ID4) + COUNT(ID5) AS total_count FROM MATCHGROUP WHERE group_num = ? ";
 		
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, groupNum1);
-			psmt.setString(2, interest);
-			psmt.setString(3, "%" + address + "%");
-			psmt.setString(4, id);
+			psmt.setString(1, groupnum);
+
 			rs = psmt.executeQuery();
 			
-			if (rs.next()) {
-				group[0] = rs.getString("group_num");
-				group[1] = rs.getString("id1");
-				group[2] = rs.getString("id2");
-				group[3] = rs.getString("id3");
-				group[4] = rs.getString("id4");
-				group[5] = rs.getString("id5");
+			while (rs.next()) {
+				total_count = rs.getInt("total_count");
 			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		return group;
+		return total_count;
 	}
-
-	// DB 연결 해제
+	
+	/** 매칭 상세 보기를 눌렀을 때 group_num 값을 받아와서 그룹원 list의 정보를 뿌려주기 */
+	public List<String> showGroupMember(String groupNum){
+		Map<String, List<String>> firstGroup = new HashMap<>();
+		List<String> groupName = new ArrayList<>();
+		List<String> groupImg = new ArrayList<>();
+		List<String> groupJob = new ArrayList<>();
+		
+		
+		return null;
+	}
+	
+	/** '매치하기' 눌렀을 때 그룹에 가입하는 쿼리문 */
+	public void groupJoin(String groupNum, String id, int total_count) {
+		String query1 = "UPDATE MATCHGROUP SET " + "id" + (total_count + 1) + " = ? WHERE GROUP_NUM = ? ";
+		
+		try {
+			psmt = con.prepareStatement(query1);
+			psmt.setString(1, id);
+			psmt.setString(2, groupNum);
+			rs = psmt.executeQuery();
+			
+			} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		String query2 = "INSERT INTO AGREEMATCH(GROUP_NUM, id, AGREE_CREATE, PREVIOUS_MATCH) values (?, ?, 'Y', 'Y')";
+		
+		try {
+			psmt = con.prepareStatement(query2);
+			psmt.setString(1, groupNum);
+			psmt.setString(2, id);
+			rs = psmt.executeQuery();
+			
+			} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
 		try {
