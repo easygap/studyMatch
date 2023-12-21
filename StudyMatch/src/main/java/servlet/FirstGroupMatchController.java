@@ -43,7 +43,8 @@ public class FirstGroupMatchController extends HttpServlet {
 
 		} else {	/** 사용자가 1번 그룹의 '매 치 하 기' 를 눌렀을 때 */
 			groupNum1 = req.getParameter("groupNum1");
-
+			System.out.println("그룹 매치에서 information1 : " + information1 + ", groupNum : " + groupNum1);
+			
 			/** 그룹 인원이 몇명인지 구하는 쿼리문 */
 			int total_Count = dao.countGroupMember(groupNum1);
 			/** 5명 모두 찼으면 메인페이지로 이동 */
@@ -52,8 +53,10 @@ public class FirstGroupMatchController extends HttpServlet {
 				req.setAttribute("makeGroup", "excess");
 			}
 			
+			dao.groupJoin(groupNum1, sessionID, total_Count);
+			
 			dao.close();
-			req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("../board/Main.do").forward(req, resp);
 		}
 	}
 }

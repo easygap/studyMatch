@@ -41,16 +41,17 @@ public class SecondGroupMatchController extends HttpServlet {
 			
 		} else {	/** 사용자가 2번 그룹의 '매 치 하 기' 를 눌렀을 때 */
 			groupNum2 = req.getParameter("groupNum2");
+			System.out.println("그룹 매치에서 information1 : " + information2 + ", groupNum : " + groupNum2);
 
 			/** 그룹 인원이 몇명인지 구하는 쿼리문 */
 			int total_Count = dao.countGroupMember(groupNum2);
-			/** 5명 모두 찼으면 메인페이지로 이동 */
+			/** 5명 모두 찼으면 'makeGroup'의 값을 '초과'로 설정 */
 			if (total_Count > 4) {
 				dao.close();
 				req.setAttribute("makeGroup", "excess");
 			}
 			
-			
+			dao.groupJoin(groupNum2, sessionID, total_Count);
 			
 			dao.close();
 			req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
