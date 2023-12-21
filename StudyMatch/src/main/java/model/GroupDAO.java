@@ -262,6 +262,33 @@ public class GroupDAO extends DBConnPool {
 		return null;
 	}
 	
+	/** '매치하기' 눌렀을 때 그룹에 가입하는 쿼리문 */
+	public void groupJoin(String groupNum, String id, int total_count) {
+		String query1 = "UPDATE MATCHGROUP SET " + "id" + (total_count + 1) + " = ? WHERE GROUP_NUM = ? ";
+		
+		try {
+			psmt = con.prepareStatement(query1);
+			psmt.setString(1, id);
+			psmt.setString(2, groupNum);
+			rs = psmt.executeQuery();
+			
+			} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		String query2 = "INSERT INTO AGREEMATCH(GROUP_NUM, id, AGREE_CREATE, PREVIOUS_MATCH) values (?, ?, 'Y', 'Y')";
+		
+		try {
+			psmt = con.prepareStatement(query2);
+			psmt.setString(1, groupNum);
+			psmt.setString(2, id);
+			rs = psmt.executeQuery();
+			
+			} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();

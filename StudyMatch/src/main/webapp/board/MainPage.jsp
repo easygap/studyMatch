@@ -68,12 +68,27 @@ String nowTime = sdf.format(now.getTime());
 <meta charset="UTF-8">
 <title>달력</title>
 <link rel="stylesheet" href="../css/MainPage.css">
-<script>
-	let make = <%out.print(makeGroup);%>;
+<script>	
+	/** 그룹1 매치하기 버튼 눌렀을 때 */
+	function matchCheck1() {
+		if (confirm("그룹1에 가입하시겠습니까??") == true) {
+			alert("'그룹1' 가입이 완료되었습니다.");
+			document.group1.submit();
+		} else {
+			// 사용자가 취소를 선택한 경우 아무 동작 없음
+		}
+	}
 	
-	const make = "excess" => {
-		console.log('그룹 내 인원이 가득 찼습니다.');
-	};
+	/** 그룹2 매치하기 버튼 눌렀을 때 */
+	function matchCheck2() {
+ 		if (confirm("그룹2에 가입하시겠습니까??") == true) {    //확인
+ 			alert("'그룹2' 가입이 완료되었습니다.");
+ 			document.group2.submit();
+ 			
+ 		} else {   //취소
+ 			return false;
+ 		}
+ 	}
 
 	window.onload = function() {
 		buildCalendar();
@@ -204,7 +219,7 @@ String nowTime = sdf.format(now.getTime());
 						<div id="NewMatch">
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
-							<form action="../board/Match1.do" method="post">
+							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
 								<% if("".equals(id)) { %>
 								<p>로그인 후 이용할 수 있는 기능입니다.</p>
@@ -231,8 +246,8 @@ String nowTime = sdf.format(now.getTime());
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
 										<input type="submit" name="information1" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="match1" class="Mainbutton"
-											value="  매 치 하 기  " />
+										<input type="button" name="match1" class="Mainbutton"
+											value="  매 치 하 기  " onclick="matchCheck1()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"
@@ -245,7 +260,7 @@ String nowTime = sdf.format(now.getTime());
 								<p class="matchfont" id="vs">VS</p>
 							</div>
 							<!-- 그룹2 매칭 -->
-							<form action="../board/Match2.do" method="post">
+							<form action="../board/Match2.do" name="group2" method="post">
 							<div class="Match2" align="center">
 								<% if( secondGroupImg != null && !secondGroupImg.isEmpty() ) { 
 									for(int i = 0; i < secondGroupName.size(); i++) {
@@ -269,8 +284,8 @@ String nowTime = sdf.format(now.getTime());
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
 										<input type="submit" name="information2" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="match2" class="Mainbutton"
-											value="  매 치 하 기  " />
+										<input type="button" name="match2" class="Mainbutton"
+											value="  매 치 하 기  " onclick="matchCheck2()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"
