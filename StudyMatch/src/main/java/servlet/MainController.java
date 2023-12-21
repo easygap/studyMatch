@@ -239,4 +239,7 @@ public class MainController extends HttpServlet {
 		doGet(req, resp);
 	}
 
+	
+	/** 추후 개발 - 그룹이 가득 찼을 때 걸러주는 커리문을 위한 id1, id2, id3, id4, id5 갯수 체크 (count가 5 미만일 때만 추천) */
+	/** SELECT COUNT(ID1) + COUNT(ID2) + COUNT(ID3) + COUNT(ID4) + COUNT(ID5) AS total_count FROM MATCHGROUP WHERE group_num = '2231101' */
 }

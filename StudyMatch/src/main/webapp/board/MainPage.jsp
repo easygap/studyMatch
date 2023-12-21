@@ -38,6 +38,11 @@ for(int i = 0; i < secondGroupImg.size(); i++){
 }
 */
 
+String makeGroup = "";
+
+Object make = request.getAttribute("makeGroup");
+makeGroup = (String)make;
+
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
 String id = "";
@@ -64,6 +69,12 @@ String nowTime = sdf.format(now.getTime());
 <title>달력</title>
 <link rel="stylesheet" href="../css/MainPage.css">
 <script>
+	let make = <%out.print(makeGroup);%>;
+	
+	const make = "excess" => {
+		console.log('그룹 내 인원이 가득 찼습니다.');
+	};
+
 	window.onload = function() {
 		buildCalendar();
 	} // 웹 페이지가 로드되면 buildCalendar 실행
@@ -171,11 +182,9 @@ String nowTime = sdf.format(now.getTime());
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
 				<br /> <br /> <br />
-
 				<!-- import 끝 -->
 				<!-- 본문 -->
 				<div style="position: absolute; width: 1280px; height: 1300px">
-					<form action="../board/Match.do" method="post">
 						<div class="wrap"
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
@@ -195,8 +204,8 @@ String nowTime = sdf.format(now.getTime());
 						<div id="NewMatch">
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
+							<form action="../board/Match1.do" method="post">
 							<div class="Match1" align="center">
-
 								<% if("".equals(id)) { %>
 								<p>로그인 후 이용할 수 있는 기능입니다.</p>
 								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
@@ -230,10 +239,13 @@ String nowTime = sdf.format(now.getTime());
 											value="  그 룹 생 성  " />
 								<% } %>
 							</div>
+							<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
+							</form>
 							<div class="VS" align="center">
 								<p class="matchfont" id="vs">VS</p>
 							</div>
 							<!-- 그룹2 매칭 -->
+							<form action="../board/Match2.do" method="post">
 							<div class="Match2" align="center">
 								<% if( secondGroupImg != null && !secondGroupImg.isEmpty() ) { 
 									for(int i = 0; i < secondGroupName.size(); i++) {
@@ -265,10 +277,10 @@ String nowTime = sdf.format(now.getTime());
 											value="  그 룹 생 성  " />
 								<% } } %>
 							</div>
+							<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
+							</form>
 						</div>
-						<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
-						<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
-					</form>
+						
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
 						<table class="Calendar">
