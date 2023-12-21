@@ -93,6 +93,17 @@ String nowTime = sdf.format(now.getTime());
 	window.onload = function() {
 		buildCalendar();
 	} // 웹 페이지가 로드되면 buildCalendar 실행
+	
+	function openPopup() {
+        var popupUrl = 'MatchInformation.jsp'; // 팝업 창의 URL로 교체
+        var popupName = 'popupWindow';
+        var popupWidth = 1000;
+        var popupHeight = 700;
+        var leftPosition = (screen.width - popupWidth) / 2;
+        var topPosition = (screen.height - popupHeight) / 2;
+
+        window.open(popupUrl, popupName, 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition);
+    }
 
 	let nowMonth = new Date(); // 현재 달을 페이지를 로드한 날의 달로 초기화
 	let today = new Date(); // 페이지를 로드한 날짜를 저장
@@ -244,10 +255,16 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
+<<<<<<< HEAD
+										<input type="submit" name="information1" class="Mainbutton" onclick="openPopup()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="submit" name="match1" class="Mainbutton"
+											value="  매 치 하 기  " />
+=======
 										<input type="submit" name="information1" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="button" name="match1" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck1()" />
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"
