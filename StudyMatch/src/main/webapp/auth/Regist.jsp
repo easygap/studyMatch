@@ -8,9 +8,9 @@ String cp = request.getContextPath();
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">                                                                 
+<meta charset="UTF-8">
+<link href="../css/Regist.css" rel="stylesheet"/>                                                                 
 <title>Regist Page</title>
-<link href="../css/Regist.css" rel="stylesheet"/>
 <script src="../js/upload.js"></script>
 <script>
 
@@ -58,73 +58,85 @@ String cp = request.getContextPath();
 </script>
 </head>
 
-<body>
+<body id="registbody">
+<!-- 코드 시작 -->
+    <div class="d-flex" id="wrapper">
+        <!-- 네비게이션 바 -->
+        <jsp:include page="../layout/Main.jsp"></jsp:include>
+
+        <!-- 페이지 컨텐츠 -->
+        <div id="page-content-wrapper">
+            <!-- 네비게이션 바 -->
+            <jsp:include page="../layout/Navbar.jsp"></jsp:include>
+            <div class="container-fluid">
+                <br /> <br /> <br />
 	<form name="RegistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
-	<div align="center">
-	<h2>회원가입</h2>
-	<table>
+	<div align="center" id="registDiv">
+	<h2 id="registHead">회 원 가 입</h2>
+	<div id="table">
+	<table id="registTb">
 			<tr>
-				<td>ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
-				<td><input type="text" name="id"> <input type="button" name="idCheck" onclick="winopen()" class="RegistButton" value="중복확인"></td>
-				<td></td>
+				<td class="registTd">ㆍ 아 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</td>
+				<td><input type="text" name="id" class="registInput"> <input type="button" name="idCheck" id="idCheck" onclick="winopen()" class="RegistButton" value="중 복 확 인"></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 비 &nbsp;&nbsp;밀 &nbsp;&nbsp;&nbsp;번 &nbsp;&nbsp;&nbsp;호</td>
-				<td><input type="password" name="pw"></td>
-				<td></td>
+				<td class="registTd">ㆍ 비 &nbsp;&nbsp;&nbsp;밀 &nbsp;&nbsp;&nbsp;번 &nbsp;&nbsp;&nbsp;호</td>
+				<td><input type="password" name="pw" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 		
 			<tr>
-				<td>ㆍ 비 밀 번 호 확 인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="password" name="pwcheck"></td>
-				<td></td>
+				<td class="registTd">ㆍ 비 밀 번 호 확&nbsp;&nbsp;인 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td><input type="password" name="pwcheck" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
-				<td><input type="text" name="name"></td>
-				<td></td>
+				<td class="registTd">ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</td>
+				<td><input type="text" name="name" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
-				<td><input type="text" name="nickName"></td>
-				<td></td>
+				<td class="registTd">ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
+				<td><input type="text" name="nickName" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
-				<td><input type="text" name="birth"></td>
-				<td></td>
+				<td class="registTd">ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
+				<td><input type="text" name="birth" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 			 
 			<tr>
-				<td>ㆍ 연 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처</td>
-				<td><input type="text" name="phone" placeholder="'-' 포함하여 작성해 주세요."></td>
-				<td></td>
+				<td class="registTd">ㆍ 연 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처</td>
+				<td><input type="text" name="phone" class="registInput" placeholder="'-' 포함하여 작성해 주세요."></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 주 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
-				<td><input type="text" name="address" placeholder="'~동'까지 입력해 주세요."></td>
-				<td></td>
+				<td class="registTd">ㆍ 주 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
+				<td><input type="text" name="address" class="registInput" placeholder="'~동'까지 입력해 주세요."></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
-				<td><input type="text" name="Email"></td>
-				<td></td>
+				<td class="registTd">ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
+				<td><input type="text" name="Email" class="registInput"></td>
+				<td class="registTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 직 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업</td>
-				<td><input type="text" name="job"></td>
+				<td class="registTd">ㆍ 직 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업</td>
+				<td><input type="text" name="job" class="registInput"></td>
 				<td></td>
 			</tr>
 
 			<tr>
-				<td>ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
+				<td class="registTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
 				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
 				<td colspan="5">
 					<input type="checkbox" class="interest" name="interests" value="JAVA " /> JAVA
@@ -152,15 +164,23 @@ String cp = request.getContextPath();
 			</tr>
 
 			<tr>
-				<td>ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
-				<td><input type="file" name="img" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"></td>
-				<td></td>
+				<td class="registTd">ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
+				<td><input type="file" name="img" class="registInput" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"></td>
+				<td class="registTd"></td>
 			</tr>
 		</table>
+		</div>
 	<br/>
-	<button type="submit" name="signUp" class="RegistButton" >가입하기</button>
-	<button type="button" onclick="location.href='Login.jsp';" class="RegistButton" >로그인하기</button>
+	<button type="submit" name="signUp" id="RegistButton" >가입하기</button>
 	</div>
 </form>
+</div>
+</div>
+</div>
+ <!-- BootStrap javascript 사용 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </body>
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
