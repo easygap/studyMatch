@@ -180,7 +180,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (id != null) {
+								if (!"".equals(id)) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -200,9 +200,9 @@ String nowTime = sdf.format(now.getTime());
 								<% if("".equals(id)) { %>
 								<p>로그인 후 이용할 수 있는 기능입니다.</p>
 								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
-									<% if( !firstGroupImg.isEmpty() ) { 
+									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
 									for(int i = 0; i < firstGroupName.size(); i++) {
-										if(!firstGroupImg.get(i).isEmpty() || firstGroupImg.get(i) != null) { %>
+										if(firstGroupImg.get(i) != null && !firstGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=firstGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
@@ -235,9 +235,9 @@ String nowTime = sdf.format(now.getTime());
 							</div>
 							<!-- 그룹2 매칭 -->
 							<div class="Match2" align="center">
-								<% if( !secondGroupImg.isEmpty() ) { 
+								<% if( secondGroupImg != null && !secondGroupImg.isEmpty() ) { 
 									for(int i = 0; i < secondGroupName.size(); i++) {
-										if(!secondGroupImg.get(i).isEmpty() || secondGroupImg.get(i) != null) { %>
+										if(secondGroupImg.get(i) != null && !secondGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=secondGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
