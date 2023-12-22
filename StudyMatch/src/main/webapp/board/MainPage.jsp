@@ -256,13 +256,8 @@ String nowTime = sdf.format(now.getTime());
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
 										<input type="submit" name="information1" class="Mainbutton" onclick="openPopup()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-<<<<<<< HEAD
 										<input type="button" name="match1" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck1()" />
-=======
-										<input type="submit" name="match1" class="Mainbutton"
-											value="  매 치 하 기  " />
->>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"

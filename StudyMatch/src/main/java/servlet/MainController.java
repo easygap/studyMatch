@@ -203,7 +203,7 @@ public class MainController extends HttpServlet {
 		// jsp 페이지로 forward 이동
 		req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
 	}
-	
+
 	/** Group_num 생성을 위한 처리 - 현 로그인 계정의 관심사로 한자리수의 코드 부여 */
 	private String MemberInterest(String input) {
 
