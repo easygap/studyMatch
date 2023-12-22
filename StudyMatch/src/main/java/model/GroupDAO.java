@@ -195,15 +195,18 @@ public class GroupDAO extends DBConnPool {
 		List<String> groupName = new ArrayList<>();
 		List<String> groupImg = new ArrayList<>();
 		List<String> groupNum = new ArrayList<>();
-		String query = "SELECT m.NAME, m.IMG, Group_num "
-				+ "FROM member m "
-				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
+		String query = " SELECT mg.group_num, m.name, m.img "
+				+ "FROM matchgroup mg "
+				+ "JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
 				+ "WHERE mg.group_num IN ( "
 				+ "    SELECT group_num "
 				+ "    FROM matchgroup "
-				+ "    WHERE import = ? AND ADDRESS LIKE ? "
-				+ ") "
-				+ "AND m.id != ? ";
+				+ "    WHERE group_num IN ( "
+				+ "        SELECT group_num "
+				+ "        FROM matchgroup "
+				+ "        WHERE import = ? AND address LIKE ? "
+				+ "    )"
+				+ ") AND m.id != ? ";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -218,6 +221,7 @@ public class GroupDAO extends DBConnPool {
 	            groupImg.add(rs.getString("IMG"));
 	            groupNum.add(rs.getString("group_num"));
 	        }
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
