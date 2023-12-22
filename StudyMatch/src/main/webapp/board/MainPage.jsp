@@ -242,7 +242,7 @@ String nowTime = sdf.format(now.getTime());
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
 								
-								<% } } } else { %>
+								<% } } }  else { %>
 									<p>No images available</p>
 								<% } %>
 								<br />

@@ -74,6 +74,19 @@ public class JSFunction {
 				writer.print(script);
 			}catch(Exception e) {}
 		}
+		
+	// 메인페이지 상세보기 클릭 시 다시 원페이지로 백
+		public static void alertMainPage(HttpServletResponse resp) {
+			try {
+				resp.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = resp.getWriter();
+				String script = ""
+						+ "<script>"
+						+ " 	history.back();"
+						+ "</script>";
+				writer.print(script);
+			}catch(Exception e) {}
+		}
 
 	// 로그인 알람창
 	public static void alertLogin(HttpServletResponse resp, String msg, String url) {
@@ -88,4 +101,6 @@ public class JSFunction {
 			writer.print(script);
 		}catch(Exception e) {}
 	}
+
+
 }
