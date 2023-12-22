@@ -195,15 +195,18 @@ public class GroupDAO extends DBConnPool {
 		List<String> groupName = new ArrayList<>();
 		List<String> groupImg = new ArrayList<>();
 		List<String> groupNum = new ArrayList<>();
-		String query = "SELECT m.NAME, m.IMG, Group_num "
-				+ "FROM member m "
-				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
+		String query = " SELECT mg.group_num, m.name, m.img "
+				+ "FROM matchgroup mg "
+				+ "JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
 				+ "WHERE mg.group_num IN ( "
 				+ "    SELECT group_num "
 				+ "    FROM matchgroup "
-				+ "    WHERE import = ? AND ADDRESS LIKE ? "
-				+ ") "
-				+ "AND m.id != ? ";
+				+ "    WHERE group_num IN ( "
+				+ "        SELECT group_num "
+				+ "        FROM matchgroup "
+				+ "        WHERE import = ? AND address LIKE ? "
+				+ "    )"
+				+ ") AND m.id != ? ";
 		
 		try {
 			psmt = con.prepareStatement(query);
@@ -218,6 +221,12 @@ public class GroupDAO extends DBConnPool {
 	            groupImg.add(rs.getString("IMG"));
 	            groupNum.add(rs.getString("group_num"));
 	        }
+			
+			if(groupName.size() > 4) {
+				groupName.clear();
+                groupImg.clear();
+                groupNum.clear();
+			}			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -290,58 +299,58 @@ public class GroupDAO extends DBConnPool {
 	}
 	
 	/** 그룹 매치 전 해당 그룹 상세보기 */
-	public Map<String, List< String>> groupInformation(String groupnum) {
-		Map<String, List< String>> groupInfoList = new HashMap<>();
-		List<String> groupImg = new ArrayList<>();
-		List<String> groupName = new ArrayList<>();
-		List<String> groupBirth = new ArrayList<>();
-		List<String> groupJob = new ArrayList<>();
-		List<String> groupinterest1 = new ArrayList<>();
-		List<String> groupinterest2 = new ArrayList<>();
-		List<String> groupinterest3 = new ArrayList<>();
-		
-		String query=" SELECT"
-				+ "  m.img,"
-				+ "  m.name,"
-				+ "  m.birth,"
-				+ "  m.job,"
-				+ "  m.interest1,"
-				+ "  m.interest2,"
-				+ "  m.interest3,"
-				+ "  m.address "
-				+ " FROM matchgroup mg "
-				+ " JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
-				+ " WHERE mg.group_num = ?";
-		try {
-	        psmt = con.prepareStatement(query);
-	        psmt.setString(1, groupnum);
-	        rs = psmt.executeQuery();
+	   public Map<String, List< String>> groupInformation(String groupnum) {
+	      Map<String, List< String>> groupInfoList = new HashMap<>();
+	      List<String> groupImg = new ArrayList<>();
+	      List<String> groupName = new ArrayList<>();
+	      List<String> groupBirth = new ArrayList<>();
+	      List<String> groupJob = new ArrayList<>();
+	      List<String> groupinterest1 = new ArrayList<>();
+	      List<String> groupinterest2 = new ArrayList<>();
+	      List<String> groupinterest3 = new ArrayList<>();
+	      
+	      String query=" SELECT"
+	            + "  m.img,"
+	            + "  m.name,"
+	            + "  m.birth,"
+	            + "  m.job,"
+	            + "  m.interest1,"
+	            + "  m.interest2,"
+	            + "  m.interest3,"
+	            + "  m.address "
+	            + " FROM matchgroup mg "
+	            + " JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
+	            + " WHERE mg.group_num = ?";
+	      try {
+	           psmt = con.prepareStatement(query);
+	           psmt.setString(1, groupnum);
+	           rs = psmt.executeQuery();
 
-	        while (rs.next()) {
-	        	groupImg.add(rs.getString("img"));
-	            groupName.add(rs.getString("name"));
-	            groupBirth.add(rs.getString("birth"));
-	            groupJob.add(rs.getString("job"));
-	            groupinterest1.add(rs.getString("interest1"));
-	            groupinterest2.add(rs.getString("interest2"));
-	            groupinterest3.add(rs.getString("interest3"));
-	        }
-	        
-	        groupInfoList.put("groupImg", groupImg);
-	        groupInfoList.put("groupName", groupName);
-	        groupInfoList.put("groupBirth", groupBirth);
-	        groupInfoList.put("groupJob", groupJob);
-	        groupInfoList.put("groupinterest1", groupinterest1);
-	        groupInfoList.put("groupinterest2", groupinterest2);
-	        groupInfoList.put("groupinterest3", groupinterest3);
-			
-	        System.out.println("쿼리문에서 : " + groupInfoList);
-	    } catch (Exception e) {
-	        System.out.println("그룹 정보 불러오기 실패");
-	        e.printStackTrace();
-	    }
-	    return groupInfoList;
-	}
+	           while (rs.next()) {
+	              groupImg.add(rs.getString("img"));
+	               groupName.add(rs.getString("name"));
+	               groupBirth.add(rs.getString("birth"));
+	               groupJob.add(rs.getString("job"));
+	               groupinterest1.add(rs.getString("interest1"));
+	               groupinterest2.add(rs.getString("interest2"));
+	               groupinterest3.add(rs.getString("interest3"));
+	           }
+	           
+	           groupInfoList.put("groupImg", groupImg);
+	           groupInfoList.put("groupName", groupName);
+	           groupInfoList.put("groupBirth", groupBirth);
+	           groupInfoList.put("groupJob", groupJob);
+	           groupInfoList.put("groupinterest1", groupinterest1);
+	           groupInfoList.put("groupinterest2", groupinterest2);
+	           groupInfoList.put("groupinterest3", groupinterest3);
+	         
+	           System.out.println("쿼리문에서 : " + groupInfoList);
+	       } catch (Exception e) {
+	           System.out.println("그룹 정보 불러오기 실패");
+	           e.printStackTrace();
+	       }
+	       return groupInfoList;
+	   }
 	
 	/** DB 연결 해제 */
 	public void close() {
