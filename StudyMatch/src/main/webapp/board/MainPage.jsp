@@ -89,6 +89,24 @@ String nowTime = sdf.format(now.getTime());
  			return false;
  		}
  	}
+	
+	/** 그룹생성 버튼 눌렀을 때 */
+	function makeGroup() {
+ 		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
+ 			var url = "../board/MakeGroup.jsp";
+            var name = "makeGroup";
+            var _width = '500';
+            var _height = '300';
+             
+            // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+            var _left = Math.ceil(( window.screen.width - _width )/2);
+            var _top = Math.ceil(( window.screen.height - _height )/2); 
+           
+            window.open( url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top);
+ 		} else {   //취소
+ 			return false;
+ 		}
+ 	}
 
 	window.onload = function() {
 		buildCalendar();
@@ -215,7 +233,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (!"".equals(id)) {
+								if (!"".equals(id) || id != null) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -232,7 +250,7 @@ String nowTime = sdf.format(now.getTime());
 							<!-- 그룹1 매칭 -->
 							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
-								<% if("".equals(id)) { %>
+								<% if("".equals(id) || id == null) { %>
 								<p>로그인 후 이용할 수 있는 기능입니다.</p>
 								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
@@ -295,14 +313,16 @@ String nowTime = sdf.format(now.getTime());
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="button" name="match2" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck2()" />
+										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
+								</form>
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="make" class="Mainbutton"
-											value="  그 룹 생 성  " />
+										<input type="button" name="make" class="Mainbutton"
+											value="  그 룹 생 성  " onclick="makeGroup()" />
 								<% } } %>
+								
 							</div>
-							<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
-							</form>
+									
 						</div>
 						
 					<!-- 캘린더 -->
