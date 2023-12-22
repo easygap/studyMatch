@@ -198,15 +198,19 @@ public class GroupDAO extends DBConnPool {
 		String query = " SELECT mg.group_num, m.name, m.img "
 				+ "FROM matchgroup mg "
 				+ "JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
-				+ "WHERE mg.group_num IN ( "
+				+ "WHERE mg.group_num IN ("
 				+ "    SELECT group_num "
 				+ "    FROM matchgroup "
-				+ "    WHERE group_num IN ( "
+				+ "    WHERE group_num IN ("
 				+ "        SELECT group_num "
 				+ "        FROM matchgroup "
-				+ "        WHERE import = ? AND address LIKE ? "
+				+ "        WHERE import = ? AND address LIKE ? AND group_num NOT IN ("
+				+ "            SELECT group_num "
+				+ "            FROM matchgroup "
+				+ "            WHERE ? IN (id1, id2, id3, id4, id5)"
+				+ "        )"
 				+ "    )"
-				+ ") AND m.id != ? ";
+				+ ")";
 		
 		try {
 			psmt = con.prepareStatement(query);
