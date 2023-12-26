@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+#inforBody {
+  /* height: 100vh;
+  margin: 0; */
+  background-color: #F4EAE0;
+}
+
+#newmatch{
+	margin-left: 1em;
+	color: #5174BE;
+	
+	font-style: italic;
+	font-size: 2.5em;
+	font-weight: 900;
+}
+
+.Match1{
+  position: absolute;
+  width: 55em;
+  height: 92em;
+  top: 130px;
+  left: 3em;
+  background: rgba(241, 224, 207, 0.4);
+}
+
+.groupImg {
+  float: left;
+  display: flex;
+  flex-direction: column; /* 세로로 배치 */
+  align-items: center;
+  width: 320px;
+  margin-left: 2em;
+}
+
+.profile {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	overflow: hidden;
+	width: 17em;
+	/* 이미지 크기에 맞게 조절하세요 */
+	height: 17em;
+	/* 이미지 크기에 맞게 조절하세요 */
+	margin: 3em 3em 3em 3em;
+}
+
+.groupInfo {
+  width: 350px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; /* 세로로 배치 */
+  float: left;
+  margin: 2em 2em 3em 3em;
+}
+
+#info{
+	font-size: 1.2em;
+	font-weight: bold;
+}
