@@ -177,7 +177,7 @@ public class MemberDAO extends DBConnPool {
 	}
 
 	// 회원가입
-	public boolean signUp(MemberDTO dto) throws SQLException {
+	public boolean signUp(MemberDTO dto) {
 		
 		boolean result = false;
 		String query = "INSERT INTO member (id, name, birth, job, nickname, pwd, phone, email, address, interest1, interest2, interest3, img)"
@@ -312,7 +312,25 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("비밀번호 변경 진행 시 예외 발생!!!");
 		}
+	}
+	
+	// 내 프로필 사진 가져오기
+	public String MyProfile(String id) {
+		String query = "SELECT img FROM member WHERE id=?";
+		String MyProfile = null;
 		
+		try {
+			psmt = con.prepareStatement(query);
+	        psmt.setString(1, id);
+	        rs = psmt.executeQuery();
+			if(rs.next()) {
+				MyProfile = rs.getString("img");
+				System.out.println("MyProfile 쿼리문에서 : " + MyProfile);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return MyProfile;
 	}
 
 	// 자원 반납

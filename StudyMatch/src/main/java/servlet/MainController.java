@@ -73,6 +73,9 @@ public class MainController extends HttpServlet {
 			List<String> groupImgList1;
 			List<String> groupNameList2;
 			List<String> groupImgList2;
+			String firstGroup = "";
+			String secondGroup = "";
+		
 			
 			/** 현 로그인 계정의 관심사가 2개 이상일 경우 */
 			if (interest.size() != 1) {
@@ -98,6 +101,11 @@ public class MainController extends HttpServlet {
 				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList1 = groupArr1.get("groupImg");
 				
+				/** 첫번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum1 = groupArr1.get("groupNum");
+				if(!groupNum1.isEmpty())
+					firstGroup = groupNum1.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
 				req.setAttribute("imgGR1", groupImgList1);
@@ -111,6 +119,10 @@ public class MainController extends HttpServlet {
 				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList2 = groupArr2.get("groupImg");
 				
+				/** 두번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum2 = groupArr2.get("groupNum");
+				if(!groupNum2.isEmpty())
+					secondGroup = groupNum2.get(0);				
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
@@ -134,7 +146,12 @@ public class MainController extends HttpServlet {
 
 				/** 첫번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList1 = groupArr1.get("groupImg");
-	
+				
+				/** 첫번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum1 = groupArr1.get("groupNum");
+				if(!groupNum1.isEmpty())
+					firstGroup = groupNum1.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR1", groupNameList1);
 				req.setAttribute("imgGR1", groupImgList1);
@@ -152,6 +169,11 @@ public class MainController extends HttpServlet {
 				/** 두번째 그룹 매치 - 그룹원 프로필 사진 */
 				groupImgList2 = groupArr1.get("groupImg");
 				
+				/** 두번째 그룹 매치 - Group_Num 값 */
+				List<String> groupNum2 = groupArr2.get("groupNum");
+				if(!groupNum2.isEmpty())
+					secondGroup = groupNum2.get(0);
+				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
 				req.setAttribute("imgGR2", groupImgList2);
@@ -168,49 +190,25 @@ public class MainController extends HttpServlet {
 	        }
 	        **/	
 			}
+			dto.setFirstGroup(firstGroup);
+			dto.setSecondGroup(secondGroup);
 			dto.setCreateGroup(createGR);
 		}
 		
 		// request 영역에 DTO 담기
 		req.setAttribute("dto", dto);
+		
+		dao.close();
 				
 		// jsp 페이지로 forward 이동
 		req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
-	}
-	
-	/** Group_num 생성을 위한 처리 - 현 로그인 계정의 관심사로 한자리수의 코드 부여 */
-	private String MemberInterest(String input) {
-
-        String interestCode = "";
-
-        if ("영어".equals(input) || "일본어".equals(input) || "중국어".equals(input)) {
-            interestCode = "1";
-        } else if ("프론트/백엔드".equals(input) || "프로젝트".equals(input)) {
-            interestCode = "2";
-        } else if ("디자이너".equals(input) || "퍼블리셔".equals(input) || "프로젝트".equals(input)) {
-            interestCode = "3";
-        } else if ("엑셀/한글/워드".equals(input) || "회계".equals(input)) {
-            interestCode = "4";
-        } else if ("부동산".equals(input) || "투자".equals(input)) {
-            interestCode = "5";
-        } else {
-            // 다른 경우에 대한 처리
-            interestCode = "0"; // 혹은 다른 값을 지정하거나 필요에 따라 처리하세요.
-        }
-		return interestCode;
-	}
-	
-	/** group_num 생성을 위한 interest1 혹은 interest2 값을 난수로 준다. */
-	private String getRandomGroupNum(String groupNum1, String groupNum2) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(2); // 0 또는 1 생성
-
-        // 랜덤으로 선택된 번호에 따라 groupNum1 또는 groupNum2 반환
-        return (randomNumber == 0) ? groupNum1 : groupNum2;
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
 
+	
+	/** 추후 개발 - 그룹이 가득 찼을 때 걸러주는 커리문을 위한 id1, id2, id3, id4, id5 갯수 체크 (count가 5 미만일 때만 추천) */
+	/** SELECT COUNT(ID1) + COUNT(ID2) + COUNT(ID3) + COUNT(ID4) + COUNT(ID5) AS total_count FROM MATCHGROUP WHERE group_num = '2231101' */
 }

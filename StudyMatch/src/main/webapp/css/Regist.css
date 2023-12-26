@@ -1,19 +1,53 @@
 @charset "UTF-8";
 
-body {
-	background-color: #F4EAE0;
-}
-
-h1,
-h2, h3 {
+#registHead{
 	color: #5174BE;
-	font-weight: bold;
+	font-weight: 900;
+	font-size: 40px;
+	line-height: 130px;
 }
 
-.RegistButton, .IdCheck, .pwChange, .IdPwSearch, .myPage{
+#registDiv{
+	height: 850px;
+}
+
+#table{
+	height: 600px;
+}
+
+.registTd, .registInput, .interest{
+	margin: 5px;
+	border: none;
+}
+.registTd{
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.registInput{
+	width: 14.5em;
+	height: 1.6em;
+}
+
+#RegistButton, #idCheck{
 	background-color: #5174BE;
 	opacity: 0.6;
-	color: #ffffff;	
 	font-weight: bold;
+	color: #fff;
 	border-radius: 10px;
+	border: none;
+}
+
+#idCheck{
+	font-size: 14px;
+	width: 90px;
+	height: 28px;
+}
+
+#RegistButton{
+	text-align: center;
+	font-size: 20px;
+	width: 250px;
+	height: 34px;
+	letter-spacing: 20px;
 }

@@ -171,6 +171,11 @@
 		    <input type="hidden" name="depth" value="${article.depth}">
 		    <input type="hidden" name="pos" value="${article.pos}">
 		    <input type="hidden" name="groupId" value="${article.groupId}">
+<<<<<<< HEAD
+=======
+		    <div style="position: absolute; width:1280px; height:1300px">
+					<form action="../board/" method="post">
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 		    
 			<table border="2" width="500">
 				<tr>

@@ -10,37 +10,51 @@ request.setCharacterEncoding("UTF-8");
 
 Object groupNameList1 = request.getAttribute("nameGR1");
 List<String> firstGroupName = (List<String>) groupNameList1;
+/*
 for(int i = 0; i < firstGroupName.size(); i++){
 	System.out.println("First Group Name IN MainPage.jsp : " + firstGroupName.get(i));
 }
-
+*/
 Object groupImgList1 = request.getAttribute("imgGR1");
 List<String> firstGroupImg = (List<String>) groupImgList1;
+/*
 for(int i = 0; i < firstGroupImg.size(); i++){
 	System.out.println("First Group IMG IN MainPage.jsp : " + firstGroupImg.get(i));
 }
-
+*/
 Object groupNameList2 = request.getAttribute("nameGR2");
 List<String> secondGroupName = (List<String>) groupNameList2;
+/*
 for(int i = 0; i < secondGroupName.size(); i++){
 	System.out.println("Second Group Name IN MainPage.jsp : " + secondGroupName.get(i));
 }
+*/
 
 Object groupImgList2 = request.getAttribute("imgGR2");
 List<String> secondGroupImg = (List<String>) groupImgList2;
+/*
 for(int i = 0; i < secondGroupImg.size(); i++){
 	System.out.println("Second Group IMG IN MainPage.jsp : " + secondGroupImg.get(i));
 }
+*/
+
+String makeGroup = "";
+
+Object make = request.getAttribute("makeGroup");
+makeGroup = (String)make;
 
 GroupDTO dto = (GroupDTO) request.getAttribute("dto");
 
-System.out.println("그룹 생성 모드 : " + dto.getCreateGroup());
-
-
 String id = "";
+
+String firstGroup = ""; 
+
+String secondGroup = "";
 
 if (dto != null) {
 	id = dto.getId();
+	firstGroup = dto.getFirstGroup();
+	secondGroup = dto.getSecondGroup();
 }
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -54,10 +68,63 @@ String nowTime = sdf.format(now.getTime());
 <meta charset="UTF-8">
 <title>달력</title>
 <link rel="stylesheet" href="../css/MainPage.css">
-<script>
+<script>	
+	/** 그룹1 매치하기 버튼 눌렀을 때 */
+	function matchCheck1() {
+		if (confirm("그룹1에 가입하시겠습니까??") == true) {
+			alert("'그룹1' 가입이 완료되었습니다.");
+			document.group1.submit();
+		} else {
+			// 사용자가 취소를 선택한 경우 아무 동작 없음
+		}
+	}
+	
+	/** 그룹2 매치하기 버튼 눌렀을 때 */
+	function matchCheck2() {
+ 		if (confirm("그룹2에 가입하시겠습니까??") == true) {    //확인
+ 			alert("'그룹2' 가입이 완료되었습니다.");
+ 			document.group2.submit();
+ 			
+ 		} else {   //취소
+ 			return false;
+ 		}
+ 	}
+	
+	/** 그룹생성 버튼 눌렀을 때 */
+	function makeGroup() {
+ 		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
+ 			var url = "../board/MakeGroup.jsp";
+            var name = "makeGroup";
+            var _width = '500';
+            var _height = '300';
+             
+            // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+            var _left = Math.ceil(( window.screen.width - _width )/2);
+            var _top = Math.ceil(( window.screen.height - _height )/2); 
+           
+            window.open( url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top);
+ 		} else {   //취소
+ 			return false;
+ 		}
+ 	}
+
 	window.onload = function() {
 		buildCalendar();
 	} // 웹 페이지가 로드되면 buildCalendar 실행
+	
+	var groupNum1 = <%= firstGroup %>;
+	
+	function openPopup() {
+        var popupUrl = '../board/Match1.do'; // 팝업 창의 URL로 교체
+        var popupName = 'popupWindow';
+        var popupWidth = 1000;
+        var popupHeight = 700;
+        var leftPosition = (screen.width - popupWidth) / 2;
+        var topPosition = (screen.height - popupHeight) / 2;
+
+        window.open(popupUrl + '?firstGroup=' + groupNum1, popupName, 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition);
+        document.information1.submit();
+    }
 
 	let nowMonth = new Date(); // 현재 달을 페이지를 로드한 날의 달로 초기화
 	let today = new Date(); // 페이지를 로드한 날짜를 저장
@@ -162,16 +229,14 @@ String nowTime = sdf.format(now.getTime());
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
 				<br /> <br /> <br />
-
 				<!-- import 끝 -->
 				<!-- 본문 -->
 				<div style="position: absolute; width: 1280px; height: 1300px">
-					<form action="../board/" method="post">
 						<div class="wrap"
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (id != "") {
+								if (!"".equals(id) || id != null) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -186,46 +251,50 @@ String nowTime = sdf.format(now.getTime());
 						<div id="NewMatch">
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
+							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
-
-								<% if( !firstGroupImg.isEmpty() ) { 
+								<% if("".equals(id) || id == null) { %>
+								<p>로그인 후 이용할 수 있는 기능입니다.</p>
+								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
+									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
 									for(int i = 0; i < firstGroupName.size(); i++) {
-										if("null".equals(firstGroupImg.get(0))) { %>
+										if(firstGroupImg.get(i) != null && !firstGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=firstGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
 								
-								<% } } } else { %>
+								<% } } }  else { %>
 									<p>No images available</p>
 								<% } %>
 								<br />
-								<% if( !firstGroupName.isEmpty() ) { %>
+								<% if( firstGroupName != null && !firstGroupName.isEmpty() ) { %>
 								<p id="name">
 								<% 
 									for(int i = 0; i < firstGroupName.size(); i++) { %>
 									<%=firstGroupName.get(i)%>
-									<% if (i < firstGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+									<% if (i < firstGroupName.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %>
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-										<input type="submit" name="imformation" class="Mainbutton"
-											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="Match" class="Mainbutton"
-											value="  매 치 하 기  " />
+										<input type="button" name="information1" class="Mainbutton" onclick="openPopup()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="button" name="match1" class="Mainbutton" value="  매 치 하 기  " onclick="matchCheck1()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="Match" class="Mainbutton"
+										<input type="submit" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " />
 								<% } %>
 							</div>
+							<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
+							</form>
 							<div class="VS" align="center">
 								<p class="matchfont" id="vs">VS</p>
 							</div>
 							<!-- 그룹2 매칭 -->
+							<form action="../board/Match2.do" name="group2" method="post">
 							<div class="Match2" align="center">
-								<% if( !secondGroupImg.isEmpty() ) { 
+								<% if( secondGroupImg != null && !secondGroupImg.isEmpty() ) { 
 									for(int i = 0; i < secondGroupName.size(); i++) {
-										if("null".equals(secondGroupImg.get(0))) { %>
+										if(secondGroupImg.get(i) != null && !secondGroupImg.get(i).isEmpty()) { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/<%=secondGroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% 	} else { %>
 											<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
@@ -234,27 +303,31 @@ String nowTime = sdf.format(now.getTime());
 									<p>No images available</p>
 								<% } %>
 								<br />
-								<% if( !secondGroupName.isEmpty() ) { %>
+								<% if( secondGroupName != null && !secondGroupName.isEmpty() ) { %>
 								<p id="name">
 								<% 
 									for(int i = 0; i < secondGroupName.size(); i++) { %>
 									<%=secondGroupName.get(i)%>
-									<% if (i < secondGroupName.size() - 1) { %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <% } %>
+									<% if (i < secondGroupName.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %>
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
-										<input type="submit" name="imformation" class="Mainbutton"
+										<input type="submit" name="information2" class="Mainbutton"
 											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="Match" class="Mainbutton"
-											value="  매 치 하 기  " />
+										<input type="button" name="match2" class="Mainbutton"
+											value="  매 치 하 기  " onclick="matchCheck2()" />
+										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
+								</form>
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="Match" class="Mainbutton"
-											value="  그 룹 생 성  " />
-								<% } %>
+										<input type="button" name="make" class="Mainbutton"
+											value="  그 룹 생 성  " onclick="makeGroup()" />
+								<% } } %>
+								
 							</div>
+									
 						</div>
-					</form>
+						
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
 						<table class="Calendar">
