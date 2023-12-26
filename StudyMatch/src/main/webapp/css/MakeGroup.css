@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+body{
+	background-color: #F4EAE0;
+}
+
+#makeHead{
+	color: #5174BE;
+	font-weight: 900;
+	font-size: 2.5em;
+	line-height: 3em;
+}
+
+#makeDiv{
+	height: 1em;
+}
+
+#table{
+	height: 20em;
+}
+
+.makeTd, .makeInput, .interest{
+	margin: 0.31em;
+	border: none;
+}
+.makeTd{
+	font-size: 1.06em;
+	font-weight: 600;
+}
+
+.makeInput{
+	width: 14.5em;
+	height: 1.6em;
+}
+
+#MakeButton, #makeCheck{
+	background-color: #5174BE;
+	opacity: 0.6;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 0.63em;
+	border: none;
+}
+
+#makeCheck{
+	font-size: 0.88em;
+	width: 5.63em;
+	height: 1.75em;
+}
+
+#MakeButton{
+	text-align: center;
+	font-size: 1.25em;
+	width: 15.63em;
+	height: 2.13em;
+	letter-spacing: 1.25em;
+}

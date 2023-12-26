@@ -54,7 +54,7 @@ public class SecondGroupMatchController extends HttpServlet {
 			dao.groupJoin(groupNum2, sessionID, total_Count);
 			
 			dao.close();
-			req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
+			req.getRequestDispatcher("../board/Main.do").forward(req, resp);
 		}
 	}
 }

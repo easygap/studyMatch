@@ -193,11 +193,22 @@ public class GroupDAO extends DBConnPool {
 		List<String> groupName = new ArrayList<>();
 		List<String> groupImg = new ArrayList<>();
 		List<String> groupNum = new ArrayList<>();
-		String query = "SELECT m.NAME, m.IMG, Group_num " + "FROM member m "
-				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
-				+ "WHERE mg.group_num IN ( " + "    SELECT group_num " + "    FROM matchgroup "
-				+ "    WHERE import = ? AND ADDRESS LIKE ? " + ") " + "AND m.id != ? ";
-
+		String query = " SELECT mg.group_num, m.name, m.img "
+				+ "FROM matchgroup mg "
+				+ "JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
+				+ "WHERE mg.group_num IN ("
+				+ "    SELECT group_num "
+				+ "    FROM matchgroup "
+				+ "    WHERE group_num IN ("
+				+ "        SELECT group_num "
+				+ "        FROM matchgroup "
+				+ "        WHERE import = ? AND address LIKE ? AND group_num NOT IN ("
+				+ "            SELECT group_num "
+				+ "            FROM matchgroup "
+				+ "            WHERE ? IN (id1, id2, id3, id4, id5)"
+				+ "        )"
+				+ "    )"
+				+ ")";
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
@@ -207,11 +218,18 @@ public class GroupDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				groupName.add(rs.getString("name"));
-				groupImg.add(rs.getString("IMG"));
-				groupNum.add(rs.getString("group_num"));
-			}
-		} catch (Exception e) {
+	            groupName.add(rs.getString("name"));
+	            groupImg.add(rs.getString("IMG"));
+	            groupNum.add(rs.getString("group_num"));
+	        }
+			
+			if(groupName.size() > 4) {
+				groupName.clear();
+                groupImg.clear();
+                groupNum.clear();
+			}			
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		firstGroup.put("groupName", groupName);
@@ -280,16 +298,16 @@ public class GroupDAO extends DBConnPool {
 	}
 
 	/** 그룹 매치 전 해당 그룹 상세보기 */
-	public Map<String, List<String>> groupInformation(String groupnum) {
-		Map<String, List<String>> groupInfoList = new HashMap<>();
-		List<String> groupImg = new ArrayList<>();
-		List<String> groupName = new ArrayList<>();
-		List<String> groupBirth = new ArrayList<>();
-		List<String> groupJob = new ArrayList<>();
-		List<String> groupinterest1 = new ArrayList<>();
-		List<String> groupinterest2 = new ArrayList<>();
-		List<String> groupinterest3 = new ArrayList<>();
-
+	   public Map<String, List< String>> groupInformation(String groupnum) {
+	      Map<String, List< String>> groupInfoList = new HashMap<>();
+	      List<String> groupImg = new ArrayList<>();
+	      List<String> groupName = new ArrayList<>();
+	      List<String> groupBirth = new ArrayList<>();
+	      List<String> groupJob = new ArrayList<>();
+	      List<String> groupinterest1 = new ArrayList<>();
+	      List<String> groupinterest2 = new ArrayList<>();
+	      List<String> groupinterest3 = new ArrayList<>();
+	      
 		String query = " SELECT" + "  m.img," + "  m.name," + "  m.birth," + "  m.job," + "  m.interest1,"
 				+ "  m.interest2," + "  m.interest3," + "  m.address " + " FROM matchgroup mg "
 				+ " JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) " + " WHERE mg.group_num = ?";
@@ -323,7 +341,7 @@ public class GroupDAO extends DBConnPool {
 		}
 		return groupInfoList;
 	}
-
+	      
 	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
