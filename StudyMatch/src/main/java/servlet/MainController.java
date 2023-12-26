@@ -203,37 +203,6 @@ public class MainController extends HttpServlet {
 		// jsp 페이지로 forward 이동
 		req.getRequestDispatcher("../board/MainPage.jsp").forward(req, resp);
 	}
-	
-	/** Group_num 생성을 위한 처리 - 현 로그인 계정의 관심사로 한자리수의 코드 부여 */
-	private String MemberInterest(String input) {
-
-        String interestCode = "";
-
-        if ("영어".equals(input) || "일본어".equals(input) || "중국어".equals(input)) {
-            interestCode = "1";
-        } else if ("프론트/백엔드".equals(input) || "프로젝트".equals(input)) {
-            interestCode = "2";
-        } else if ("디자이너".equals(input) || "퍼블리셔".equals(input) || "프로젝트".equals(input)) {
-            interestCode = "3";
-        } else if ("엑셀/한글/워드".equals(input) || "회계".equals(input)) {
-            interestCode = "4";
-        } else if ("부동산".equals(input) || "투자".equals(input)) {
-            interestCode = "5";
-        } else {
-            // 다른 경우에 대한 처리
-            interestCode = "0"; // 혹은 다른 값을 지정하거나 필요에 따라 처리하세요.
-        }
-		return interestCode;
-	}
-	
-	/** group_num 생성을 위한 interest1 혹은 interest2 값을 난수로 준다. */
-	private String getRandomGroupNum(String groupNum1, String groupNum2) {
-        Random random = new Random();
-        int randomNumber = random.nextInt(2); // 0 또는 1 생성
-
-        // 랜덤으로 선택된 번호에 따라 groupNum1 또는 groupNum2 반환
-        return (randomNumber == 0) ? groupNum1 : groupNum2;
-	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
