@@ -109,7 +109,6 @@ public class MemberDAO extends DBConnPool {
 			e.printStackTrace();
 			System.out.println("*** MemberDAO.getMemberDTO 회원 정보 조회 중 예외 발생 ***");
 		}
-		
 		return dto;
 	}
 

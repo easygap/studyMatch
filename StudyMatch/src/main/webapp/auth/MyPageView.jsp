@@ -11,7 +11,7 @@
 </script>
 </head>
 <body>
-<form name="MyPageFrm" method="post" action="../auth/MyPage.do" onsubmit="return validateForm(this);">
+<form name="MyPageFrm" method="post" action="../auth/Mypage.do" onsubmit="return validateForm(this);">
 <div align="center">
 <h2>마이페이지</h2>
 		<table>

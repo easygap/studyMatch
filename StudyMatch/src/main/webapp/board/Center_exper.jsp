@@ -161,11 +161,7 @@
     </head>
     <body>
     <div class="container">
-    <table>
-    <tr>
-    <td>
-    <table>
-    <tr>
+  
     <div class="card-write">
     <div class="myinfo">
  
@@ -202,8 +198,6 @@
 		    </td> 
 
 
-                       </td>
-            
                     </tr>
       
           <tbody>          
@@ -218,7 +212,7 @@
           </td>
 	      </tr>  
 	      </tbody>
-	     </div> 
+	
 			</table>
 		</div>
 	</form>
