@@ -10,10 +10,8 @@ String cp = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <link href="../css/MakeGroup.css" rel="stylesheet"/>                                                                 
-<title>Regist Page</title>
-<script src="../js/upload.js"></script>
+<title>그룹 생성</title>
 <script>
-
 	function validateForm(form) {
 
 		var Pw = form.pw.value;
@@ -29,39 +27,36 @@ String cp = request.getContextPath();
 		}
 	}
 
-	function winopen() {
-			window.open("../auth/makeCheck.do", "", "width=500, height=300");
-	}
 </script>
 </head>
 
 <body id="registbody">
-	<form name="RegistFrm" method="post" enctype="multipart/form-data" action="../board/makeGroup.do" onsubmit="return validateForm(this);">
+	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do" onsubmit="return validateForm(this);">
 	<div align="center" id="makeDiv">
 	<h2 id="makeHead">그 룹 생 성</h2>
 	<div id="table">
 	<table id="registTb">
 			<tr>
 				<td class="makeTd">ㆍ 그 &nbsp;&nbsp;&nbsp;룹 &nbsp;&nbsp;&nbsp;원 &nbsp;&nbsp;&nbsp;1</td>
-				<td><input type="text" name="group1" class="makeInput"> <input type="button" name="makeCheck" id="makeCheck" onclick="winopen()" class="MakeButton" value="중 복 확 인"></td>
+				<td><input type="text" name="group1" class="makeInput"></td>
 				<td class="makeTd"></td>
 			</tr>
 			
 			<tr>
 				<td class="makeTd">ㆍ 그 &nbsp;&nbsp;&nbsp;룹 &nbsp;&nbsp;&nbsp;원 &nbsp;&nbsp;&nbsp;2</td>
-				<td><input type="password" name="group2" class="makeInput"></td>
+				<td><input type="text" name="group2" class="makeInput"></td>
 				<td class="makeTd"></td>
 			</tr>
 		
 			<tr>
 				<td class="makeTd">ㆍ 그 &nbsp;&nbsp;&nbsp;룹 &nbsp;&nbsp;&nbsp;원 &nbsp;&nbsp;&nbsp;3</td>
-				<td><input type="password" name="group3" class="makeInput"></td>
+				<td><input type="text" name="group3" class="makeInput"></td>
 				<td class="makeTd"></td>
 			</tr>
 			
 			<tr>
 				<td class="makeTd">ㆍ 그 &nbsp;&nbsp;&nbsp;룹 &nbsp;&nbsp;&nbsp;원 &nbsp;&nbsp;&nbsp;4</td>
-				<td><input type="password" name="group4" class="makeInput"></td>
+				<td><input type="text" name="group4" class="makeInput"></td>
 				<td class="makeTd"></td>
 			</tr>
 			

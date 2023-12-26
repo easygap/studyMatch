@@ -355,6 +355,32 @@ public class GroupDAO extends DBConnPool {
 	       }
 	       return groupInfoList;
 	   }
+	   
+	   public int checkId(String id) {
+		   int idCheck = 0;
+		   
+		   String query = "select * from member where ID=?"; 
+		   
+		   try {
+			   psmt = con.prepareStatement(query); 
+			   psmt.setString(1, id); 
+			   System.out.println("DAO 내부) DB에 검색하는 id값(input에 쓴 값) : "+ id); 
+			   
+			   rs = psmt.executeQuery();
+			   
+			   if(rs.next() || id.equals("")) {
+				   idCheck = 0;
+				   System.out.println("DAO 내부) id 확인됨");
+			   } else {
+				   idCheck = 1;
+				   System.out.println("DAO 내부) id 확인 X");
+			   }
+		   } catch (Exception e) {
+			   e.printStackTrace();
+		   } 
+		   return idCheck;
+	   }
+
 	
 	/** DB 연결 해제 */
 	public void close() {
