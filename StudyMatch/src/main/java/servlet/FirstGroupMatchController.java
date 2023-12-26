@@ -32,8 +32,6 @@ public class FirstGroupMatchController extends HttpServlet {
 
 		String groupNum1 = req.getParameter("firstGroup");
 
-		System.out.println("몰라 인마! 너가 알아서 좀 해 인마! 흥칫뿡 groupNum : " + groupNum1);
-
 		List<String> groupNameList;
 		List<String> groupImgList;
 		List<String> groupBirthList;
@@ -63,10 +61,6 @@ public class FirstGroupMatchController extends HttpServlet {
 			req.setAttribute("interest2", groupInterest2List);
 			req.setAttribute("interest3", groupInterest3List);
 
-			System.out.println("그룹 매치에서 groupImgList : " + groupImgList + " / groupNameList : " + groupNameList
-					+ " / groupAgeList : " + groupAgeList + " / groupJobList : " + groupJobList
-					+ " / groupInterest1List : " + groupInterest1List + " / groupInterest2List : " + groupInterest2List
-					+ " / groupInterest3List : " + groupInterest3List + ", groupNum : " + groupNum1);
 			dao.close();
 			req.getRequestDispatcher("../board/MatchInformation.jsp").forward(req, resp);
 		}
