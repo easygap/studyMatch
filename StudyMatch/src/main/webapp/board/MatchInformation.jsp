@@ -17,8 +17,9 @@ List<String> GroupImg = (List<String>) groupImgList;
 Object groupNameList = request.getAttribute("name");
 List<String> GroupName = (List<String>) groupNameList;
 
-Object groupBirthList = request.getAttribute("birth");
-List<String> GroupBirth = (List<String>) groupBirthList;
+Object groupAgeList = request.getAttribute("Age");
+List<String> GroupAge = (List<String>) groupAgeList;
+
 
 Object groupJobList = request.getAttribute("job");
 List<String> GroupJob = (List<String>) groupJobList;
@@ -32,7 +33,8 @@ List<String> GroupInterest2 = (List<String>) groupInterest2List;
 Object groupInterest3List = request.getAttribute("interest3");
 List<String> GroupInterest3 = (List<String>) groupInterest3List;
 
-System.out.println(" JSP에서 GroupImg : " + GroupImg + " / GroupName : " + GroupName + " / GroupBirth : " + GroupBirth
+
+System.out.println(" JSP에서 GroupImg : " + GroupImg + " / GroupName : " + GroupName + " / GroupAge : " + GroupAge
 		+ " / GroupJob : " + GroupJob + " / GroupInterest1 : " + GroupInterest1 + " / GroupInterest2 : "
 		+ GroupInterest2 + " / GroupInterest3 : " + GroupInterest3);
 %>
@@ -42,43 +44,49 @@ System.out.println(" JSP에서 GroupImg : " + GroupImg + " / GroupName : " + Gro
 <meta charset="UTF-8">
 <title>매칭 정보</title>
 <script>
-
+	
 </script>
-<link rel="stylesheet" href="../css/MainPage.css">
+<link rel="stylesheet" href="../css/MatchInfor.css">
 </head>
-<body>
-	<form action="/Match/FirstGroupInfor.do" name="group" method="post">
+<body id="inforBody">
+	<form action="/board/Match1.do" name="group" method="post">
 		<!-- import 끝 -->
 		<!-- 본문 -->
-		<div style="position: absolute; width: 1280px; height: 1300px">
-			<div class="wrap"
-				style="position: relative; width: 1280px; height: 100px;">
+		<div>
+			<div class="wrap">
 				<p class="matchfont" id="newmatch">매칭 정보</p>
-				<div class="jumbotron" style="text-align: left;">
-					<div id="NewMatch">
-						<p class="lead">프로필</p>
+				<div class="jumbotron">
+					<div id="Match1Group"> 
 						<!-- 그룹1 매칭 -->
-						<div class="Match1" align="center">
-							<p>이름</p>
-							<% if (GroupImg != null && !GroupImg.isEmpty()) {
-								for (int i = 0; i < GroupImg.size(); i++) {
-									if (GroupImg.get(i) != null && !GroupImg.get(i).isEmpty()) { %>
-							<img src="${pageContext.request.contextPath}/MyProfile/<%=GroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
-							<% } else { %>
-							<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
-
-							<% } } } else { %>
-							<p>No images available</p>
-							<% } %>
-							<br />
-							<% if (GroupName != null && !GroupName.isEmpty()) { %>
-							<p id="name">
-								<% for (int i = 0; i < GroupName.size(); i++) { %>
-								<%=GroupName.get(i)%>
-								<% if (i < GroupName.size() - 1) { %>
-								<%-- 마지막 요소가 아닌 경우만 공백 추가 --%>
-								<% } } } %>
-							</p>
+						<div class="Match1">
+							<div class="groupImg">
+								<% if (GroupImg != null && !GroupImg.isEmpty()) {
+									for (int i = 0; i < GroupImg.size(); i++) {
+										if (GroupImg.get(i) != null && !GroupImg.get(i).isEmpty()) { %>
+								<img src="${pageContext.request.contextPath}/MyProfile/<%=GroupImg.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% } else { %>
+								<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								<% } } } else { %>
+								<p>No images available</p>
+								<% } %>
+							</div>
+							<div class="groupInfo">
+								<div id="info">
+									<p class="Info">
+									<% for (int i = 0; i < GroupName.size(); i++) { %>
+										<% if (GroupName != null && !GroupName.isEmpty()) { %>
+										<br/>
+										성함 : <%=GroupName.get(i)%><br/> <br/>
+										나이 : <%=GroupAge.get(i)%>대<br/> <br/>
+										직업 : <%=GroupJob.get(i)%><br/> <br/>
+										관심사 : <%=GroupInterest1.get(i)%> / <%=GroupInterest2.get(i)%> / <%=GroupInterest3.get(i)%><br/><br/><br/><br/><br/><br/><br/>
+										<%-- 마지막 요소가 아닌 경우만 공백 추가 --%>
+									</p>
+									<% } else { %>
+									<p class="Info">전달된 이름 정보가 없음.</p>
+									<% } }%> 
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
