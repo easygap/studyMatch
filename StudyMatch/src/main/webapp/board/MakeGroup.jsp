@@ -4,6 +4,9 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
+Object Address = request.getAttribute("address");
+String address = (String)Address;
+System.out.println("주소값은 : " + address);
 %>
 <!DOCTYPE html>
 <html>
@@ -26,12 +29,24 @@ String cp = request.getContextPath();
 			RegistFrm.id.focus();
 		}
 	}
+	
+	function checkOnlyOne(element) {
+		  
+		  const checkboxes 
+		      = document.getElementsByName("interests");
+		  
+		  checkboxes.forEach((cb) => {
+		    cb.checked = false;
+		  })
+		  
+		  element.checked = true;
+		}
 
 </script>
 </head>
 
 <body id="registbody">
-	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do" onsubmit="return validateForm(this);">
+	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do?address=<%=address%>" onsubmit="return validateForm(this);">
 	<div align="center" id="makeDiv">
 	<h2 id="makeHead">그 룹 생 성</h2>
 	<div id="table">
@@ -63,28 +78,28 @@ String cp = request.getContextPath();
 
 			<tr>
 				<td class="makeTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
-				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
+				</td>
 				<td colspan="5">
-					<input type="checkbox" class="interest" name="interests" value="JAVA " /> JAVA
-					<input type="checkbox" class="interest" name="interests" value="PYTHON"> PYTHON
-					<input type="checkbox" class="interest" name="interests" value="C"> C
-					<input type="checkbox" class="interest" name="interests" value="C++"> C++ <br/>
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="JAVA" /> JAVA
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="PYTHON"> PYTHON
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="C"> C
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="C++"> C++ <br/>
 					
-					<input type="checkbox" class="interest" name="interests" value="영어"> 영어
-					<input type="checkbox" class="interest" name="interests" value="일본어"> 일본어
-					<input type="checkbox" class="interest" name="interests" value="중국어"> 중국어 <br/>
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="영어"> 영어
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="일본어"> 일본어
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="중국어"> 중국어 <br/>
 			
-					<input type="checkbox" class="interest" name="interests" value="UI/UX"> UI/UX
-					<input type="checkbox" class="interest" name="interests" value="JSP"> JSP
-					<input type="checkbox" class="interest" name="interests" value="디자이너"> 디자이너
-					<input type="checkbox" class="interest" name="interests" value="퍼블리셔"> 퍼블리셔
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="UI/UX"> UI/UX
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="JSP"> JSP
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="디자이너"> 디자이너
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="퍼블리셔"> 퍼블리셔
 					<br/>
 					
-					<input type="checkbox" class="interest" name="interests" value="엑셀/한글/워드"> 엑셀/한글/워드
-					<input type="checkbox" class="interest" name="interests" value="회계"> 회계 <br/>
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="엑셀/한글/워드"> 엑셀/한글/워드
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="회계"> 회계 <br/>
 				
-					<input type="checkbox" class="interest" name="interests" value="부동산"> 부동산
-					<input type="checkbox" class="interest" name="interests" value="투자/주식"> 투자/주식 <br/>
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="부동산"> 부동산
+					<input type="checkbox" class="interest" name="interests" onclick='checkOnlyOne(this)' value="투자/주식"> 투자/주식 <br/>
 					<br/>
 				</td>
 			</tr>

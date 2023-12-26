@@ -34,7 +34,10 @@ public class FirstGroupMatchController extends HttpServlet {
 
 		String newMatching1 = req.getParameter("match1");
 
-		String groupNum1 = "";
+		String groupNum1 = req.getParameter("groupNum1");
+		
+		System.out.println("몰라 인마! 너가 알아서 좀 해 인마! 흥칫뿡 : " + information1 + " / "+ groupNum1);
+		
 		List<String> groupNameList;
 		List<String> groupImgList;
 		List<String> groupBirthList;
@@ -45,32 +48,36 @@ public class FirstGroupMatchController extends HttpServlet {
 
 		/** 사용자가 1번 그룹의 '상 세 정 보'를 눌렀을 때 */
 		if (information1 != null) {
-			groupNum1 = req.getParameter("groupNum1");
-			Map<String, List<String>> information = dao.groupInformation(groupNum1);
+			if (groupNum1 != null) {
+				Map<String, List<String>> information = dao.groupInformation(groupNum1);
 
-			groupImgList = information.get("groupImg");
-			groupNameList = information.get("groupName");
-			groupBirthList = information.get("groupBirth");
-			groupJobList = information.get("groupJob");
-			groupInterest1List = information.get("groupinterest1");
-			groupInterest2List = information.get("groupinterest2");
-			groupInterest3List = information.get("groupinterest3");
+				groupImgList = information.get("groupImg");
+				groupNameList = information.get("groupName");
+				groupBirthList = information.get("groupBirth");
+				groupJobList = information.get("groupJob");
+				groupInterest1List = information.get("groupinterest1");
+				groupInterest2List = information.get("groupinterest2");
+				groupInterest3List = information.get("groupinterest3");
+				if (groupImgList != null && groupNameList != null && groupBirthList != null && groupJobList != null
+						&& groupInterest1List != null && groupInterest2List != null && groupInterest3List != null) {
+					req.setAttribute("img", groupImgList);
+					req.setAttribute("name", groupNameList);
+					req.setAttribute("birth", groupBirthList);
+					req.setAttribute("job", groupJobList);
+					req.setAttribute("interest1", groupInterest1List);
+					req.setAttribute("interest2", groupInterest2List);
+					req.setAttribute("interest3", groupInterest3List);
 
-			req.setAttribute("img", groupImgList);
-			req.setAttribute("name", groupNameList);
-			req.setAttribute("birth", groupBirthList);
-			req.setAttribute("job", groupJobList);
-			req.setAttribute("interest1", groupInterest1List);
-			req.setAttribute("interest2", groupInterest2List);
-			req.setAttribute("interest3", groupInterest3List);
-
-			System.out.println("그룹 매치에서 groupImgList : " + groupImgList + " / groupNameList : " + groupNameList
-					+ " / groupBirthList : " + groupBirthList + " / groupJobList : " + groupJobList
-					+ " / groupInterest1List : " + groupInterest1List + " / groupInterest2List : " + groupInterest2List
-					+ " / groupInterest3List : " + groupInterest3List + ", groupNum : " + groupNum1);
-
+					System.out.println("그룹 매치에서 groupImgList : " + groupImgList + " / groupNameList : " + groupNameList
+							+ " / groupBirthList : " + groupBirthList + " / groupJobList : " + groupJobList
+							+ " / groupInterest1List : " + groupInterest1List + " / groupInterest2List : "
+							+ groupInterest2List + " / groupInterest3List : " + groupInterest3List + ", groupNum : "
+							+ groupNum1);
+				}
+			}
 			dao.close();
-			JSFunction.alertMainPage(resp);
+			req.getRequestDispatcher("../board/MatchInformation.jsp").forward(req, resp);
+//			JSFunction.alertMainPage(resp);
 		} else { /** 사용자가 1번 그룹의 '매 치 하 기' 를 눌렀을 때 */
 			groupNum1 = req.getParameter("groupNum1");
 			System.out.println("그룹 매치에서 information1 : " + information1 + ", groupNum : " + groupNum1);
