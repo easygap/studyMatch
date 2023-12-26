@@ -32,11 +32,6 @@ List<String> GroupInterest2 = (List<String>) groupInterest2List;
 
 Object groupInterest3List = request.getAttribute("interest3");
 List<String> GroupInterest3 = (List<String>) groupInterest3List;
-
-
-System.out.println(" JSP에서 GroupImg : " + GroupImg + " / GroupName : " + GroupName + " / GroupAge : " + GroupAge
-		+ " / GroupJob : " + GroupJob + " / GroupInterest1 : " + GroupInterest1 + " / GroupInterest2 : "
-		+ GroupInterest2 + " / GroupInterest3 : " + GroupInterest3);
 %>
 <!DOCTYPE html>
 <html>
