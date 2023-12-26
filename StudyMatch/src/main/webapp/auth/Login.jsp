@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
 function validateForm(form){
 	if(form.id.value == ""){
@@ -62,35 +63,47 @@ function validateForm(form){
 					window.Kakao.Auth.login({
 						scope: 'profile_nickname, account_email, name, birthyear, birthday, phone_number, shipping_address',
 						success: function(authObj) {
-							console.log(authObj);
-							Kakao.Auth.setAccessToken(authObj.access_token);
-							window.Kakao.API.request({
-								url:'/v2/user/me',
-								success: function(res) {
-									const kakao_account = res.kakao_account;
-				                    var nickname = kakao_account.profile.nickname;
-				                    var email = kakao_account.email;
-				                    var name = kakao_account.name;
-				                    var birthyear = kakao_account.birthyear;
-				                    var birthday = kakao_account.birthday;
-				                    var birth = birthyear + birthday;
-				                    var phone_number = kakao_account.phone_number;
-				                    var shipping_address = kakao_account.shipping_address;
-				                    
-									alert('카카오 로그인 성공');
-									window.Kakao.Auth.authorize({
-									    redirectUri: 'http://localhost:8081/StudyMatch/board/MainPage.jsp',
-									});
-				                    console.log('로그인 계정:', email);
-				                    console.log('이름:', name);
-				                    console.log('닉네임: ', nickname);
-				                    console.log('생년월일: ', birth);
-				                    console.log('핸드폰:', phone_number);
-				                    console.log('주소:', shipping_address);
-								}
+							$.ajax({
+							    type: 'POST',
+							    url: '../auth/KakaoLogin.do',
+							    contentType: 'application/json; charset=utf-8',
+							    data: JSON.stringify({
+							        access_token: authObj.access_token
+							    }),
+							    dataType: 'json',
+							    success: function (response) {
+							        console.log('서버 응답:', response);
+							        alert('카카오 로그인 성공');
+							    },
+							    error: function (error) {
+							        console.error('서버 요청 실패:', error);
+							    }
 							});
+							window.Kakao.API.request({
+				                url: '/v2/user/me',
+				                success: function (res) {
+				                    handleKakaoUserInfo(res.kakao_account);
+				                }
+				            });
 						}
-					});
+				    });
+				function handleKakaoUserInfo(kakao_account) {
+				    const nickname = kakao_account.profile.nickname;
+				    const email = kakao_account.email;
+				    const name = kakao_account.name;
+				    const birthyear = kakao_account.birthyear;
+				    const birthday = kakao_account.birthday;
+				    const birth = birthyear + birthday;
+				    const phone = kakao_account.phone_number;
+				    const address = kakao_account.shipping_address;
+
+				    console.log('로그인 계정:', email);
+				    console.log('이름:', name);
+				    console.log('닉네임: ', nickname);
+				    console.log('생년월일: ', birth);
+				    console.log('핸드폰:', phone);
+				    console.log('주소:', address);
+				}
 				}
 </script>
 						</fieldset>
