@@ -215,7 +215,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (!"".equals(id)) {
+								if (!"".equals(id) || id != null) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -232,7 +232,7 @@ String nowTime = sdf.format(now.getTime());
 							<!-- 그룹1 매칭 -->
 							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
-								<% if("".equals(id)) { %>
+								<% if("".equals(id) || id == null) { %>
 								<p>로그인 후 이용할 수 있는 기능입니다.</p>
 								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
@@ -255,16 +255,9 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-<<<<<<< HEAD
 										<input type="submit" name="information1" class="Mainbutton" onclick="openPopup()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
-										<input type="submit" name="match1" class="Mainbutton"
-											value="  매 치 하 기  " />
-=======
-										<input type="submit" name="information1" class="Mainbutton"
-											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="button" name="match1" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck1()" />
->>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="submit" name="make" class="Mainbutton"
