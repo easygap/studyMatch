@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -391,7 +392,58 @@ public class GroupDAO extends DBConnPool {
 		}
 		return groupInfoList;
 	}
-	      
+	   
+	   /** Group 생성 시 그룹원 존재 여부 확인 */
+	   public int checkId(String[] id) {
+		   int idCheck = 1;
+		   
+		   for(int i = 0; i < id.length; i++) {
+			   String query = "select * from member where ID=?"; 
+			   
+			   try {
+				   psmt = con.prepareStatement(query); 
+				   psmt.setString(1, id[i]); 
+				   System.out.println("DAO 내부) DB에 검색하는 id값(input에 쓴 값) : "+ id[i]); 
+				   rs = psmt.executeQuery();
+				   if(rs.next()) {
+					   idCheck = 1;
+					   System.out.println("DAO 내부) id 확인됨");
+					   } else {
+						   idCheck = 0;
+						   System.out.println("DAO 내부) id 확인 X");
+					   
+						   return idCheck;
+					   }
+				   } catch (Exception e) {
+					   e.printStackTrace();
+				   } 
+			   }
+		   return idCheck;
+		 }
+	   
+	   /** number와 input값을 통해서 MATCHGROUP & AGREEMATCH 테이블 레코드 생성 */
+	   public void makeGroup(String GroupNum, String ID, String[] groupID, String important, String address) {
+		   String query = "INSERT INTO MATCHGROUP (GROUP_NUM, id1, id2, id3, id4, id5, import, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		   
+		   try { psmt = con.prepareStatement(query);
+		   psmt.setString(1, GroupNum); 
+		   psmt.setString(2, ID); 
+		   
+		   int parameterIndex = 3; // Starting index for id1
+		   
+		   for (int i = 0; i < groupID.length; i++) {
+			   psmt.setString(parameterIndex++, groupID[i]);
+	        }
+		   
+		   psmt.setString(7, ID); 
+		   psmt.setString(8, ID); 
+		   
+		   // String query = "INSERT INTO AGREEMATCH (GROUP_NUM, id, agree_create, previous_match) VALUES ('2231101', 'doo8888', 'Y', 'Y') ";
+		   } catch (SQLException e) {
+		        e.printStackTrace();
+		        }
+		   }
+	   
 	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
