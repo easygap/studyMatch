@@ -116,19 +116,39 @@ String nowTime = sdf.format(now.getTime());
 		buildCalendar();
 	} // 웹 페이지가 로드되면 buildCalendar 실행
 	
-	var groupNum1 = <%= firstGroup %>;
 	
 	function openPopup() {
-        var popupUrl = '../board/Match1.do'; // 팝업 창의 URL로 교체
-        var popupName = 'popupWindow';
-        var popupWidth = 1000;
-        var popupHeight = 700;
-        var leftPosition = (screen.width - popupWidth) / 2;
-        var topPosition = (screen.height - popupHeight) / 2;
+		var groupNum1 = <%=firstGroup%>;
+		
+		// 동적으로 폼 생성
+	    var form = document.createElement("form");
+	    form.method = "post";
+	    form.action = "../board/Match1.do";
+	    form.target = "popupWindow"; // 팝업 창의 이름
+	    
+	    // 데이터를 담아 POST 요청 보내기
+	    var input = document.createElement("input");
+	    input.type = "hidden";
+	    input.name = "firstGroup";
+	    input.value = groupNum1;
+	    form.appendChild(input);
+	    
+	    // 팝업 창 열기 및 스타일 지정
+	    var popupUrl = '../board/Match1.do';
+	    var popupName = 'popupWindow';
+	    var popupWidth = 1100;
+	    var popupHeight = 650;
+	    var leftPosition = (screen.width - popupWidth) / 2;
+	    var topPosition = (screen.height - popupHeight) / 2;
 
-        window.open(popupUrl + '?firstGroup=' + groupNum1, popupName, 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition);
-        document.information1.submit();
-    }
+	    var popupStyle = 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition + ', resizable=yes, scrollbars=yes';
+
+	    window.open(popupUrl, popupName, popupStyle);
+	    
+	    document.body.appendChild(form);
+	    form.submit();
+	    document.body.removeChild(form);
+	}
 
 	let nowMonth = new Date(); // 현재 달을 페이지를 로드한 날의 달로 초기화
 	let today = new Date(); // 페이지를 로드한 날짜를 저장

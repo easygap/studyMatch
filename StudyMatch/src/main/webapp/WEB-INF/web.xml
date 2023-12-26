@@ -39,6 +39,7 @@
 	</session-config>
 
 	<!-- 게시판 -->
+<!-- 
 	<servlet>
 		<servlet-name>BoardList</servlet-name>
 		<servlet-class>servlet.ListController</servlet-class>
@@ -47,6 +48,6 @@
 		<servlet-name>BoardList</servlet-name>
 		<url-pattern>/board/list.do</url-pattern>
 	</servlet-mapping>
-	
+-->
 
 </web-app>

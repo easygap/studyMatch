@@ -41,10 +41,10 @@ public class MemberDAO extends DBConnPool {
 	
 	// 마이페이지 업데이트
 	public boolean updateMypage (MemberDTO dto) throws SQLException {
-		
+
 		boolean result = false;
-		String query = "INSERT INTO member (job, nickname, pwd, phone, email, address, interest1, interest2, interest3, img)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "UPDATE member SET "
+				+ "job=?, nickname=?, pwd=?, phone=?, email=?, address=?, interest1=?, interest2=?, interest3=?, img=?";
 		int mypageCount = 0;
 
 		try {
@@ -214,8 +214,72 @@ public class MemberDAO extends DBConnPool {
 			System.out.println("*** " + date.format(now) + " 회원가입 실패 ***");
 			result = false;
 		}
-		
 		return result;
+	}
+	
+	// 카카오 로그인 정보 저장
+	public MemberDTO kakaoSign(MemberDTO dto) {
+		boolean result = false;
+		String kakao = "Y";
+		String pass = "kakaologin";
+		String query = "INSERT INTO member (id, name, birth, nickname, pwd, phone, email, address, kakao)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		int signUpCount = 0;
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getName());
+			psmt.setString(3, dto.getBirth());
+			psmt.setString(4, dto.getNick());
+			psmt.setString(5, pass);
+			psmt.setString(6, dto.getPhone());
+			psmt.setString(7, dto.getEmail());
+			psmt.setString(8, dto.getAddress());
+			psmt.setString(9, kakao);
+			signUpCount = psmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 카카오 회원가입 DB 업로드 중 예외 발생! ***");
+		}
+		
+		if (signUpCount > 0) {
+	        result = true;
+	        System.out.println(date.format(now) + " [ " + dto.getId() + " ] 카카오 회원가입 성공!");
+
+	        String query2 = "SELECT * FROM member WHERE id=?";
+	        try {
+	            psmt = con.prepareStatement(query2);
+	            psmt.setString(1, dto.getId());
+	            rs = psmt.executeQuery();
+
+	            while (rs.next()) {
+	                dto = new MemberDTO();
+	                // 회원 정보를 DTO에 설정
+	                dto.setId(rs.getString("id"));
+	                dto.setName(rs.getString("name"));
+	                dto.setBirth(rs.getString("birth"));
+	                dto.setJob(rs.getString("job"));
+	                dto.setNick(rs.getString("nickname"));
+	                dto.setPhone(rs.getString("phone"));
+	                dto.setEmail(rs.getString("email"));
+	                dto.setAddress(rs.getString("address"));
+	                dto.setInterest1(rs.getString("interest1"));
+	                dto.setInterest2(rs.getString("interest2"));
+	                dto.setInterest3(rs.getString("interest3"));
+	                dto.setImage(rs.getString("img"));
+
+	                System.out.println(date.format(now) + " kakaoSign 정보 조회 성공!");
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("*** MemberDAO.kakaoSign 회원 정보 조회 중 예외 발생 ***");
+	        }
+	    } else {
+	    	System.out.println("*** MemberDAO.kakaoSign 로그인 실패");
+	    }
+		return dto;
 	}
 	
 	// ID 중복체크

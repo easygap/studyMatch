@@ -5,10 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -297,13 +301,52 @@ public class GroupDAO extends DBConnPool {
 			e.printStackTrace();
 		}
 	}
+	
+	/** 나이 계산 */
+	private int calculateAge(String birthDateStr) {
+		int Age = 0;
+	    try {
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	        Date birthDate = sdf.parse(birthDateStr);
+
+	        Calendar birthCal = Calendar.getInstance();
+	        birthCal.setTime(birthDate);
+
+	        Calendar currentCal = Calendar.getInstance();
+	        currentCal.setTime(new Date());
+
+	        int age = currentCal.get(Calendar.YEAR) - birthCal.get(Calendar.YEAR);
+	        // 생일이 지났는지 체크
+	        if (currentCal.get(Calendar.DAY_OF_YEAR) < birthCal.get(Calendar.DAY_OF_YEAR)) {
+	            age--;
+	            
+	        }
+	        
+	        if(age > 10 && age < 20) {
+	        	Age = 10;
+	        }else if(age > 20 && age < 30) {
+	        	Age = 20;
+	        }else if(age > 30 && age < 40) {
+	        	Age = 30;
+	        }else if(age > 40 && age < 50) {
+	        	Age = 40;
+	        }else if(age > 50 && age < 60) {
+	        	Age = 50;
+	        }
+
+	        return Age;
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	        return 0; // 나이를 계산할 수 없을 경우 0으로 처리하거나 예외처리를 적절히 수정하세요.
+	    }
+	}
 
 	/** 그룹 매치 전 해당 그룹 상세보기 */
 	   public Map<String, List< String>> groupInformation(String groupnum) {
 	      Map<String, List< String>> groupInfoList = new HashMap<>();
 	      List<String> groupImg = new ArrayList<>();
 	      List<String> groupName = new ArrayList<>();
-	      List<String> groupBirth = new ArrayList<>();
+	      List<String> groupAge = new ArrayList<>();
 	      List<String> groupJob = new ArrayList<>();
 	      List<String> groupinterest1 = new ArrayList<>();
 	      List<String> groupinterest2 = new ArrayList<>();
@@ -320,16 +363,23 @@ public class GroupDAO extends DBConnPool {
 			while (rs.next()) {
 				groupImg.add(rs.getString("img"));
 				groupName.add(rs.getString("name"));
-				groupBirth.add(rs.getString("birth"));
+				
+				// 나이 계산 및 추가
+			    String birthDateStr = rs.getString("birth");
+			    int age = calculateAge(birthDateStr);
+			    groupAge.add(String.valueOf(age));
+
 				groupJob.add(rs.getString("job"));
 				groupinterest1.add(rs.getString("interest1"));
 				groupinterest2.add(rs.getString("interest2"));
 				groupinterest3.add(rs.getString("interest3"));
+				
+				
 			}
 
 			groupInfoList.put("groupImg", groupImg);
 			groupInfoList.put("groupName", groupName);
-			groupInfoList.put("groupBirth", groupBirth);
+			groupInfoList.put("groupAge", groupAge);
 			groupInfoList.put("groupJob", groupJob);
 			groupInfoList.put("groupinterest1", groupinterest1);
 			groupInfoList.put("groupinterest2", groupinterest2);
