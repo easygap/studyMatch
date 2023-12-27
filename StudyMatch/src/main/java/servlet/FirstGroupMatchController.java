@@ -31,6 +31,9 @@ public class FirstGroupMatchController extends HttpServlet {
 		String sessionID = (String) session.getAttribute("user");
 
 		String groupNum1 = req.getParameter("firstGroup");
+		String Infor = req.getParameter("information1");
+		
+		System.out.println(" Infor / Infor / Infor : " + Infor);
 
 		List<String> groupNameList;
 		List<String> groupImgList;
