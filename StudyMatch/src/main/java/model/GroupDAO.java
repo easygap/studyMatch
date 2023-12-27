@@ -66,6 +66,25 @@ public class GroupDAO extends DBConnPool {
 		}
 		return NickName;
 	}
+	
+	/** 사용자가 그룹에 가입했는지 확인 */
+	public int getGroupNum(String ID) {
+		String query = "SELECT GROUP_NUM FROM MATCHGROUP WHERE ? IN (ID1, ID2, ID3, ID4, ID5)";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, ID);
+			rs = psmt.executeQuery();
+
+			if (rs.next())
+				return 1;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 조회중 에러 발생 ***");
+		}
+		return 0;
+	}
 
 	public ArrayList<String> getMemberInterest(String id) {
 		int count = 0;
