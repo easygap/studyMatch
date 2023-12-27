@@ -1,316 +1,105 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+request.setCharacterEncoding("UTF-8");
+String cp = request.getContextPath();
+
+// 주소창에서 interest 값을 변수에 저장
+String interest = request.getParameter("interest");
+%>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>자주 묻는 질문</title>
-    <style>
-        table, th, td {
-            border: 1px solid #000000;
-            border-collapse: collapse;
-        }
+<meta charset="UTF-8">
+<title>자주묻는질문</title>
 
-        th, td {
-            padding: 10px 20px;
-        }
-    </style>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+
+<style>
+body, #wrapper, #page-content-wrapper, .container, .table, thead, tr, th, td, table{
+background-color : #F4EAE0 !important;
+}
+
+</style>
 </head>
-<body style="background-color:#F5F6CE">
-   	<!-- 코드 시작 -->
+<body>
+	
+	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
-		<!-- 네비게이션 바 -->
+		<!-- 네비게이션 사이드 bar -->
 		<jsp:include page="../layout/Main.jsp"></jsp:include>
 
 		<!-- 페이지 컨텐츠 -->
 		<div id="page-content-wrapper">
-			<!-- 네비게이션 바 -->
+			<!-- 네비게이션 상단 bar -->
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
-			<div class="container-fluid">
+			<div class="container-fluid container">
 				<br /> <br /> <br />
-
-<h2>고객센터</h2>
-	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
-	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
-	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Document</title>
-    <style>
-
-        ul{
-            padding: 0;
-            margin: 0;
-            display:inline-block;
-        }
-        /* 
-            게시판 목록 행 단위 
-            목록 요소 자체를 가운데 정렬하기
-            ul 기본 가로 크기는 100%이므로, 가로 크기를 지정해줘야 가운데로 정렬할 수 있다.
-            가운데 정렬
-            번호, 제목, 작성자, 작성일, 조회, 좋아요 와 데이터 정렬
-        */
-        .board_row {
-
-            width: 1000px;
-            border-bottom:solid 1px gray; 
-
-        }
-
-        /* 게시글 목록 공통 개별 요소 속성 */
-        li{
-            list-style:none;
-            border-bottom:solid 0px gray; 
-             float:left; 
-             text-align:center;
-            /* padding: 0;
-            margin: 0; */
-        }
-
-        /* 번호, 제목, 작성자, 작성일, 답변 row의 style 설정 */
-        .title_row > li {
-            height: 50px;
-            line-height: 50px;
-            background:rgb(233, 233, 233);
-            font-weight: bold;
-            border-bottom: #000000 0px solid;
-            border-left:#0000000 0px solid
-            border-right:#0000000 0px solid
-        }
-
-        /* 게시글 목록 데이터 개별 요소 속성 */
-        .data_row > li{
-            height: 40px;
-            line-height: 40px;
-            font-weight: lighter;
-            border-right:solid 1px gray;
-            
-        }
-
-        /* 요소들의 너비 설정 */
-        .w70 {width:70px; }
-        .w500 {width:500px; }
-        .w120 {width:120px; }
-        .w100 {width:100px; }
-
-
-        /* 게시판 목록 박스 */
-        .notice_board{
-
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-            /* 구성 요소 세로로 배치 */
-            flex-direction: column;
-
-        }
-
-
-        .pagination{
-            display: flex;
-            width: 400px;
-            justify-content: space-between;
-        }
-
-        /* 전체 중앙 정렬 */
-        .container{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    </style>
-    <script>
-
- 
-            //    총 게시글 수
-            let totalPage = 500;
-            //  한 페이지 당 출력되는 게시글 갯수
-            let page_num = 10;
-            //   한번에 출력될 수 있는 최대 블록 수
-            // ex ) [1][2][3][4][5] -> 블록
-            let block_num = 10;
-            // 블록의 총 수를 계산한다.
-            let total_block = totalPage%20 == 0 ? totalPage/20 : totalPage/20+1 ;
-            // 현재 블록 위치를 알려준다
-            let current_block = 1;
-            /*
-            게시글 데이터를 담고 있는 객체 배열
-            번호 : data[게시글 번호].notice_num
-            제목 : data[게시글 번호].title
-            작성자 : data[게시글 번호].writer
-            작성일 : data[게시글 번호].date_created
-            답 변 : data[게시글 번호].like_ans
-            */
-            let data = new Array();
-
-            //    게시글 데이터를 담고 있는 객체를 500개 추가한다.
-            for(let i=1;i<=totalPage;i++){
-                data[i] = {
-                    notice_num : i,
-                    title:"제목"+i,
-                    writer:"작성자"+i,
-                    date_created:"2022-10-07",
-                    like_ans : i
-                }
-            }
-            // 게시글 데이터 출력하기
-            // 매개변수 : 선택 블럭 
-           function post_data_print(block){
-
-                // 초기화
-                // 게시글 title 제외하고 모두 제거
-                let post_list = document.querySelectorAll(".data_row");
-                post_list.forEach(function(item){
-                    item.remove();
-                })
-
-                // 게시글 출력 공간
-                let notice_board = document.querySelector(".notice_board");
-                // 출력 첫 페이지 번호
-                let start = totalPage-page_num*(block-1);
-                for(let i=start;i>=1&&i>start-page_num;i--){
-
-                    // data[i].notice_num data[i].title data[i].writer data[i].date_created data[i].Lookkup_num data[i].like
-
-                    let post = document.createElement("ul");
-                    post.className = "board_row";
-                    post.className = "data_row";
-
-                    let classname = ["w70","w500","w120","w100","w100"]
-
-                    let post_data = [data[i].notice_num, data[i].title, data[i].writer, data[i].date_created, data[i].like_ans];
-                    
-                    //게시글 생성
-                    for(let j=0;j<classname.length;j++){
-                        let li = document.createElement("li");
-                        li.className = classname[j];
-                        li.textContent = post_data[j];
-                        post.appendChild(li);
-                    }
-
-                    // 게시글 추가
-                    notice_board.appendChild(post);
-
-                }
-
-                }
-                
-            // 블럭 출력하기
-            // 매개변수 : 가장 앞에 오는 블럭
-            function block_print(front_block){
-             current_block = front_block;
-
-                // 이전으로 갈 블럭이 없으면
-                if(front_block <= 1 ){
-                    document.querySelector(".before_move").style.visibility = "hidden";
-                }
-                else{
-                    document.querySelector(".before_move").style.visibility = "visible";
-                }
-
-                // 다음으로 갈 블럭이 없으면
-                if(front_block+block_num >= total_block){
-
-                    document.querySelector(".next_move").style.visibility = "hidden";
-                }
-                else{
-                    document.querySelector(".next_move").style.visibility = "visible";
-                }
-
-                // 블럭을 추가할 공간
-                let block_box = document.querySelector(".block");
-                // 기존 블럭 모두 삭제
-                block_box.replaceChildren();
-
-                console.log("remove");
-
-
-                //front_block부터 total_block 또는 block_num까지 생성 및 추가
-                for(let i=front_block;i<=total_block && i< front_block+block_num ;i++){
-                    console.log("add element");
-
-                    // 버튼을 생성한다.
-                    let button = document.createElement("button");
-                    button.textContent = i;
-                    // 버튼을 클릭하면 게시글이 변경되는 이벤트 추가
-                    button.addEventListener("click",function(event){
-                        post_data_print(i)});
-                    // 블럭에 추가한다.
-                    block_box.appendChild(button);
-
-                }
-               
-            }
-
-            function before(){
-                block_print(current_block-block_num)
-                console.log("이전");
-            }
-
-            function next(){
-                block_print(current_block+block_num)
-                console.log("다음");
-
-            }
-            // 화면 로드 시 실행되는 이벤트
-            window.onload = function(){
-
-                // 게시글 데이터 출력하기
-                post_data_print(1)
-
-               // 블럭 출력하기
-               block_print(1)
-            }
-        </script>
-
-    </head>
-    <body>
-        
-
-    <div class="container">
-  
-     <p style='letter-spacing:2px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;No.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;조회수&nbsp;&nbsp;&nbsp;&nbsp;추천</p>
-      <div class="notice_board">
-            <!-- title 열 -->
-            <ul class="board_row title_row ">
-               
-            </ul>
-            <!-- 게시글 추가로 들어오는 위치 -->
-        </div>
-
-        <!-- 페이지 블럭 -->
-        <div class="pagination">
-            <button class="before_move" onclick="before()">이전</button>
-            <div class="block">
-                <!-- 블럭 추가로 들어오는 위치 -->
-            </div>
-            <button class="next_move" onclick="next()">다음</button>
-                  
-        </div>
-        <div class="container">
-		<div class="row">
-			<form method="post" name="search" action="searchbbs.jsp">
-				<table class="pull-right">
+				<!-- 목록 테이블 -->
+				<table class="table table-hover">
+				<thead>
 					<tr>
-						<td><select class="form-control" name="searchField">
-								<option value="0">선택</option>
-								<option value="bbsTitle">제목</option>
-								<option value="userID">작성자</option>
-								<option value="userday">작성일</option>
-						</select></td>
-						<td><input type="text" class="form-control"
-							 name="searchText" maxlength="100"></td>
-						<td><button type="submit" class="btn btn-success">검색</button></td>
+						<th width="10%" align="center">번호</th>
+						<th width="*">제목</th>
+						<th width="15%">작성자</th>
+						<th width="15%">작성일</th>
+						<th width="9%">조회수</th>
+						<th width="9%">추천</th>
 					</tr>
+		
+					<c:choose>
+						<c:when test="${ empty boardLists }">
+							<!-- 게시물이 없을 때 -->
+							<tr>
+								<td colspan="6" align="center">게시글이 존재하지 않습니다.•͈⌔•͈⑅</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<!-- 게시물이 있을 때 -->
+							<c:forEach items="${ boardLists }" var="row" varStatus="loop">
+								<tr>
+									<td style="padding-left: 20px;">
+										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
+									</td>
+									<td>
+										<!-- 제목(링크) --> <a href="../board/view.do?num=${ row.board_num }&interest=<%=interest%>">${ row.title }</a>
 
+									</td>
+									<td>${ row.id }</td>
+									<!-- 작성자 -->
+									<td>${ row.post_date }</td>
+									<!-- 날짜 -->
+									<td style="padding-left: 25px;">${ row.visit_count }</td>
+									<!-- 조회수 -->
+									<td style="padding-left: 25px;">${ row.like_count }</td>
+									<!-- 추천 -->
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+					</thead>
 				</table>
-			</form>
+
+				
+
+				<!-- 검색 폼 -->
+				<form method="get">
+					<table class="table">
+						<tr>
+							<td align="center"><select class="selectpicker" style="height:27px" name="searchField">
+									<option value="0">선택</option>
+									<option value="bbsTitle">내용</option>
+									<option value="userID">작성자</option>
+									<option value="userday">작성일</option>
+							<input type="text" name="searchWord" /> <input type="submit"
+								value="검색하기" /></td>
+						</tr>
+					</table>
+					<input type="text" style="display:none;" name="interest" value="<%=interest%>" />
+				</form>
+			</div>
 		</div>
 	</div>
 	<!-- BootStrap javascript 사용 -->
@@ -319,4 +108,6 @@
 		integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
 		crossorigin="anonymous"></script>
 </body>
+<!-- 푸터 -->
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>
