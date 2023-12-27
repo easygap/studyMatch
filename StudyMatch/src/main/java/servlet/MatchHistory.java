@@ -33,22 +33,38 @@ public class MatchHistory extends HttpServlet {
 		List<String> getGroupName;
 		List<String> groupNum;
 		String Group_Num = "";
+		
+		List<String> PreviousImg;
+		List<String> PreviousNames;
 
 		// DB 연결
 		if (MatchID != null) {
 			Map<String, List<String>> NameImg = dao.getProfile(MatchID);
+			Map<String, List<String>> Previous = dao.PreviousList(MatchID);
 
+			// 현재 내가 속한 그룹 정보
 			profileImages = NameImg.get("Img");
 			getGroupName = NameImg.get("Names");
 			groupNum = NameImg.get("group_num");
+			
+			// 이전에 내가 가입했다가 탈퇴한 그룹 정보
+			PreviousNames = Previous.get("PreviousNames");
+			PreviousImg = Previous.get("PreviousImg");
 
 			if (!groupNum.isEmpty()) { Group_Num = groupNum.get(0); }
 
+			// 현재 내가 속한 그룹 정보
 			req.setAttribute("img", profileImages);
 			req.setAttribute("name", getGroupName);
+			
+			// 이전에 내가 가입했다가 탈퇴한 그룹 정보
+			req.setAttribute("previousImg", PreviousImg);
+			req.setAttribute("previousNames", PreviousNames);
+			
 			req.setAttribute("dto", dto);
 
 			System.out.println("서블렛에서 : " + profileImages + " / " + getGroupName + " / " + Group_Num + "\n");
+			System.out.println("서블렛에서 PreviousImg : " + PreviousImg + " / PreviousNames : " + PreviousNames);
 			System.out.println("match hitory DB연결 성공 ! ! !");
 		} else {
 			System.out.println("match hitory DB연결 실패 . . .");
