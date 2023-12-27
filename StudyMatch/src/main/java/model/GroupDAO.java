@@ -423,25 +423,55 @@ public class GroupDAO extends DBConnPool {
 	   
 	   /** number와 input값을 통해서 MATCHGROUP & AGREEMATCH 테이블 레코드 생성 */
 	   public void makeGroup(String GroupNum, String ID, String[] groupID, String important, String address) {
-		   String query = "INSERT INTO MATCHGROUP (GROUP_NUM, id1, id2, id3, id4, id5, import, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		   String query1 = "INSERT INTO MATCHGROUP (GROUP_NUM, id1, id2, id3, id4, id5, import, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		   String query2 = "INSERT INTO AGREEMATCH (GROUP_NUM, id, agree_create) VALUES (?, ?, ?) ";
 		   
-		   try { psmt = con.prepareStatement(query);
-		   psmt.setString(1, GroupNum); 
-		   psmt.setString(2, ID); 
+		   try { 
+			   psmt = con.prepareStatement(query1);
+			   psmt.setString(1, GroupNum); 
+			   psmt.setString(2, ID); 
 		   
-		   int parameterIndex = 3; // Starting index for id1
+		   if(groupID.length == 2) {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, null); 
+			   psmt.setString(6, null); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   } else if(groupID.length == 3) {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, groupID[1]); 
+			   psmt.setString(6, null); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   } else {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, groupID[2]); 
+			   psmt.setString(6, groupID[3]); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   }
 		   
-		   for (int i = 0; i < groupID.length; i++) {
-			   psmt.setString(parameterIndex++, groupID[i]);
-	        }
+		   psmt.executeUpdate();	   
 		   
-		   psmt.setString(7, ID); 
-		   psmt.setString(8, ID); 
-		   
-		   // String query = "INSERT INTO AGREEMATCH (GROUP_NUM, id, agree_create, previous_match) VALUES ('2231101', 'doo8888', 'Y', 'Y') ";
+		   for(int i = 0; i <= groupID.length; i++) {
+			   psmt = con.prepareStatement(query2);
+			   psmt.setString(1, GroupNum); 
+			   
+			   if(i == 0)
+				   psmt.setString(2, ID);  
+			   else
+				   psmt.setString(2, groupID[i-1]);
+	
+			   psmt.setString(3, "Y"); 
+			   psmt.executeUpdate();
+			   
+			   } 
 		   } catch (SQLException e) {
-		        e.printStackTrace();
-		        }
+			   e.printStackTrace();
+			   }
 		   }
 	   
 	/** DB 연결 해제 */

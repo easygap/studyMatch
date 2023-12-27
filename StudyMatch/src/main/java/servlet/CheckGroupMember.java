@@ -29,8 +29,8 @@ public class CheckGroupMember extends HttpServlet {
 		/** 현재 날짜 가져오기 */
         LocalDate currentDate = LocalDate.now();
 
-        /** DateTimeFormatter를 사용하여 날짜를 "yyyy-MM-dd" 형식으로 포맷팅 */
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        /** DateTimeFormatter를 사용하여 날짜를 "yyMMdd" 형식으로 포맷팅 */
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
         String YearThatYY = currentDate.format(formatter);
 		
         int count = 0;
@@ -51,17 +51,16 @@ public class CheckGroupMember extends HttpServlet {
 		System.out.println("주소값은 : " + address);
 		
 		if( count == 0 )
-			JSFunction .alertLocation(resp, "함께하실 그룹원을 선택해주세요.（；´д｀）ゞ", "../board/MakeGroup.jsp");
+			JSFunction .alertLocation(resp, "함께하실 그룹원을 선택해주세요.（；´д｀）ゞ", "../board/MakeGroup.jsp?address=" + address);
 		else if(count == 1)
-			JSFunction .alertLocation(resp, "본인 포함 3명부터 그룹 생성이 가능합니다.", "../board/MakeGroup.jsp");
+			JSFunction .alertLocation(resp, "본인 포함 3명부터 그룹 생성이 가능합니다.", "../board/MakeGroup.jsp?address=" + address);
 		
 		/** 흥미 값 num으로 변환*/
 		String intrest = req.getParameter("interests");
 		System.out.println("관심사 : " + intrest);
 		if(intrest == null)
-			JSFunction .alertLocation(resp, "관심사를 선택해주세요.（；´д｀）ゞ", "../board/MakeGroup.jsp");
+			JSFunction .alertLocation(resp, "관심사를 선택해주세요.（；´д｀）ゞ", "../board/MakeGroup.jsp?address=" + address);
 		String interests = MemberInterest(intrest);
-		
 		
 		String groupNum= interests + YearThatYY;
 		
@@ -72,6 +71,14 @@ public class CheckGroupMember extends HttpServlet {
 		String sessionID = (String) session.getAttribute("user");
 		
 		String[] strArray = { groupID1, groupID2, groupID3, groupID4 };
+		
+		/** 입력한 ID와 sessionID가 같다면 그룹 생성 불가능 */
+		for (String str : strArray) {
+            if (str.equals(sessionID)) {
+            	
+            	JSFunction .alertLocation(resp, "본인 ID는 입력할 수 없습니다...", "../board/MakeGroup.jsp?address=" + address);
+            }
+		}
 
 		/** 배열 null값 제거 */
 		strArray = Arrays.stream(strArray)
@@ -85,13 +92,12 @@ public class CheckGroupMember extends HttpServlet {
 		/** 사용자가 입력한 ID가 존재하는지 확인 */
 		int chkID = dao.checkId(strArray);
 		
-		System.out.println(chkID);
-		
-
 		/** ID가 존재한다면 */
-		if(chkID == 1) {
+		if(chkID == 1 && count > 1 && intrest != null) {
+			dao.makeGroup(groupNum, sessionID, strArray, intrest, address);
+			dao.close();
 			JSFunction .alertThenClose(resp, "그룹 생성에 성공하셨습니다.", "../board/MakeGroup.jsp");
-		} else {
+		} else if(chkID == 0){
 			
 			
 			JSFunction .alertBack(resp, "ID를 바르게 입력해주세요.（；´д｀）ゞ");
