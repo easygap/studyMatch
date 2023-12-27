@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -372,7 +373,7 @@ public class GroupDAO extends DBConnPool {
 		}
 		return groupInfoList;
 	}
-	   
+
 	   /** 그룹 회원 탈퇴하기 */
 	   public void Leaving(String id, String GroupNum) {
 		   String query1 = "UPDATE matchgroup SET id4 = CASE " +
@@ -407,7 +408,88 @@ public class GroupDAO extends DBConnPool {
 				e.printStackTrace();
 			}
 	   }
-	      
+
+	   /** Group 생성 시 그룹원 존재 여부 확인 */
+	   public int checkId(String[] id) {
+		   int idCheck = 1;
+		   
+		   for(int i = 0; i < id.length; i++) {
+			   String query = "select * from member where ID=?"; 
+			   
+			   try {
+				   psmt = con.prepareStatement(query); 
+				   psmt.setString(1, id[i]); 
+				   System.out.println("DAO 내부) DB에 검색하는 id값(input에 쓴 값) : "+ id[i]); 
+				   rs = psmt.executeQuery();
+				   if(rs.next()) {
+					   idCheck = 1;
+					   System.out.println("DAO 내부) id 확인됨");
+					   } else {
+						   idCheck = 0;
+						   System.out.println("DAO 내부) id 확인 X");
+					   
+						   return idCheck;
+					   }
+				   } catch (Exception e) {
+					   e.printStackTrace();
+				   } 
+			   }
+		   return idCheck;
+		 }
+	   
+	   /** number와 input값을 통해서 MATCHGROUP & AGREEMATCH 테이블 레코드 생성 */
+	   public void makeGroup(String GroupNum, String ID, String[] groupID, String important, String address) {
+		   String query1 = "INSERT INTO MATCHGROUP (GROUP_NUM, id1, id2, id3, id4, id5, import, address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		   String query2 = "INSERT INTO AGREEMATCH (GROUP_NUM, id, agree_create) VALUES (?, ?, ?) ";
+		   
+		   try { 
+			   psmt = con.prepareStatement(query1);
+			   psmt.setString(1, GroupNum); 
+			   psmt.setString(2, ID); 
+		   
+		   if(groupID.length == 2) {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, null); 
+			   psmt.setString(6, null); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   } else if(groupID.length == 3) {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, groupID[1]); 
+			   psmt.setString(6, null); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   } else {
+			   psmt.setString(3, groupID[0]); 
+			   psmt.setString(4, groupID[1]); 
+			   psmt.setString(5, groupID[2]); 
+			   psmt.setString(6, groupID[3]); 
+			   psmt.setString(7, important); 
+			   psmt.setString(8, address); 
+		   }
+		   
+		   psmt.executeUpdate();	   
+		   
+		   for(int i = 0; i <= groupID.length; i++) {
+			   psmt = con.prepareStatement(query2);
+			   psmt.setString(1, GroupNum); 
+			   
+			   if(i == 0)
+				   psmt.setString(2, ID);  
+			   else
+				   psmt.setString(2, groupID[i-1]);
+	
+			   psmt.setString(3, "Y"); 
+			   psmt.executeUpdate();
+			   
+			   } 
+		   } catch (SQLException e) {
+			   e.printStackTrace();
+			   }
+		   }
+	   
 	/** DB 연결 해제 */
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();

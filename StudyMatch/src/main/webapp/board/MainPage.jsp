@@ -51,8 +51,11 @@ String firstGroup = "";
 
 String secondGroup = "";
 
+String address = "";
+
 if (dto != null) {
 	id = dto.getId();
+	address = dto.getAddress();
 	firstGroup = dto.getFirstGroup();
 	secondGroup = dto.getSecondGroup();
 }
@@ -93,7 +96,7 @@ String nowTime = sdf.format(now.getTime());
 	/** 그룹생성 버튼 눌렀을 때 */
 	function makeGroup() {
  		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
- 			var url = "../board/MakeGroup.jsp";
+ 			var url = "../board/MakeGroup.jsp?address=" + "<%=address%>";
             var name = "makeGroup";
             var _width = '500';
             var _height = '300';
