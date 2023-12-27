@@ -114,7 +114,7 @@ String nowTime = sdf.format(now.getTime());
 	
 	
 	function openPopup() {
-		var groupNum1 = <%=firstGroup%>;
+		var groupNum1 = "<%=firstGroup%>";
 		
 		// 동적으로 폼 생성
 	    var form = document.createElement("form");
