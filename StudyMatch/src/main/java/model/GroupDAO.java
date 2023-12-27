@@ -138,10 +138,14 @@ public class GroupDAO extends DBConnPool {
 		return address;
 	}
 
-	/** 프로필 사진 가져오기 */
-	public List<String> getProfile(String id) {
-		List<String> profiles = new ArrayList<>();
-		String query = "SELECT m.img " + "FROM member m "
+	/** 프로필 사진, 이름, 그룹번호 가져오기 */
+	public Map<String, List< String>> getProfile(String id) {
+		Map<String, List< String>> Profile = new HashMap<>();
+	    List<String> Img = new ArrayList<>();
+		List<String> Names = new ArrayList<>();
+		List<String> Group_num = new ArrayList<>();
+		
+		String query = "SELECT m.img, m.name, mg.group_num " + " FROM member m "
 				+ "JOIN matchgroup mg ON m.id = mg.id1 OR m.id = mg.id2 OR m.id = mg.id3 OR m.id = mg.id4 OR m.id = mg.id5 "
 				+ "WHERE mg.group_num IN "
 				+ "    (SELECT group_num FROM matchgroup WHERE id1 = ? OR id2 = ? OR id3 = ? OR id4 = ? OR id5 = ?)";
@@ -155,41 +159,20 @@ public class GroupDAO extends DBConnPool {
 			psmt.setString(5, id);
 			rs = psmt.executeQuery();
 			while (rs.next()) {
-				String profile = rs.getString("img");
-				profiles.add(profile);
+				Img.add(rs.getString("img"));
+				Names.add(rs.getString("name"));
+				Group_num.add(rs.getString("group_num"));
 			}
-			System.out.println("쿼리문에서 : " + profiles);
+			Profile.put("Img", Img);
+			Profile.put("Names", Names);
+			Profile.put("group_num", Group_num);
+			
+			System.out.println("쿼리문에서 : " + Img);
 		} catch (Exception e) {
 			System.out.println("DB 이미지 불러오기 실패");
 			e.printStackTrace();
 		}
-		return profiles;
-	}
-
-	/** 그룹 멤버 이름 가져오기 */
-	public List<String> getGroupName(String id) {
-		List<String> Names = new ArrayList<>();
-		String query = " SELECT m.name " + " FROM matchgroup mg " + " JOIN member m ON "
-				+ "    (mg.id1 = m.id OR mg.id2 = m.id OR mg.id3 = m.id OR mg.id4 = m.id OR mg.id5 = m.id) "
-				+ " WHERE mg.id1 = ? OR mg.id2 = ? OR mg.id3 = ? OR mg.id4 = ? OR mg.id5 = ? ";
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, id);
-			psmt.setString(2, id);
-			psmt.setString(3, id);
-			psmt.setString(4, id);
-			psmt.setString(5, id);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				String name = rs.getString("name");
-				Names.add(name);
-			}
-			System.out.println("쿼리문에서 : " + Names + "\n");
-		} catch (Exception e) {
-			System.out.println("DB 이름 불러오기 실패");
-			e.printStackTrace();
-		}
-		return Names;
+		return Profile;
 	}
 
 	/** 본인 관심사, 주소와 맞는 그룹의 그룹원, 그룹원 프로필, Group_num 조회 */
@@ -289,7 +272,7 @@ public class GroupDAO extends DBConnPool {
 			e.printStackTrace();
 		}
 
-		String query2 = "INSERT INTO AGREEMATCH(GROUP_NUM, id, AGREE_CREATE, PREVIOUS_MATCH) values (?, ?, 'Y', 'Y')";
+		String query2 = "INSERT INTO AGREEMATCH(GROUP_NUM, id, AGREE_CREATE) values (?, ?, 'Y')";
 
 		try {
 			psmt = con.prepareStatement(query2);
@@ -373,8 +356,6 @@ public class GroupDAO extends DBConnPool {
 				groupinterest1.add(rs.getString("interest1"));
 				groupinterest2.add(rs.getString("interest2"));
 				groupinterest3.add(rs.getString("interest3"));
-				
-				
 			}
 
 			groupInfoList.put("groupImg", groupImg);
@@ -392,7 +373,42 @@ public class GroupDAO extends DBConnPool {
 		}
 		return groupInfoList;
 	}
-	   
+
+	   /** 그룹 회원 탈퇴하기 */
+	   public void Leaving(String id, String GroupNum) {
+		   String query1 = "UPDATE matchgroup SET id4 = CASE " +
+	               "WHEN id4 = ? THEN NULL " +
+	               "ELSE id4 END, " +
+	               "id5 = CASE " +
+	               "WHEN id5 = ? THEN NULL " +
+	               "ELSE id5 END " +
+	               "WHERE group_num = ? AND (? IN (id1, id2, id3, id4, id5))";
+		   
+		   try {
+				psmt = con.prepareStatement(query1);
+				psmt.setString(1, id);
+				psmt.setString(2, id);
+				psmt.setString(3, GroupNum);
+				psmt.setString(4, id);
+				rs = psmt.executeQuery();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			String query2 = "UPDATE AGREEMATCH SET GROUP_NUM = ? , id = ? , AGREE_CREATE = 'N'";
+
+			try {
+				psmt = con.prepareStatement(query2);
+				psmt.setString(1, GroupNum);
+				psmt.setString(2, id);				 
+				rs = psmt.executeQuery();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	   }
+
 	   /** Group 생성 시 그룹원 존재 여부 확인 */
 	   public int checkId(String[] id) {
 		   int idCheck = 1;

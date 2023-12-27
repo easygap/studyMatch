@@ -19,7 +19,7 @@ import model.BoardDAO;
 import model.BoardDTO;
 import utils.BoardPage;
 
-@WebServlet("/ListController")
+@WebServlet("/board/list.do")
 public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
