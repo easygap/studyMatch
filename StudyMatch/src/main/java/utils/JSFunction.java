@@ -34,6 +34,21 @@ public class JSFunction {
 		}catch(Exception e) {}
 	}
 	
+	// 예시(링크랑 같이 사용할 때) + 현재 페이지 종료
+		public static void alertThenClose(HttpServletResponse resp, String msg, String url) {
+			try {
+				resp.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = resp.getWriter();
+				String script = ""
+						+ "<script>"
+						+ "		alert('" + msg + "');"
+						+ "		location.href='" + url + "';"
+						+ "		window.close();"
+						+ "</script>";
+				writer.print(script);
+			}catch(Exception e) {}
+		}
+	
 	// 회원가입 성공 알람창
 	public static void alertRegist(HttpServletResponse resp, String msg, String url) {
 		try {
