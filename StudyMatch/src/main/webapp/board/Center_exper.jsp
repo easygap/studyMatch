@@ -1,15 +1,6 @@
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.HashMap"%>
-<%@ page import="java.util.Map"%>
-<%@ page import="model.BoardDAO"%>
-<%@ page import="model.BoardDTO"%>
-<%@ page import="utils.BoardPage"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>게시글 선택</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <title>게시글 선택시</title>
     <style>
         table, th, td {
             border: 1px solid #000000;
@@ -39,10 +30,8 @@
 	 <button onclick="location.href='Center_often.jsp'">자주묻는질문</button >
 	 <button onclick="location.href='Center.jsp'">1:1 문의</button >
 	 <button onclick="location.href='CenterLeaguewik.jsp'">내 문의</button >
-<table board="1" width="90%">
-     
-     
-</table>
+
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -171,6 +160,7 @@
 
     </head>
     <body>
+    <div class="container">
   
     <div class="card-write">
     <div class="myinfo">
@@ -181,54 +171,59 @@
 		    <input type="hidden" name="depth" value="${article.depth}">
 		    <input type="hidden" name="pos" value="${article.pos}">
 		    <input type="hidden" name="groupId" value="${article.groupId}">
+<<<<<<< HEAD
+=======
 		    <div style="position: absolute; width:1280px; height:1300px">
 					<form action="../board/" method="post">
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 		    
 			<table border="2" width="500">
 				<tr>
-					<th>제목</th>	
-						
+					<th>제목</th>		
 				<td>
-				
-				<textarea name="comments" id="" cols="54"row="6"></textarea>	
+				<textarea name="comments" id="" cols="54"row="10"></textarea>	
 				</td>			
 				</tr>
 	    	<tr> 
 	    	<td colspan='2'>
-	    	<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
+	   		<textarea name="title" id="utitle" rows="10" cols="65" placeholder="내용쓰기" maxlength="100" required></textarea>
       	     </td>
-      		</tr>
-               
-					         
-                         
-                    </div>			
+      	     <tr>
+          </tr>
+ 	
 
 				<tr>
 				<td colspan='2'>
 										
-			<img src="../img/추천.png" alt="추천" />
 			<img src="../img/댓글.png" alt="댓글" />
 		    <textarea name="title" id="utitle" rows="5" cols="65" placeholder="댓글달기" maxlength="100" required></textarea>
           <div align="right"> 
 	    <input type='button' value='작성하기'/>
 	    </div>
+		    </td> 
 
-		          
-	</table>	
-	
-	<div class="page-control">
-	 <align : center>	
-       <div>
-       
 
-		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
+                    </tr>
       
-			
-		<a href="../board/List.jsp">목록 바로가기</a>	
-       
-		<a id="prev" class="button" href="/blog/githubpages/2020-12-26-making-blog-10/">&laquo; 이전글</a>
-        </div>					
-				
+          <tbody>          
+           <tr>
+          
+           <td colspan='2'>              
+           <div align="center">  
+            <input type='button' value='이전글'/>
+             <input type='button' value='목록가기'/>
+             <input type='button' value='다음글'/>
+               </div>
+          </td>
+	      </tr>  
+	      </tbody>
+	
+			</table>
+		</div>
+	</form>
+
+	<script>
+	</script>
 	</div>
 		<!-- BootStrap javascript 사용 -->
 	<script
