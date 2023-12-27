@@ -95,7 +95,6 @@ public class CheckGroupMember extends HttpServlet {
 		/** ID가 존재한다면 */
 		if(chkID == 1 && count > 1 && intrest != null) {
 			dao.makeGroup(groupNum, sessionID, strArray, intrest, address);
-			dao.close();
 			JSFunction .alertThenClose(resp, "그룹 생성에 성공하셨습니다.", "../board/MakeGroup.jsp");
 		} else if(chkID == 0){
 			

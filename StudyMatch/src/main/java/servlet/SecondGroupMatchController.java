@@ -30,7 +30,6 @@ public class SecondGroupMatchController extends HttpServlet {
 		
 		/** 사용자가 2번 그룹의 '상 세 정 보'를 눌렀을 때 */
 		if (groupNum2 != null) {	
-			dao.close();
 			req.getRequestDispatcher("../board/MatchInformation.jsp").forward(req, resp);
 			
 		} else {	/** 사용자가 2번 그룹의 '매 치 하 기' 를 눌렀을 때 */
@@ -41,14 +40,13 @@ public class SecondGroupMatchController extends HttpServlet {
 			int total_Count = dao.countGroupMember(groupNum2);
 			/** 5명 모두 찼으면 'makeGroup'의 값을 '초과'로 설정 */
 			if (total_Count > 4) {
-				dao.close();
 				req.setAttribute("makeGroup", "excess");
 			}
 			
 			dao.groupJoin(groupNum2, sessionID, total_Count);
-			
-			dao.close();
+				
 			req.getRequestDispatcher("../board/Main.do").forward(req, resp);
 		}
+		dao.close();
 	}
 }

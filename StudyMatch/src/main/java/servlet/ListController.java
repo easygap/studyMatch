@@ -19,7 +19,7 @@ import model.BoardDAO;
 import model.BoardDTO;
 import utils.BoardPage;
 
-@WebServlet("/ListController")
+@WebServlet("/board/list.do")
 public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -78,7 +78,7 @@ public class ListController extends HttpServlet {
 		map.put("end", end);
 
 		List<BoardDTO> boardLists = dao.selectList(map, interest);
-		dao.close();
+
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
@@ -89,5 +89,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("map", map);
 		req.getRequestDispatcher("../board/List.jsp").forward(req, resp);
 		System.out.println("BoardLists Size: " + boardLists.size());
+		
+		dao.close();
 	}
 }
