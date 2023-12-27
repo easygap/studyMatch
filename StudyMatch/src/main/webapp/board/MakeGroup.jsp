@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
-Object Address = request.getAttribute("address");
-String address = (String)Address;
-System.out.println("주소값은 : " + address);
+String address = "";
+if(request.getParameter("address") != null)
+	address = request.getParameter("address").trim();
 %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +45,7 @@ System.out.println("주소값은 : " + address);
 </head>
 
 <body id="registbody">
-	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do?address=<%=address%>" onsubmit="return validateForm(this);">
+	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do" onsubmit="return validateForm(this);">
 	<div align="center" id="makeDiv">
 	<h2 id="makeHead">그 룹 생 성</h2>
 	<div id="table">
@@ -107,6 +106,7 @@ System.out.println("주소값은 : " + address);
 		</div>
 		<button type="submit" name="signUp" id="MakeButton" >생성하기</button>	
 	</div>
+	<input type="text" style="display:none;" name="address" value="<%=address%>" />
 </form>
 </body>
 </html>

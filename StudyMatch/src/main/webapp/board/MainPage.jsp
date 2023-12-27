@@ -56,7 +56,6 @@ String address = "";
 if (dto != null) {
 	id = dto.getId();
 	address = dto.getAddress();
-	System.out.println("메인에서 주소값 : " + address);
 	firstGroup = dto.getFirstGroup();
 	secondGroup = dto.getSecondGroup();
 }
@@ -97,7 +96,7 @@ String nowTime = sdf.format(now.getTime());
 	/** 그룹생성 버튼 눌렀을 때 */
 	function makeGroup() {
  		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
- 			var url = "../board/MakeGroup.jsp?address=<%=address%>";
+ 			var url = "../board/MakeGroup.jsp?address=" + "<%=address%>";
             var name = "makeGroup";
             var _width = '500';
             var _height = '300';
@@ -118,7 +117,7 @@ String nowTime = sdf.format(now.getTime());
 	
 	
 	function openPopup() {
-		var groupNum1 = <%=firstGroup%>;
+		var groupNum1 = "<%=firstGroup%>";
 		
 		// 동적으로 폼 생성
 	    var form = document.createElement("form");
