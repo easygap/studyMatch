@@ -1,6 +1,6 @@
 <%@ page isELIgnored="false"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="model.CommentDAO"%>
+<%@ page import="model.BoardDAO"%>
 <%@ page import="model.CommentDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -124,8 +124,9 @@ function setEditMode(content, commNum, commId) {
         </thead>
         <tbody>
             <% 
-            CommentDAO dao = new CommentDAO(); 
+            BoardDAO dao = new BoardDAO(); 
             ArrayList<CommentDTO> list = dao.getList(num); 
+            dao.close();
             ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions"); 
             if (permissions != null) { 
             	for (int i = 0; i < list.size(); i++) { 

@@ -39,8 +39,7 @@ public class ViewController extends HttpServlet {
 		}
 		
 		// 댓글 삭제 & 수정
-		CommentDAO cDao = new CommentDAO();
-		ArrayList<CommentDTO> commList = cDao.getList(num);
+		ArrayList<CommentDTO> commList = dao.getList(num);
 		ArrayList<Boolean> permissions = new ArrayList<>();
 
 		for (CommentDTO comment : commList) {
@@ -52,7 +51,6 @@ public class ViewController extends HttpServlet {
 		dao.updateVisitCount(num); // 조회수 1 증가
 		BoardDTO dto = dao.selectView(num);
 		dao.close();
-		cDao.close();
 		// 줄 바꿈 처리
 		dto.setContent(dto.getContent().replace("\r\n", "<br/>"));
 

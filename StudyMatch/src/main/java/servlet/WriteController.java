@@ -90,7 +90,6 @@ public class WriteController extends HttpServlet {
 			userId = userObject.toString();
 			System.out.println("게시글 작성 - userId 생성 성공");
 		} else {
-			dao.close();
 			resp.sendRedirect("../board/Write.jsp?interest=" + internum);
 			System.out.println("userId 생성 실패");
 			return; // 메서드 종료
