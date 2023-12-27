@@ -7,11 +7,19 @@
 
 	GroupDTO dto = (GroupDTO)request.getAttribute("dto");
 
+	// 현재 내가 속한 그룹 정보
     Object Img = request.getAttribute("img");
     List<String> profileImages = (List<String>) Img;
     
     Object Name = request.getAttribute("name");
     List<String> Group_names = (List<String>) Name;
+    
+    // 이전에 내가 가입했다가 탈퇴한 그룹 정보
+    Object previousImg = request.getAttribute("previousImg");
+    List<String> PreviousImg = (List<String>) previousImg;
+    
+    Object previousName = request.getAttribute("previousNames");
+    List<String> PreviousName = (List<String>) previousName;
     
     String Group_num = "";
     if(dto != null){
@@ -19,6 +27,7 @@
     }
 
     System.out.println("history.jsp : " + profileImages + " / " + Group_names + " / " + Group_num);
+    System.out.println("JSP에서 PreviousImg : " + PreviousImg + " / PreviousName : " + PreviousName);
 %>
 <!DOCTYPE html>
 <html>
@@ -26,21 +35,7 @@
     <meta charset="UTF-8">
     <title>Match History</title>
     <link rel="stylesheet" href="../css/MatchHistorystyle.css">
-    <script>
-    function validateForm(form) {
-        return true;
-    }
-    
-    function Leaving() {
-		if (confirm("정말 그룹을 탈퇴 하시겠습니까?") == true) {
-			alert("그룹 탈퇴가 완료되었습니다.");
-			document.historyFrm.submit();
-		} else {
-			// 사용자가 취소를 선택한 경우 아무 동작 없음
-		}
-	}
-    
-    </script>
+    <script src="../js/MatchHistoryScript.js"></script>
 </head>
 <body id="matchbody">
 
@@ -55,91 +50,71 @@
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
 				<br /> <br /> <br />
-
+			<div id="matchHistory">
 				<form name="historyFrm" method="post" action="../Match/MatchLeaving.do" onsubmit="return validateForm(this);">
 					<p class="matching" id="Matching">매 칭 현 황</p>
-					<!-- 현재 내 그룹 -->
-					<div class="MyStudyGruop-Back">
-						<p class="matching" id="group">MY STUDY GROUP</p>
-						<div class="image" align="center">
-							<!-- 프로필 사진 -->
-							<% if (profileImages != null && !profileImages.isEmpty()) {
+					
+						<!-- 현재 내 그룹 -->
+						<div class="MyStudyGruop-Back">
+							<p class="matching" id="group">MY STUDY GROUP</p>
+							<div class="image" align="center">
+								<!-- 프로필 사진 -->
+								<% if (profileImages != null && !profileImages.isEmpty()) {
 									for (int i = 0; i < profileImages.size(); i++) { 
 										if (profileImages.get(i) != null && !profileImages.get(i).isEmpty()) { %>
-							<img src="${pageContext.request.contextPath}/MyProfile/<%=profileImages.get(i)%>" name="profile" alt="Mem" class="profile">
+								<img src="${pageContext.request.contextPath}/MyProfile/<%=profileImages.get(i)%>" name="profile" alt="Mem" class="profile">
+								<% } else { %>
+								<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+								<% } } } else { %>
+								<p>그룹 정보의 프로필 이미지 값이 조회되지 않았습니다.</p>
+								<% } %>
+
+								<!-- 그룹원 이름 -->
+								<% if( Group_names != null && !Group_names.isEmpty()) { %>
+								<p id="name">
+									<% for (int i = 0; i < Group_names.size(); i++) { %>
+									<%=Group_names.get(i)%>
+									<% if (i < Group_names.size() - 1) { %>
+									<%-- 마지막 요소가 아닌 경우만 공백 추가 --%>
+									<% } %>
+									<% } %>
+								</p>
+								<input type="button" name="leaving" id="mygroup" value="  그 룹 탈 퇴 하 기  " onclick="Leaving()" />
+								<% } else { %>
+								<p>그룹 정보의 이름 값이 조회되지 않았습니다.</p>
+								<% } %>
+
+								<input type="text" style="display: none;" name="groupNum" value="<% if(Group_num != null && !Group_num.equals("")) { out.print(Group_num);  } %>" />
+							</div>
+						</div>
+
+						<!-- 이전에 매칭될뻔한 그룹 -->
+						<div class="MatchHistory">
+						<p class="matching" id="history">Match History</p>
+							<!-- 프로필 사진 -->
+							<% if (PreviousImg != null && !PreviousImg.isEmpty()) {
+									for (int i = 0; i < PreviousImg.size(); i++) { 
+										if (PreviousImg.get(i) != null && !PreviousImg.get(i).isEmpty()) { %>
+							<img src="${pageContext.request.contextPath}/MyProfile/<%=PreviousImg.get(i)%>" name="profile" alt="Mem" class="profile">
 							<% } else { %>
 							<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
 							<% } } } else { %>
-							<p>No images available</p>
+							<p>이전 그룹의 프로필 사진 값이 존재하지 않았습니다.</p>
 							<% } %>
 
 							<!-- 그룹원 이름 -->
-							<p id="name">
-								<% if (Group_names != null && Group_names.size() > 0) {
-									for (int i = 0; i < Group_names.size(); i++) {
-										Group_names.get(i); %>
-									<% if (i < Group_names.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%>
-							</p>
-							<% } } } else { %>
-							<p>Group_names 값이 존재하지 않습니다.</p>
-							<% } %>
-
-							<input type="text" style="display: none;" name="groupNum" value="<% if(Group_num != null && !Group_num.equals("")) { out.print(Group_num);  } %>" />
-							<input type="button" name="leaving" id="mygroup" value="  그 룹 탈 퇴 하 기  " onclick="Leaving()" />
-
+							<% if( PreviousName != null && !PreviousName.isEmpty() ) { %>
+								<p id="PreviousName"> 
+								<% for(int i = 0; i < PreviousName.size(); i++) { %>
+									<%=PreviousName.get(i)%> 
+									<% if (i < PreviousName.size() - 1) { %> <%-- 마지막 요소가 아닌 경우만 공백 추가 --%><% } %> 
+								<% } %></p>
+								<% } else { %>
+										<p>이전 그룹 정보의 이름 값이 조회되지 않았습니다.</p>
+								<% } %>
 						</div>
-					</div>
-
-					<!-- 이전에 매칭될뻔한 그룹 -->
-					<div class="MatchHistory">
-						<p class="matching" id="history">Match History</p>
-						<p class="font">매칭 진행되고자 했던 날짜</p>
-						<c:forEach var="img" items="${profileImages}">
-							<c:choose>
-								<c:when test="${not empty img}">
-									<img src="${pageContext.request.contextPath}/MyProfile/${img}" name="profile" alt="Member" class="profile">
-								</c:when>
-								<c:otherwise>
-									<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${empty profileImages}">
-							<p>No images available</p>
-						</c:if>
-						<p class="font">신짱구 한유리 김철수 이훈이</p>
-						<p class="font">매칭 진행되고자 했던 날짜</p>
-						<c:forEach var="img" items="${profileImages}">
-							<c:choose>
-								<c:when test="${not empty img}">
-									<img src="${pageContext.request.contextPath}/MyProfile/${img}" name="profile" alt="Member" class="profile">
-								</c:when>
-								<c:otherwise>
-									<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${empty profileImages}">
-							<p>No images available</p>
-						</c:if>
-						<p class="font">신짱구 한유리 김철수 이훈이</p>
-						<p class="font">매칭 진행되고자 했던 날짜</p>
-						<c:forEach var="img" items="${profileImages}">
-							<c:choose>
-								<c:when test="${not empty img}">
-									<img src="${pageContext.request.contextPath}/MyProfile/${img}" name="profile" alt="Member" class="profile">
-								</c:when>
-								<c:otherwise>
-									<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<c:if test="${empty profileImages}">
-							<p>No images available</p>
-						</c:if>
-						<p class="font" id="plus">더 보 기..</p>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

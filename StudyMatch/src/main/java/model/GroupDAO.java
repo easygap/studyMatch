@@ -193,6 +193,58 @@ public class GroupDAO extends DBConnPool {
 		}
 		return Profile;
 	}
+	
+	/** 이전에 매칭된 기록 조회 */
+	public Map<String, List<String>> PreviousList(String id){
+		Map<String, List< String>> Previous = new HashMap<>();
+	    List<String> PreviousImg = new ArrayList<>();
+		List<String> PreviousNames = new ArrayList<>();
+		
+		GroupDTO dto = new GroupDTO();
+		
+		String query1 = "SELECT GROUP_NUM FROM AGREEMATCH A WHERE A.AGREE_CREATE  = 'N' AND id=?";
+		try {
+			psmt = con.prepareStatement(query1);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setGroup_Num(rs.getString("GROUP_NUM"));
+			}
+
+			System.out.println(" 이전 그룹 매칭되었던 리스트 DB 연결 성공 ! ! ! ");
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println(" 이전 그룹 매칭되었던 리스트 DB 연결 실패 . . . ");
+		}
+		
+		String query2 = " SELECT M.name, M.img "
+				+ " FROM MEMBER M "
+				+ " JOIN MATCHGROUP MG ON M.id IN (MG.id1, MG.id2, MG.id3, MG.id4, MG.id5) "
+				+ " WHERE MG.GROUP_NUM = ? ";
+		
+		try {
+			psmt = con.prepareStatement(query2);
+			psmt.setString(1, dto.getGroup_Num());
+			rs = psmt.executeQuery();
+
+			System.out.println(" dto에 값이 저장이 안됐나? 뭐지? " + dto.getGroup_Num());
+			while (rs.next()) {
+				PreviousNames.add(rs.getString("name"));
+				PreviousImg.add(rs.getString("img"));
+			}
+			Previous.put("PreviousNames", PreviousNames);
+			Previous.put("PreviousImg", PreviousImg);
+			
+			System.out.println("정말 값이 서블렛으로만 전달이 안된건가?? 분명 된거 같은데?? " + Previous);
+			System.out.println(" 이전 그룹 매칭되었던 리스트 DB연결 후 해당 그룹 이미지 및 이름 불러오기 성공 ! ! ! ");
+		} catch (Exception e) {
+			System.out.println(" 이전 그룹 매칭되었던 리스트 DB연결 후 해당 그룹 이미지 및 이름 불러오기 실패 . . .");
+			e.printStackTrace();
+		}
+		
+		return Previous;
+	}
 
 	/** 본인 관심사, 주소와 맞는 그룹의 그룹원, 그룹원 프로필, Group_num 조회 */
 	public Map<String, List<String>> getGroupData(String interest, String address, String id) {
