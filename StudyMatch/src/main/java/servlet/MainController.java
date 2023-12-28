@@ -6,7 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +38,10 @@ public class MainController extends HttpServlet {
 		dto.setId(sessionID);
 		/** 닉네임 저장 */
 		dto.setNickName(NickName);
+		/** 가입한 그룹이 있는지 - 있으면 1, 없으면 0  */
+		int status = dao.getGroupNum(sessionID);
+		dto.setGroup_status(status);
+		System.out.println("그룹에 가입했으니 당신은 : " + status + "의 값을 갖고 있습니다.");
 		
 		// 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();

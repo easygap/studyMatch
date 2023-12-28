@@ -53,11 +53,14 @@ String secondGroup = "";
 
 String address = "";
 
+int status = 0;
+
 if (dto != null) {
 	id = dto.getId();
 	address = dto.getAddress();
 	firstGroup = dto.getFirstGroup();
 	secondGroup = dto.getSecondGroup();
+	status = dto.getGroup_status();
 }
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -270,6 +273,7 @@ String nowTime = sdf.format(now.getTime());
 								</p>
 							</div>
 						</div>
+						<% if(status == 0) { %>
 						<!-- 매칭하기 -->
 						<div id="NewMatch">
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
@@ -345,7 +349,13 @@ String nowTime = sdf.format(now.getTime());
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="button" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " onclick="makeGroup()" />
-								<% } } %>
+								<% } } } else { %>
+									<div id="NewMatch" align="center">
+									<p class="matchfont" id="newmatch">이미 가입한 그룹이 존재합니다 ! ! !</p>
+									<div class="Match1" align="center">
+									<input type="button" name="history" class="Mainbutton"
+											value="  H I S T O R Y  " onclick="location.href='../match/MatchHistory.do'" />
+								<% } %>
 								
 							</div>
 									

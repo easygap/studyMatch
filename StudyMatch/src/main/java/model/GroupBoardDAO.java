@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 import common.DBConnPool;
 import member.MemberDTO;
 
-public class BoardDAO extends DBConnPool {
+public class GroupBoardDAO extends DBConnPool {
 
 	DataSource dataSource;
 	Connection con;
@@ -29,7 +29,7 @@ public class BoardDAO extends DBConnPool {
 	DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 	LocalDateTime now = LocalDateTime.now();
 
-	public BoardDAO() {
+	public GroupBoardDAO() {
 		try {
 			Context context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/dbcp_myoracle");
@@ -41,6 +41,21 @@ public class BoardDAO extends DBConnPool {
 		}
 	}
 	
+	/** SessionID로 Group_Num 조회 */
+	public String searchGroupNum(String id) {
+		String groupNum = null;
+		
+		String query = "SELECT GROUP_NUM FROM MATCHGROUP WHERE ? IN (ID1, ID2, ID3, ID4, ID5)";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return groupNum;
+	}
+
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
@@ -104,15 +119,15 @@ public class BoardDAO extends DBConnPool {
 	}
 
 	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
-	public String checkSession(String num, String interest) {
+	public String checkSession(String num, String groupNum) {
 		String checkID = null;
 
-		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
+		String query = "SELECT id FROM board WHERE board_num = ? AND group_num = ?";
 
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, num);
-			psmt.setString(2, interest);
+			psmt.setString(2, groupNum);
 			rs = psmt.executeQuery();
 
 			if (rs.next())
@@ -240,9 +255,9 @@ public class BoardDAO extends DBConnPool {
 	}
 
 	// 게시글 목록
-	public List<BoardDTO> selectList(Map<String, Object> map, String interest) {
+	public List<BoardDTO> selectList(Map<String, Object> map, String groupNum) {
 		List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
-		String query = "SELECT B.*, M.nickname FROM member M INNER JOIN board B ON M.id = B.id WHERE inter_num=? ";
+		String query = "SELECT B.*, M.nickname FROM member M INNER JOIN board B ON M.id = B.id WHERE group_num=? ";
 		if (map.get("searchWord") != null) {
 			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
@@ -250,7 +265,7 @@ public class BoardDAO extends DBConnPool {
 
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, interest);
+			psmt.setString(1, groupNum);
 			rs = psmt.executeQuery(); // 쿼리문 실행
 			System.out.println("Query: " + query);
 			while (rs.next()) {
