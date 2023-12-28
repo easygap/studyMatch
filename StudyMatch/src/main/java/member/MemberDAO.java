@@ -91,7 +91,6 @@ public class MemberDAO extends DBConnPool {
 				// 회원 정보를 DTO에 설정
 				dto.setId(rs.getString("id"));
 				dto.setName(rs.getString("name"));
-				dto.setPass(rs.getString("pwd"));
 				dto.setBirth(rs.getString("birth"));
 				dto.setJob(rs.getString("job"));
 				dto.setNick(rs.getString("nickname"));

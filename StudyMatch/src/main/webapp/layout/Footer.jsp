@@ -7,10 +7,11 @@
 <title>정보 고시</title>
 
 <style>
-.box-footer {
+footer {
 	background-color: #000;
 	color: #fff;
 	width: 100%
+	
 }
 </style>
 </head>
