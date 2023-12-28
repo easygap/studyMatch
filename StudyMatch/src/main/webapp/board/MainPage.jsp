@@ -276,13 +276,13 @@ String nowTime = sdf.format(now.getTime());
 						<% if(status == 0) { %>
 						<!-- 매칭하기 -->
 						<div id="NewMatch">
+						<% if("".equals(id) || id == null) { %>
+							<p class="loginMatchfont" id="newmatch">로그인 후 이용할 수 있는 기능입니다.</p>
+							<input type="button" value="로그인" class="Loginbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
 							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
-								<% if("".equals(id) || id == null) { %>
-								<p>로그인 후 이용할 수 있는 기능입니다.</p>
-								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
 									for(int i = 0; i < firstGroupName.size(); i++) {
 										if(firstGroupImg.get(i) != null && !firstGroupImg.get(i).isEmpty()) { %>
@@ -307,8 +307,8 @@ String nowTime = sdf.format(now.getTime());
 										<input type="button" name="match1" class="Mainbutton" value="  매 치 하 기  " onclick="matchCheck1()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="make" class="Mainbutton"
-											value="  그 룹 생 성  " />
+										<input type="button" name="make" class="Mainbutton"
+											value="  그 룹 생 성  " onclick="makeGroup()" />
 								<% } %>
 							</div>
 							<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
@@ -345,19 +345,20 @@ String nowTime = sdf.format(now.getTime());
 											value="  매 치 하 기  " onclick="matchCheck2()" />
 										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
 								</form>
+								</div>
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="button" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " onclick="makeGroup()" />
 								<% } } } else { %>
 									<div id="NewMatch" align="center">
-									<p class="matchfont" id="newmatch">이미 가입한 그룹이 존재합니다 ! ! !</p>
-									<div class="Match1" align="center">
-									<input type="button" name="history" class="Mainbutton"
+									<p class="noMatchfont" id="newmatch">이미 가입한 그룹이 존재합니다 ! ! !</p>
+									<input type="button" name="history" class="Nobutton"
 											value="  H I S T O R Y  " onclick="location.href='../match/MatchHistory.do'" />
+									<input type="button" name="history" class="Nobutton"
+											value="  그 룹 게 시 판  " onclick="location.href='../board/GroupList.do'" />
+											<br/><br/>
 								<% } %>
-								
-							</div>
 									
 						</div>
 						
