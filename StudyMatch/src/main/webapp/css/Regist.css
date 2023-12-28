@@ -1,35 +1,35 @@
 @charset "UTF-8";
 
-#registHead{
+#registHead, #MypageHead{
 	color: #5174BE;
 	font-weight: 900;
 	font-size: 40px;
 	line-height: 130px;
 }
 
-#registDiv{
+#registDiv, #MypageDiv{
 	height: 850px;
 }
 
-#table{
+#table, #MypageTb{
 	height: 600px;
 }
 
-.registTd, .registInput, .interest{
+.registTd, .registInput, .interest, .MypageTd, .MypageInput{
 	margin: 5px;
 	border: none;
 }
-.registTd{
+.registTd, .MypageTd{
 	font-size: 17px;
 	font-weight: 600;
 }
 
-.registInput{
+.registInput, .MypageInput{
 	width: 14.5em;
 	height: 1.6em;
 }
 
-#RegistButton, #idCheck{
+#RegistButton, #idCheck, .myPage{
 	background-color: #5174BE;
 	opacity: 0.6;
 	font-weight: bold;
@@ -38,7 +38,7 @@
 	border: none;
 }
 
-#idCheck{
+#idCheck, .myPage{
 	font-size: 14px;
 	width: 90px;
 	height: 28px;
