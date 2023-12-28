@@ -84,7 +84,7 @@ dao.close();
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/list.do?interest=6001">자유게시판</a>
                     
                     <!-- 그룹게시판 -->
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/list.do?group_num=6001">그룹게시판</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/GroupList.do">그룹게시판</a>
                 </div>
             </div>
             
