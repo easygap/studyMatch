@@ -262,7 +262,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (!"".equals(id) || id != null) {
+								if (id != null && !"".equals(id)) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
