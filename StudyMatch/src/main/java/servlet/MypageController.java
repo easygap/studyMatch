@@ -30,7 +30,6 @@ public class MypageController extends HttpServlet {
 		
 		request.setAttribute("id", dto.getId());
 		request.setAttribute("name", dto.getName());
-		request.setAttribute("pass", dto.getPass());
 		request.setAttribute("birth", dto.getBirth());
 		request.setAttribute("job", dto.getJob());
 		request.setAttribute("nick", dto.getNick());
