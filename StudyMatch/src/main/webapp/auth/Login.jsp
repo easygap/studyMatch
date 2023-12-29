@@ -94,7 +94,7 @@ function validateForm(form){
   });
 }
 
-// 서버로 사용자 정보를 보내는 함수
+// 서버로 사용자 정보를 보내는 함수 
 function sendUserInfoToServer(userInfo) {
 	console.log("Sending User Information to Server:", userInfo);
   $.ajax({
