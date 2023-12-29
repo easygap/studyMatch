@@ -64,13 +64,37 @@ public class CommentDAO extends DBConnPool {
 //		return dto;
 //	}
 
-	// 댓글 쓰기
+	/** 그룹 게시판 댓글 쓰기 */
+	public int insertGroupComm(CommentDTO dto) {
+		int result = 0;
+		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
+		String query = "INSERT INTO comments (group_num, board_num, commen_num, content, id, like_count) "
+				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getGroup_num());
+			psmt.setString(2, dto.getBoard_num());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getId());
+			psmt.setInt(5, likeCount);
+			result = psmt.executeUpdate();
+			System.out.println(date.format(now) + " [ " + dto.getCommen_num() + " ] 댓글 DB 업로드 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 댓글 업데이트 중 예외 발생! ***");
+			result = 0;
+		}
+		return result;
+	}
+	
+	// 일반 게시글 댓글 쓰기
 	public int insertComm(CommentDTO dto) {
 		int result = 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
 		String query = "INSERT INTO comments (inter_num, board_num, commen_num, content, id, like_count) "
 				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
-
+		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getInter_num());

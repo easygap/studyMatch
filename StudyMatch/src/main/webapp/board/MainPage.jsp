@@ -58,10 +58,13 @@ int status = 0;
 if (dto != null) {
 	id = dto.getId();
 	address = dto.getAddress();
-	firstGroup = dto.getFirstGroup();
 	secondGroup = dto.getSecondGroup();
+	firstGroup = dto.getFirstGroup();
 	status = dto.getGroup_status();
+	
 }
+System.out.println("secondGroup secondGroup secondGroup : " + secondGroup);
+System.out.println("firstGroup firstGroup firstGroup : " + firstGroup);
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
 
@@ -119,7 +122,7 @@ String nowTime = sdf.format(now.getTime());
 	} // 웹 페이지가 로드되면 buildCalendar 실행
 	
 	
-	function openPopup() {
+	function openPopup1() {
 		var groupNum1 = "<%=firstGroup%>";
 		
 		// 동적으로 폼 생성
@@ -137,6 +140,39 @@ String nowTime = sdf.format(now.getTime());
 	    
 	    // 팝업 창 열기 및 스타일 지정
 	    var popupUrl = '../board/Match1.do';
+	    var popupName = 'popupWindow';
+	    var popupWidth = 1100;
+	    var popupHeight = 650;
+	    var leftPosition = (screen.width - popupWidth) / 2;
+	    var topPosition = (screen.height - popupHeight) / 2;
+
+	    var popupStyle = 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition + ', resizable=yes, scrollbars=yes';
+
+	    window.open(popupUrl, popupName, popupStyle);
+	    
+	    document.body.appendChild(form);
+	    form.submit();
+	    document.body.removeChild(form);
+	}
+	
+	function openPopup2() {
+		var groupNum2 = "<%=secondGroup%>";
+		
+		// 동적으로 폼 생성
+	    var form = document.createElement("form");
+	    form.method = "post";
+	    form.action = "../board/Match2.do";
+	    form.target = "popupWindow"; // 팝업 창의 이름
+	    
+	    // 데이터를 담아 POST 요청 보내기
+	    var input = document.createElement("input");
+	    input.type = "hidden";
+	    input.name = "secondGroup";
+	    input.value = groupNum2;
+	    form.appendChild(input);
+	    
+	    // 팝업 창 열기 및 스타일 지정
+	    var popupUrl = '../board/Match2.do';
 	    var popupName = 'popupWindow';
 	    var popupWidth = 1100;
 	    var popupHeight = 650;
@@ -303,7 +339,7 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest1()} 프로젝트}로 1번 그룹에 매칭되었습니다.</p>
-										<input type="button" name="information1" class="Mainbutton" onclick="openPopup()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="button" name="information1" class="Mainbutton" onclick="openPopup1()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="button" name="match1" class="Mainbutton" value="  매 치 하 기  " onclick="matchCheck1()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
@@ -339,19 +375,19 @@ String nowTime = sdf.format(now.getTime());
 								<% } %></p>
 									<p class="content1">설정하신 {${dto.getAddress()},
 											${dto.getInterest2()} 프로젝트}로 2번 그룹에 매칭되었습니다.</p>
-										<input type="submit" name="information2" class="Mainbutton"
-											value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="button" name="information2" class="Mainbutton" onclick="openPopup2()" value="  상 세 보 기  " />&nbsp;&nbsp;&nbsp;&nbsp;
 										<input type="button" name="match2" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck2()" />
-										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
-								</div>
-								</form>
-								
+										
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="button" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " onclick="makeGroup()" />
-								<% } %></div><%} } else { %>
+								<% } %>
+								</div>
+								<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
+								</form>
+								<%} } else { %>
 									<div id="NewMatch" align="center">
 									<p class="noMatchfont" id="newmatch">이미 가입한 그룹이 존재합니다 ! ! !</p>
 									<input type="button" name="history" class="Nobutton"
@@ -360,9 +396,7 @@ String nowTime = sdf.format(now.getTime());
 											value="  그 룹 게 시 판  " onclick="location.href='../board/GroupList.do'" />
 											<br/><br/>
 								<% } %>
-								
-							</div>	
-						
+						</div>
 						
 					<!-- 캘린더 -->
 					<div id="Calendar" align="center">
@@ -393,6 +427,7 @@ String nowTime = sdf.format(now.getTime());
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- BootStrap javascript 사용 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"

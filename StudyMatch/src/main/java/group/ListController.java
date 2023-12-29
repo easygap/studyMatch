@@ -84,15 +84,16 @@ public class ListController extends HttpServlet {
 
 		List<BoardDTO> boardLists = dao.selectList(map, groupNum);
 
-		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/list.do");
+		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../board/GroupList.do");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
 
+		req.setAttribute("groupnum", groupNum);
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
-		req.getRequestDispatcher("../board/List.jsp").forward(req, resp);
+		req.getRequestDispatcher("../GroupBoard/List.jsp").forward(req, resp);
 		System.out.println("BoardLists Size: " + boardLists.size());
 		
 		dao.close();

@@ -24,6 +24,25 @@ System.out.println(nick + " / " + phone);
 <meta charset="UTF-8">
 <link href="../css/Regist.css" rel="stylesheet"/>   
 <title>MyPage</title>
+<script type="text/javascript">
+
+function count_check(obj) {
+	var chkBox = document.getElementsByName("interest");	// name값 interests 를 불러옴
+	var totalChecked = 0;									// checked 변수에 초깃값을 0으로 설정
+	
+	for(var i = 0; i < chkBox.length; i++){					// 반복문으로 초깃값, 조건식, 증감식 설정
+		if(chkBox[i].checked){								// 조건문으로 chkBox가 checked 됐을 경우
+			totalChecked++;									// countChecked 1씩 증가
+		}
+	}
+	if(totalChecked > 3){									// 조건문으로 totalChecked가 3개보다 클 경우
+		alert("3개까지 체크할 수 있습니다.");						// alert를 띄움
+		obj.checked = false;								// flase를 주어 alert를 띄운 뒤에 check가 되지 않도록 설정
+		return false;
+	}
+}
+
+</script>
 </head>
 <body>
 
@@ -113,25 +132,25 @@ System.out.println(nick + " / " + phone);
 								<tr>
 									<td class="MypageTd">(* 관심사 재선택 *) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td colspan="5">
-										<input type="checkbox" class="interest" name="interest" value="JAVA " /> JAVA 
-										<input type="checkbox" class="interest" name="interest" value="PYTHON"> PYTHON
-										<input type="checkbox" class="interest" name="interest" value="C"> C 
-										<input type="checkbox" class="interest" name="interest" value="C++"> C++ <br />
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="JAVA " /> JAVA 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="PYTHON"> PYTHON
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="C"> C 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="C++"> C++ <br />
 										 
-										<input type="checkbox" class="interest" name="interest" value="영어"> 영어 
-										<input type="checkbox" class="interest" name="interest" value="일본어"> 일본어 
-										<input type="checkbox" class="interest" name="interest" value="중국어"> 중국어 <br />
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="영어"> 영어 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="일본어"> 일본어 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="중국어"> 중국어 <br />
 	
-										<input type="checkbox" class="interest" name="interest" value="UI/UX"> UI/UX 
-										<input type="checkbox" class="interest" name="interest" value="JSP"> JSP 
-										<input type="checkbox" class="interest" name="interest" value="디자이너"> 디자이너 
-										<input type="checkbox" class="interest" name="interest" value="퍼블리셔"> 퍼블리셔 <br />
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="UI/UX"> UI/UX 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="JSP"> JSP 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="디자이너"> 디자이너 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="퍼블리셔"> 퍼블리셔 <br />
 										 
-										<input type="checkbox" class="interest" name="interest" value="엑셀/한글/워드"> 엑셀/한글/워드 
-										<input type="checkbox" class="interest" name="interest" value="회계"> 회계 <br />
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="엑셀/한글/워드"> 엑셀/한글/워드 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="회계"> 회계 <br />
 										 
-										<input type="checkbox" class="interest" name="interest" value="부동산"> 부동산 
-										<input type="checkbox" class="interest" name="interest" value="투자/주식"> 투자/주식 <br /> <br /></td>
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="부동산"> 부동산 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="투자/주식"> 투자/주식 <br /> <br /></td>
 								</tr>
 	
 								<tr>

@@ -1,19 +1,29 @@
 @charset "UTF-8";
+
 /* 업로드 스타일 */
 .filebox label {
 	display: inline-block;
-	padding: .5em .75em;
+	padding-left: 10px;
+	padding-top: 5px;
 	color: #f8f9fa;
 	font-size: inherit;
 	line-height: normal;
 	vertical-align: middle;
-	background-color: #0d6efd;
 	cursor: pointer;
-	border: 1px solid #E5E5E5;
-	border-radius: .40em;
+	
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1.2em;
+	border-radius: 10px;
+	width: 5em;
+	height: 1.8em;
+	border: none;
 }
 
-.filebox input[type="file"] { /* 파일 필드 숨기기 */
+.filebox input[type="file"] {
+	/* 파일 필드 숨기기 */
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -25,13 +35,38 @@
 }
 
 .mybtn {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 
-        margin-top: 10px;
-    }
-    .mybtn > input {
-        margin-right: 10px;
-    }
+	margin-top: 10px;
+}
+
+.mybtn>input {
+	margin-right: 10px;
+}
+
+#blah {
+	position: absolute;
+	left: 700px;
+	top: 100px;
+	width: 300px;
+	border: 1px solid black;
+}
+
+.write {
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1.2em;
+	border-radius: 10px;
+	width: 5em;
+	height: 1.8em;
+	border: none;
+}
+
+.List{
+	background-color: #5174BE;
+}
