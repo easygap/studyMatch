@@ -239,6 +239,8 @@ public class MemberDAO extends DBConnPool {
 			psmt.setString(9, kakao);
 			signUpCount = psmt.executeUpdate();
 
+			System.out.println("카카오 회원가입 DB 업로드 완료");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 카카오 회원가입 DB 업로드 중 예외 발생! ***");
