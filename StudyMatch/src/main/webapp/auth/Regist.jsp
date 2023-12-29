@@ -13,6 +13,22 @@ String cp = request.getContextPath();
 <title>Regist Page</title>
 <script src="../js/upload.js"></script>
 <script>
+	
+	function count_check(obj) {
+		var chkBox = document.getElementsByName("interests");	// name값 interests 를 불러옴
+		var totalChecked = 0;									// checked 변수에 초깃값을 0으로 설정
+		
+		for(var i = 0; i < chkBox.length; i++){					// 반복문으로 초깃값, 조건식, 증감식 설정
+			if(chkBox[i].checked){								// 조건문으로 chkBox가 checked 됐을 경우
+				totalChecked++;									// countChecked 1씩 증가
+			}
+		}
+		if(totalChecked > 3){									// 조건문으로 totalChecked가 3개보다 클 경우
+			alert("3개까지 체크할 수 있습니다.");						// alert를 띄움
+			obj.checked = false;								// flase를 주어 alert를 띄운 뒤에 check가 되지 않도록 설정
+			return false;
+		}
+	}
 
 	function validateForm(form) {
 
@@ -139,26 +155,26 @@ String cp = request.getContextPath();
 				<td class="registTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
 				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
 				<td colspan="5">
-					<input type="checkbox" class="interest" name="interests" value="JAVA " /> JAVA
-					<input type="checkbox" class="interest" name="interests" value="PYTHON"> PYTHON
-					<input type="checkbox" class="interest" name="interests" value="C"> C
-					<input type="checkbox" class="interest" name="interests" value="C++"> C++ <br/>
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JAVA " /> JAVA
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="PYTHON"> PYTHON
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C"> C
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C++"> C++ <br/>
 					
-					<input type="checkbox" class="interest" name="interests" value="영어"> 영어
-					<input type="checkbox" class="interest" name="interests" value="일본어"> 일본어
-					<input type="checkbox" class="interest" name="interests" value="중국어"> 중국어 <br/>
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="영어"> 영어
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="일본어"> 일본어
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="중국어"> 중국어 <br/>
 			
-					<input type="checkbox" class="interest" name="interests" value="UI/UX"> UI/UX
-					<input type="checkbox" class="interest" name="interests" value="JSP"> JSP
-					<input type="checkbox" class="interest" name="interests" value="디자이너"> 디자이너
-					<input type="checkbox" class="interest" name="interests" value="퍼블리셔"> 퍼블리셔
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="UI/UX"> UI/UX
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JSP"> JSP
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="디자이너"> 디자이너
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="퍼블리셔"> 퍼블리셔
 					<br/>
 					
-					<input type="checkbox" class="interest" name="interests" value="엑셀/한글/워드"> 엑셀/한글/워드
-					<input type="checkbox" class="interest" name="interests" value="회계"> 회계 <br/>
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="엑셀/한글/워드"> 엑셀/한글/워드
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="회계"> 회계 <br/>
 				
-					<input type="checkbox" class="interest" name="interests" value="부동산"> 부동산
-					<input type="checkbox" class="interest" name="interests" value="투자/주식"> 투자/주식 <br/>
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="부동산"> 부동산
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="투자/주식"> 투자/주식 <br/>
 					<br/>
 				</td>
 			</tr>

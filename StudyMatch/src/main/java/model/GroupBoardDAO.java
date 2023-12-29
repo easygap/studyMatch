@@ -17,7 +17,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
-import member.MemberDTO;
 
 public class GroupBoardDAO extends DBConnPool {
 
@@ -50,23 +49,28 @@ public class GroupBoardDAO extends DBConnPool {
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				groupNum = rs.getString("GROUP_NUM");	
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return groupNum;
 	}
 
-	// 글쓰기
-	public int insertWrite(BoardDTO dto) {
+	/** 조회된 group_num이 있다면 게시글 작성 */
+	public int insertWrite(GroupBoardDTO dto) {
 		int result = 0;
 		int visitCount = dto.getVisit_count() != null ? Integer.parseInt(dto.getVisit_count()) : 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
-		String query = "INSERT INTO board (inter_num, board_num, title, content, img, id, visit_count, like_count) "
+		String query = "INSERT INTO board (group_num, board_num, title, content, img, id, visit_count, like_count) "
 				+ "VALUES (?, seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, ?)";
 
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, dto.getInter_num());
+			psmt.setString(1, dto.getGroup_num());
 			psmt.setString(2, dto.getTitle());
 			psmt.setString(3, dto.getContent());
 			psmt.setString(4, dto.getImg());
@@ -74,51 +78,51 @@ public class GroupBoardDAO extends DBConnPool {
 			psmt.setInt(6, visitCount);
 			psmt.setInt(7, likeCount);
 			result = psmt.executeUpdate();
-			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 게시글 DB 업로드 완료");
+			System.out.println(date.format(now) + " [ " + dto.getGroup_num() + " / " + dto.getId() + " ] 게시글 DB 업로드 완료");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("*** 게시글 작성 쿼리문 예외 발생 ***");
+			System.out.println("*** 그룹 게시글 작성 쿼리문 예외 발생 ***");
 			result = 0;
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 게시글 작성 중 예외 발생! ***");
+			System.out.println("*** 그룹 게시글 작성 중 예외 발생! ***");
 			result = 0;
 		}
 		return result;
 	}
 
-	// 수정하기
-	public int updateEdit(BoardDTO dto) {
+	/** 그룹 게시판 수정하기 */
+	public int updateEdit(GroupBoardDTO dto) {
 		int result = 0;
 		String query = null;
 		try {
 			if (dto.getImg() != null) {
-				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
+				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND group_num = ? ";
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
 				psmt.setString(3, dto.getImg());
 				psmt.setString(4, dto.getBoard_num());
-				psmt.setString(5, dto.getInter_num());
+				psmt.setString(5, dto.getGroup_num());
 			} else {
-				query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND inter_num = ? ";
+				query = "UPDATE board SET" + " title=?, content=?" + " WHERE board_num=? AND group_num = ? ";
 				psmt = con.prepareStatement(query);
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
 				psmt.setString(3, dto.getBoard_num());
-				psmt.setString(4, dto.getInter_num());
+				psmt.setString(4, dto.getGroup_num());
 			}
 
 			result = psmt.executeUpdate();
-			System.out.println(dto.getBoard_num() + "번 게시글 수정 성공");
+			System.out.println(dto.getBoard_num() + "번 그룹 게시글 수정 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 게시물 수정 중 예외 발생 ***");
+			System.out.println("*** 그룹 게시물 수정 중 예외 발생 ***");
 		}
 		return result;
 	}
 
-	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
+	/** 그룹 게시판 삭제 및 수정 시 조회 */
 	public String checkSession(String num, String groupNum) {
 		String checkID = null;
 
@@ -135,7 +139,7 @@ public class GroupBoardDAO extends DBConnPool {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 조회중 에러 발생 ***");
+			System.out.println("*** 그룹 게시판 조회중 에러 발생 ***");
 		}
 		return checkID;
 	}
@@ -156,7 +160,7 @@ public class GroupBoardDAO extends DBConnPool {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 첨부파일 삭제 중 예외 발생 ***");
+			System.out.println("*** 그룹 게시판 첨부파일 삭제 중 예외 발생 ***");
 		}
 
 		String query2 = "DELETE FROM board WHERE board_num=?";
@@ -165,17 +169,17 @@ public class GroupBoardDAO extends DBConnPool {
 			psmt = con.prepareStatement(query2);
 			psmt.setString(1, num);
 			psmt.executeUpdate();
-			System.out.println(num + "번 게시글 삭제 완료");
+			System.out.println(num + "번 그룹 게시글 삭제 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
+			System.out.println("*** 그룹 게시물 삭제 중 예외 발생 ***");
 		}
 		return filename;
 	}
 
-	// 선택한 게시물 보기
-	public BoardDTO selectView(String num) {
-		BoardDTO dto = new BoardDTO();
+	/** 그룹게시판 선택한 게시글 보기 */
+	public GroupBoardDTO selectView(String num) {
+		GroupBoardDTO dto = new GroupBoardDTO();
 		String query = "SELECT B.*, M.nickname" + " FROM member M INNER JOIN board B " + " ON M.id = B.id "
 				+ "WHERE board_num=?";
 		try {
@@ -185,7 +189,6 @@ public class GroupBoardDAO extends DBConnPool {
 
 			if (rs.next()) {
 				dto.setGroup_num(rs.getString("group_num"));
-				dto.setInter_num(rs.getString("inter_num"));
 				dto.setBoard_num(rs.getString("board_num"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
@@ -194,11 +197,11 @@ public class GroupBoardDAO extends DBConnPool {
 				dto.setPost_date(rs.getDate("post_date"));
 				dto.setVisit_count(rs.getString("visit_count"));
 				dto.setLike_count(rs.getString("like_count"));
-				System.out.println(dto.getBoard_num() + "번 게시물 로드 성공~!");
+				System.out.println(dto.getBoard_num() + "번 그룹 게시물 로드 성공~!");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("*** 게시물 로드 중 예외 발생! ***");
+			e.printStackTrace();                     
+			System.out.println("*** 그룹 게시물 로드 중 예외 발생! ***");
 		}
 		return dto;
 	}
@@ -212,7 +215,7 @@ public class GroupBoardDAO extends DBConnPool {
 			psmt.setString(1, num);
 			psmt.executeUpdate();
 		} catch (Exception e) {
-			System.out.println("게시물 조회수 증가 중 예외 발생");
+			System.out.println("그룹 게시물 조회수 증가 중 예외 발생");
 			e.printStackTrace();
 		}
 	}
@@ -288,7 +291,7 @@ public class GroupBoardDAO extends DBConnPool {
 		return bbs;
 	}
 	
-	// 댓글 조회
+	/** 그룹 게시물 댓글 조회 */
 	public ArrayList<CommentDTO> getList (String num) {
 		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
 	            + "INNER JOIN BOARD B ON C.board_num = B.board_num "
@@ -302,7 +305,7 @@ public class GroupBoardDAO extends DBConnPool {
 
 			while (rs.next()) {
 				CommentDTO dto = new CommentDTO();
-				dto.setInter_num(rs.getString(1));
+				dto.setGroup_num(rs.getString(1));
 				dto.setBoard_num(rs.getString(2));
 				dto.setCommen_num(rs.getString(3));
 				dto.setContent(rs.getString(4));
@@ -312,11 +315,11 @@ public class GroupBoardDAO extends DBConnPool {
 				dto.setLike_count(rs.getString(7));
 					
 				list.add(dto);
-				System.out.println(dto.getBoard_num() + "번 게시물 댓글 로드 성공~!");
+				System.out.println(dto.getBoard_num() + "번 그룹 게시물 댓글 로드 성공~!");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 댓글 로드 중 예외 발생! ***");
+			System.out.println("*** 그룹 게시글 댓글 로드 중 예외 발생! ***");
 		}
 		return list;
 	}

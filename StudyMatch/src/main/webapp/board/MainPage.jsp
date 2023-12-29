@@ -344,8 +344,8 @@ String nowTime = sdf.format(now.getTime());
 										<input type="button" name="match2" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck2()" />
 										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
-								</form>
 								</div>
+								</form>
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="button" name="make" class="Mainbutton"
@@ -359,7 +359,6 @@ String nowTime = sdf.format(now.getTime());
 											value="  그 룹 게 시 판  " onclick="location.href='../board/GroupList.do'" />
 											<br/><br/>
 								<% } %>
-									
 						</div>
 						
 					<!-- 캘린더 -->
@@ -391,6 +390,7 @@ String nowTime = sdf.format(now.getTime());
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- BootStrap javascript 사용 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
