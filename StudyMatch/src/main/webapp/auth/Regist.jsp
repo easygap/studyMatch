@@ -33,7 +33,9 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		}
 	}
 
-	function validateForm(form) {
+	function validateForm() {
+		
+		var submitButton = document.getElementById("form");
 		
 		var phoneCheck = VerEx()
             .startOfLine()
@@ -46,20 +48,37 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			.range('0', '9')
 			.repeatPrevious(4)
 			.endOfLine()
-		
-		// Create an example URL
-		var phone = form.address.value;
 
+		var birthCheck = VerEx()
+            .startOfLine()
+			.range('1', '2')
+			.repeatPrevious(1)
+			.range('0', '9')
+			.repeatPrevious(3)
+			.range('0', '1')
+			.repeatPrevious(1)
+			.range('0', '9')
+			.repeatPrevious(1)
+			.range('0', '3')
+			.repeatPrevious(1)
+			.range('0', '9')
+			.repeatPrevious(1)
+			.endOfLine()
+
+			
+		// 정규식 체크를 위한 변수 <-- 폼 값을 받아온다.
+		var phone = form.phone.value;
+		var birth = form.birth.value;
+		var address = form.address.value;
+		
 		var Pw = form.pw.value;
 		var pwCheck = form.pwcheck.value;
-		
-		console.log("전화번호 정규식 확인 값은 : " + phoneCheck.test(phone) +"입니다.");
 		
 		if (form.id.value == "") {
 			alert("아이디를 입력 후 중복확인을 해주세요.");
 			RegistFrm.id.focus();
 		}
-		else if (form.pw.value == "") {
+		else if (Pw == "") {
 			alert("비밀번호를 입력하세요.");
 			RegistFrm.pw.focus();
 		} else if(Pw != pwCheck){
@@ -70,15 +89,15 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			alert("이름을 입력하세요.");
 			RegistFrm.name.focus();
 		}
-		else if (form.birth.value == "") {
+		else if (birth == "") {
 			alert("생일을 입력하세요.");
 			RegistFrm.birth.focus();
 		}
-		else if (form.phone.value == "") {
+		else if (phone == "") {
 			alert("휴대폰 번호를 입력하세요.");
 			RegistFrm.phone.focus();
 		}
-		else if (form.address.value == "") {
+		else if (address == "") {
 			alert("주소를 입력하세요.");
 			RegistFrm.address.focus();
 		}
@@ -86,8 +105,14 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			alert("이메일을 입력하세요.");
 			RegistFrm.Email.focus();
 		}
-		else if (!phoneCheck.test(phone)){
-			
+		else if (phoneCheck.test(phone) !== true){
+			alert("올바른 휴대폰 번호를 입력하세요.");
+		}
+		else if (birthCheck.test(birth) !== true){
+			alert("생년월일은 YYYYMMDD 형식으로 입력하세요.");
+		}
+		 else {
+			submitButton.submit();
 		}
 	}
 
@@ -110,7 +135,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
             <jsp:include page="../layout/Navbar.jsp"></jsp:include>
             <div class="container-fluid">
                 <br /> <br /> <br />
-	<form name="RegistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" onsubmit="return validateForm(this);">
+	<form id="form" name="RegistFrm" method="post" enctype="multipart/form-data" action="../auth/Regist.do" >
 	<div align="center" id="registDiv">
 	<h2 id="registHead">회 원 가 입</h2>
 	<div id="table">
@@ -211,7 +236,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		</table>
 		</div>
 	<br/>
-	<button type="submit" name="signUp" id="RegistButton" >가입하기</button>
+	<button type="button" name="signUp" id="RegistButton" onClick="validateForm();" >가입하기</button>
 	</div>
 </form>
 </div>
