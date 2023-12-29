@@ -20,7 +20,7 @@ import org.json.simple.parser.ParseException;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet("/auth/KakaoLoginAuth.do")
+@WebServlet("/auth/KakaoLogin.do")
 public class KakaoLoginAuth extends HttpServlet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -75,7 +75,6 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 		        String birth = birthyear + birthday;
 		        String address = getStringOrDefault(userJson, "address", "");
 		        String phoneNumber = getStringOrDefault(userJson, "phoneNumber", "");
-		        
 		        String phone = phoneNumber.replace("+82 ", "0");
 		        
 		        session.setAttribute("kakaoName", name);

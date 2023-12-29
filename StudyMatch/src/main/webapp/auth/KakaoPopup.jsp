@@ -35,7 +35,6 @@ function count_check(checkbox) {
 	var boxCheck = checkedCount > 0; // 체크박스가 1개 이상 체크하면 true 반환
     submitButton.disabled = !boxCheck;
 }
-
 </script>
 </head>
 <body>
