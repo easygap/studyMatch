@@ -1,25 +1,23 @@
 package model;
 
-public class CommentDTO {
+public class GroupBoardDTO {
+	// 게시글
 	private String group_num;
 	private String inter_num;
 	private String board_num;
-	private String commen_num;
+	private String title;
 	private String content;
+	private String img;
 	private String id;
-	private java.sql.Date commen_date;
+	private String visit_count;
 	private String like_count;
-	private String nickname;
-	
-	public String getGroup_num() {
-		return group_num;
+	private java.sql.Date post_date;
+
+	public GroupBoardDTO() {
 	}
 
-	public void setGroup_num(String group_num) {
-		this.group_num = group_num;
-	}
-	
-	public CommentDTO() {
+	public String getGroup_num() {
+		return group_num;
 	}
 
 	public String getInter_num() {
@@ -30,28 +28,36 @@ public class CommentDTO {
 		return board_num;
 	}
 
-	public String getCommen_num() {
-		return commen_num;
+	public String getTitle() {
+		return title;
 	}
 
 	public String getContent() {
 		return content;
 	}
 
+	public String getImg() {
+		return img;
+	}
+
 	public String getId() {
 		return id;
 	}
 
-	public java.sql.Date getCommen_date() {
-		return commen_date;
+	public String getVisit_count() {
+		return visit_count;
 	}
 
 	public String getLike_count() {
 		return like_count;
 	}
 
-	public String getNickname() {
-		return nickname;
+	public java.sql.Date getPost_date() {
+		return post_date;
+	}
+
+	public void setGroup_num(String group_num) {
+		this.group_num = group_num;
 	}
 
 	public void setInter_num(String inter_num) {
@@ -62,28 +68,31 @@ public class CommentDTO {
 		this.board_num = board_num;
 	}
 
-	public void setCommen_num(String commen_num) {
-		this.commen_num = commen_num;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
 	}
 
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
 
-	public void setCommen_date(java.sql.Date commen_date) {
-		this.commen_date = commen_date;
+	public void setVisit_count(String visit_count) {
+		this.visit_count = visit_count;
 	}
 
 	public void setLike_count(String like_count) {
 		this.like_count = like_count;
 	}
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setPost_date(java.sql.Date post_date) {
+		this.post_date = post_date;
 	}
-
 }
