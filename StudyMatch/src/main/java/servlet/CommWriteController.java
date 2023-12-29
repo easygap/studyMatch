@@ -50,7 +50,6 @@ public class CommWriteController extends HttpServlet {
         
         try {
             int result = dao.insertComm(dto);
-            dao.close();
 
             if (result == 1) {
                 req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
@@ -65,7 +64,7 @@ public class CommWriteController extends HttpServlet {
         }
 //		int result = dao.insertComm(dto);
 		dao.close();
-
+		
 //		if (result == 1) {
 //			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
 //		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");

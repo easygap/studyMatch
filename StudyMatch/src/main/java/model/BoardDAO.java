@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -39,7 +40,7 @@ public class BoardDAO extends DBConnPool {
 			System.out.println("*** BoardDAO DB 연동 중 예외 발생 ***");
 		}
 	}
-
+	
 	// 글쓰기
 	public int insertWrite(BoardDTO dto) {
 		int result = 0;
@@ -270,6 +271,39 @@ public class BoardDAO extends DBConnPool {
 			System.out.println("*** 게시물 목록 불러오기 중 예외 발생! ***");
 		}
 		return bbs;
+	}
+	
+	// 댓글 조회
+	public ArrayList<CommentDTO> getList (String num) {
+		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
+	            + "INNER JOIN BOARD B ON C.board_num = B.board_num "
+	            + "INNER JOIN MEMBER M ON C.id = M.id "
+	            + "WHERE B.board_num = ? ORDER BY C.commen_date ASC";
+		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, num);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				CommentDTO dto = new CommentDTO();
+				dto.setInter_num(rs.getString(1));
+				dto.setBoard_num(rs.getString(2));
+				dto.setCommen_num(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setId(rs.getString(5));
+				dto.setNickname(rs.getString("nickname"));
+				dto.setCommen_date(rs.getDate(6));
+				dto.setLike_count(rs.getString(7));
+					
+				list.add(dto);
+				System.out.println(dto.getBoard_num() + "번 게시물 댓글 로드 성공~!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 댓글 로드 중 예외 발생! ***");
+		}
+		return list;
 	}
 
 	public void close() {

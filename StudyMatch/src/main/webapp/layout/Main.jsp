@@ -11,6 +11,7 @@ String SessionId = (String) sessionID.getAttribute("user");
 
 MemberDAO dao = new MemberDAO();
 String img = dao.MyProfile(SessionId);
+dao.close();
 %>
 <!DOCTYPE html>
 <html>
@@ -56,7 +57,7 @@ String img = dao.MyProfile(SessionId);
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="lan">어학 ▶</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=1001" id="lan1" style="display:none;">• 영어</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=1002" id="lan2" style="display:none;">• 일본어</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=1002" id="lan3" style="display:none;">• 중국어</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-2" href="../board/list.do?interest=1003" id="lan3" style="display:none;">• 중국어</a>
                     
                     <!-- 개발 카테고리 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!" id="dev">개발자 ▶</a>
@@ -81,6 +82,9 @@ String img = dao.MyProfile(SessionId);
                     
                     <!-- 자유게시판 -->
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/list.do?interest=6001">자유게시판</a>
+                    
+                    <!-- 그룹게시판 -->
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/GroupList.do">그룹게시판</a>
                 </div>
             </div>
             

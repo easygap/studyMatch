@@ -45,17 +45,15 @@ public class CommEditController extends HttpServlet {
 		if (sessionID != null && sessionID.equals(id) && "delete".equals(action)) {
 			try {
 				dao.deleteCommen(commNum);
-				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				System.out.println("Controller 댓글 삭제 완");
 			} catch (Exception e) {
-				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
 				System.out.println("*** Controller 댓글 삭제 실패 ***");
 			}
 		}
-
+		dao.close();
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -91,15 +89,14 @@ public class CommEditController extends HttpServlet {
 
 			try {
 				dao.updateComm(dto);
-				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				System.out.println("Controller 댓글 수정 완");
 			} catch (Exception e) {
-				dao.close();
 				resp.sendRedirect("../board/view.do?num=" + num + "&interest=" + interest);
 				e.printStackTrace();
 				System.out.println("*** Controller 댓글 수정 실패 ***");
 			}
+			dao.close();
 		}
 	}
 }

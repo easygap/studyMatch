@@ -91,6 +91,21 @@ td {
 	color: #5174BE;
 }
 
+.noMatchfont {
+	margin-top: 2.5em;
+	font-weight: bold;
+	font-size: 2.5em;
+	color: #5174BE;
+}
+
+.loginMatchfont {
+	text-align: center;
+	margin-top: 2.5em;
+	font-weight: bold;
+	font-size: 2.5em;
+	color: #5174BE;
+}
+
 #vs{
 	font-size: 55px;
 }
@@ -134,4 +149,29 @@ td {
 	font-weight: bold;
 	font-size: 18px;
 	border-radius: 10px;
+}
+
+.Nobutton{
+	margin-right: 1em;
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;	
+	font-weight: bold;
+	font-size: 18px;
+	border-radius: 10px;
+}
+
+.Loginbutton{
+	padding-left: 0.4em;
+	text-align: center;
+	margin-left: 20em;
+	letter-spacing: 0.5em;
+	width: 5em;
+	height: 1.65em;
+	background-color: #5174BE;
+	opacity: 0.6;
+	color: #ffffff;	
+	font-weight: bold;
+	font-size: 1.5em;
+	border-radius: 0.5em;
 }

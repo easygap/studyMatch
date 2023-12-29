@@ -10,6 +10,8 @@ public class GroupDTO {
 	private String firstGroup;
 	private String secondGroup;
 	private String createGroup;
+	private String Group_Num;
+	private int Group_status;
 
 //	private String GR1id1;
 //	private String GR1id2;
@@ -22,10 +24,26 @@ public class GroupDTO {
 //	private String GR2id4;
 //	private String GR2id5;
 	
+	public String getGroup_Num() {
+		return Group_Num;
+	}
+
+	public void setGroup_Num(String group_Num) {
+		Group_Num = group_Num;
+	}
+	
+	public int getGroup_status() {
+		return Group_status;
+	}
+
+	public void setGroup_status(int group_status) {
+		Group_status = group_status;
+	}
+
 	public String getImageName() {
 		return imageName;
 	}
-
+	
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
 	}

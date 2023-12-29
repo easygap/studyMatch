@@ -1,4 +1,4 @@
-package servlet;
+package auth;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,7 +112,6 @@ public class RegistAuth2 extends HttpServlet {
 
 					// 회원가입 성공 알람창
 					if (Regist == true) {
-						dao.close();
 						JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.", "../auth/LoginAuth.do");
 					}else if(idC.equals("N")) {					// 아이디 중복 알림창
 						JSFunction.alertRegistFail(resp, "해당 ID는 이미 사용 중 입니다. 다시 중복확인 후 가입해 주세요.");

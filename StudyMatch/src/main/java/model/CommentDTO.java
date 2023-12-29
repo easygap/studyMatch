@@ -1,6 +1,7 @@
 package model;
 
 public class CommentDTO {
+	private String group_num;
 	private String inter_num;
 	private String board_num;
 	private String commen_num;
@@ -9,6 +10,14 @@ public class CommentDTO {
 	private java.sql.Date commen_date;
 	private String like_count;
 	private String nickname;
+	
+	public String getGroup_num() {
+		return group_num;
+	}
+
+	public void setGroup_num(String group_num) {
+		this.group_num = group_num;
+	}
 	
 	public CommentDTO() {
 	}

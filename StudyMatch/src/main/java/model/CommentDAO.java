@@ -63,47 +63,38 @@ public class CommentDAO extends DBConnPool {
 //		
 //		return dto;
 //	}
-	
-	// 댓글 조회
-	public ArrayList<CommentDTO> getList (String num) {
-		String query = "SELECT C.*, M.nickname FROM COMMENTS C "
-	            + "INNER JOIN BOARD B ON C.board_num = B.board_num "
-	            + "INNER JOIN MEMBER M ON C.id = M.id "
-	            + "WHERE B.board_num = ? ORDER BY C.commen_date ASC";
-		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+
+	/** 그룹 게시판 댓글 쓰기 */
+	public int insertGroupComm(CommentDTO dto) {
+		int result = 0;
+		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
+		String query = "INSERT INTO comments (group_num, board_num, commen_num, content, id, like_count) "
+				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
+
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setString(1, num);
-			rs = psmt.executeQuery();
-
-			while (rs.next()) {
-				CommentDTO dto = new CommentDTO();
-				dto.setInter_num(rs.getString(1));
-				dto.setBoard_num(rs.getString(2));
-				dto.setCommen_num(rs.getString(3));
-				dto.setContent(rs.getString(4));
-				dto.setId(rs.getString(5));
-				dto.setNickname(rs.getString("nickname"));
-				dto.setCommen_date(rs.getDate(6));
-				dto.setLike_count(rs.getString(7));
-				
-				list.add(dto);
-				System.out.println(dto.getBoard_num() + "번 게시물 댓글 로드 성공~!");
-			}
+			psmt.setString(1, dto.getGroup_num());
+			psmt.setString(2, dto.getBoard_num());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getId());
+			psmt.setInt(5, likeCount);
+			result = psmt.executeUpdate();
+			System.out.println(date.format(now) + " [ " + dto.getCommen_num() + " ] 댓글 DB 업로드 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("*** 댓글 로드 중 예외 발생! ***");
+			System.out.println("*** 댓글 업데이트 중 예외 발생! ***");
+			result = 0;
 		}
-		return list;
+		return result;
 	}
-
-	// 댓글 쓰기
+	
+	// 일반 게시글 댓글 쓰기
 	public int insertComm(CommentDTO dto) {
 		int result = 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;
 		String query = "INSERT INTO comments (inter_num, board_num, commen_num, content, id, like_count) "
 				+ "VALUES (?, ?, seq_comm_num.NEXTVAL, ?, ?, ?)";
-
+		
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getInter_num());

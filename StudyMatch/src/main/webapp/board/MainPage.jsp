@@ -51,10 +51,16 @@ String firstGroup = "";
 
 String secondGroup = "";
 
+String address = "";
+
+int status = 0;
+
 if (dto != null) {
 	id = dto.getId();
+	address = dto.getAddress();
 	firstGroup = dto.getFirstGroup();
 	secondGroup = dto.getSecondGroup();
+	status = dto.getGroup_status();
 }
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -93,7 +99,7 @@ String nowTime = sdf.format(now.getTime());
 	/** 그룹생성 버튼 눌렀을 때 */
 	function makeGroup() {
  		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
- 			var url = "../board/MakeGroup.jsp";
+ 			var url = "../board/MakeGroup.jsp?address=" + "<%=address%>";
             var name = "makeGroup";
             var _width = '500';
             var _height = '300';
@@ -112,19 +118,39 @@ String nowTime = sdf.format(now.getTime());
 		buildCalendar();
 	} // 웹 페이지가 로드되면 buildCalendar 실행
 	
-	var groupNum1 = <%= firstGroup %>;
 	
 	function openPopup() {
-        var popupUrl = '../board/Match1.do'; // 팝업 창의 URL로 교체
-        var popupName = 'popupWindow';
-        var popupWidth = 1000;
-        var popupHeight = 700;
-        var leftPosition = (screen.width - popupWidth) / 2;
-        var topPosition = (screen.height - popupHeight) / 2;
+		var groupNum1 = "<%=firstGroup%>";
+		
+		// 동적으로 폼 생성
+	    var form = document.createElement("form");
+	    form.method = "post";
+	    form.action = "../board/Match1.do";
+	    form.target = "popupWindow"; // 팝업 창의 이름
+	    
+	    // 데이터를 담아 POST 요청 보내기
+	    var input = document.createElement("input");
+	    input.type = "hidden";
+	    input.name = "firstGroup";
+	    input.value = groupNum1;
+	    form.appendChild(input);
+	    
+	    // 팝업 창 열기 및 스타일 지정
+	    var popupUrl = '../board/Match1.do';
+	    var popupName = 'popupWindow';
+	    var popupWidth = 1100;
+	    var popupHeight = 650;
+	    var leftPosition = (screen.width - popupWidth) / 2;
+	    var topPosition = (screen.height - popupHeight) / 2;
 
-        window.open(popupUrl + '?firstGroup=' + groupNum1, popupName, 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition);
-        document.information1.submit();
-    }
+	    var popupStyle = 'width=' + popupWidth + ', height=' + popupHeight + ', left=' + leftPosition + ', top=' + topPosition + ', resizable=yes, scrollbars=yes';
+
+	    window.open(popupUrl, popupName, popupStyle);
+	    
+	    document.body.appendChild(form);
+	    form.submit();
+	    document.body.removeChild(form);
+	}
 
 	let nowMonth = new Date(); // 현재 달을 페이지를 로드한 날의 달로 초기화
 	let today = new Date(); // 페이지를 로드한 날짜를 저장
@@ -236,7 +262,7 @@ String nowTime = sdf.format(now.getTime());
 							style="position: relative; width: 1280px; height: 100px;">
 							<div class="jumbotron" style="text-align: left;">
 								<%
-								if (!"".equals(id) || id != null) {
+								if (id != null && !"".equals(id)) {
 								%>
 								<h1 class="display-4">${requestScope.dto.nickName}님,환영합니다!</h1>
 								<%
@@ -247,15 +273,16 @@ String nowTime = sdf.format(now.getTime());
 								</p>
 							</div>
 						</div>
+						<% if(status == 0) { %>
 						<!-- 매칭하기 -->
 						<div id="NewMatch">
+						<% if("".equals(id) || id == null) { %>
+							<p class="loginMatchfont" id="newmatch">로그인 후 이용할 수 있는 기능입니다.</p>
+							<input type="button" value="로그인" class="Loginbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 							<p class="matchfont" id="newmatch">NEW MATCH ! ! !</p>
 							<!-- 그룹1 매칭 -->
 							<form action="../board/Match1.do" name="group1" method="post">
 							<div class="Match1" align="center">
-								<% if("".equals(id) || id == null) { %>
-								<p>로그인 후 이용할 수 있는 기능입니다.</p>
-								<input type="button" value="로그인" class="Mainbutton" onClick="location.href='../auth/Login.jsp'"> <% } else { %>
 									<% if( firstGroupImg != null && !firstGroupImg.isEmpty()) { 
 									for(int i = 0; i < firstGroupName.size(); i++) {
 										if(firstGroupImg.get(i) != null && !firstGroupImg.get(i).isEmpty()) { %>
@@ -280,8 +307,8 @@ String nowTime = sdf.format(now.getTime());
 										<input type="button" name="match1" class="Mainbutton" value="  매 치 하 기  " onclick="matchCheck1()" />
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
-										<input type="submit" name="make" class="Mainbutton"
-											value="  그 룹 생 성  " />
+										<input type="button" name="make" class="Mainbutton"
+											value="  그 룹 생 성  " onclick="makeGroup()" />
 								<% } %>
 							</div>
 							<input type="text" style="display:none;" name="groupNum1" value="<% if(firstGroup != null && !firstGroup.equals("")) { out.print(firstGroup);  } %>" />
@@ -317,15 +344,21 @@ String nowTime = sdf.format(now.getTime());
 										<input type="button" name="match2" class="Mainbutton"
 											value="  매 치 하 기  " onclick="matchCheck2()" />
 										<input type="text" style="display:none;" name="groupNum2" value="<% if(secondGroup != null && !secondGroup.equals("")) { out.print(secondGroup); } %>" />
+								</div>
 								</form>
 								<% } else { %>
 										<p>매칭할 수 있는 그룹이 존재하지 않습니다.</p>
 										<input type="button" name="make" class="Mainbutton"
 											value="  그 룹 생 성  " onclick="makeGroup()" />
-								<% } } %>
-								
-							</div>
-									
+								<% } } } else { %>
+									<div id="NewMatch" align="center">
+									<p class="noMatchfont" id="newmatch">이미 가입한 그룹이 존재합니다 ! ! !</p>
+									<input type="button" name="history" class="Nobutton"
+											value="  H I S T O R Y  " onclick="location.href='../match/MatchHistory.do'" />
+									<input type="button" name="history" class="Nobutton"
+											value="  그 룹 게 시 판  " onclick="location.href='../board/GroupList.do'" />
+											<br/><br/>
+								<% } %>
 						</div>
 						
 					<!-- 캘린더 -->
@@ -357,6 +390,7 @@ String nowTime = sdf.format(now.getTime());
 			</div>
 		</div>
 	</div>
+</div>
 	<!-- BootStrap javascript 사용 -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
