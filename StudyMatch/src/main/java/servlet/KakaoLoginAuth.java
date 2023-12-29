@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,7 +20,7 @@ import org.json.simple.parser.ParseException;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet("/auth/KakaoLogin.do")
+@WebServlet("/auth/KakaoLoginAuth.do")
 public class KakaoLoginAuth extends HttpServlet implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -59,6 +60,8 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 		}
 
 	    JSONParser parser = new JSONParser();
+        HttpSession session = req.getSession();
+        
 		 try {
 		        JSONObject userJson = (JSONObject) parser.parse(userData);
 
@@ -70,8 +73,16 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 		        String birthyear = getStringOrDefault(userJson, "birthyear", "");
 		        String birthday = getStringOrDefault(userJson, "birthday", "");
 		        String birth = birthyear + birthday;
-		        String address = getStringOrDefault(userJson, "shipping_address", "");
-		        String phone = getStringOrDefault(userJson, "phone_number", "");
+		        String address = getStringOrDefault(userJson, "address", "");
+		        String phoneNumber = getStringOrDefault(userJson, "phoneNumber", "");
+		        
+		        String phone = phoneNumber.replace("+82 ", "0");
+		        
+		        session.setAttribute("kakaoName", name);
+		        session.setAttribute("kakaoNick", nick);
+		        session.setAttribute("kakaoBirth", birth);
+		        session.setAttribute("kakaoPhone", phone);
+		        session.setAttribute("kakaoEmail", email);
 		        
 		        System.out.println("-----------카카오 로그인 사용자 정보------------");
 		        System.out.println("id: " + id);
