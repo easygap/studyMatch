@@ -86,6 +86,7 @@ function validateForm(form){
       console.log(res);
       console.log("User Information:", res);
       sendUserInfoToServer(res);
+      System.out.print(res);
     },
     fail: function (error) {
       alert("카카오 로그인 실패" + JSON.stringify(error));
@@ -98,19 +99,18 @@ function sendUserInfoToServer(userInfo) {
 	console.log("Sending User Information to Server:", userInfo);
   $.ajax({
     type: 'POST',
-    url: '../auth/KakaoLogin.do',
+    url: '../auth/KakaoLoginAuth.do',
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify({
       id: userInfo.id,
       profile_nickname: userInfo.kakao_account.profile.nickname,
       name: userInfo.kakao_account.name,
       email: userInfo.kakao_account.email,
-      phone: userInfo.kakao_account.phone_number,
+      phoneNumber: userInfo.kakao_account.phone_number,
       birthyear: userInfo.kakao_account.birthyear,
-      birthday: userInfo.kakao_account.birthday,
-      address: userInfo.kakao_account.shipping_address
+      birthday: userInfo.kakao_account.birthday
     }),
-    success: function (response) {
+    success: function (response) { 
       console.log('서버 응답:', response);
       if (response.status === 'success') {
         alert('카카오 로그인 성공');
