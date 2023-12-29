@@ -305,6 +305,29 @@ public class MemberDAO extends DBConnPool {
 		return idCheck;
 	}
 	
+	// NICK NAME 중복체크
+	public String nickCheck(String id) {
+		String query = "SELECT nickname FROM member WHERE nickname = ?";
+		String nickCheck = null;
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				nickCheck = "N";		// 닉네임 중복
+			}else {
+				nickCheck = "Y";			// 닉네임 등록 가능
+			}
+			System.out.println("쿼리문 닉네임 중복체크 결과 : " + nickCheck);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("*** 아이디 중복 검사 쿼리 실행 중 예외 발생 ***");
+		}
+		return nickCheck;
+	}
+	
 	// 아이디 찾기
 	public String idSearch(String name, String phone) {
 		String query = "SELECT id FROM member WHERE name = ? AND phone = ?";

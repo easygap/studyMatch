@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -70,11 +69,14 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		var phone = form.phone.value;
 		var birth = form.birth.value;
 		var address = form.address.value;
+		var id = form.id.value;
+		var name = form.name.value;
+		var email = form.Email.value;
 		
 		var Pw = form.pw.value;
 		var pwCheck = form.pwcheck.value;
 		
-		if (form.id.value == "") {
+		if (id == "") {
 			alert("아이디를 입력 후 중복확인을 해주세요.");
 			RegistFrm.id.focus();
 		}
@@ -85,7 +87,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			alert("비밀번호가 동일하지 않습니다. 다시 확인해 주세요.");
 			RegistFrm.pwcheck.focus();
 		}
-		else if (form.name.value == "") {
+		else if (name == "") {
 			alert("이름을 입력하세요.");
 			RegistFrm.name.focus();
 		}
@@ -101,7 +103,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			alert("주소를 입력하세요.");
 			RegistFrm.address.focus();
 		}
-		else if (form.Email.value == "") {
+		else if (email == "") {
 			alert("이메일을 입력하세요.");
 			RegistFrm.Email.focus();
 		}
@@ -117,7 +119,11 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 	}
 
 	function winopen() {
-			window.open("../auth/idCheckAuth.do", "", "width=500, height=300");
+		window.open("../auth/idCheckAuth.do", "", "width=500, height=200");
+	}
+	
+	function NickCheck(){
+		window.open("../auth/nickCheckAuth.do", "", "width=500, height=200");
 	}
 	
 </script>
@@ -166,7 +172,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			
 			<tr>
 				<td class="registTd">ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
-				<td><input type="text" name="nickName" class="registInput"></td>
+				<td><input type="text" name="nickName" class="registInput"> <input type="button" name="nickCheck" id="nick" onclick="NickCheck()" class="RegistButton" value="중 복 확 인"></td>
 				<td class="registTd"></td>
 			</tr>
 			
@@ -190,7 +196,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			
 			<tr>
 				<td class="registTd">ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
-				<td><input type="text" name="Email" class="registInput"></td>
+				<td><input type="email" name="Email" class="registInput"></td>
 				<td class="registTd"></td>
 			</tr>
 			
