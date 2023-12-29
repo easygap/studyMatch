@@ -13,10 +13,8 @@ String IDcheck = request.getParameter("idCheck");
 <meta charset="UTF-8">
 <title>idCheck</title>
 <link href="../css/Regist.css" rel="stylesheet"/>
-<script type="text/javascript">
-</script>
 </head>
-<body>
+<body id="idCheckBody">
 	
 	
 	<div align="center">
@@ -33,7 +31,7 @@ String IDcheck = request.getParameter("idCheck");
 					<%} else{ %>
 					<td><input type="text" name="idCheck" value="<%= idCheck %>" /></td>
 					<%} %>
-					<td><input type="submit" name="idChecked" class="IdCheck" value="중복확인"></td>
+					<td><input type="submit" name="idChecked" class="IdCheck" value="중 복 확 인"></td>
 				</tr>
 
 			</table>
@@ -49,7 +47,7 @@ String IDcheck = request.getParameter("idCheck");
 			<%
 			}}
 			%>
-			
+			<br/> <br/>
 			<input type="button" value="확인" class="IdCheck" onclick="window.close()" />
 		</form>
 	</div>

@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+#idCheckBody, #CheckBody{
+	background-color: #F4EAE0;
+}
+
 #registHead, #MypageHead{
 	color: #5174BE;
 	font-weight: 900;
@@ -29,7 +33,7 @@
 	height: 1.6em;
 }
 
-#RegistButton, #idCheck, .myPage{
+#RegistButton, #idCheck, .myPage, #nick{
 	background-color: #5174BE;
 	opacity: 0.6;
 	font-weight: bold;
@@ -38,7 +42,19 @@
 	border: none;
 }
 
-#idCheck, .myPage{
+.IdCheck, .NickCheck{
+	background-color: #5174BE;
+	opacity: 0.6;
+	font-weight: bold;
+	color: #fff;
+	border-radius: 10px;
+	border: none;
+	
+	width: 6em;
+	height: 2em;
+}
+
+#idCheck, .myPage, #nick{
 	font-size: 14px;
 	width: 90px;
 	height: 28px;

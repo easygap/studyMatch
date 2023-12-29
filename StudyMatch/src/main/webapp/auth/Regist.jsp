@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 request.setCharacterEncoding("UTF-8");
-String cp = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -69,7 +68,11 @@ String cp = request.getContextPath();
 	}
 
 	function winopen() {
-			window.open("../auth/idCheckAuth.do", "", "width=500, height=300");
+		window.open("../auth/idCheckAuth.do", "", "width=500, height=200");
+	}
+	
+	function NickCheck(){
+		window.open("../auth/nickCheckAuth.do", "", "width=500, height=200");
 	}
 </script>
 </head>
@@ -117,7 +120,7 @@ String cp = request.getContextPath();
 			
 			<tr>
 				<td class="registTd">ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
-				<td><input type="text" name="nickName" class="registInput"></td>
+				<td><input type="text" name="nickName" class="registInput"> <input type="button" name="nickCheck" id="nick" onclick="NickCheck()" class="RegistButton" value="중 복 확 인"></td>
 				<td class="registTd"></td>
 			</tr>
 			
@@ -141,7 +144,7 @@ String cp = request.getContextPath();
 			
 			<tr>
 				<td class="registTd">ㆍ 이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</td>
-				<td><input type="text" name="Email" class="registInput"></td>
+				<td><input type="email" name="Email" class="registInput"></td>
 				<td class="registTd"></td>
 			</tr>
 			
