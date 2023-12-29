@@ -19,26 +19,36 @@
 <script>
 function count_check(checkbox) {
 	var checkboxes = document.querySelectorAll('.interest:checked');
-	if (checkboxes.length > 3) {
+	var submitButton = document.getElementById('submitButton');
+	
+	var checkedCount = 0;
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) { // 관심사 선택 수량 체크
+            checkedCount++;
+        }
+    }
+	if (checkboxes.length > 3) { // 관심사 3개 이상 선택 시
 		alert('최대 3개의 관심사만 선택할 수 있습니다.');
         checkbox.checked = false;
 	}
+	
+	var boxCheck = checkedCount > 0; // 체크박스가 1개 이상 체크하면 true 반환
+    submitButton.disabled = !boxCheck;
 }
 
-// 입력칸이 비어있거나 관심사 설정 안 하면 입력완료 버튼 누를 수 없게
 </script>
 </head>
 <body>
-<div id="popup-container">
-<div id="popup-content">
+<div id="popup-container"></div>
+<div id="popup-content"></div>
 <h2>카카오 로그인 정보</h2>
 <p>
 <form action="UpdateUserInfoServlet" method="post">
         <p>이름: <input type="text" name="newName" value="<%= (name != null) ? name : "" %>" required></p>
-<p>닉네임: <input type="text" name="newNick" value="<%= (nick != null) ? nick : "" %>" required></p>
-<p>이메일: <input type="text" name="newEmail" value="<%= (email != null) ? email : "" %>" required></p>
-<p>생년월일: <input type="text" name="newBirth" value="<%= (birth != null) ? birth : "" %>" required></p>
-<p>핸드폰: <input type="text" name="newPhone" value="<%= (phone != null) ? phone : "" %>" required></p>
+        <p>닉네임: <input type="text" name="newNick" value="<%= (nick != null) ? nick : "" %>" required></p>
+        <p>이메일: <input type="text" name="newEmail" value="<%= (email != null) ? email : "" %>" required></p>
+        <p>생년월일: <input type="text" name="newBirth" value="<%= (birth != null) ? birth : "" %>" required></p>
+        <p>핸드폰: <input type="text" name="newPhone" value="<%= (phone != null) ? phone : "" %>" required></p>
         <p>주소: <input type="text" name="address" placeholder="(동/읍/면)까지만 입력" required></p>
         <p>관심사 (매칭을 위해 필수 선택 / 최대 3개)</p>
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JAVA " /> JAVA
@@ -62,6 +72,7 @@ function count_check(checkbox) {
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="부동산"> 부동산
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="투자/주식"> 투자/주식 <br/>
 					<br/>
-					<input type="submit" value="입력완료">
+					<button id="submitButton" type="submit" disabled>입력완료</button>
+					</form>
 </body>
 </html>
