@@ -52,60 +52,91 @@ function validateForm(form){
 							</ul>
 							<!--데이터를 서버로 전송-->
 							<button type="submit">로그인</button>
-							<!-- 카카오 스크립트 -->
-				<a href="javascript:kakaoLogin();"><img
-					src="../img/kakao_login.png"></a>
-				<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-				<script>
-				window.Kakao.init('bb8b6ca34d06454a9c045ccd122b2902');
-				//카카오 로그인
-				function kakaoLogin() {
-					window.Kakao.Auth.login({
-						scope: 'profile_nickname, account_email, name, birthyear, birthday, phone_number, shipping_address',
-						success: function(authObj) {
-							$.ajax({
-							    type: 'POST',
-							    url: '../auth/KakaoLogin.do',
-							    contentType: 'application/json; charset=utf-8',
-							    data: JSON.stringify({
-							        access_token: authObj.access_token
-							    }),
-							    dataType: 'json',
-							    success: function (response) {
-							        console.log('서버 응답:', response);
-							        alert('카카오 로그인 성공');
-							    },
-							    error: function (error) {
-							        console.error('서버 요청 실패:', error);
-							    }
-							});
-							window.Kakao.API.request({
-				                url: '/v2/user/me',
-				                success: function (res) {
-				                    handleKakaoUserInfo(res.kakao_account);
-				                }
-				            });
-						}
-				    });
-				function handleKakaoUserInfo(kakao_account) {
-				    const nickname = kakao_account.profile.nickname;
-				    const email = kakao_account.email;
-				    const name = kakao_account.name;
-				    const birthyear = kakao_account.birthyear;
-				    const birthday = kakao_account.birthday;
-				    const birth = birthyear + birthday;
-				    const phone = kakao_account.phone_number;
-				    const address = kakao_account.shipping_address;
+							<!-- 카카오 스크립트 --> 
+							<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+							<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<a href="javascript:void(0);" onclick="loginWithKakao();">
+    <img src="../img/kakao_login.png">
+</a>
+<script>
+      // 카카오 초기화
+      Kakao.init('bb8b6ca34d06454a9c045ccd122b2902');
+      Kakao.isInitialized();
+      console.log(Kakao.isInitialized());
+      
+      // 카카오로그인 코드 확인
+      function loginWithKakao() {
+        Kakao.Auth.login({
+          success: function (authObj) {
+            console.log(authObj); //access토큰
+            Kakao.Auth.setAccessToken(authObj.access_token); // 토큰 값 저장
+            getInfo();
+          },
+          fail: function (err) {
+            console.log(err);
+          },
+        });
+      }
 
-				    console.log('로그인 계정:', email);
-				    console.log('이름:', name);
-				    console.log('닉네임: ', nickname);
-				    console.log('생년월일: ', birth);
-				    console.log('핸드폰:', phone);
-				    console.log('주소:', address);
-				}
-				}
-</script>
+      // 액세스 토큰 발급 후 아래 함수를 호출시켜 사용자 정보 받기
+      function getInfo() {
+  Kakao.API.request({
+    url: "/v2/user/me",
+    success: function (res) {
+      console.log(res);
+      console.log("User Information:", res);
+      sendUserInfoToServer(res);
+      System.out.print(res);
+    },
+    fail: function (error) {
+      alert("카카오 로그인 실패" + JSON.stringify(error));
+    },
+  });
+}
+
+// 서버로 사용자 정보를 보내는 함수 
+function sendUserInfoToServer(userInfo) {
+	console.log("Sending User Information to Server:", userInfo);
+  $.ajax({
+    type: 'POST',
+    url: '../auth/KakaoLoginAuth.do',
+    contentType: 'application/json; charset=utf-8',
+    data: JSON.stringify({
+      id: userInfo.id,
+      profile_nickname: userInfo.kakao_account.profile.nickname,
+      name: userInfo.kakao_account.name,
+      email: userInfo.kakao_account.email,
+      phoneNumber: userInfo.kakao_account.phone_number,
+      birthyear: userInfo.kakao_account.birthyear,
+      birthday: userInfo.kakao_account.birthday
+    }),
+    success: function (response) { 
+      console.log('서버 응답:', response);
+      if (response.status === 'success') {
+        alert('카카오 로그인 성공');
+        window.location.href = 'http://localhost:8081/StudyMatch/board/Main.do';
+      } else {
+        alert('카카오 로그인 실패: ' + response.message);
+      }
+    },
+    error: function (error) {
+      console.error('서버 요청 실패:', error);
+      alert('서버 요청 실패');
+    }
+  });
+}
+      // 로그아웃 기능
+      function kakaoLogOut() {
+        if (!Kakao.Auth.getAccessToken()) {
+          alert("로그인을 먼저 하세요.");
+          return;
+        }
+        Kakao.Auth.logout(function () {
+          alert("로그아웃" + Kakao.Auth.getAccessToken());
+        });
+      }
+    </script>
+
 						</fieldset>
 					</form>
 				</div>
