@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import member.MemberDAO;
 import member.MemberDTO;
+import utils.JSFunction;
 
 @WebServlet("/auth/Mypage.do")
 public class MypageController extends HttpServlet {
@@ -20,8 +21,13 @@ public class MypageController extends HttpServlet {
 			throws ServletException, IOException {
 		// 방법2. session에 담겨있는 loginUser(로그인한 회원정보) 객체에 있는 아이디 꺼내오기
 		HttpSession session = request.getSession();
+		
 		// session에서 값을 꺼내오면 object 타입으로 가져와지므로 Member로 형변환해야한다.
 		String sessionID = (String) session.getAttribute("user");
+		
+		if(sessionID == null) {
+			JSFunction .alertBack(response, "로그인 후 이용할 수 있습니다.");
+		} else {
 		
 		System.out.println(" sessionID : " +sessionID);
 		
@@ -46,5 +52,6 @@ public class MypageController extends HttpServlet {
 		
 		dao.close();
 		request.getRequestDispatcher("/auth/MyPageView.jsp").forward(request, response);
+		}
 	}
 }
