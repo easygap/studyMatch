@@ -99,7 +99,8 @@ function sendUserInfoToServer(userInfo) {
 	console.log("Sending User Information to Server:", userInfo);
   $.ajax({
     type: 'POST',
-    url: '../auth/KakaoLoginAuth.do',
+    url: '../auth/KakaoLoginungjun8947*
+    .do',
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify({
       id: userInfo.id,
