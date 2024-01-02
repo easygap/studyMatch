@@ -133,16 +133,6 @@ function openPopup() {
 	var option = "width=500, height=500, left=500, location=no, top=100, scrollbars=no";
 	window.open(url, name, option);
 }
-      // 로그아웃 기능
-      function kakaoLogOut() {
-        if (!Kakao.Auth.getAccessToken()) {
-          alert("로그인을 먼저 하세요.");
-          return;
-        }
-        Kakao.Auth.logout(function () {
-          alert("로그아웃" + Kakao.Auth.getAccessToken());
-        });
-      }
     </script>
 
 						</fieldset>

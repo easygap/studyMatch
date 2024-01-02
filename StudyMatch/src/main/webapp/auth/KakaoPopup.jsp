@@ -42,9 +42,30 @@ function getInterests() {
     });
     return interests;
 }
+function validateForm() {
+    // 텍스트 필드 검증
+    var textFields = document.querySelectorAll('input[type="text"]');
+    for (var i = 0; i < textFields.length; i++) {
+        if (textFields[i].hasAttribute('required') && textFields[i].value.trim() === '') {
+            alert('입력란을 모두 채워주세요.');
+            return false;
+        }
+    }
 
+    // 체크박스 검증
+    var checkboxes = document.querySelectorAll('.interest:checked');
+    if (checkboxes.length === 0 || checkboxes.length > 3) {
+        alert('관심사를 1개 이상 선택해 주세요.');
+        return false;
+    }
+
+    return true;
+}
 // 사용자 입력 정보 서버로 전송
 function sendUserData() {
+    if (!validateForm()) {
+        return;
+    }
 	var id = '<%= (String) session.getAttribute("kakaoId") %>';
 	var queryString = $('#kakaoData').serialize() + '&id=' + id;
   $.ajax({
@@ -54,6 +75,7 @@ function sendUserData() {
             if (response.status === 'success') {
                 alert('가입이 완료되었습니다.');
                 window.close();
+                redirectToMainPage();
             } else {
                 alert('가입 실패: ' + response.message);
             }
@@ -62,6 +84,9 @@ function sendUserData() {
             alert('서버 오류가 발생했습니다.');
         }
     });
+}
+function redirectToMainPage() {
+    window.opener.location.href = '../board/Main.do';
 }
 </script>
 </head>
