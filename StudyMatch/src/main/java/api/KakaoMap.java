@@ -18,6 +18,10 @@ public class KakaoMap extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
 		String sessionID = (String) session.getAttribute("user");
+		
+		if(sessionID == null)
+			req.getRequestDispatcher("../board/KakaoMap.jsp").forward(req, resp);
+		else {
 		GroupDAO dao = new GroupDAO();
 		String address = dao.getaddress(sessionID);
 		
@@ -26,6 +30,7 @@ public class KakaoMap extends HttpServlet {
 		dao.close();
 		
 		req.getRequestDispatcher("../board/KakaoMap.jsp").forward(req, resp);
+		}
 	}
 
 }
