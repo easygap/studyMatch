@@ -60,7 +60,6 @@ public class LoginAuth extends HttpServlet {
 			
 			// 로그인 성공 알람창
 			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/Main.do");
-
 			System.out.println("------------------------------");
 			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 로그인 성공 - session 저장 완료");
 			System.out.println("세션 아이디: " + session.getId());
