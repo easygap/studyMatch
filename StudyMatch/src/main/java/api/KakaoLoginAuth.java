@@ -68,7 +68,6 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 			String kakaoBirthyear = getStringOrDefault(userJson, "birthyear", "");
 			String kakaoBirthday = getStringOrDefault(userJson, "birthday", "");
 			String kakaoBirth = kakaoBirthyear + kakaoBirthday;
-			String kakaoAddress = getStringOrDefault(userJson, "address", "");
 			String kakaoPhoneNumber = getStringOrDefault(userJson, "phoneNumber", "");
 			String kakaoPhone = kakaoPhoneNumber.replace("+82 ", "0");
 
@@ -80,16 +79,16 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 			session.setAttribute("kakaoEmail", kakaoEmail);
 
 			dto = dao.kakaoCheck(kakaoId);
+			dao.close();
+
 			if (dto != null) {
-//				RequestDispatcher loginAuth = req.getRequestDispatcher("../auth/LoginAuth.do");
-//				loginAuth.forward(req, resp);
 				resp.setContentType("application/json; charset=UTF-8");
 				resp.setCharacterEncoding("UTF-8");
 
 				JSONObject jsonResponse = new JSONObject();
 				jsonResponse.put("status", "success");
 				resp.getWriter().write(jsonResponse.toJSONString());
-				
+
 				session.setAttribute("user", dto.getId());
 				SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 				long creationTime = session.getCreationTime(); // 최초 요청 시간
@@ -127,6 +126,9 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("kakao doGet");
+		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
+
 		String id = req.getParameter("id");
 		String nick = req.getParameter("nick");
 		String name = req.getParameter("name");
@@ -136,30 +138,19 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 		String phone = req.getParameter("phone");
 		String job = req.getParameter("job");
 		String[] interests = req.getParameterValues("interests");
-		String interest1 = interests[0];
-		String interest2 = interests[1];
-		String interest3 = interests[2];
+		String interest1 = "";
+		String interest2 = "";
+		String interest3 = "";
 
-		if (!(interest1.isEmpty()) || !(interest1.equals("null"))) {
-			resp.setContentType("text/plain");
-			resp.setCharacterEncoding("UTF-8");
-			resp.getWriter().write("success");
-			System.out.println("카카오 팝업에서 값 받아옴");
+		if (interests != null && interests.length >= 1) {
+			interest1 = interests[0];
 		}
-
-		System.out.println("-----------카카오 로그인 사용자 정보------------");
-		System.out.println("id: " + id);
-		System.out.println("nick: " + nick);
-		System.out.println("name: " + name);
-		System.out.println("email: " + email);
-		System.out.println("birth: " + birth);
-		System.out.println("address: " + address);
-		System.out.println("phone: " + phone);
-		System.out.println("job: " + job);
-		System.out.println("interest1: " + interest1);
-		System.out.println("interest2: " + interest2);
-		System.out.println("interest3: " + interest3);
-		System.out.println("-------------------------------------------");
+		if (interests != null && interests.length >= 2) {
+			interest2 = interests[1];
+		}
+		if (interests != null && interests.length >= 3) {
+			interest3 = interests[2];
+		}
 
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = new MemberDTO();
@@ -177,6 +168,44 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 		dto.setInterest3(interest3);
 
 		dao.kakaoSign(dto);
+
+		if (dto != null) {
+			resp.setContentType("application/json");
+			resp.setCharacterEncoding("UTF-8");
+			resp.getWriter().write("{\"status\":\"success\"}");
+			dao.kakaoCheck(id);
+			HttpSession session = req.getSession();
+			session.setAttribute("user", dto.getId());
+			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+			long creationTime = session.getCreationTime(); // 최초 요청 시간
+			String creationTimeStr = dateFormat.format(new Date(creationTime));
+			long lastTime = session.getLastAccessedTime(); // 마지막 요청 시간
+
+			String lastTimeStr = dateFormat.format(new Date(lastTime));
+
+			// 로그인 성공 알람창
+			System.out.println("------------------------------");
+			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 로그인 성공 - session 저장 완료");
+			System.out.println("세션 아이디: " + session.getId());
+			System.out.println("세션 유지 시간: " + session.getMaxInactiveInterval());
+			System.out.println("최초 요청 시간: " + creationTimeStr);
+			System.out.println("마지막 요청 시간: " + lastTimeStr);
+		}
+
+		System.out.println("-----------카카오 로그인 사용자 정보------------");
+		System.out.println("id: " + id);
+		System.out.println("nick: " + nick);
+		System.out.println("name: " + name);
+		System.out.println("email: " + email);
+		System.out.println("birth: " + birth);
+		System.out.println("address: " + address);
+		System.out.println("phone: " + phone);
+		System.out.println("job: " + job);
+		System.out.println("interest1: " + interest1);
+		System.out.println("interest2: " + interest2);
+		System.out.println("interest3: " + interest3);
+		System.out.println("-------------------------------------------");
+
 		dao.close();
 	}
 }
