@@ -15,7 +15,6 @@ request.setCharacterEncoding("UTF-8");
 https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min.js
 "></script>
 <script>
-	
 	function count_check(obj) {
 		var chkBox = document.getElementsByName("interests");	// name값 interests 를 불러옴
 		var totalChecked = 0;									// checked 변수에 초깃값을 0으로 설정
@@ -23,19 +22,25 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		for(var i = 0; i < chkBox.length; i++){					// 반복문으로 초깃값, 조건식, 증감식 설정
 			if(chkBox[i].checked){								// 조건문으로 chkBox가 checked 됐을 경우
 				totalChecked++;									// countChecked 1씩 증가
-			}
+			} 
 		}
+		
 		if(totalChecked > 3){									// 조건문으로 totalChecked가 3개보다 클 경우
 			alert("3개까지 체크할 수 있습니다.");						// alert를 띄움
 			obj.checked = false;								// flase를 주어 alert를 띄운 뒤에 check가 되지 않도록 설정
 			return false;
-		}
+		} 
 	}
 
 	function validateForm() {
 		
 		var submitButton = document.getElementById("form");
 		
+		
+		/** 아이디 정규식 */
+		var idCheck = /^[a-zA-Z0-9]+$/;
+		
+		/** 핸드폰 번호 정규식 */
 		var phoneCheck = VerEx()
             .startOfLine()
 			.range('0', '9')
@@ -48,6 +53,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			.repeatPrevious(4)
 			.endOfLine()
 
+		/** 생일 정규식 */
 		var birthCheck = VerEx()
             .startOfLine()
 			.range('1', '2')
@@ -63,8 +69,24 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			.range('0', '9')
 			.repeatPrevious(1)
 			.endOfLine()
-
 			
+		/** 주소 정규식 */
+		var addressCheck = /^(경기도|서울특별시|부산광역시|대구광역시|인천광역시|광주광역시|대전광역시|울산광역시|세종특별자치시|제주특별자치도) [가-힣\s]+(시|군|구)[가-힣\s]*$/;
+		
+		// 한글 이름 (2글자 이상, 5글자 이하)
+		var koreanNameCheck = VerEx()
+		    .startOfLine()
+		    .range('가', '힣')
+		    .repeatPrevious(2, 5)
+		    .endOfLine();
+
+		// 영어 이름 (2글자 이상, 20글자 이하)
+		var englishNameCheck = VerEx()
+		    .startOfLine()
+		    .range('a', 'z')
+			.repeatPrevious(2, 20)
+		    .endOfLine()
+		    		
 		// 정규식 체크를 위한 변수 <-- 폼 값을 받아온다.
 		var phone = form.phone.value;
 		var birth = form.birth.value;
@@ -76,6 +98,18 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		var Pw = form.pw.value;
 		var pwCheck = form.pwcheck.value;
 		
+		/** 체크된 interest 박스가 있는지 검사 */
+		var interest = document.getElementsByName("interests");
+		
+		var chk = "N";
+		
+		 for (var i = 0; i < interest.length; i++) {
+		        if (interest[i].checked) 
+		        	chk = "Y";
+		    }
+		 
+		console.log("koreanNameCheck.test(name) : " + koreanNameCheck.test(name) + ", englishNameCheck.test(name) : " +englishNameCheck.test(name)) 
+		 
 		if (id == "") {
 			alert("아이디를 입력 후 중복확인을 해주세요.");
 			RegistFrm.id.focus();
@@ -107,11 +141,23 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			alert("이메일을 입력하세요.");
 			RegistFrm.Email.focus();
 		}
+		else if(idCheck.test(id) === false){
+			alert("아이디는 한글, 특수문자 입력이 불가합니다.");
+		}
+		else if(koreanNameCheck.test(name) != true && englishNameCheck.test(name) != true){
+			alert("올바른 이름을 입력하세요.");
+		}
 		else if (phoneCheck.test(phone) !== true){
 			alert("올바른 휴대폰 번호를 입력하세요.");
 		}
 		else if (birthCheck.test(birth) !== true){
 			alert("생년월일은 YYYYMMDD 형식으로 입력하세요.");
+		}
+		else if(addressCheck.test(address) !== true){
+			alert("올바른 주소를 입력하세요.");
+		}
+		else if (chk === 'N'){
+			alert("관심사를 1개 이상 선택해 주세요.");
 		}
 		 else {
 			submitButton.submit();
@@ -210,7 +256,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 				<td class="registTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사
 				<br/>(최대 3개까지 선택해 주세요.)&nbsp;&nbsp;&nbsp;</td>
 				<td colspan="5">
-					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JAVA " /> JAVA
+					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JAVA" /> JAVA
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="PYTHON"> PYTHON
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C"> C
 					<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C++"> C++ <br/>

@@ -16,7 +16,7 @@ String interest2 = (String) request.getAttribute("interest2");
 String interest3 = (String) request.getAttribute("interest3");
 String image = (String) request.getAttribute("image");
 
-System.out.println(nick + " / " + phone);
+System.out.println(nick + " / " + phone + " / " + image);
 %>
 <!DOCTYPE html>
 <html>
@@ -25,6 +25,22 @@ System.out.println(nick + " / " + phone);
 <link href="../css/Regist.css" rel="stylesheet"/>   
 <title>MyPage</title>
 <script type="text/javascript">
+
+// 체크박스 데이터베이스에 있는 값 먼저 선택되어 호출하기
+window.onload=function() {
+var Checked = document.getElementsByName("interest");
+var Interest1 = "<%= interest1 %>";
+var Interest2 = "<%= interest2 %>";
+var Interest3 = "<%= interest3 %>";
+    
+    for (var i = 0; i < Checked.length; i++) {
+        if (Checked[i].value == Interest1 || Checked[i].value == Interest2 || Checked[i].value == Interest3) {
+            Checked[i].checked = true;
+            // 이 부분에 원하는 로직을 추가하세요
+            console.log(Checked[i].value + " is checked.");
+        }
+    }
+}
 
 function count_check(obj) {
 	var chkBox = document.getElementsByName("interest");	// name값 interests 를 불러옴
@@ -41,7 +57,6 @@ function count_check(obj) {
 		return false;
 	}
 }
-
 
 	function validateForm() {
 		var Pw = MyPageFrm.pw.value;
@@ -71,7 +86,7 @@ function count_check(obj) {
 			<div class="container-fluid">
 				<br /> <br /> <br />
 
-					<form name="MyPageFrm" method="post" action="../auth/MypageView.do" onsubmit="return validateForm(this);">
+					<form name="MyPageFrm" method="post" enctype="multipart/form-data" action="../auth/MypageView.do" onsubmit="return validateForm(this);">
 						<div id="MypageDiv">
 							<h2 id="MypageHead">마이페이지</h2>
 								<div align="center" id="MyapgeTable">
@@ -145,7 +160,7 @@ function count_check(obj) {
 								<tr>
 									<td class="MypageTd">(* 관심사 재선택 *) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 									<td colspan="5">
-										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="JAVA " /> JAVA 
+										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="JAVA"/> JAVA 
 										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="PYTHON"> PYTHON
 										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="C"> C 
 										<input type="checkbox" class="interest" onclick="count_check(this)" name="interest" value="C++"> C++ <br />
@@ -168,7 +183,12 @@ function count_check(obj) {
 	
 								<tr>
 									<td class="MypageTd">ㆍ 프 &nbsp;로 &nbsp;필 &nbsp;사 &nbsp;진 &nbsp;</td>
-									<td><input type="file" name="img" onchange="fileCheck(this)" value="<%= image %>" class="MypageInput"  accept="image/gif, image/jpeg, image/png"></td>
+									<td><input type="file" name="img" onchange="fileCheck(this)" class="MypageInput" accept="image/gif, image/jpeg, image/png">
+									    <% if (image != null && !image.isEmpty()) { %>
+									        <!-- 기존 이미지가 있는 경우 hidden input에 기존 이미지의 파일명을 설정 -->
+									        <input type="hidden" name="oldImg" value="<%= image %>">
+									    <% } %>
+									</td>
 									<td class="MypageTd"></td>
 								</tr>
 	
@@ -181,6 +201,10 @@ function count_check(obj) {
 			</div>
 		</div>
 	</div>
+	<!-- BootStrap javascript 사용 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </body>
 <!-- 푸터 -->
 <jsp:include page="../layout/Footer.jsp"></jsp:include>
