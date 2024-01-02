@@ -86,7 +86,6 @@ function validateForm(form){
       console.log(res);
       console.log("User Information:", res);
       sendUserInfoToServer(res);
-      System.out.print(res);
     },
     fail: function (error) {
       alert("카카오 로그인 실패" + JSON.stringify(error));
@@ -99,7 +98,7 @@ function sendUserInfoToServer(userInfo) {
 	console.log("Sending User Information to Server:", userInfo);
   $.ajax({
     type: 'POST',
-    url: '../auth/KakaoLoginAuth.do',
+    url: '../auth/KakaoLogin.do',
     contentType: 'application/json; charset=utf-8',
     data: JSON.stringify({
       id: userInfo.id,
@@ -115,6 +114,8 @@ function sendUserInfoToServer(userInfo) {
       if (response.status === 'success') {
         alert('카카오 로그인 성공');
         window.location.href = 'http://localhost:8081/StudyMatch/board/Main.do';
+      } else if (response.status === 'popup') {
+    	  openPopup();
       } else {
         alert('카카오 로그인 실패: ' + response.message);
       }
@@ -124,6 +125,13 @@ function sendUserInfoToServer(userInfo) {
       alert('서버 요청 실패');
     }
   });
+}
+
+function openPopup() {
+	var url = "KakaoPopup.jsp";
+	var name = "카카오 로그인 회원정보";
+	var option = "width=500, height=500, left=500, location=no, top=100, scrollbars=no";
+	window.open(url, name, option);
 }
       // 로그아웃 기능
       function kakaoLogOut() {

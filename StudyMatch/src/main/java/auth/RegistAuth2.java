@@ -132,41 +132,6 @@ public class RegistAuth2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		System.out.println("---------------Regist doGet()----------------");
-		
-		// 카카오 로그인에서 보낸 정보 가져오기
-		String id = req.getParameter("id");
-		String name = req.getParameter("name");
-		String nick = req.getParameter("nick");
-		String birth = req.getParameter("birth");
-		String phone = req.getParameter("phone");
-		String address = req.getParameter("address");
-		String pass = "1234";
-		String action = req.getParameter("action");
-		boolean result = false;
-		
-		System.out.println("***---------------------***");
-		System.out.println("action : " + action);
-		System.out.println("id : " + id);
-		System.out.println("name : " + name);
-		System.out.println("nick : " + nick);
-		System.out.println("birth : " + birth);
-		System.out.println("phone : " + phone);
-		System.out.println("address : " + address);
-		System.out.println("***---------------------***");
-		
-		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = new MemberDTO();
-		
-		if (action.equals("kakao")) {
-		result = dao.signUp(dto);
-		
-		if (result = true) {
-			System.out.println("카카오 로그인 계정 DB 저장 성공");
-		} else {
-			System.out.println("카카오 로그인 계정 DB 저장 실패");
-		}
-		}
-		
-//		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
+		req.getRequestDispatcher("/auth/Regist.jsp").forward(req, resp);
 	}
 }

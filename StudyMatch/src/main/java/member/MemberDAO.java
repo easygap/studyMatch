@@ -155,7 +155,6 @@ public class MemberDAO extends DBConnPool {
 		String query = "SELECT nickname FROM member WHERE id=? AND pwd=?";
 
 		try {
-			
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, id);
 			psmt.setString(2, pass);
@@ -215,13 +214,47 @@ public class MemberDAO extends DBConnPool {
 		return result;
 	}
 	
-	// 카카오 로그인 정보 저장
+	// 카카오 로그인 체크
+	public MemberDTO kakaoCheck(String kakaoId) {
+		String query = "SELECT * FROM member WHERE id=?";
+		MemberDTO dto = null;
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, kakaoId);
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				dto = new MemberDTO();
+				// 회원 정보를 DTO에 설정
+				dto.setId(rs.getString("id"));
+				dto.setName(rs.getString("name"));
+				dto.setPass(rs.getString("pwd"));
+				dto.setBirth(rs.getString("birth"));
+				dto.setJob(rs.getString("job"));
+				dto.setNick(rs.getString("nickname"));
+				dto.setPhone(rs.getString("phone"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddress(rs.getString("address"));
+				dto.setInterest1(rs.getString("interest1"));
+				dto.setInterest2(rs.getString("interest2"));
+				dto.setInterest3(rs.getString("interest3"));
+				dto.setImage(rs.getString("img"));
+			}
+			System.out.println("카카오 로그인 정보 조회 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 카카오 로그인 정보 조회 중 예외 발생 ***");
+		}
+		return dto;
+	}
+	
+	// 카카오 회원가입
 	public MemberDTO kakaoSign(MemberDTO dto) {
 		boolean result = false;
 		String kakao = "Y";
 		String pass = "kakaologin";
-		String query = "INSERT INTO member (id, name, birth, nickname, pwd, phone, email, address, kakao)"
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO member (id, name, birth, nickname, pwd, phone, email, address, kakao, interest1, interest2, interest3, job)"
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		int signUpCount = 0;
 
 		try {
@@ -235,6 +268,10 @@ public class MemberDAO extends DBConnPool {
 			psmt.setString(7, dto.getEmail());
 			psmt.setString(8, dto.getAddress());
 			psmt.setString(9, kakao);
+			psmt.setString(10, dto.getInterest1());
+			psmt.setString(11, dto.getInterest2());
+			psmt.setString(12, dto.getInterest3());
+			psmt.setString(13, dto.getJob());
 			signUpCount = psmt.executeUpdate();
 
 			System.out.println("카카오 회원가입 DB 업로드 완료");
