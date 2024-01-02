@@ -21,6 +21,9 @@ import utils.JSFunction;
 @WebServlet("/auth/LoginAuth.do")
 public class LoginAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public LoginAuth() {
+		
+	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher dis = req.getRequestDispatcher("../auth/Login.jsp");
@@ -32,13 +35,21 @@ public class LoginAuth extends HttpServlet {
 		LocalDateTime now = LocalDateTime.now();
 
 		// 인증 요청한 계정 객체에 저장
+		HttpSession session = req.getSession();
+		MemberDTO dto = null;
 		String id = req.getParameter("id");
 		String pass = req.getParameter("pass");
 		MemberDAO dao = new MemberDAO();
-		MemberDTO dto = dao.getMemberDTO(id, pass);
+		
+		if (id != null) {
+			dto = dao.getMemberDTO(id, pass);
+		} else {
+			String kakaoId = (String) session.getAttribute("kakaoId");
+			dto = dao.kakaoCheck(kakaoId);
+		}
 		dao.close();
+		
 		if (dto != null) {
-			HttpSession session = req.getSession();
 			session.setAttribute("user", dto.getId());
 			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 			long creationTime = session.getCreationTime(); // 최초 요청 시간
@@ -51,7 +62,7 @@ public class LoginAuth extends HttpServlet {
 			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/Main.do");
 
 			System.out.println("------------------------------");
-			System.out.println(date.format(now) + " [ " + id + " ] 로그인 성공 - session 저장 완료");
+			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 로그인 성공 - session 저장 완료");
 			System.out.println("세션 아이디: " + session.getId());
 			System.out.println("세션 유지 시간: " + session.getMaxInactiveInterval());
 			System.out.println("최초 요청 시간: " + creationTimeStr);
