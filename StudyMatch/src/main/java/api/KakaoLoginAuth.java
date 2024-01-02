@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +31,8 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 //	private static KakaoServiceIml kakaoService = new KakaoServiceIml();
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		LocalDateTime now = LocalDateTime.now();
 
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = new MemberDTO();
@@ -66,21 +71,41 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 			String kakaoAddress = getStringOrDefault(userJson, "address", "");
 			String kakaoPhoneNumber = getStringOrDefault(userJson, "phoneNumber", "");
 			String kakaoPhone = kakaoPhoneNumber.replace("+82 ", "0");
-			
+
 			session.setAttribute("kakaoId", kakaoId);
 			session.setAttribute("kakaoName", kakaoName);
 			session.setAttribute("kakaoNick", kakaoNick);
 			session.setAttribute("kakaoBirth", kakaoBirth);
 			session.setAttribute("kakaoPhone", kakaoPhone);
 			session.setAttribute("kakaoEmail", kakaoEmail);
-			
+
 			dto = dao.kakaoCheck(kakaoId);
 			if (dto != null) {
-				RequestDispatcher loginAuth = req.getRequestDispatcher("../auth/LoginAuth.do");
-				loginAuth.forward(req, resp);
-			}
+//				RequestDispatcher loginAuth = req.getRequestDispatcher("../auth/LoginAuth.do");
+//				loginAuth.forward(req, resp);
+				resp.setContentType("application/json; charset=UTF-8");
+				resp.setCharacterEncoding("UTF-8");
 
-			if (kakaoAddress.isEmpty() || kakaoAddress.equals("null")) {
+				JSONObject jsonResponse = new JSONObject();
+				jsonResponse.put("status", "success");
+				resp.getWriter().write(jsonResponse.toJSONString());
+				
+				session.setAttribute("user", dto.getId());
+				SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				long creationTime = session.getCreationTime(); // 최초 요청 시간
+				String creationTimeStr = dateFormat.format(new Date(creationTime));
+				long lastTime = session.getLastAccessedTime(); // 마지막 요청 시간
+
+				String lastTimeStr = dateFormat.format(new Date(lastTime));
+
+				// 로그인 성공 알람창
+				System.out.println("------------------------------");
+				System.out.println(date.format(now) + " [ " + dto.getId() + " ] 로그인 성공 - session 저장 완료");
+				System.out.println("세션 아이디: " + session.getId());
+				System.out.println("세션 유지 시간: " + session.getMaxInactiveInterval());
+				System.out.println("최초 요청 시간: " + creationTimeStr);
+				System.out.println("마지막 요청 시간: " + lastTimeStr);
+			} else {
 				resp.setContentType("application/json");
 				resp.setCharacterEncoding("UTF-8");
 				PrintWriter out = resp.getWriter();
@@ -138,7 +163,7 @@ public class KakaoLoginAuth extends HttpServlet implements Serializable {
 
 		MemberDAO dao = new MemberDAO();
 		MemberDTO dto = new MemberDTO();
-		
+
 		dto.setId(id);
 		dto.setName(name);
 		dto.setNick(nick);

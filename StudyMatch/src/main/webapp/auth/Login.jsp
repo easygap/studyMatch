@@ -113,7 +113,7 @@ function sendUserInfoToServer(userInfo) {
       console.log('서버 응답:', response);
       if (response.status === 'success') {
         alert('카카오 로그인 성공');
-        window.location.href = 'http://localhost:8081/StudyMatch/board/Main.do';
+        window.location.href = '../board/Main.do';
       } else if (response.status === 'popup') {
     	  openPopup();
       } else {
