@@ -42,6 +42,19 @@ function count_check(obj) {
 	}
 }
 
+
+	function validateForm() {
+		var Pw = MyPageFrm.pw.value;
+		var pwCheck = MyPageFrm.pwcheck.value;
+		
+		if (Pw == "") {
+			alert("비밀번호를 입력하세요.");
+			MyPageFrm.pw.focus();
+		} else if(Pw != pwCheck){
+			alert("비밀번호가 동일하지 않습니다. 다시 확인해 주세요.");
+			MyPageFrm.pwcheck.focus();
+		}
+	}
 </script>
 </head>
 <body>
@@ -58,7 +71,7 @@ function count_check(obj) {
 			<div class="container-fluid">
 				<br /> <br /> <br />
 
-					<form name="MyPageFrm" method="post" action="../auth/Mypage.do" onsubmit="return validateForm(this);">
+					<form name="MyPageFrm" method="post" action="../auth/MypageView.do" onsubmit="return validateForm(this);">
 						<div id="MypageDiv">
 							<h2 id="MypageHead">마이페이지</h2>
 								<div align="center" id="MyapgeTable">
@@ -95,7 +108,7 @@ function count_check(obj) {
 	
 								<tr>
 									<td class="MypageTd">ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
-									<td><input type="text" name="birth" value="<%=birth%>" class="MypageInput" ></td>
+									<td><input type="text" name="birth" value="<%=birth%>" class="MypageInput" disabled></td>
 									<td class="MypageTd"></td>
 								</tr>
 	
@@ -161,7 +174,8 @@ function count_check(obj) {
 	
 							</table>
 							<br /> <input type="reset" class="myPage" name="reset" value="RESET"> <input type="submit" class="myPage" name="save" value="저장하기">
-						</div>
+							<br/>
+							</div>
 					</div>
 				</form>
 			</div>

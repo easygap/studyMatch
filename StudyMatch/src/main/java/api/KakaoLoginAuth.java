@@ -20,7 +20,7 @@ import org.json.simple.parser.ParseException;
 import member.MemberDAO;
 import member.MemberDTO;
 
-@WebServlet("/auth/KakaoLoginAuth.do")
+@WebServlet("/auth/KakaoLogin.do")
 public class KakaoLoginAuth extends HttpServlet implements Serializable {
 
 	private static final long serialVersionUID = 1L;

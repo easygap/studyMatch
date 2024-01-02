@@ -40,11 +40,12 @@ public class MemberDAO extends DBConnPool {
 	}
 	
 	// 마이페이지 업데이트
-	public boolean updateMypage (MemberDTO dto) throws SQLException {
+	public boolean updateMypage (MemberDTO dto, String id) {
 
 		boolean result = false;
 		String query = "UPDATE member SET "
-				+ "job=?, nickname=?, pwd=?, phone=?, email=?, address=?, interest1=?, interest2=?, interest3=?, img=?";
+				+ "job=?, nickname=?, pwd=?, phone=?, email=?, address=?, interest1=?, interest2=?, interest3=?, img=?"
+				+ " WHERE id=? ";
 		int mypageCount = 0;
 
 		try {
@@ -59,6 +60,8 @@ public class MemberDAO extends DBConnPool {
 			psmt.setString(8, dto.getInterest2());
 			psmt.setString(9, dto.getInterest3());
 			psmt.setString(10, dto.getImage());
+			
+			psmt.setString(11, id);
 			mypageCount = psmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +69,7 @@ public class MemberDAO extends DBConnPool {
 		}
 
 		if (mypageCount > 0) {
-			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 마이페이지 업데이트 성공!");
+			System.out.println(date.format(now) + " [ " + dto.getNick() + " ] 마이페이지 업데이트 성공!");
 			result = true;
 		} else {
 			System.out.println("*** " + date.format(now) + " 정보 업데이트 실패 ***");
