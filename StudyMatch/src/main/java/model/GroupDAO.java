@@ -187,7 +187,6 @@ public class GroupDAO extends DBConnPool {
 			Profile.put("Names", Names);
 			Profile.put("group_num", Group_num);
 			
-			System.out.println("쿼리문에서 : " + Img);
 		} catch (Exception e) {
 			System.out.println("DB 이미지 불러오기 실패");
 			e.printStackTrace();
@@ -229,7 +228,6 @@ public class GroupDAO extends DBConnPool {
 			psmt.setString(1, dto.getGroup_Num());
 			rs = psmt.executeQuery();
 
-			System.out.println(" dto에 값이 저장이 안됐나? 뭐지? " + dto.getGroup_Num());
 			while (rs.next()) {
 				PreviousNames.add(rs.getString("name"));
 				PreviousImg.add(rs.getString("img"));
@@ -237,7 +235,6 @@ public class GroupDAO extends DBConnPool {
 			Previous.put("PreviousNames", PreviousNames);
 			Previous.put("PreviousImg", PreviousImg);
 			
-			System.out.println("정말 값이 서블렛으로만 전달이 안된건가?? 분명 된거 같은데?? " + Previous);
 			System.out.println(" 이전 그룹 매칭되었던 리스트 DB연결 후 해당 그룹 이미지 및 이름 불러오기 성공 ! ! ! ");
 		} catch (Exception e) {
 			System.out.println(" 이전 그룹 매칭되었던 리스트 DB연결 후 해당 그룹 이미지 및 이름 불러오기 실패 . . .");
@@ -436,7 +433,6 @@ public class GroupDAO extends DBConnPool {
 			groupInfoList.put("groupinterest2", groupinterest2);
 			groupInfoList.put("groupinterest3", groupinterest3);
 
-			System.out.println("쿼리문에서 : " + groupInfoList);
 		} catch (Exception e) {
 			System.out.println("그룹 정보 불러오기 실패");
 			e.printStackTrace();
