@@ -66,10 +66,6 @@ public class MainController extends HttpServlet {
 			
 			/** 그룹을 생성해야 하는지 확인하는 변수 */
 			String createGR = "N";
-
-			
-			/** 본인이 가입되어있는 그룹인지 확인하는 변수 */
-			String invited = "N";
 			
 			/** 그룹 매칭 관련 변수 전역변수로 만들기 */
 			List<String> groupNameList1;

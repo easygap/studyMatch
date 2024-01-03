@@ -124,6 +124,7 @@ public class GroupDAO extends DBConnPool {
 				}
 			}
 			Collections.shuffle(interest);
+			System.out.println("데이터베이스에서 interest : " + interest);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -252,22 +253,20 @@ public class GroupDAO extends DBConnPool {
 		List<String> groupName = new ArrayList<>();
 		List<String> groupImg = new ArrayList<>();
 		List<String> groupNum = new ArrayList<>();
-		String query = " SELECT mg.group_num, m.name, m.img "
-				+ "FROM matchgroup mg "
-				+ "JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5) "
-				+ "WHERE mg.group_num IN ("
-				+ "    SELECT group_num "
-				+ "    FROM matchgroup "
-				+ "    WHERE group_num IN ("
-				+ "        SELECT group_num "
-				+ "        FROM matchgroup "
-				+ "        WHERE import = ? AND address LIKE ? AND group_num NOT IN ("
+		String query = " WITH RandomGroup AS ("
+				+ "    SELECT group_num"
+				+ "    FROM matchgroup"
+				+ "    WHERE import = ? "
+				+ "      AND address LIKE ? AND group_num NOT IN ("
 				+ "            SELECT group_num "
-				+ "            FROM matchgroup "
-				+ "            WHERE ? IN (id1, id2, id3, id4, id5)"
-				+ "        )"
-				+ "    )"
-				+ ")";
+				+ "            FROM matchgroup"
+				+ "            WHERE ? IN (id1, id2, id3, id4, id5)) "
+				+ " ORDER BY DBMS_RANDOM.VALUE"
+				+ " FETCH FIRST 1 ROW ONLY )"
+				+ " SELECT mg.group_num, m.name, m.img"
+				+ " FROM RandomGroup rg"
+				+ " JOIN matchgroup mg ON rg.group_num = mg.group_num"
+				+ " JOIN member m ON m.id IN (mg.id1, mg.id2, mg.id3, mg.id4, mg.id5)";
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, interest);
