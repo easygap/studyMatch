@@ -43,6 +43,13 @@
 	height: 17em;
 	/* 이미지 크기에 맞게 조절하세요 */
 	margin: 3em 3em 3em 3em;
+	
+	transition: all 0.1s ease-in-out;
+}
+
+.profile:hover {
+	filter: brightness(1.1) opacity(0.8);
+	box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.7);
 }
 
 .groupInfo {

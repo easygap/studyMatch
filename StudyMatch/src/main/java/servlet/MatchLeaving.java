@@ -19,7 +19,7 @@ public class MatchLeaving extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/MatchHistory/MatchHistory.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/MatchHistory.jsp").forward(req, resp);
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

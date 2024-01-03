@@ -160,11 +160,21 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 	}
 
 	function winopen() {
-		window.open("../auth/idCheckAuth.do", "", "width=500, height=200");
+		var width = 500;
+	    var height = 250;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+
+	    window.open("../auth/idCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
 	}
 	
 	function NickCheck(){
-		window.open("../auth/nickCheckAuth.do", "", "width=500, height=200");
+		var width = 500;
+	    var height = 250;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+
+	    window.open("../auth/nickCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
 	}
 	
 </script>
