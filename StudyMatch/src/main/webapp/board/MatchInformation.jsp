@@ -71,7 +71,13 @@ List<String> GroupInterest3 = (List<String>) groupInterest3List;
 										성함 : <%=GroupName.get(i)%><br/> <br/>
 										나이 : <%=GroupAge.get(i)%>대<br/> <br/>
 										직업 : <%=GroupJob.get(i)%><br/> <br/>
+										<% if(GroupInterest1.get(i) != null && GroupInterest2.get(i) != null && GroupInterest3.get(i) != null) {%>
 										관심사 : <%=GroupInterest1.get(i)%> / <%=GroupInterest2.get(i)%> / <%=GroupInterest3.get(i)%><br/><br/><br/><br/><br/><br/><br/>
+										<% }else if(GroupInterest1.get(i) != null && GroupInterest2.get(i) != null) {%>
+										관심사 : <%=GroupInterest1.get(i)%> / <%=GroupInterest2.get(i)%><br/><br/><br/><br/><br/><br/><br/>
+										<% }else if(GroupInterest1.get(i) != null) {%>
+										관심사 : <%=GroupInterest1.get(i)%><br/><br/><br/><br/><br/><br/><br/>
+										<% } %>
 										<%-- 마지막 요소가 아닌 경우만 공백 추가 --%>
 									</p>
 									<% } else { %>

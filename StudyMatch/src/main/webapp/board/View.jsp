@@ -19,6 +19,7 @@ String num = request.getParameter("num");
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+<link href="../css/upload.css" rel="stylesheet" />
 
 <script>
 	function removeCheck() {
@@ -109,7 +110,7 @@ function setEditMode(content, commNum, commId) {
 							<button type="button" onclick="removeCheck();">삭제하기</button> <%	
  }
  %>
-							<button type="button" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
+							<button type="button" class="List" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>

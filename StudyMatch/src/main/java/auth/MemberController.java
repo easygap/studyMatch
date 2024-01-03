@@ -60,7 +60,7 @@ public class MemberController extends HttpServlet {
 		// 기존 이미지 파일명을 가져옴
 		String oldImage = mr.getParameter("oldImg");
 
-		String result = "N";
+		String nickChe = null;
 
 		boolean Mypage = false;
 
@@ -116,10 +116,13 @@ public class MemberController extends HttpServlet {
 			}
 
 			Mypage = dao.updateMypage(dto, sessionID);
+			nickChe = dao.nickCheck(nick);
 
 			if (Mypage == true) {
 				JSFunction.alertRegist(resp, "마이페이지 정보 변경이 완료되었습니다.", "../auth/Mypage.do");
-			} else {
+			} else if(nickChe.equals("N")) {
+				JSFunction.alertRegistFail(resp, "해당 닉네임은 이미 사용 중 입니다. 중복확인 후 다시 시도해 주세요.");
+			} else if(Mypage == false){
 				JSFunction.alertRegistFail(resp, "마이페이지 정보 변경에 실패하였습니다.");
 			}
 

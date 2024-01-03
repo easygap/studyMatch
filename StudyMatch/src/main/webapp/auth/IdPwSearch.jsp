@@ -54,47 +54,42 @@ if(request.getParameter("nullPW") != null)
 		window.open("../auth/PwSearchPopup.do?id=" + document.pwSearchFrm.pwId.value, "", "width=500, height=300");
 	}
 </script>
-<style>
-.parent {
-	width: 90%;
-    margin: 10px auto;
-    display: flex;
-    }
-.id {
-    flex:1;
-    width:35%;
-    margin: 0px 5%;
-}
-.pw{
-    flex:1;
-    margin: 0px 5%;
-    width:35%;
-}
-</style>
 </head>
-<body>
-<h2 align="center">아이디/비밀번호 찾기</h2>	<p style="font-size:14px;" align="center">가입한 아이디와 비밀번호를 잊으셨습니까?</p>
-	<div class = "parent">
-	<div class = "id">
+<body id="idpwSerBody">
+<!-- 코드 시작 -->
+    <div class="d-flex" id="wrapper">
+        <!-- 네비게이션 바 -->
+        <jsp:include page="../layout/Main.jsp"></jsp:include>
+
+        <!-- 페이지 컨텐츠 -->
+        <div id="page-content-wrapper">
+            <!-- 네비게이션 바 -->
+            <jsp:include page="../layout/Navbar.jsp"></jsp:include>
+            <div class="container-fluid">
+                <br /> <br /> <br />
+		<h2 align="center" id="idpwsear">아이디/비밀번호 찾기</h2>	<p style="font-size:14px;" align="center">가입한 아이디와 비밀번호를 잊으셨습니까?</p>
+    <div id="parent">            
+	
+	<div id="idSearch">
 	<form name="IdSearchFrm" method="post" action="../auth/IdSearch.do" onsubmit="return validateForm(this);">	
-		<h3 align="center">아 이 디 찾 기</h3>
+		<h3 align="center" id="idsearch">아 이 디 찾 기</h3>
 			<table>
 				<tr>
-					<td>ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><input type="text" name="idName" /></td>
-					<td></td>
+					<td class="idpwSearchTd">ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="idpwSearchTd"><input type="text" class="idpwSearchInput" name="idName" /></td>
+					<td class="idpwSearchTd"></td>
 				</tr>
 
 				<tr>
-					<td>ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td><input type="text" name="idPhone" placeholder="'-' 포함하여 입력해 주세요." />
+					<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="idpwSearchTd"><input type="text" name="idPhone" class="idpwSearchInput"  placeholder="'-' 포함하여 입력해 주세요." />
 					 	<input type="submit" class="IdPwSearch" name="idCertified" value="인증하기" /></td>
-					<td></td>
+					<td class="idpwSearchTd"></td>
 				</tr>
 				
 				<tr>
-						<td>ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-						<td>
+						<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td class="idpwSearchTd">
 						<% if(idSearch != null){ 
 						if(nullID.equals("N")) {%>
 						<span style="color:blue; font:bold;">[  <%= idSearch %>  ]</span>
@@ -104,49 +99,49 @@ if(request.getParameter("nullPW") != null)
 						</td>
 				</tr>
 				<tr>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="idpwSearchTd"></td>
+						<td class="idpwSearchTd"></td>
+						<td class="idpwSearchTd"></td>
 				</tr>
 				<tr>
-						<td></td>
-						<td></td>
-						<td></td>
+						<td class="idpwSearchTd"></td>
+						<td class="idpwSearchTd"></td>
+						<td class="idpwSearchTd"></td>
 				</tr>
 				
 				<tr>
-					<td></td>
-					<td><button type="button" class="IdPwSearch" name="Login" onclick="location.href='Login.jsp';">로그인 하기</button></td>
-					<td></td>
+					<td class="idpwSearchTd"></td>
+					<td class="idpwSearchTd"><button type="button" class="login" name="Login" onclick="location.href='Login.jsp';">로 그 인 하 기</button></td>
+					<td class="idpwSearchTd"></td>
 				</tr>
 			</table>
 	</form>
 	</div>
-	<div class="pw">
+	<div id="pwSearch">
 		<form name="pwSearchFrm" method="post" action="../auth/PwSearch.do" onsubmit="validateForm(this)" >
-		<h3 align="center">비 밀 번 호 찾 기</h3>
+		<h3 align="center" id="pwsearch">비 밀 번 호 찾 기</h3>
 		<table>
 			<tr>
-				<td>ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" name="pwId"/></td>
-				<td></td>
+				<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="idpwSearchTd"><input type="text" name="pwId" class="idpwSearchInput"/></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 			<tr>
-				<td>ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				<td><input type="text" name="pwPhone" placeholder="'-' 포함하여 입력해 주세요." /></td>
-				<td></td>
+				<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="idpwSearchTd"><input type="text" name="pwPhone" class="idpwSearchInput" placeholder="'-' 포함하여 입력해 주세요." /></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 			
 			<tr>
-				<td>ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
-				<td><input type="text" name="pwBirth" placeholder="ex)20000101" />
+				<td class="idpwSearchTd">ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
+				<td class="idpwSearchTd"><input type="text" name="pwBirth" class="idpwSearchInput" placeholder="ex)20000101" />
 					<button type="submit" class="IdPwSearch" name="pwCertified" onclick="certifi()">인증하기</button></td>
-				<td></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 			
 			<tr>
-				<td></td>
-				<td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd">
 						<% if(pwSearch != null){ 
 						if(nullPW.equals("N")){%>
 						<span style="color:blue; font:bold;">[  회원 정보가 확인 되었습니다. <br/> 비밀번호를 변경해 주세요.  ]</span>
@@ -156,29 +151,36 @@ if(request.getParameter("nullPW") != null)
 						<span style="color:red; font:bold;">회원 정보가 없습니다. </span>
 						<% }} %>
 						</td>
-				<td></td>
-				<td></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 				
 			<tr>
-				<td></td>
-				<td><button type="button" class="IdPwSearch" name="Login" onclick="location.href='Login.jsp';">로그인 하기</button></td>
-				<td></td>
+				<td class="idpwSearchTd"></td>
+				<td class="idpwSearchTd"><button type="button" class="login" name="Login" onclick="location.href='Login.jsp';">로 그 인 하 기</button></td>
+				<td class="idpwSearchTd"></td>
 			</tr>
 		</table>
 		</form>
 	</div>
 	</div>
-	
+	</div>
+	</div>
+	</div>
+	 <!-- BootStrap javascript 사용 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
 </body>
+<jsp:include page="../layout/Footer.jsp"></jsp:include>
 </html>

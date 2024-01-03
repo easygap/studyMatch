@@ -149,6 +149,9 @@ td {
 	font-weight: bold;
 	font-size: 18px;
 	border-radius: 10px;
+	border: none;
+	width: 7em;
+	height: 1.8em;
 }
 
 .Nobutton{
@@ -159,6 +162,10 @@ td {
 	font-weight: bold;
 	font-size: 18px;
 	border-radius: 10px;
+	border: none;
+	
+	width: 10em;
+	height: 2em;
 }
 
 .Loginbutton{
@@ -174,4 +181,5 @@ td {
 	font-weight: bold;
 	font-size: 1.5em;
 	border-radius: 0.5em;
+	border: none;
 }
