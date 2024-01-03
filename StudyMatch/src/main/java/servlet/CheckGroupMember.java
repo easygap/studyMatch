@@ -72,13 +72,17 @@ public class CheckGroupMember extends HttpServlet {
 		
 		String[] strArray = { groupID1, groupID2, groupID3, groupID4 };
 		
+		String duplicationChk = "Y";
+		
 		/** 입력한 ID와 sessionID가 같다면 그룹 생성 불가능 */
 		for (String str : strArray) {
-            if (str.equals(sessionID)) {
-            	
-            	JSFunction .alertLocation(resp, "본인 ID는 입력할 수 없습니다...", "../board/MakeGroup.jsp?address=" + address);
-            }
+            if (str.equals(sessionID)) 
+            	duplicationChk = "N";	
 		}
+		
+		if(duplicationChk.equals("N")) 
+			JSFunction .alertLocation(resp, "본인 ID는 입력할 수 없습니다...", "../board/MakeGroup.jsp?address=" + address);
+		
 
 		/** 배열 null값 제거 */
 		strArray = Arrays.stream(strArray)
@@ -93,11 +97,10 @@ public class CheckGroupMember extends HttpServlet {
 		int chkID = dao.checkId(strArray);
 		
 		/** ID가 존재한다면 */
-		if(chkID == 1 && count > 1 && intrest != null) {
+		if(chkID == 1 && count > 1 && intrest != null && duplicationChk.equals("Y")) {
 			dao.makeGroup(groupNum, sessionID, strArray, intrest, address);
 			JSFunction .alertThenClose(resp, "그룹 생성에 성공하셨습니다.", "../board/MakeGroup.jsp");
 		} else if(chkID == 0){
-			
 			
 			JSFunction .alertBack(resp, "ID를 바르게 입력해주세요.（；´д｀）ゞ");
 		}
