@@ -70,6 +70,15 @@ function count_check(obj) {
 			MyPageFrm.pwcheck.focus();
 		}
 	}
+	
+	function NickCheck(){
+		var width = 500;
+	    var height = 250;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+
+	    window.open("../auth/nickCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
+	}
 </script>
 </head>
 <body>
@@ -117,7 +126,7 @@ function count_check(obj) {
 	
 								<tr>
 									<td class="MypageTd">ㆍ 닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임</td>
-									<td><input type="text" name="nickName" value="<%=nick%>" class="MypageInput" ></td>
+									<td><input type="text" name="nickName" value="<%=nick%>" class="MypageInput" > <input type="button" name="nickCheck" id="nick" onclick="NickCheck()" class="RegistButton" value="중 복 확 인"></td>
 									<td class="MypageTd"></td>
 								</tr>
 	
