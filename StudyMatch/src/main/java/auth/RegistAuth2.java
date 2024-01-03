@@ -48,6 +48,7 @@ public class RegistAuth2 extends HttpServlet {
 
 		boolean Regist = false;
 		String idC = null;
+		String nickChe = null;
 
 		try {
 
@@ -104,12 +105,15 @@ public class RegistAuth2 extends HttpServlet {
 
 				Regist = dao.signUp(dto);
 				idC = dao.idCheck(mr.getParameter("id"));
+				nickChe = dao.nickCheck(mr.getParameter("nickName"));
 
 				// 회원가입 성공 알람창
 				if (Regist == true) {
 					JSFunction.alertRegist(resp, "회원가입에 성공하였습니다.", "../auth/LoginAuth.do");
 				} else if (idC.equals("N")) { // 아이디 중복 알림창
-					JSFunction.alertRegistFail(resp, "해당 ID는 이미 사용 중 입니다. 다시 중복확인 후 가입해 주세요.");
+					JSFunction.alertRegistFail(resp, "해당 ' 아이디 '는 이미 사용 중 입니다. 중복확인 후 다시 시도해 주세요.");
+				} else if(nickChe.equals("N")) {
+					JSFunction.alertRegistFail(resp, "해당 ' 닉네임 '은 이미 사용 중 입니다. 중복확인 후 다시 시도해 주세요.");
 				} else if (Regist == false) { // 회원가입 실패 알람창
 					JSFunction.alertRegistFail(resp, "회원가입에 실패하였습니다. 다시 확인해 주세요.");
 				}

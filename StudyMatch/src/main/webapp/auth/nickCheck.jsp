@@ -18,20 +18,20 @@ String NICKcheck = request.getParameter("nickCheck");
 	
 	
 	<div align="center">
-	<h2>닉네임 중복 확인</h2>
+	<h2 id="nickCheckHead">닉네임 중복 확인</h2>
 	<br />
 		<form name="checkNickFrm" action="../auth/nickCheckAuth.do" method="get" onsubmit="return validateForm(this);">
 			<table>
 				<tr>
-					<td>ㆍ 닉&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 네&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 임&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="nickCheckTd">ㆍ 닉&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 네&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 임&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<%
 					if(nickCheck.equals("null")){
 					%>
-					<td><input type="text" name="nickCheck" /></td>
+					<td class="nickCheckTd"><input type="text" class="nickCheckInput" name="nickCheck" /></td>
 					<%} else{ %>
-					<td><input type="text" name="nickCheck" value="<%= nickCheck %>" /></td>
+					<td class="nickCheckTd"><input type="text" class="nickCheckInput" name="nickCheck" value="<%= nickCheck %>" /></td>
 					<%} %>
-					<td><input type="submit" name="nickChecked" class="NickCheck" value="중 복 확 인"></td>
+					<td class="nickCheckTd"><input type="submit" name="nickChecked" class="NickCheck" value="중 복 확 인"></td>
 				</tr>
 
 			</table>

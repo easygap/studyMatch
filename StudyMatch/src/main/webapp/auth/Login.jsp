@@ -130,7 +130,7 @@ function sendUserInfoToServer(userInfo) {
 function openPopup() {
 	var url = "KakaoPopup.jsp";
 	var name = "카카오 로그인 회원정보";
-	var option = "width=500, height=500, left=500, location=no, top=100, scrollbars=no";
+	var option = "width=480, height=720, left=500, location=no, top=100, scrollbars=no";
 	window.open(url, name, option);
 }
     </script>

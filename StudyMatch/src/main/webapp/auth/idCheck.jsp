@@ -18,20 +18,20 @@ String IDcheck = request.getParameter("idCheck");
 	
 	
 	<div align="center">
-	<h2>ID 중복 확인</h2>
+	<h2 id="idCheckHead">ID 중복 확인</h2>
 	<br />
 		<form name="checkIdFrm" action="../auth/idCheckAuth.do" method="get" onsubmit="return validateForm(this);">
 			<table>
 				<tr>
-					<td>ㆍ아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디 &nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="idCheckTd">ㆍ아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디 &nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<%
 					if(idCheck.equals("null")){
 					%>
-					<td><input type="text" name="idCheck" /></td>
+					<td class="idCheckTd"><input type="text" class="idCheckInput" name="idCheck" /></td>
 					<%} else{ %>
-					<td><input type="text" name="idCheck" value="<%= idCheck %>" /></td>
+					<td class="idCheckTd"><input type="text" class="idCheckInput" name="idCheck" value="<%= idCheck %>" /></td>
 					<%} %>
-					<td><input type="submit" name="idChecked" class="IdCheck" value="중 복 확 인"></td>
+					<td class="idCheckTd"><input type="submit" name="idChecked" class="IdCheck" value="중 복 확 인"></td>
 				</tr>
 
 			</table>

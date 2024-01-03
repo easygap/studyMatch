@@ -4,13 +4,13 @@
 #matchbody {
 	/* display: flex;  
 	align-items: center; */
-	justify-content: center; 
+	justify-content: center;
 	height: 100vh;
 	margin: 0;
 	background-color: #F4EAE0;
 }
 
-#matchHistory{
+#matchHistory {
 	width: 900px;
 	height: 900px;
 }
@@ -21,16 +21,23 @@
 	object-fit: cover;
 	/* 이미지 비율 유지 */
 	border-radius: 50%;
-	
+
 	overflow: hidden;
 	border-radius: 50%;
 	width: 110px;
 	/* 이미지 크기에 맞게 조절하세요 */
 	height: 110px;
 	/* 이미지 크기에 맞게 조절하세요 */
+
+	margin-left: 5%;
+	margin-bottom: 10px;
 	
-	 margin-left: 5%;
-	 margin-bottom: 10px;
+	transition: all 0.1s;
+}
+
+.profile:hover {
+	filter: brightness(1.1) opacity(0.8);
+	box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.7);
 }
 
 /* 내 스터디 매칭된 그룸 뒷 배경 */
@@ -40,21 +47,25 @@
 	height: 270px;
 	left: 352px;
 	top: 214px;
-	
+
 	background: rgba(192, 192, 192, 0.13);
 }
 
-#mygroup{
-	background: rgba(81, 116, 190, 0.4);
+#mygroup {
+	background: rgba(81, 116, 190, 0.6);
 	border-radius: 10px;
-	color: #ffffff;	
+	color: #ffffff;
 	font-weight: bold;
 	font-size: 18px;
 	float: right;
 	margin-right: 40px;
+	border: none;
+	
+	width: 13em;
+	height: 2em;
 }
 
-/* 이전에 매칭됐던 현황 */ 
+/* 이전에 매칭됐던 현황 */
 .MatchHistory {
 	position: absolute;
 	background: rgba(192, 192, 192, 0.13);
@@ -67,37 +78,37 @@
 .matching {
 	margin-left: 10px;
 	color: #5174BE;
-	
+
 	font-style: italic;
 	font-size: 23px;
 	font-weight: 900;
 }
 
-#Matching{
+#Matching {
 	font-size: 40px;
 	font-weight: bold;
 }
 
-.font{
+.font {
 	margin-left: 10px;
 }
 
-#name{
-	word-spacing:95px;
+#name {
+	word-spacing: 95px;
 	margin-left: 50px;
 	font-weight: bold;
 	font-size: 18px;
 	margin-right: 10px;
 }
 
-#PreviousName{
-	word-spacing:105px;
+#PreviousName {
+	word-spacing: 105px;
 	margin-left: 50px;
 	font-weight: bold;
 	font-size: 18px;
 	margin-right: 10px;
 }
 
-#plus{
+#plus {
 	font-weight: bold;
 }

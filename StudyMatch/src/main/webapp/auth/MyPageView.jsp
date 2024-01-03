@@ -24,7 +24,10 @@ System.out.println(nick + " / " + phone + " / " + image);
 <meta charset="UTF-8">
 <link href="../css/Regist.css" rel="stylesheet"/>   
 <title>MyPage</title>
-<script type="text/javascript">
+<script src="
+https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min.js
+"></script>
+<script>
 
 // 체크박스 데이터베이스에 있는 값 먼저 선택되어 호출하기
 window.onload=function() {
@@ -59,8 +62,43 @@ function count_check(obj) {
 }
 
 	function validateForm() {
+		var submitButton = document.getElementById("form");
+		
 		var Pw = MyPageFrm.pw.value;
 		var pwCheck = MyPageFrm.pwcheck.value;
+		
+		/** verbal 정규식 */
+		
+		/** 핸드폰 번호 정규식 */
+		var phoneCheck = VerEx()
+            .startOfLine()
+			.range('0', '9')
+			.repeatPrevious(3)
+			.maybe('-')
+			.range('0', '9')
+			.repeatPrevious(4)
+			.maybe('-')
+			.range('0', '9')
+			.repeatPrevious(4)
+			.endOfLine()
+			
+		/** 정규 표현식 */
+		
+		/** 주소 정규식 */
+		var addressCheck = /^(경기도|서울특별시|부산광역시|대구광역시|인천광역시|광주광역시|대전광역시|울산광역시|세종특별자치시|제주특별자치도) [가-힣\s]+(시|군|구)[가-힣\s]*$/;
+		
+		var phone = MyPageFrm.phone.value;
+		var address = MyPageFrm.address.value;
+		
+		/** 체크된 interest 박스가 있는지 검사 */
+		var interest = document.getElementsByName("interest");
+		
+		var chk = "N";
+		
+		 for (var i = 0; i < interest.length; i++) {
+		        if (interest[i].checked) 
+		        	chk = "Y";
+		    }
 		
 		if (Pw == "") {
 			alert("비밀번호를 입력하세요.");
@@ -68,6 +106,16 @@ function count_check(obj) {
 		} else if(Pw != pwCheck){
 			alert("비밀번호가 동일하지 않습니다. 다시 확인해 주세요.");
 			MyPageFrm.pwcheck.focus();
+		}else if (phoneCheck.test(phone) !== true){
+			alert("올바른 휴대폰 번호를 입력하세요.");
+		}
+		else if(addressCheck.test(address) !== true){
+			alert("올바른 주소를 입력하세요.");
+		}
+		else if (chk === 'N'){
+			alert("관심사를 1개 이상 선택해 주세요.");
+		}else {
+			submitButton.submit();
 		}
 	}
 	
@@ -95,7 +143,7 @@ function count_check(obj) {
 			<div class="container-fluid">
 				<br /> <br /> <br />
 
-					<form name="MyPageFrm" method="post" enctype="multipart/form-data" action="../auth/MypageView.do" onsubmit="return validateForm(this);">
+					<form name="MyPageFrm" id="form" method="post" enctype="multipart/form-data" action="../auth/MypageView.do">
 						<div id="MypageDiv">
 							<h2 id="MypageHead">마이페이지</h2>
 								<div align="center" id="MyapgeTable">
@@ -202,7 +250,7 @@ function count_check(obj) {
 								</tr>
 	
 							</table>
-							<br /> <input type="reset" class="myPage" name="reset" value="RESET"> <input type="submit" class="myPage" name="save" value="저장하기">
+							<br /> <input type="reset" class="myPage" name="reset" value="RESET"> <input type="button" onclick="validateForm();" class="myPage" name="save" value="저장하기">
 							<br/>
 							</div>
 					</div>

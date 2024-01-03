@@ -68,5 +68,12 @@
 }
 
 .List{
-	background-color: #5174BE;
+	background-color: gray;
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1.2em;
+	border-radius: 10px;
+	width: 8em;
+	height: 1.8em;
+	border: none;
 }
