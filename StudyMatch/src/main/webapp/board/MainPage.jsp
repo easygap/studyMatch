@@ -104,14 +104,14 @@ String nowTime = sdf.format(now.getTime());
  		if (confirm("그룹을 생성하시겠습니까??") == true) {    //확인
  			var url = "../board/MakeGroup.jsp?address=" + "<%=address%>";
             var name = "makeGroup";
-            var _width = '500';
-            var _height = '300';
+            var _width = 500;
+            var _height = 300;
              
             // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
             var _left = Math.ceil(( window.screen.width - _width )/2);
             var _top = Math.ceil(( window.screen.height - _height )/2); 
            
-            window.open( url, name, 'width='+ _width +', height='+ _height +', left=' + _left + ', top='+ _top);
+            window.open( url, name, "width="+ _width +", height="+ _height +", left=" + _left + ", top="+ _top);
  		} else {   //취소
  			return false;
  		}

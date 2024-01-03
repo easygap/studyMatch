@@ -37,15 +37,10 @@ public class LoginAuth extends HttpServlet {
 		String id = req.getParameter("id");
 		String pass = req.getParameter("pass");
 		MemberDAO dao = new MemberDAO();
-		
-//		if (id != null) {
-			dto = dao.getMemberDTO(id, pass);
-//		} else {
-//			String kakaoId = (String) session.getAttribute("kakaoId");
-//			dto = dao.kakaoCheck(kakaoId);
-//		}
+
+		dto = dao.getMemberDTO(id, pass);
 		dao.close();
-		
+
 		if (dto != null) {
 			session.setAttribute("user", dto.getId());
 			SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -53,10 +48,11 @@ public class LoginAuth extends HttpServlet {
 			String creationTimeStr = dateFormat.format(new Date(creationTime));
 			long lastTime = session.getLastAccessedTime(); // 마지막 요청 시간
 
-			String lastTimeStr = dateFormat.format(new Date(lastTime));			
-			
+			String lastTimeStr = dateFormat.format(new Date(lastTime));
+
 			// 로그인 성공 알람창
-			JSFunction .alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)", "../board/Main.do");
+			JSFunction.alertLogin(resp, dto.getNick() + " (" + dto.getId() + ") 회원님 반갑습니다! (´▽`ʃ♡ƪ)",
+					"../board/Main.do");
 			System.out.println("------------------------------");
 			System.out.println(date.format(now) + " [ " + dto.getId() + " ] 로그인 성공 - session 저장 완료");
 			System.out.println("세션 아이디: " + session.getId());
@@ -65,7 +61,7 @@ public class LoginAuth extends HttpServlet {
 			System.out.println("마지막 요청 시간: " + lastTimeStr);
 		} else {
 			// 로그인 실패 알람창
-			JSFunction .alertLogin(resp, "일치하는 회원 정보를 찾지 못했어요.（；´д｀）ゞ", "../auth/Login.jsp");
+			JSFunction.alertLogin(resp, "일치하는 회원 정보를 찾지 못했어요.（；´д｀）ゞ", "../auth/Login.jsp");
 			System.out.println("로그인 실패 - 페이지 이동 안 함");
 		}
 	}
