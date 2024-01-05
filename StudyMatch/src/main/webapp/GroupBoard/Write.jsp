@@ -11,22 +11,6 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판</title>
-<style>
-#blah{
-
-position: absolute;
-
-left: 700px;
-
-top: 100px;
-
-width: 300px;
-
-border: 1px solid black;
-
-}
-</style>
-
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
@@ -56,7 +40,7 @@ border: 1px solid black;
 					action="../board/GroupWrite.do?<%=GroupNum%>" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
-						<label for="ofile">업로드</label> <input type="file" name="ofile" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"
+						<label for="ofile">업 로 드</label> <input type="file" name="ofile" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"
 							id="ofile">
 					</div>
 
@@ -75,9 +59,9 @@ border: 1px solid black;
 					<div class="mybtn">
 						<input
 							type="button" onclick="location.href='../board/GroupList.do?groupnum=<%=GroupNum%>';"
-							class="btn btn-secondary pull-right" value="목록 바로가기">
-						<input type="submit" class="btn btn-primary pull-right"
-							value="글쓰기">
+							class="List" value="목록 바로가기">
+						<input type="submit" class="write"
+							value="글 쓰 기">
 							<input type="hidden" name="groupnum" value="<%=GroupNum%>">
 					</div>
 				</form>

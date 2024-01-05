@@ -19,6 +19,7 @@ String num = request.getParameter("num");
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+<link href="../css/upload.css" rel="stylesheet" />
 
 <script>
 	function removeCheck() {
@@ -28,8 +29,8 @@ String num = request.getParameter("num");
 			return false;
 		}
 	}
-		// 댓글 수정 버튼
-	function setEditMode(content, commNum, commId) {
+	// 댓글 수정 버튼
+function setEditMode(content, commNum, commId) {
         // 댓글 내용을 textarea에 설정
         document.getElementById("commContent").value = content;
 
@@ -45,10 +46,12 @@ String num = request.getParameter("num");
         // 추가: hidden 필드에 action과 id를 설정
         document.getElementById("commAction").value = "edit";
         document.getElementById("commId").value = commId;
-        }
+    }
+
 	</script>
 </head>
 <body>
+
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -62,6 +65,7 @@ String num = request.getParameter("num");
 				<br /> <br /> <br />
 
 				<!-- View.jsp 코드 시작 -->
+
 				<table class="table"
 					style="text-align: center; border: 1px solid #dddddd">
 					<colgroup>
@@ -101,13 +105,12 @@ String num = request.getParameter("num");
 						<td colspan="4" align="center">
 							<%
 							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
-							%><button type="button"
+							%><button type="button" class="ViewButton"
 								onclick="location.href='../board/Edit.jsp?interest=${ param.interest }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
-							<button type="button" onclick="removeCheck();">삭제하기</button>
-							<%
-							}
-							%>
-							<button type="button" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
+							<button type="button" class="ViewButton" onclick="removeCheck();">삭제하기</button> <%	
+ }
+ %>
+							<button type="button" class="List" onclick="location.href='../board/list.do?interest=${ param.interest }';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>
@@ -121,13 +124,13 @@ String num = request.getParameter("num");
             </tr>
         </thead>
         <tbody>
-            <%
-            BoardDAO dao = new BoardDAO();
-            ArrayList<CommentDTO> list = dao.getList(num);
+            <% 
+            BoardDAO dao = new BoardDAO(); 
+            ArrayList<CommentDTO> list = dao.getList(num); 
             dao.close();
-            ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions");
-            if (permissions != null) {
-            	for (int i = 0; i < list.size(); i++) {
+            ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions"); 
+            if (permissions != null) { 
+            	for (int i = 0; i < list.size(); i++) { 
             	%>
                 <tr>
                     <td style="text-align: left;"><%=list.get(i).getContent()%></td>

@@ -48,6 +48,18 @@ public class JSFunction {
 				writer.print(script);
 			}catch(Exception e) {}
 		}
+		
+		public static void alertClose(HttpServletResponse resp, String msg) {
+			try {
+				resp.setContentType("text/html;charset=UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.println("<script>");
+                out.println("alert('" + msg + "');");
+                out.println("window.close();");  // 창 닫기 스크립트 추가
+                out.println("</script>");
+                out.close();
+			}catch(Exception e) {}
+		}
 	
 	// 회원가입 성공 알람창
 	public static void alertRegist(HttpServletResponse resp, String msg, String url) {

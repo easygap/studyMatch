@@ -62,9 +62,6 @@ public class MatchHistory extends HttpServlet {
 			req.setAttribute("previousNames", PreviousNames);
 			
 			req.setAttribute("dto", dto);
-
-			System.out.println("서블렛에서 : " + profileImages + " / " + getGroupName + " / " + Group_Num + "\n");
-			System.out.println("서블렛에서 PreviousImg : " + PreviousImg + " / PreviousNames : " + PreviousNames);
 			System.out.println("match hitory DB연결 성공 ! ! !");
 		} else {
 			System.out.println("match hitory DB연결 실패 . . .");
@@ -75,6 +72,6 @@ public class MatchHistory extends HttpServlet {
 		System.out.println("Match GroupID : " + MatchID);
 		System.out.println("------------------------------------");
 
-		req.getRequestDispatcher("/MatchHistory/MatchHistory.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/MatchHistory.jsp").forward(req, resp);
 	}
 }

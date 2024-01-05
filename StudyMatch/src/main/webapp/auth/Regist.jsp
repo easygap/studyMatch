@@ -37,8 +37,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		var submitButton = document.getElementById("form");
 		
 		
-		/** 아이디 정규식 */
-		var idCheck = /^[a-zA-Z0-9]+$/;
+		/** verbal 정규식 */
 		
 		/** 핸드폰 번호 정규식 */
 		var phoneCheck = VerEx()
@@ -70,22 +69,17 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			.repeatPrevious(1)
 			.endOfLine()
 			
+			
+		/** 정규 표현식 */
+		
+		/** 아이디 정규식 */
+		var idCheck = /^[a-zA-Z0-9]+$/;
+			
 		/** 주소 정규식 */
 		var addressCheck = /^(경기도|서울특별시|부산광역시|대구광역시|인천광역시|광주광역시|대전광역시|울산광역시|세종특별자치시|제주특별자치도) [가-힣\s]+(시|군|구)[가-힣\s]*$/;
 		
 		// 한글 이름 (2글자 이상, 5글자 이하)
-		var koreanNameCheck = VerEx()
-		    .startOfLine()
-		    .range('가', '힣')
-		    .repeatPrevious(2, 5)
-		    .endOfLine();
-
-		// 영어 이름 (2글자 이상, 20글자 이하)
-		var englishNameCheck = VerEx()
-		    .startOfLine()
-		    .range('a', 'z')
-			.repeatPrevious(2, 20)
-		    .endOfLine()
+		var nameCheck = /^[가-힣a-zA-Z]+$/;
 		    		
 		// 정규식 체크를 위한 변수 <-- 폼 값을 받아온다.
 		var phone = form.phone.value;
@@ -107,9 +101,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		        if (interest[i].checked) 
 		        	chk = "Y";
 		    }
-		 
-		console.log("koreanNameCheck.test(name) : " + koreanNameCheck.test(name) + ", englishNameCheck.test(name) : " +englishNameCheck.test(name)) 
-		 
+		
 		if (id == "") {
 			alert("아이디를 입력 후 중복확인을 해주세요.");
 			RegistFrm.id.focus();
@@ -144,9 +136,12 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		else if(idCheck.test(id) === false){
 			alert("아이디는 한글, 특수문자 입력이 불가합니다.");
 		}
-		else if(koreanNameCheck.test(name) != true && englishNameCheck.test(name) != true){
+		else if(nameCheck.test(name) === false){
 			alert("올바른 이름을 입력하세요.");
 		}
+//		else if((koreanNameCheck.test(name).equals("false")) && (englishNameCheck.test(name).equals("false"))){
+//			alert("올바른 이름을 입력하세요.");
+//		}
 		else if (phoneCheck.test(phone) !== true){
 			alert("올바른 휴대폰 번호를 입력하세요.");
 		}
@@ -165,11 +160,21 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 	}
 
 	function winopen() {
-		window.open("../auth/idCheckAuth.do", "", "width=500, height=200");
+		var width = 500;
+	    var height = 250;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+
+	    window.open("../auth/idCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
 	}
 	
 	function NickCheck(){
-		window.open("../auth/nickCheckAuth.do", "", "width=500, height=200");
+		var width = 500;
+	    var height = 250;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+
+	    window.open("../auth/nickCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
 	}
 	
 </script>

@@ -25,9 +25,6 @@
     if(dto != null){
     	Group_num = dto.getGroup_Num();
     }
-
-    System.out.println("history.jsp : " + profileImages + " / " + Group_names + " / " + Group_num);
-    System.out.println("JSP에서 PreviousImg : " + PreviousImg + " / PreviousName : " + PreviousName);
 %>
 <!DOCTYPE html>
 <html>
@@ -62,9 +59,9 @@
 								<% if (profileImages != null && !profileImages.isEmpty()) {
 									for (int i = 0; i < profileImages.size(); i++) { 
 										if (profileImages.get(i) != null && !profileImages.get(i).isEmpty()) { %>
-								<img src="${pageContext.request.contextPath}/MyProfile/<%=profileImages.get(i)%>" name="profile" alt="Mem" class="profile">
+										<img src="${pageContext.request.contextPath}/MyProfile/<%=profileImages.get(i)%>" name="profile" alt="Mem" class="profile">
 								<% } else { %>
-								<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
+										<img src="${pageContext.request.contextPath}/MyProfile/default.png" name="profile" alt="Default" class="profile">
 								<% } } } else { %>
 								<p>그룹 정보의 프로필 이미지 값이 조회되지 않았습니다.</p>
 								<% } %>

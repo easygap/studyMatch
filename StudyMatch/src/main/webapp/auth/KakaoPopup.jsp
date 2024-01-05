@@ -15,6 +15,7 @@ String phone = (String) session.getAttribute("kakaoPhone");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카카오 로그인 정보 입력</title>
+<link href="../css/Regist.css" rel="stylesheet"/>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">
 function count_check(checkbox) {
@@ -88,21 +89,31 @@ function sendUserData() {
 function redirectToMainPage() {
     window.opener.location.href = '../board/Main.do';
 }
+
+function NickCheck(){
+	var width = 500;
+    var height = 250;
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+
+    window.open("../auth/nickCheckAuth.do", "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
+}
 </script>
 </head>
-<body>
+<body id="kakaoBody">
 	<div id="popup-container"></div>
 	<div id="popup-content"></div>
-	<h2>카카오 로그인 정보</h2>
+	<h2 id="kakaoHead">카카오 로그인 정보</h2>
 	<form id='kakaoData' action="../auth/KakaoLogin.do" method="GET">
-		<p>이름: <input type="text" name="name" value="<%=(name != null) ? name : ""%>" required></p>
-		<p>닉네임: <input type="text" name="nick" value="<%=(nick != null) ? nick : ""%>" required></p>
-		<p>이메일: <input type="text" name="email" value="<%=(email != null) ? email : ""%>" required></p>
-		<p>생년월일: <input type="text" name="birth" value="<%=(birth != null) ? birth : ""%>" required></p>
-		<p>핸드폰: <input type="text" name="phone" value="<%=(phone != null) ? phone : ""%>" required></p>
-		<p>직업: <input type="text" name="job"></p>
-		<p>주소: <input type="text" name="address" placeholder="(동/읍/면)까지만 입력" required></p>
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름 : <input type="text" class="KAKAOInput" name="name" value="<%=(name != null) ? name : ""%>" required></p>
+		<p>닉 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;네 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;임 : <input type="text" class="KAKAOInput" name="nick" value="<%=(nick != null) ? nick : ""%>" required> &nbsp;&nbsp;&nbsp;<input type="button" name="nickCheck" id="nick" onclick="NickCheck()" class="RegistButton" value="중 복 확 인"></p>
+		<p>생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일 : <input type="text" class="KAKAOInput" name="birth" value="<%=(birth != null) ? birth : ""%>" required></p>
+		<p>연 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처 : <input type="text" class="KAKAOInput" name="phone" value="<%=(phone != null) ? phone : ""%>" required></p>
+		<p>주 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소 : <input type="text" class="KAKAOInput" name="address" placeholder="(동/읍/면)까지만 입력" required></p>
+		<p>이 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;메 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일 : <input type="text" class="KAKAOInput" name="email" value="<%=(email != null) ? email : ""%>" required></p>
+		<p>직 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업 : <input type="text" class="KAKAOInput" name="job"></p>
 		<p>관심사 (매칭을 위해 필수 선택 / 최대 3개)</p>
+		
 		<input type="checkbox" class="interest" onclick="count_check(this)"
 			name="interests" value="JAVA" /> JAVA <input type="checkbox"
 			class="interest" onclick="count_check(this)" name="interests"
