@@ -17,10 +17,7 @@ String GroupNum = (String) request.getAttribute("groupnum");
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
-<style>
-body, #wrapper, #page-content-wrapper, .container, .table, thead, tr, th, td, table{
-background-color : #F4EAE0 !important;
-}
+<link rel="stylesheet" href="../css/Board.css">
 
 </style>
 </head>
@@ -86,7 +83,7 @@ background-color : #F4EAE0 !important;
 				<table class="table">
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
-						<td width="100"><button type="button" class="btn btn-primary"
+						<td width="100"><button type="button" class="write"
 						<% 
 							if( GroupNum != null) { 
 						%>
@@ -98,7 +95,7 @@ background-color : #F4EAE0 !important;
 						<%
 							}
 						%>
-						>글쓰기</button></td>
+						>글 쓰 기</button></td>
 						
 					</tr>
 				</table>
@@ -111,7 +108,7 @@ background-color : #F4EAE0 !important;
 									<option value="title">제목</option>
 									<option value="content">내용</option>
 							</select> <input type="text" name="searchWord" /> <input type="submit"
-								value="검색하기" /></td>
+								value="검 색 하 기" class="searchB" /></td>
 						</tr>
 					</table>
 					<input type="text" style="display:none;" name="groupnum" value="<%=GroupNum%>" />

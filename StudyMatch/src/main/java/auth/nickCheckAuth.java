@@ -38,10 +38,4 @@ public class nickCheckAuth extends HttpServlet {
 			System.out.println("중복된 ' 닉네임 ' 입니다.");
 		}
 	}
-
-	/*
-	 * protected void doPost(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { doGet(request, response);
-	 * System.out.println(" NickCheck : doPost()"); }
-	 */
 }

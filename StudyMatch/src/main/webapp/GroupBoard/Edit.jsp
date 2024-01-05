@@ -43,7 +43,7 @@
 					action="../board/GroupEdit.do?groupnum=<%=GroupNum%>&num=<%=num%>" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
-						<label for="ofile">업로드</label> <input type="file" name="ofile" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"
+						<label for="ofile">업 로 드</label> <input type="file" name="ofile" onchange="fileCheck(this)" accept="image/gif, image/jpeg, image/png"
 							id="ofile">
 					</div>
 
@@ -62,9 +62,9 @@
 					<div class="mybtn">
 						<input
 							type="button" onclick="location.href='../board/GroupView.do?groupnum=<%=GroupNum%>&num=<%=num%>';"
-							class="btn btn-secondary pull-right" value="이전">
-						<input type="submit" class="btn btn-primary pull-right"
-							value="글쓰기"> 
+							class="Before" value="이 전">
+						<input type="submit" class="write"
+							value="글 쓰 기"> 
 					</div>
 					<input type="hidden" id="groupnum" name="groupnum" value="<%=GroupNum%>">
 					<input type="hidden" id="num" name="num" value="<%=num%>">
