@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-#idCheckBody, #CheckBody, #idpwSerBody, #kakaoBody{
+#idCheckBody, #CheckBody, #idpwSerBody, #kakaoBody, #pwPopBody{
 	background-color: #F4EAE0;
 }
 
@@ -17,7 +17,7 @@
 	font-size: 40px;
 }
 
-#idsearch, #pwsearch, #idCheckHead, #nickCheckHead{
+#idsearch, #pwsearch, #idCheckHead, #nickCheckHead, #pwPopHead{
 	color: #5174BE;
 	font-weight: 900;
 	font-size: 30px;
@@ -31,7 +31,7 @@
 	height: 600px;
 }
 
-.registTd, .registInput, .interest, .MypageTd, .MypageInput, .idpwSearchInput, .idpwSearchTd, .idCheckTd, .idCheckInput, .nickCheckTd, .nickCheckInput, .KAKAOInput{
+.registTd, .registInput, .interest, .MypageTd, .MypageInput, .idpwSearchInput, .idpwSearchTd, .idCheckTd, .idCheckInput, .nickCheckTd, .nickCheckInput, .KAKAOInput, .pwSearchPopTd, .pwSearchPopInput{
 	margin: 5px;
 	border: none;
 }
@@ -40,7 +40,7 @@
 	font-weight: 600;
 }
 
-.registInput, .MypageInput, .idpwSearchInput, .idCheckInput, .nickCheckInput, .KAKAOInput{
+.registInput, .MypageInput, .idpwSearchInput, .idCheckInput, .nickCheckInput, .KAKAOInput, .pwSearchPopInput{
 	width: 14.5em;
 	height: 1.6em;
 }
@@ -68,6 +68,20 @@
     height: 2em;
 }
 
+.PwChange{
+	background-color: #5174BE;
+    opacity: 0.6;
+    font-weight: bold;
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+    height: 34px;
+    margin-top: 5px;
+    
+    width: 10em;
+    height: 2em;
+}
+
 .login, #submitButton{
 	background-color: #5174BE;
     opacity: 0.6;
@@ -83,7 +97,7 @@
     height: 2.5em;
 }
 
-.IdCheck, .NickCheck{
+.IdCheck, .NickCheck, .pwChange{
 	background-color: #5174BE;
 	opacity: 0.6;
 	font-weight: bold;

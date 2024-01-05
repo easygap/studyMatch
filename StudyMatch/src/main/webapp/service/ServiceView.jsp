@@ -1,14 +1,13 @@
 <%@ page isELIgnored="false"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="model.BoardDAO"%>
-<%@ page import="model.CommentDTO"%>
+<%@ page import="service.ServiceDAO"%>
+<%@ page import="service.ServiceDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
-String GroupNum = request.getParameter("groupnum");
 String num = request.getParameter("num");
 %>
 <!DOCTYPE html>
@@ -19,18 +18,17 @@ String num = request.getParameter("num");
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
-<link href="../css/upload.css" rel="stylesheet" />
 
 <script>
 	function removeCheck() {
 		if (confirm("정말 삭제하시겠습니까??") == true) { //확인
-			location.href = '../board/GroupList.do?mode=delete&groupnum=${ param.GroupNum }&num=${ param.num}';
+			location.href = '../service/ServiceList.do?mode=delete&num=${ param.num }';
 		} else { //취소
 			return false;
 		}
 	}
-	// 댓글 수정 버튼
-function setEditMode(content, commNum, commId) {
+		// 댓글 수정 버튼
+	function setEditMode(content, commNum, commId) {
         // 댓글 내용을 textarea에 설정
         document.getElementById("commContent").value = content;
 
@@ -41,17 +39,15 @@ function setEditMode(content, commNum, commId) {
         document.getElementById("commSubmitButton").value = "수정하기";
 
         // "수정하기" 버튼 클릭 시 commEdit.do로 전송
-        document.getElementById("commentForm").action = "../board/GroupCommEdit.do";
+        document.getElementById("commentForm").action = "../board/CommEdit.do";
 
         // 추가: hidden 필드에 action과 id를 설정
         document.getElementById("commAction").value = "edit";
         document.getElementById("commId").value = commId;
-    }
-
+        }
 	</script>
 </head>
 <body>
-
 	<!-- 코드 시작 -->
 	<div class="d-flex" id="wrapper">
 		<!-- 네비게이션 바 -->
@@ -65,7 +61,6 @@ function setEditMode(content, commNum, commId) {
 				<br /> <br /> <br />
 
 				<!-- View.jsp 코드 시작 -->
-
 				<table class="table"
 					style="text-align: center; border: 1px solid #dddddd">
 					<colgroup>
@@ -78,7 +73,7 @@ function setEditMode(content, commNum, commId) {
 					<!-- 게시글 정보 -->
 					<tr>
 						<td>글 번호</td>
-						<td>${ dto.board_num }</td>
+						<td>${ dto.inquiry_num }</td>
 						<td>작성자</td>
 						<td>${ dto.id }</td>
 					</tr>
@@ -105,17 +100,18 @@ function setEditMode(content, commNum, commId) {
 						<td colspan="4" align="center">
 							<%
 							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
-							%><button type="button" class="ViewButton"
-								onclick="location.href='../board/Edit.jsp?groupnum=${ param.GroupNum }&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
-							<button type="button" class="ViewButton" onclick="removeCheck();">삭제하기</button> <%	
- }
- %>
-							<button type="button" class="List" onclick="location.href='../board/GroupList.do?groupnum=${ param.GroupNum }';">목록 바로가기</button>
+							%><button type="button"
+								onclick="location.href='../service/ServiceEdit.jsp?&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
+							<button type="button" onclick="removeCheck();">삭제하기</button>
+							<%
+							}
+							%>
+							<button type="button" onclick="location.href='../service/ServiceList.do';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>
 
-				<form name="commentForm" id="commentForm" method="post" action="../board/GroupCommWrite.do">
+				<form name="commentForm" id="commentForm" method="post" action="../board/CommWrite.do">
     <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd; width: 100%;">
         <%-- 홀,짝 행 구분 --%>
         <thead>
@@ -124,13 +120,13 @@ function setEditMode(content, commNum, commId) {
             </tr>
         </thead>
         <tbody>
-            <% 
-            BoardDAO dao = new BoardDAO(); 
-            ArrayList<CommentDTO> list = dao.getList(num); 
+            <%
+            ServiceDAO dao = new ServiceDAO();
+            ArrayList<ServiceDTO> list = dao.getList(num);
             dao.close();
-            ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions"); 
-            if (permissions != null) { 
-            	for (int i = 0; i < list.size(); i++) { 
+            ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions");
+            if (permissions != null) {
+            	for (int i = 0; i < list.size(); i++) {
             	%>
                 <tr>
                     <td style="text-align: left;"><%=list.get(i).getContent()%></td>
@@ -141,7 +137,7 @@ function setEditMode(content, commNum, commId) {
                         %>
                             <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>', '<%=list.get(i).getId()%>');"
                                 class="btn">수정</a>
-                            <a href="../board/GroupCommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>&groupnum=<%=GroupNum%>"
+                            <a href="../service/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>"
                                 class="btn">삭제</a>
                     </td>
                 </tr>
@@ -156,7 +152,6 @@ function setEditMode(content, commNum, commId) {
                         style="width: 100%;" maxlength="1024"></textarea>
                 </td>
                 <td style="text-align: center; vertical-align: middle;">
-                    <input type="hidden" name="groupnum" value="<%=GroupNum%>">
                     <input type="hidden" id="num" name="num" value="<%=num%>">
                     <input type="hidden" id="commNum" name="commNum" value="">
                     <input type="hidden" id="commAction" name="action" value="">

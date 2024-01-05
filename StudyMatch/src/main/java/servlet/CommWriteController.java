@@ -45,7 +45,6 @@ public class CommWriteController extends HttpServlet {
         dto.setInter_num(internum);
         dto.setBoard_num(boardnum);
         dto.setId(userId);
-//		dto.setContent(req.getParameter("commContent"));
         dto.setContent(content);
         
         try {
@@ -62,15 +61,6 @@ public class CommWriteController extends HttpServlet {
             e.printStackTrace();
             System.out.println("댓글 입력 서블릿 실행 실패");
         }
-//		int result = dao.insertComm(dto);
 		dao.close();
-		
-//		if (result == 1) {
-//			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-//		    System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
-//		} else {
-//			req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-//		    System.out.println("*** 댓글 업로드 실패 ***");
-//		}
 	}
 }

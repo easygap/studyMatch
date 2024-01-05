@@ -1,4 +1,4 @@
-package group;
+package service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,24 +18,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import model.GroupBoardDAO;
-import model.GroupBoardDTO;
-
-@WebServlet("/board/GroupWrite.do")
+@WebServlet("/service/ServiceWrite.do")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, // 파일 임시저장 사이즈 (파일 최대 용량 초과 시 사용)
 		maxFileSize = 1024 * 1024 * 50, // 개별 최대 파일 사이즈
 		maxRequestSize = 1204 * 1204 * 50 * 5) // 서버로 전송되는 파일의 최대 사이즈
-public class WriteController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+
+public class ServiceWriteController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
-
-		GroupBoardDAO dao = new GroupBoardDAO();
-		System.out.println("DAO 객체 생성 확인: " + (dao != null));
-		GroupBoardDTO dto = new GroupBoardDTO();
-		System.out.println("DTO 객체 생성 확인: " + (dto != null));
+		ServiceDAO dao = new ServiceDAO();
+		ServiceDTO dto = new ServiceDTO();
 
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
@@ -78,34 +71,40 @@ public class WriteController extends HttpServlet {
 
 		// 글쓰기
 		HttpSession session = req.getSession();
-		Object userObject = session.getAttribute("user");
-		String userId = null;
-		String GroupNum = req.getParameter("groupnum");
-		System.out.println("controller에서 groupnum 값은 : " + GroupNum);
-
-		if (userObject != null) {
-			userId = userObject.toString();
-			System.out.println("게시글 작성 - userId 생성 성공");
-		} else {
-			resp.sendRedirect("../GroupBoard/Write.jsp?groupnum=" + GroupNum);
-			System.out.println("userId 생성 실패");
-			return; // 메서드 종료
-		}
+		String userId = (String) session.getAttribute("user");
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		String pass = req.getParameter("pass");
+		
+		String categorySelect = req.getParameter("categorySelect");
+		int category_id = Integer.parseInt(categorySelect);
+		String detailSelect = req.getParameter("detailSelect");
+		int detail_id = Integer.parseInt(detailSelect);
+		
+		System.out.println("-----------------------------");
+		System.out.println("category_id: " + category_id);
+		System.out.println("detail_id: " + detail_id);
+		System.out.println("id: " + userId);
+		System.out.println("title: " + title);
+		System.out.println("content: " + content);
+		System.out.println("pass: " + pass);
+		System.out.println("-----------------------------");
 
 		dto.setId(userId);
-		dto.setTitle(req.getParameter("title"));
+		dto.setTitle(title);
+		dto.setCategory_id(category_id);
+		dto.setDetail_id(detail_id);
 		dto.setContent(req.getParameter("content"));
-		dto.setGroup_num(GroupNum);
 
-		int result = dao.insertWrite(dto);
+		int result = dao.insertService(dto);
 		dao.close();
 
 		if (result == 1) {
-			resp.sendRedirect("../board/GroupList.do?groupnum=" + GroupNum);
-			System.out.println("게시판: " + GroupNum + " 게시글 업로드 완료");
+			resp.sendRedirect("../service/ServiceView.jsp");
+//			System.out.println("게시판: " + internum + " 게시글 업로드 완료");
 		} else {
-			resp.sendRedirect("../GroupBoard/Write.jsp?groupnum=" + GroupNum);
-			System.out.println("*** 게시글 업로드 실패 ***");
+			resp.sendRedirect("../service/ServiceWrite.jsp");
+			System.out.println("*** 문의글 업로드 실패 ***");
 		}
 	}
 
@@ -120,9 +119,4 @@ public class WriteController extends HttpServlet {
 		return null;
 	}
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String GroupNum = req.getParameter("groupnum");
-		RequestDispatcher dis = req.getRequestDispatcher("../GroupBoard/Write.jsp?groupnum=" + GroupNum);
-		dis.forward(req, resp);
-	}
 }

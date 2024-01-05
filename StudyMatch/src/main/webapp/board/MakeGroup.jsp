@@ -45,7 +45,7 @@ if(request.getParameter("address") != null)
 </head>
 
 <body id="registbody">
-	<form name="RegistFrm" method="post" action="../board/CheckGroupMember.do" onsubmit="return validateForm(this);">
+	<form name="MakeGroupFrm" method="post" action="../board/CheckGroupMember.do" onsubmit="return validateForm(this);">
 	<div align="center" id="makeDiv">
 	<h2 id="makeHead">그 룹 생 성</h2>
 	<div id="table">

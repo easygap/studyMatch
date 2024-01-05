@@ -51,7 +51,12 @@ if(request.getParameter("nullPW") != null)
 	}
 	
 	function winopen() {
-		window.open("../auth/PwSearchPopup.do?id=" + document.pwSearchFrm.pwId.value, "", "width=500, height=300");
+		var width = 500;
+	    var height = 300;
+	    var left = (screen.width - width) / 2;
+	    var top = (screen.height - height) / 2;
+		
+		window.open("../auth/PwSearchPopup.jsp?id=" + "<%= pwSearch%>" , "", "width=" + width + ", height=" + height + ", left=" + left + ", top=" + top);
 	}
 </script>
 </head>
@@ -75,20 +80,20 @@ if(request.getParameter("nullPW") != null)
 		<h3 align="center" id="idsearch">아 이 디 찾 기</h3>
 			<table>
 				<tr>
-					<td class="idpwSearchTd">ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="idpwSearchTd">ㆍ 이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td class="idpwSearchTd"><input type="text" class="idpwSearchInput" name="idName" /></td>
 					<td class="idpwSearchTd"></td>
 				</tr>
 
 				<tr>
-					<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+					<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td class="idpwSearchTd"><input type="text" name="idPhone" class="idpwSearchInput"  placeholder="'-' 포함하여 입력해 주세요." />
 					 	<input type="submit" class="IdPwSearch" name="idCertified" value="인증하기" /></td>
 					<td class="idpwSearchTd"></td>
 				</tr>
 				
 				<tr>
-						<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 						<td class="idpwSearchTd">
 						<% if(idSearch != null){ 
 						if(nullID.equals("N")) {%>
@@ -122,18 +127,18 @@ if(request.getParameter("nullPW") != null)
 		<h3 align="center" id="pwsearch">비 밀 번 호 찾 기</h3>
 		<table>
 			<tr>
-				<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="idpwSearchTd">ㆍ 아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디&nbsp;&nbsp;&nbsp;</td>
 				<td class="idpwSearchTd"><input type="text" name="pwId" class="idpwSearchInput"/></td>
 				<td class="idpwSearchTd"></td>
 			</tr>
 			<tr>
-				<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				<td class="idpwSearchTd">ㆍ 연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처&nbsp;&nbsp;&nbsp;</td>
 				<td class="idpwSearchTd"><input type="text" name="pwPhone" class="idpwSearchInput" placeholder="'-' 포함하여 입력해 주세요." /></td>
 				<td class="idpwSearchTd"></td>
 			</tr>
 			
 			<tr>
-				<td class="idpwSearchTd">ㆍ 생 &nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;일</td>
+				<td class="idpwSearchTd">ㆍ 생 &nbsp;년 &nbsp;&nbsp;월 &nbsp;&nbsp;일</td>
 				<td class="idpwSearchTd"><input type="text" name="pwBirth" class="idpwSearchInput" placeholder="ex)20000101" />
 					<button type="submit" class="IdPwSearch" name="pwCertified" onclick="certifi()">인증하기</button></td>
 				<td class="idpwSearchTd"></td>
@@ -146,7 +151,7 @@ if(request.getParameter("nullPW") != null)
 						if(nullPW.equals("N")){%>
 						<span style="color:blue; font:bold;">[  회원 정보가 확인 되었습니다. <br/> 비밀번호를 변경해 주세요.  ]</span>
 						<br/>
-						<button type="button" class="IdPwSearch" name="pwChange" onclick="winopen()">비밀번호 변경하기</button>
+						<button type="button" class="PwChange" name="pwChange" onclick="winopen()">비밀번호 변경하기</button>
 						<% } else if(nullPW.equals("Y")){ %>
 						<span style="color:red; font:bold;">회원 정보가 없습니다. </span>
 						<% }} %>
