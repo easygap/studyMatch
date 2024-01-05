@@ -12,30 +12,38 @@ String writer = (String) session.getAttribute("user");
 <head>
 <meta charset="UTF-8">
 <title>매치메이트 1:1 문의</title>
-
-<style>
-.info-group {
-	display: flex;
-	align-items: center;
-	flex-direction: row;
+<script>
+function validateForm() {
+	console.log("validateForm 함수 호출 확인");
+	
+	var submitButton = document.getElementById("form");
+	
+	if(inquiryFrm.categorySelect.value === "category"){
+		alert("문의 유형을 선택해 주세요.");
+		return false;
+	} else if(inquiryFrm.title.value === ""){
+		alert("문의 제목을 작성해 주세요.");
+		inquiryFrm.title.focus();
+		return false;
+	} else if(inquiryFrm.content.value === ""){
+		alert("문의 내용을 작성해 주세요.");
+		inquiryFrm.content.focus();
+		return false;
+	} else {
+		submitButton.submit();
+		return true;
+	}
 }
-
-.info-group label {
-	margin-right: 10px;
-}
-</style>
-
+</script>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <!-- 업로드 css -->
 <link href="../css/upload.css" rel="stylesheet" />
-<!-- 자바 스크립트 -->
-<script src="../js/upload.js"></script>
 
 </head>
 <body>
 	<!-- 코드 시작 -->
-	<div class="d-flex" id="wrapper">
+	<div class="d-flex" id="wrapper"> 
 		<!-- 네비게이션 바 -->
 		<jsp:include page="../layout/Main.jsp"></jsp:include>
 
@@ -45,8 +53,7 @@ String writer = (String) session.getAttribute("user");
 			<jsp:include page="../layout/Navbar.jsp"></jsp:include>
 			<div class="container-fluid">
 				<br /> <br /> <br />
-				<form name="inquiryFrm" method="post" enctype="multipart/form-data"
-					action="../service/ServiceWrite.do" onsubmit="return validateForm(this);">
+				<form name="inquiryFrm" method="post" id="form" enctype="multipart/form-data" action="../service/ServiceWrite.do">
 
 					<div class="filebox">
 						<label for="ofile">사진첨부</label> <input type="file" name="ofile"
@@ -113,8 +120,7 @@ String writer = (String) session.getAttribute("user");
 					</div>
 
 					<div class="mybtn">
-						<input type="button" class="reset" value="RESET"> <input
-							type="submit" class="write" value="문의하기">
+						<input type="reset" class="reset" value="RESET"> <input type="button" class="write" onclick="validateForm();" value="문의하기">
 					</div>
 				</form>
 			</div>
