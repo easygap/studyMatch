@@ -16,8 +16,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
-import model.BoardDTO;
-import model.CommentDTO;
 
 public class ServiceDAO extends DBConnPool {
 	DataSource dataSource;
@@ -39,13 +37,13 @@ public class ServiceDAO extends DBConnPool {
 			System.out.println("*** ServiceDAO DB 연동 중 예외 발생 ***");
 		}
 	}
-	
+
 	// 문의글 작성 DB 업로드
-	public int insertService (ServiceDTO dto) {
+	public int insertService(ServiceDTO dto) {
 		int result = 0;
 		String query = "INSERT INTO inquiry_board (inquiry_num, category_name, detail_name, writer, title, content, img, pass) "
 				+ "VALUES (seq_inquiry_num.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)";
-		
+
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, dto.getCategory_name());
@@ -63,7 +61,8 @@ public class ServiceDAO extends DBConnPool {
 		}
 		return result;
 	}
-	
+
+	// 게시글 보기
 	public ServiceDTO selectView(int inquiry_num) {
 		ServiceDTO dto = new ServiceDTO();
 		String query = "SELECT * FROM inquiry_board WHERE inquiry_num=?";
@@ -106,11 +105,11 @@ public class ServiceDAO extends DBConnPool {
 		}
 		return checkID;
 	}
-	
+
 	// 답변 조회
-	public ArrayList<ServiceDTO> getList (int inquiry_num) {
+	public ArrayList<ServiceDTO> getList(int inquiry_num) {
 		String query = "SELECT answer_content, answer_date FROM inquiry_board "
-	            + "WHERE inquiry_num = ? ORDER BY answer_date DESC";
+				+ "WHERE inquiry_num = ? ORDER BY answer_date DESC";
 		ArrayList<ServiceDTO> list = new ArrayList<ServiceDTO>();
 		try {
 			psmt = con.prepareStatement(query);
@@ -121,7 +120,7 @@ public class ServiceDAO extends DBConnPool {
 				ServiceDTO dto = new ServiceDTO();
 				dto.setAnswer_content(rs.getString(1));
 				dto.setAnswer_date(rs.getDate(2));
-					
+
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -130,38 +129,39 @@ public class ServiceDAO extends DBConnPool {
 		}
 		return list;
 	}
-	
-	// 게시글 목록
-		public List<BoardDTO> selectList(Map<String, Object> map) {
-			List<BoardDTO> bbs = new Vector<BoardDTO>(); // 게시물 목록 담을 변수
-			String query = "SELECT * FROM inquiry_board";
-			if (map.get("searchWord") != null) {
-				query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
-			}
-			query += "ORDER BY board_num DESC";
 
-			try {
-				psmt = con.prepareStatement(query);
-				rs = psmt.executeQuery();
-				while (rs.next()) {
-					BoardDTO dto = new BoardDTO();
-					dto.setBoard_num(rs.getString("board_num"));
-					dto.setTitle(rs.getString("title"));
-					dto.setContent(rs.getString("content"));
-					dto.setId(rs.getString("nickname"));
-					dto.setPost_date(rs.getDate("post_date"));
-					bbs.add(dto);
-					System.out.println("게시글 목록 로드 성공");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("*** 게시물 목록 불러오기 중 예외 발생! ***");
-			}
-			return bbs;
+	// 게시글 목록
+	public List<ServiceDTO> selectList(Map<String, Object> map) {
+		List<ServiceDTO> bbs = new Vector<ServiceDTO>(); // 게시물 목록 담을 변수
+		String query = "SELECT * FROM inquiry_board";
+		if (map.get("searchWord") != null) {
+			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
 		}
-		
-		// 게시물 수
-	public int selectCount(Map<String, Object> map) { // 게시글 검색
+		query += "ORDER BY inquiry_num DESC";
+
+		try {
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				ServiceDTO dto = new ServiceDTO();
+				dto.setInquiry_num(rs.getInt("inquiry_num"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setId(rs.getString("writer"));
+				dto.setPost_date(rs.getDate("post_date"));
+				dto.setAnswer_status(rs.getString("answer_status"));
+				bbs.add(dto);
+				System.out.println("게시글 목록 로드 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 목록 불러오기 중 예외 발생! ***");
+		}
+		return bbs;
+	}
+
+	// 게시물 수
+	public int selectCount(Map<String, Object> map) {
 		int totalCount = 0; // 게시물 수를 담을 변수
 		String query = "SELECT COUNT(*) FROM inquiry_board";
 		if (map.get("searchWord") != null) {
@@ -171,47 +171,47 @@ public class ServiceDAO extends DBConnPool {
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);
 			rs.next();
-			totalCount = rs.getInt(1); // 첫 번째 컬럼 값
+			totalCount = rs.getInt(1);
 			System.out.println("게시판 게시글 수 로드 성공");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("*** 게시물 카운트 중 예외 발생! ***");
 		}
-		return totalCount; // 게시물 개수를 서블릿으로 반환
+		return totalCount;
 	}
-	
+
 	// 게시물 삭제
-		public String deletePost(int inquiry_num) {
-			String filename = null;
+	public String deletePost(int inquiry_num) {
+		String filename = null;
 
-			String query1 = "SELECT img FROM board WHERE inquiry_num=?";
+		String query1 = "SELECT img FROM board WHERE inquiry_num=?";
 
-			try {
-				psmt = con.prepareStatement(query1);
-				psmt.setInt(1, inquiry_num);
-				rs = psmt.executeQuery();
+		try {
+			psmt = con.prepareStatement(query1);
+			psmt.setInt(1, inquiry_num);
+			rs = psmt.executeQuery();
 
-				if (rs.next()) {
-					filename = rs.getString("img");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("*** 첨부파일 삭제 중 예외 발생 ***");
+			if (rs.next()) {
+				filename = rs.getString("img");
 			}
-
-			String query2 = "DELETE FROM inquiry_board WHERE inquiry_num=?";
-
-			try {
-				psmt = con.prepareStatement(query2);
-				psmt.setInt(1, inquiry_num);
-				psmt.executeUpdate();
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println("*** 게시물 삭제 중 예외 발생 ***");
-			}
-			return filename;
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 첨부파일 삭제 중 예외 발생 ***");
 		}
-	
+
+		String query2 = "DELETE FROM inquiry_board WHERE inquiry_num=?";
+
+		try {
+			psmt = con.prepareStatement(query2);
+			psmt.setInt(1, inquiry_num);
+			psmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 게시물 삭제 중 예외 발생 ***");
+		}
+		return filename;
+	}
+
 	public void close() {
 		DBConnPool dbConnPool = new DBConnPool();
 		try {
