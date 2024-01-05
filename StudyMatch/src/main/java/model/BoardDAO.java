@@ -17,7 +17,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
-import member.MemberDTO;
 
 public class BoardDAO extends DBConnPool {
 
@@ -106,7 +105,6 @@ public class BoardDAO extends DBConnPool {
 	// 게시물 삭제, 수정의 visible / invisible 처리를 위한 유저 정보 전달
 	public String checkSession(String num, String interest) {
 		String checkID = null;
-
 		String query = "SELECT id FROM board WHERE board_num = ? AND inter_num = ?";
 
 		try {

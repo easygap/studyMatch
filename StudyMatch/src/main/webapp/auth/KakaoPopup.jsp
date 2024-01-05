@@ -114,26 +114,34 @@ function NickCheck(){
 		<p>직 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;업 : <input type="text" class="KAKAOInput" name="job"></p>
 		<p>관심사 (매칭을 위해 필수 선택 / 최대 3개)</p>
 		
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JAVA " /> JAVA 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="PYTHON"> PYTHON 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C"> C 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="C++"> C++ <br />
-	 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="영어"> 영어 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="일본어"> 일본어 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="중국어"> 중국어 <br />
-		 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="UI/UX"> UI/UX 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="JSP"> JSP
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="디자이너"> 디자이너 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="퍼블리셔"> 퍼블리셔 <br /> 
-		
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="엑셀/한글/워드"> 엑셀/한글/워드 
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="회계"> 회계 <br /> 
-		
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="부동산"> 부동산
-		<input type="checkbox" class="interest" onclick="count_check(this)" name="interests" value="투자/주식"> 투자/주식 <br /> <br />
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="submitButton" type="button" onclick="sendUserData()">입 력 완 료</button>
+		<input type="checkbox" class="interest" onclick="count_check(this)"
+			name="interests" value="JAVA" /> JAVA <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="PYTHON"> PYTHON <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="C"> C <input type="checkbox" class="interest"
+			onclick="count_check(this)" name="interests" value="C++"> C++
+		<br /> <input type="checkbox" class="interest"
+			onclick="count_check(this)" name="interests" value="영어"> 영어 <input
+			type="checkbox" class="interest" onclick="count_check(this)"
+			name="interests" value="일본어"> 일본어 <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="중국어"> 중국어 <br /> <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="UI/UX"> UI/UX <input type="checkbox" class="interest"
+			onclick="count_check(this)" name="interests" value="JSP"> JSP
+		<input type="checkbox" class="interest" onclick="count_check(this)"
+			name="interests" value="디자이너"> 디자이너 <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="퍼블리셔"> 퍼블리셔 <br /> <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="엑셀/한글/워드"> 엑셀/한글/워드 <input type="checkbox"
+			class="interest" onclick="count_check(this)" name="interests"
+			value="회계"> 회계 <br /> <input type="checkbox" class="interest"
+			onclick="count_check(this)" name="interests" value="부동산"> 부동산
+		<input type="checkbox" class="interest" onclick="count_check(this)"
+			name="interests" value="투자/주식"> 투자/주식 <br /> <br />
+		<button id="submitButton" type="button" onclick="sendUserData()">입력완료</button>
 	</form>
 </body>
 </html>

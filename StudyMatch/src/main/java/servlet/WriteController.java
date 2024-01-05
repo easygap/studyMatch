@@ -31,7 +31,6 @@ public class WriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.getWriter().append("Served at: ").append(req.getContextPath());
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 
@@ -40,7 +39,6 @@ public class WriteController extends HttpServlet {
 		BoardDTO dto = new BoardDTO();
 		System.out.println("DTO 객체 생성 확인: " + (dto != null));
 
-//		String filePath = req.getParameter("path"); // 이미지 파일 경로
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
 
@@ -124,7 +122,6 @@ public class WriteController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//		resp.getWriter().append("Served at: ").append(req.getContextPath());
 		String internum = req.getParameter("interest");
 		RequestDispatcher dis = req.getRequestDispatcher("../board/Write.jsp?interest=" + internum);
 		dis.forward(req, resp);

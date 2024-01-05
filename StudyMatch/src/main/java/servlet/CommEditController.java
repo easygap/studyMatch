@@ -27,7 +27,6 @@ public class CommEditController extends HttpServlet {
 		String action = req.getParameter("action");
 		String num = req.getParameter("num");
 		String interest = req.getParameter("interest");
-//		String content = req.getParameter("commContent");
 		String commNum = req.getParameter("commNum");
 		String id = req.getParameter("id");
 
