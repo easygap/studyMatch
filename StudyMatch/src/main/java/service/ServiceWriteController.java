@@ -76,14 +76,12 @@ public class ServiceWriteController extends HttpServlet {
 		String content = req.getParameter("content");
 		String pass = req.getParameter("pass");
 		
-		String categorySelect = req.getParameter("categorySelect");
-		int category_id = Integer.parseInt(categorySelect);
-		String detailSelect = req.getParameter("detailSelect");
-		int detail_id = Integer.parseInt(detailSelect);
+		String category_name = req.getParameter("categorySelect");
+		String detail_name = req.getParameter("detailSelect");
 		
 		System.out.println("-----------------------------");
-		System.out.println("category_id: " + category_id);
-		System.out.println("detail_id: " + detail_id);
+		System.out.println("category_name: " + category_name);
+		System.out.println("detail_name: " + detail_name);
 		System.out.println("id: " + userId);
 		System.out.println("title: " + title);
 		System.out.println("content: " + content);
@@ -92,8 +90,8 @@ public class ServiceWriteController extends HttpServlet {
 
 		dto.setId(userId);
 		dto.setTitle(title);
-		dto.setCategory_id(category_id);
-		dto.setDetail_id(detail_id);
+		dto.setCategory_name(category_name);
+		dto.setDetail_name(detail_name);
 		dto.setContent(req.getParameter("content"));
 
 		int result = dao.insertService(dto);
