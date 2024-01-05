@@ -36,35 +36,8 @@ public class CommentDAO extends DBConnPool {
 			System.out.println("*** 댓글 DB 연동 중 예외 발생 ***");
 		}
 	}
-	
-//	public CommentDTO getCommentDTO (String id) {
-//		CommentDTO dto = null;
-//		String query = "SELECT * FROM comments WHERE id=?";
-//		try {
-//			psmt = con.prepareStatement(query);
-//			psmt.setString(1, id);
-//			rs = psmt.executeQuery();
-//			
-//			while (rs.next()) {
-//				dto = new CommentDTO();
-//				dto.setInter_num(rs.getString("inter_num"));
-//				dto.setBoard_num(rs.getString("board_num"));
-//				dto.setCommen_num(rs.getString("commen_num"));
-//				dto.setContent(rs.getString("content"));
-//				dto.setId(rs.getString("id"));
-//				dto.setCommen_date(rs.getDate("commen_date"));
-//				dto.setLike_count(rs.getString("like_count"));
-//				System.out.println("dao.getCommenDTO 댓글 조회 성공");
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("*** dao.getCommenDTO 댓글 조회 예외 발생 ***");
-//		}
-//		
-//		return dto;
-//	}
 
-	/** 그룹 게시판 댓글 쓰기 */
+	// 그룹 게시판 댓글 쓰기
 	public int insertGroupComm(CommentDTO dto) {
 		int result = 0;
 		int likeCount = dto.getLike_count() != null ? Integer.parseInt(dto.getLike_count()) : 0;

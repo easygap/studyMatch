@@ -5,24 +5,18 @@
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
 
-// 주소창에서 GroupNum 값을 변수에 저장
-String GroupNum = (String) request.getAttribute("groupnum");
+// 주소창에서 interest 값을 변수에 저장
+String interest = request.getParameter("interest");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>파일 첨부형 게시판</title>
-
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
-<style>
-body, #wrapper, #page-content-wrapper, .container, .table, thead, tr, th, td, table{
-background-color : #F4EAE0 !important;
-}
-
-</style>
+<link rel="stylesheet" href="../css/Board.css">
 </head>
 <body>
 	
@@ -45,15 +39,14 @@ background-color : #F4EAE0 !important;
 						<th width="*">제목</th>
 						<th width="15%">작성자</th>
 						<th width="15%">작성일</th>
-						<th width="9%">조회수</th>
-						<th width="9%">좋아요</th>
+						<th width="9%">답변여부</th>
 					</tr>
 		
 					<c:choose>
 						<c:when test="${ empty boardLists }">
 							<!-- 게시물이 없을 때 -->
 							<tr>
-								<td colspan="6" align="center">게시글이 존재하지 않습니다.•͈⌔•͈⑅</td>
+								<td colspan="6" align="center">문의글이 존재하지 않습니다.•͈⌔•͈⑅</td>
 							</tr>
 						</c:when>
 						<c:otherwise>
@@ -64,17 +57,13 @@ background-color : #F4EAE0 !important;
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td>
-										<!-- 제목(링크) --> <a href="../board/GroupView.do?num=${ row.board_num }&groupnum=<%=GroupNum%>">${ row.title }</a>
+										<!-- 제목(링크) --> <a href="../service/ServiceView.do?num=${ row.inquiry_num }&">${ row.title }</a>
 
 									</td>
-									<td>${ row.id }</td>
 									<!-- 작성자 -->
-									<td>${ row.post_date }</td>
+									<td>${ row.id }</td>
 									<!-- 날짜 -->
-									<td style="padding-left: 25px;">${ row.visit_count }</td>
-									<!-- 조회수 -->
-									<td style="padding-left: 25px;">${ row.like_count }</td>
-									<!-- 좋아요 -->
+									<td>${ row.post_date }</td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>
@@ -86,20 +75,19 @@ background-color : #F4EAE0 !important;
 				<table class="table">
 					<tr align="center">
 						<td>${ map.pagingImg }</td>
-						<td width="100"><button type="button" class="btn btn-primary"
+						<td width="100"><button type="button" class="write"
 						<% 
-							if( GroupNum != null) { 
+							if(session.getAttribute("user") != null) { 
 						%>
-							onclick="location.href='../board/GroupWrite.do?groupnum=<%=GroupNum%>';"
+							onclick="location.href='../service/ServiceWrite.jsp';"
 						<%
 							} else {
 						%>		
-							onclick="alert('그룹 가입 후 글쓰기가 가능합니다.')"
+							onclick="alert('로그인 후 글쓰기가 가능합니다.')"
 						<%
 							}
 						%>
-						>글쓰기</button></td>
-						
+						>글 쓰 기</button></td>
 					</tr>
 				</table>
 
@@ -111,13 +99,13 @@ background-color : #F4EAE0 !important;
 									<option value="title">제목</option>
 									<option value="content">내용</option>
 							</select> <input type="text" name="searchWord" /> <input type="submit"
-								value="검색하기" /></td>
+								value="검 색 하 기" class="searchB"/></td>
 						</tr>
 					</table>
-					<input type="text" style="display:none;" name="groupnum" value="<%=GroupNum%>" />
+					<input type="text" style="display:none;" name="service" value="service" />
 				</form>
 			</div>
-		</div>x
+		</div>
 	</div>
 	<!-- BootStrap javascript 사용 -->
 	<script

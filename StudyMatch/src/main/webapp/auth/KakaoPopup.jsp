@@ -104,7 +104,7 @@ function redirectToMainPage() {
 		<p>주소: <input type="text" name="address" placeholder="(동/읍/면)까지만 입력" required></p>
 		<p>관심사 (매칭을 위해 필수 선택 / 최대 3개)</p>
 		<input type="checkbox" class="interest" onclick="count_check(this)"
-			name="interests" value="JAVA " /> JAVA <input type="checkbox"
+			name="interests" value="JAVA" /> JAVA <input type="checkbox"
 			class="interest" onclick="count_check(this)" name="interests"
 			value="PYTHON"> PYTHON <input type="checkbox"
 			class="interest" onclick="count_check(this)" name="interests"
