@@ -44,9 +44,7 @@ if(request.getParameter("not") != not){
 </script>
 </head>
 <body id="pwPopBody">
-	<form name="pwChangeFrm" method="post" id="form"
-		action="../auth/PwSearchPopup.do"
-		onsubmit="return validateForm(this);">
+	<form name="pwChangeFrm" method="post" id="form" action="../auth/PwSearchPopup.do">
 		<div align="center">
 		<h2 id="pwPopHead">비밀번호 변경하기</h2>
 			<table>
