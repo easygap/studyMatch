@@ -156,12 +156,8 @@ public class MainController extends HttpServlet {
 				req.setAttribute("imgGR1", groupImgList1);
 								
 				// 두번째 그룹 매치 - 흥미가 1개일 때 interest1 값으로만 그룹 매치
-				Map<String, List<String>> groupArr2;
-				do {
-					groupArr2 = dao.getGroupData(interest1, address, sessionID);
-				}
-				while(groupArr2 != groupArr1 && groupArr2 != null);
-					
+//				Map<String, List<String>> groupArr2 = dao.getGroupData(interest1, address, sessionID);
+
 				/** 두번째 그룹 매치 - 그룹원 이름 */
 				groupNameList2 = groupArr1.get("groupName");
 
@@ -169,9 +165,9 @@ public class MainController extends HttpServlet {
 				groupImgList2 = groupArr1.get("groupImg");
 				
 				/** 두번째 그룹 매치 - Group_Num 값 */
-				List<String> groupNum2 = groupArr2.get("groupNum");
-				if(!groupNum2.isEmpty())
-					secondGroup = groupNum2.get(0);
+//				List<String> groupNum2 = groupArr2.get("groupNum");
+//				if(!groupNum2.isEmpty())
+//					secondGroup = groupNum2.get(0);
 				
 				/** 포워딩된 페이지에서 그룹 이용자들이 들어있는 groupList를 불러옴 */
 				req.setAttribute("nameGR2", groupNameList2);
