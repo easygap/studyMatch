@@ -38,6 +38,8 @@ List<String> GroupInterest3 = (List<String>) groupInterest3List;
 <head>
 <meta charset="UTF-8">
 <title>매칭 정보</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link rel="stylesheet" href="../css/MatchInfor.css">
 </head>
 <body id="inforBody">

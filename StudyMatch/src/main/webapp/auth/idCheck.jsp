@@ -12,6 +12,8 @@ String IDcheck = request.getParameter("idCheck");
 <head>
 <meta charset="UTF-8">
 <title>idCheck</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/Regist.css" rel="stylesheet"/>
 </head>
 <body id="idCheckBody">

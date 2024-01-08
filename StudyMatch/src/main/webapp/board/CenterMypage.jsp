@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이 페이지</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 </head>
 <body>
 

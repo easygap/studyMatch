@@ -15,6 +15,8 @@ String phone = (String) session.getAttribute("kakaoPhone");
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>카카오 로그인 정보 입력</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/Regist.css" rel="stylesheet"/>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script type="text/javascript">

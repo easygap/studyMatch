@@ -187,7 +187,6 @@ public class GroupDAO extends DBConnPool {
 			Profile.put("Names", Names);
 			Profile.put("group_num", Group_num);
 			
-			System.out.println("쿼리문에서 : " + Img);
 		} catch (Exception e) {
 			System.out.println("DB 이미지 불러오기 실패");
 			e.printStackTrace();
@@ -434,7 +433,6 @@ public class GroupDAO extends DBConnPool {
 			groupInfoList.put("groupinterest2", groupinterest2);
 			groupInfoList.put("groupinterest3", groupinterest3);
 
-			System.out.println("쿼리문에서 : " + groupInfoList);
 		} catch (Exception e) {
 			System.out.println("그룹 정보 불러오기 실패");
 			e.printStackTrace();

@@ -8,6 +8,8 @@ request.setCharacterEncoding("UTF-8");
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/Regist.css" rel="stylesheet"/>                                                                 
 <title>Regist Page</title>
 <script src="../js/upload.js"></script>
@@ -35,8 +37,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 	function validateForm() {
 		
 		var submitButton = document.getElementById("form");
-		
-		
+				
 		/** verbal 정규식 */
 		
 		/** 핸드폰 번호 정규식 */
@@ -68,8 +69,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 			.range('0', '9')
 			.repeatPrevious(1)
 			.endOfLine()
-			
-			
+				
 		/** 정규 표현식 */
 		
 		/** 아이디 정규식 */
@@ -78,7 +78,7 @@ https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min
 		/** 주소 정규식 */
 		var addressCheck = /^(경기도|서울특별시|부산광역시|대구광역시|인천광역시|광주광역시|대전광역시|울산광역시|세종특별자치시|제주특별자치도) [가-힣\s]+(시|군|구)[가-힣\s]*$/;
 		
-		// 한글 이름 (2글자 이상, 5글자 이하)
+		/** 이름 정규식 */
 		var nameCheck = /^[가-힣a-zA-Z]+$/;
 		    		
 		// 정규식 체크를 위한 변수 <-- 폼 값을 받아온다.
