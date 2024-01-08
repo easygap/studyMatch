@@ -37,7 +37,7 @@
 				<br /> <br /> <br />
 
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../service/ServiceEdit.do?num=&{inquiry_num}" onsubmit="return validateForm(this);">
+					action="../service/ServiceEdit.do" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
 						<label for="ofile">업 로 드</label> 
