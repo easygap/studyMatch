@@ -63,5 +63,5 @@
 
 
 ###  🖤 프레젠테이션 자료
-[MatchMate.pptx](https://github.com/easygap/studyMatch/files/13856418/MatchMate.pptx)
+[MatchMate.pptx](https://github.com/easygap/studyMatch/files/13857451/MatchMate.pptx)
 
