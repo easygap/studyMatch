@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.BoardDAO;
-import model.BoardDTO;
 import utils.BoardPage;
 
 @WebServlet("/service/ServiceList.do")
@@ -77,7 +74,7 @@ public class ServiceListController extends HttpServlet {
 		map.put("start", start);
 		map.put("end", end);
 
-		List<ServiceDTO> boardLists = 
+		List<ServiceDTO> boardLists = dao.selectList(map);
 
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../service/ServiceList.do");
 		map.put("pagingImg", pagingImg);

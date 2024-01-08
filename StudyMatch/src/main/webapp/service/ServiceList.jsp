@@ -4,9 +4,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
-
-// 주소창에서 interest 값을 변수에 저장
-String interest = request.getParameter("interest");
 %>
 <!DOCTYPE html>
 <html>
@@ -57,7 +54,7 @@ String interest = request.getParameter("interest");
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td>
-										<!-- 제목(링크) --> <a href="../service/ServiceView.do?num=${ row.inquiry_num }&">${ row.title }</a>
+										<!-- 제목(링크) --> <a href="../service/ServiceView.jsp?num=${ row.inquiry_num }&">${ row.title }</a>
 
 									</td>
 									<!-- 작성자 -->
