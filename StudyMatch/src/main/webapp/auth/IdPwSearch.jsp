@@ -23,6 +23,8 @@ if(request.getParameter("nullPW") != null)
 <head>
 <meta charset="UTF-8">
 <title>ID & PW Search</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/Regist.css" rel="stylesheet"/>
 <script>
 	function validateForm(form){

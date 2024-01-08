@@ -76,6 +76,8 @@ String nowTime = sdf.format(now.getTime());
 <head>
 <meta charset="UTF-8">
 <title>달력</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link rel="stylesheet" href="../css/MainPage.css">
 <script>	
 	/** 그룹1 매치하기 버튼 눌렀을 때 */

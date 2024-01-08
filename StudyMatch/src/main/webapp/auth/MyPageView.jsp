@@ -24,6 +24,8 @@ System.out.println(nick + " / " + phone + " / " + image);
 <meta charset="UTF-8">
 <link href="../css/Regist.css" rel="stylesheet"/>   
 <title>MyPage</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <script src="
 https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min.js
 "></script>
@@ -210,7 +212,13 @@ function count_check(obj) {
 	
 								<tr>
 									<td class="MypageTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사</td>
+									<% if(interest1 != null && interest2 != null && interest3 != null){ %>
 									<td><input type="text" name="interestInfor" value="<%=interest1%> / <%=interest2%> / <%=interest3%>"  class="MypageInput" disabled></td>
+									<% } else if(interest1 != null && interest2 != null){ %>
+									<td><input type="text" name="interestInfor" value="<%=interest1%> / <%=interest2%>"  class="MypageInput" disabled></td>
+									<% } else if(interest1 != null) {%>
+									<td><input type="text" name="interestInfor" value="<%=interest1%>"  class="MypageInput" disabled></td>
+									<% } %>
 									<td class="MypageTd"></td>
 								</tr>
 	
