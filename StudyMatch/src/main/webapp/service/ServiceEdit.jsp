@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>파일 첨부형 게시판</title>
+<title>매치메이트 고객센터</title>
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
@@ -37,7 +37,7 @@
 				<br /> <br /> <br />
 
 				<form name="writeFrm" method="post" enctype="multipart/form-data"
-					action="../service/ServiceEdit.do?num=&{inquiry_num}" onsubmit="return validateForm(this);">
+					action="../service/ServiceEdit.do" onsubmit="return validateForm(this);">
 
 					<div class="filebox">
 						<label for="ofile">업 로 드</label> 

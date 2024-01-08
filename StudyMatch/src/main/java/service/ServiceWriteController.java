@@ -99,7 +99,6 @@ public class ServiceWriteController extends HttpServlet {
 
 		if (result == 1) {
 			resp.sendRedirect("../service/ServiceList.do");
-//			System.out.println("게시판: " + internum + " 게시글 업로드 완료");
 		} else {
 			resp.sendRedirect("../service/ServiceWrite.jsp");
 			System.out.println("*** 문의글 업로드 실패 ***");

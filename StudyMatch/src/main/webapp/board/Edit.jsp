@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>파일 첨부형 게시판</title>
+<title>게시글 수정</title>
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />

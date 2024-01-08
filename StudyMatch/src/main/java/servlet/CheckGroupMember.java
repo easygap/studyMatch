@@ -48,7 +48,7 @@ public class CheckGroupMember extends HttpServlet {
 			count++;
 		
 		String address = req.getParameter("address");
-		System.out.println("주소값은 : " + address);
+		System.out.println("주소값은 : " + address + " Count 값은 : " + count);
 		
 		if( count == 0 )
 			JSFunction .alertLocation(resp, "함께하실 그룹원을 선택해주세요.（；´д｀）ゞ", "../board/MakeGroup.jsp?address=" + address);

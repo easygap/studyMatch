@@ -16,10 +16,11 @@ String sessionID = (String) session.getAttribute("user");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>파일 첨부형 게시판</title>
+<title>매치메이트 고객센터</title>
 
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+<link href="../css/upload.css" rel="stylesheet" />
 
 <script>
     function submitForm() {
@@ -105,17 +106,13 @@ String sessionID = (String) session.getAttribute("user");
 							<%
 							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
 							%>
-							<form method="post" action="../service/ServiceEdit.do" enctype="multipart/form-data">
-							<input type="hidden" name="num" value="${dto.inquiry_num}">
-							<input type="hidden" name="title" value="${dto.title}">
-							<input type="hidden" name="content" value="${dto.content}">
-							<button type="submit">수정하기</button>
-							</form>
-							<button type="button" onclick="removeCheck();">삭제하기</button>
+							<button type="button" class="ViewButton"
+								onclick="location.href='../service/ServiceEdit.jsp?&num=${ dto.inquiry_num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
+							<button type="button" class="ViewButton" onclick="removeCheck();">삭제하기</button>
 							<%
 							}
 							%>
-							<button type="button" onclick="location.href='../service/ServiceList.do';">목록 바로가기</button>
+							<button type="button" class="List" onclick="location.href='../service/ServiceList.do';">목록 바로가기</button>
 						</td>
 					</tr>
 				</table>

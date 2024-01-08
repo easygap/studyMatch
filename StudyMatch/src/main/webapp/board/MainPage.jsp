@@ -75,7 +75,7 @@ String nowTime = sdf.format(now.getTime());
 <html>
 <head>
 <meta charset="UTF-8">
-<title>달력</title>
+<title>MatchMate</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link rel="stylesheet" href="../css/MainPage.css">

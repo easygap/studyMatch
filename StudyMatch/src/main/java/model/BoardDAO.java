@@ -78,7 +78,7 @@ public class BoardDAO extends DBConnPool {
 		try {
 			if (dto.getImg() != null) {
 				query = "UPDATE board SET" + " title=?, content=?, img=?" + " WHERE board_num=? AND inter_num = ? ";
-				psmt = con.prepareStatement(query);
+				psmt = con.prepareStatement(query) ;
 				psmt.setString(1, dto.getTitle());
 				psmt.setString(2, dto.getContent());
 				psmt.setString(3, dto.getImg());

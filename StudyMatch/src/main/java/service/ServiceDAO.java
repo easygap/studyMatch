@@ -210,12 +210,14 @@ public class ServiceDAO extends DBConnPool {
 	
 	// 답변 삭제
 	public void deleteAnswer (int inquiry_num) {
+		String status = "미답변";
 		String query = "UPDATE inquiry_board "
-				+ "SET answer_content = NULL, answer_date = NULL, answer_id = NULL "
+				+ "SET answer_content=NULL, answer_date=NULL, answer_id=NULL, answer_status=? "
 				+ "WHERE inquiry_num=?";
 		try {
 			psmt = con.prepareStatement(query);
-			psmt.setInt(1, inquiry_num);
+			psmt.setString(1, status);
+			psmt.setInt(2, inquiry_num);
 			psmt.executeUpdate();
 
 			System.out.println("답변 삭제 완료");
@@ -281,7 +283,7 @@ public class ServiceDAO extends DBConnPool {
 	// 게시물 수정
 	public String modifyNameIMG(int inquiry_num) {
 		String imgNameToDelete = null;
-		String query = "SELECT img FROM inquiry_board WHERE iquiry_num=?";
+		String query = "SELECT img FROM inquiry_board WHERE inquiry_num=?";
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setInt(1, inquiry_num);

@@ -523,7 +523,7 @@ public class GroupDAO extends DBConnPool {
 		   } else if(groupID.length == 3) {
 			   psmt.setString(3, groupID[0]); 
 			   psmt.setString(4, groupID[1]); 
-			   psmt.setString(5, groupID[1]); 
+			   psmt.setString(5, groupID[2]); 
 			   psmt.setString(6, null); 
 			   psmt.setString(7, important); 
 			   psmt.setString(8, address); 

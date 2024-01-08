@@ -14,7 +14,7 @@ if(request.getParameter("address") != null)
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/MakeGroup.css" rel="stylesheet"/>                                                                 
-<title>그룹 생성</title>
+<title>Make Group</title>
 <script>
 	function validateForm(form) {
 
