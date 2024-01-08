@@ -35,13 +35,14 @@ public class ServiceEditController extends HttpServlet {
 		ServiceDTO dto = new ServiceDTO();
 
 //		int inquiry_num = dto.getInquiry_num();
-		String num = req.getParameter("num");
+		String num = req.getParameter("inquiry_num");
 		int inquiry_num = Integer.parseInt(num);
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
 
 		Part filePart = req.getPart("ofile"); // 파일
 		String fileName = getFileName(filePart); // 파일명
+		System.out.println("fileName / fileName : " + fileName);
 		String uploadPath = "uploads";
 		String realPath = getServletContext().getRealPath(uploadPath);
 		File uploadDir = new File(realPath);
@@ -67,8 +68,9 @@ public class ServiceEditController extends HttpServlet {
 		if (sessionID != null && sessionID.equals(EditID)) {
 			// 파일 변경 후 재업로드 및 기존 파일 삭제
 			String ext = "";
-			if (!fileName.isEmpty() && !fileName.equals(null)) {
+			if (!fileName.equals("")) {
 				String imgNameToDelete = dao.modifyNameIMG(inquiry_num);
+				System.out.println("imgNameToDelete / imgNameToDelete : " + imgNameToDelete);
 
 				if (imgNameToDelete != null) {
 					File toDeleteFile = new File(realPath + File.separator + imgNameToDelete);
