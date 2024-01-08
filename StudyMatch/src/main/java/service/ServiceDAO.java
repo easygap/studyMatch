@@ -188,7 +188,7 @@ public class ServiceDAO extends DBConnPool {
 	// 게시물 수정
 	public String modifyNameIMG(int inquiry_num) {
 		String imgNameToDelete = null;
-		String query = "SELECT img FROM inquiry_board WHERE iquiry_num=?";
+		String query = "SELECT img FROM inquiry_board WHERE inquiry_num=?";
 		try {
 			psmt = con.prepareStatement(query);
 			psmt.setInt(1, inquiry_num);

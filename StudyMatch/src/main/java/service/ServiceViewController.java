@@ -63,6 +63,6 @@ public class ServiceViewController extends HttpServlet {
 		req.setAttribute("dto", dto);
 		req.setAttribute("permissions", permissions);
 
-		req.getRequestDispatcher("../service/ServiceView.jsp?result=" + result).forward(req, resp);
+		req.getRequestDispatcher("../service/ServiceView.jsp?result=" + result + "&num=" + inquiry_num).forward(req, resp);
 	}
 }
