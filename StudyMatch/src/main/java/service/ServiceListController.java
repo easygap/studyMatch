@@ -25,15 +25,17 @@ public class ServiceListController extends HttpServlet {
 		resp.getWriter().append("Served at: ").append(req.getContextPath());
 
 		ServiceDAO dao = new ServiceDAO();
-
-		// sessionID 와 deleteID와 같은지 확인 후 삭제 가능하도록 구현
 		String num = req.getParameter("num");
-		int inquiry_num = Integer.parseInt(num);
+		int inquiry_num = 0;
+		if (num != null && !num.isEmpty()) {
+		    inquiry_num = Integer.parseInt(num);
+		}
 
 		String deleteID = dao.checkSession(inquiry_num);
 		HttpSession session = req.getSession();
 		String sessionID = (String) session.getAttribute("user");
 		System.out.println("현재 삭제 페이지 sessionID : " + sessionID);
+		System.out.println("현재 삭제 페이지 inquiry_num : " + inquiry_num);
 		if (sessionID != null && sessionID.equals(deleteID)) {
 			if (req.getParameter("mode") != null) {
 				String filename = dao.deletePost(inquiry_num);
@@ -74,18 +76,18 @@ public class ServiceListController extends HttpServlet {
 		map.put("start", start);
 		map.put("end", end);
 
-		List<ServiceDTO> boardLists = dao.selectList(map);
+		List<ServiceDTO> inquiryLists = dao.selectList(map);
 
-		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../service/ServiceList.do");
+		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, "../service/ServiceList.jsp");
 		map.put("pagingImg", pagingImg);
 		map.put("totalCount", totalCount);
 		map.put("pageSize", pageSize);
 		map.put("pageNum", pageNum);
 
-		req.setAttribute("boardLists", boardLists);
+		req.setAttribute("inquiryLists", inquiryLists);
 		req.setAttribute("map", map);
 		req.getRequestDispatcher("../service/ServiceList.jsp").forward(req, resp);
-		System.out.println("BoardLists Size: " + boardLists.size());
+		System.out.println("BoardLists Size: " + inquiryLists.size());
 		
 		dao.close();
 	}

@@ -98,7 +98,11 @@ public class ServiceWriteController extends HttpServlet {
 		dao.close();
 
 		if (result == 1) {
+<<<<<<< HEAD
+			resp.sendRedirect("../service/ServiceList.do");
+=======
 			resp.sendRedirect("../service/ServiceView.do");
+>>>>>>> branch 'master' of https://github.com/easygap/studyMatch.git
 //			System.out.println("게시판: " + internum + " 게시글 업로드 완료");
 		} else {
 			resp.sendRedirect("../service/ServiceWrite.jsp");

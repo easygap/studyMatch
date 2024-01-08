@@ -9,6 +9,7 @@
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
 String num = request.getParameter("num");
+int inquiry_num = Integer.parseInt(num);
 %>
 <!DOCTYPE html>
 <html>
@@ -20,9 +21,14 @@ String num = request.getParameter("num");
 <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 
 <script>
+    function submitForm() {
+        document.getElementById("editForm").submit();
+    }
+</script>
+<script>
 	function removeCheck() {
 		if (confirm("정말 삭제하시겠습니까??") == true) { //확인
-			location.href = '../service/ServiceList.do?mode=delete&num=${ param.num }';
+			location.href = '../service/ServiceList.do?mode=delete&num=${ dto.inquiry_num }';
 		} else { //취소
 			return false;
 		}
@@ -78,10 +84,10 @@ String num = request.getParameter("num");
 						<td>${ dto.id }</td>
 					</tr>
 					<tr>
+						<td>문의유형</td>
+						<td>${ dto.category_name } > ${ dto.detail_name }</td>
 						<td>작성일</td>
 						<td>${ dto.post_date }</td>
-						<td>조회수</td>
-						<td>${ dto.visit_count }</td>
 					</tr>
 					<tr>
 						<td>제목</td>
@@ -100,8 +106,13 @@ String num = request.getParameter("num");
 						<td colspan="4" align="center">
 							<%
 							if (request.getParameter("result") != null && request.getParameter("result").equals("Y")) {
-							%><button type="button"
-								onclick="location.href='../service/ServiceEdit.jsp?&num=${ param.num }&title=${ dto.title }&content=${ dto.content }';">수정하기</button>
+							%>
+							<form method="post" action="../service/ServiceEdit.do" enctype="multipart/form-data">
+							<input type="hidden" name="num" value="${dto.inquiry_num}">
+							<input type="hidden" name="title" value="${dto.title}">
+							<input type="hidden" name="content" value="${dto.content}">
+							<button type="submit">수정하기</button>
+							</form>
 							<button type="button" onclick="removeCheck();">삭제하기</button>
 							<%
 							}
@@ -111,7 +122,7 @@ String num = request.getParameter("num");
 					</tr>
 				</table>
 
-				<form name="commentForm" id="commentForm" method="post" action="../board/CommWrite.do">
+				<form name="commentForm" id="commentForm" method="post" action="../service/CommWrite.do">
     <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd; width: 100%;">
         <%-- 홀,짝 행 구분 --%>
         <thead>
@@ -122,7 +133,7 @@ String num = request.getParameter("num");
         <tbody>
             <%
             ServiceDAO dao = new ServiceDAO();
-            ArrayList<ServiceDTO> list = dao.getList(num);
+            ArrayList<ServiceDTO> list = dao.getList(inquiry_num);
             dao.close();
             ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions");
             if (permissions != null) {
@@ -130,14 +141,14 @@ String num = request.getParameter("num");
             	%>
                 <tr>
                     <td style="text-align: left;"><%=list.get(i).getContent()%></td>
-                    <td style="text-align: right;"><%=list.get(i).getNickname()%> <%=list.get(i).getCommen_date()%>
+                    <td style="text-align: right;"><%=list.get(i).getAnswer_date()%>
                         <%
                             boolean hasPermission = permissions.get(i);
                             if (hasPermission == true) {
                         %>
-                            <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getCommen_num()%>', '<%=list.get(i).getId()%>');"
+                            <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getId()%>');"
                                 class="btn">수정</a>
-                            <a href="../service/CommEdit.do?action=delete&commNum=<%=list.get(i).getCommen_num()%>&id=<%=list.get(i).getId()%>&num=<%=num%>"
+                            <a href="../service/CommEdit.do?action=delete&commNum=<%=list.get(i).getAnswer_date()%>&id=<%=list.get(i).getId()%>&num=<%=inquiry_num%>"
                                 class="btn">삭제</a>
                     </td>
                 </tr>
@@ -152,7 +163,7 @@ String num = request.getParameter("num");
                         style="width: 100%;" maxlength="1024"></textarea>
                 </td>
                 <td style="text-align: center; vertical-align: middle;">
-                    <input type="hidden" id="num" name="num" value="<%=num%>">
+                    <input type="hidden" id="inquiry_num" name="inquiry_num" value="<%=inquiry_num%>">
                     <input type="hidden" id="commNum" name="commNum" value="">
                     <input type="hidden" id="commAction" name="action" value="">
                     <input type="hidden" id="commId" name="id" value="">

@@ -40,7 +40,7 @@ String cp = request.getContextPath();
 					</tr>
 		
 					<c:choose>
-						<c:when test="${ empty boardLists }">
+						<c:when test="${ empty inquiryLists }">
 							<!-- 게시물이 없을 때 -->
 							<tr>
 								<td colspan="6" align="center">문의글이 존재하지 않습니다.•͈⌔•͈⑅</td>
@@ -48,19 +48,21 @@ String cp = request.getContextPath();
 						</c:when>
 						<c:otherwise>
 							<!-- 게시물이 있을 때 -->
-							<c:forEach items="${ boardLists }" var="row" varStatus="loop">
+							<c:forEach items="${ inquiryLists }" var="row" varStatus="loop">
 								<tr>
 									<td style="padding-left: 20px;">
 										<!-- 번호 --> ${ map.totalCount - (((map.pageNum-1) * map.pageSize) + loop.index)}
 									</td>
 									<td>
-										<!-- 제목(링크) --> <a href="../service/ServiceView.jsp?num=${ row.inquiry_num }&">${ row.title }</a>
-
+										<!-- 제목(링크) --> 
+										<a href="../service/ServiceView.do?num=${ row.inquiry_num }&">${ row.title }</a>
 									</td>
 									<!-- 작성자 -->
 									<td>${ row.id }</td>
 									<!-- 날짜 -->
 									<td>${ row.post_date }</td>
+									<!-- 답변 여부 -->
+									<td>${ row.answer_status }</td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>

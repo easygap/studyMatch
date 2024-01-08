@@ -23,9 +23,11 @@ public class ServiceViewController extends HttpServlet {
 		System.out.println("안녕 나는 view라고 해");
 		// 게시글 불러오기
 		ServiceDAO dao = new ServiceDAO();
+		ServiceDTO dto = new ServiceDTO();
 
 		String num = req.getParameter("num");
 		int inquiry_num = Integer.parseInt(num);
+		System.out.println("inquiey_num: " + inquiry_num);
 		String result = "N";
 
 		// 삭제하기 & 수정하기 버튼 visible/invisible 처리
@@ -43,12 +45,16 @@ public class ServiceViewController extends HttpServlet {
 		ArrayList<Boolean> permissions = new ArrayList<>();
 
 		for (ServiceDTO comment : commList) {
-		    String answerId = comment.getId();
-		    boolean permission = (sessionID != null && answerId.equals(sessionID));
-		    permissions.add(permission);
+		    String answerId = comment.getAnswer_id();
+		    if (answerId != null) {
+		        boolean permission = (sessionID != null && answerId.equals(sessionID));
+		        permissions.add(permission);
+		    } else {
+		        permissions.add(false);
+		    }
 		}
 
-		ServiceDTO dto = dao.selectView(inquiry_num);
+		dto = dao.selectView(inquiry_num);
 		dao.close();
 		// 줄 바꿈 처리
 		dto.setContent(dto.getContent().replace("\r\n", "<br/>"));
