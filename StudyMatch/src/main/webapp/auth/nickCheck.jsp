@@ -12,6 +12,8 @@ String NICKcheck = request.getParameter("nickCheck");
 <head>
 <meta charset="UTF-8">
 <title>NickName Check</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/Regist.css" rel="stylesheet"/>
 </head>
 <body id="CheckBody">

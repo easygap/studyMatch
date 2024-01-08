@@ -31,6 +31,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Match History</title>
+    <!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <link rel="stylesheet" href="../css/MatchHistorystyle.css">
     <script src="../js/MatchHistoryScript.js"></script>
 </head>
