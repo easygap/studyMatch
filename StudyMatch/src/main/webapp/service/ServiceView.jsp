@@ -10,6 +10,7 @@ request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
 String num = request.getParameter("num");
 int inquiry_num = Integer.parseInt(num);
+String sessionID = (String) session.getAttribute("user");
 %>
 <!DOCTYPE html>
 <html>
@@ -35,22 +36,19 @@ int inquiry_num = Integer.parseInt(num);
 		}
 	}
 		// 댓글 수정 버튼
-	function setEditMode(content, commNum, commId) {
+	function setEditMode(answerContent, answerId) {
         // 댓글 내용을 textarea에 설정
-        document.getElementById("commContent").value = content;
-
-        // 수정할 댓글 번호를 hidden 필드에 설정
-        document.getElementById("commNum").value = commNum;
+        document.getElementById("answerContent").value = answerContent;
 
         // "댓글입력" 버튼을 "수정하기"로 변경
-        document.getElementById("commSubmitButton").value = "수정하기";
+        document.getElementById("answerSubmitButton").value = "수정하기";
 
         // "수정하기" 버튼 클릭 시 commEdit.do로 전송
-        document.getElementById("commentForm").action = "../board/CommEdit.do";
+        document.getElementById("answerForm").action = "../service/AnswerEdit.do";
 
         // 추가: hidden 필드에 action과 id를 설정
-        document.getElementById("commAction").value = "edit";
-        document.getElementById("commId").value = commId;
+        document.getElementById("answerAction").value = "edit";
+        document.getElementById("answerId").value = answerId;
         }
 	</script>
 </head>
@@ -119,8 +117,8 @@ int inquiry_num = Integer.parseInt(num);
 					</tr>
 				</table>
 
-				<form name="commentForm" id="commentForm" method="post" action="../service/CommWrite.do">
-    <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd; width: 100%;">
+				<form name="answerForm" id="answerForm" method="post" action="../service/AnswerWrite.do">
+				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd; width: 100%;">
         <%-- 홀,짝 행 구분 --%>
         <thead>
             <tr>
@@ -135,17 +133,20 @@ int inquiry_num = Integer.parseInt(num);
             ArrayList<Boolean> permissions = (ArrayList<Boolean>) request.getAttribute("permissions");
             if (permissions != null) {
             	for (int i = 0; i < list.size(); i++) {
+            		String answerContent = list.get(i).getAnswer_content();
+                    if (answerContent != null && !answerContent.trim().isEmpty()) { 
             	%>
                 <tr>
-                    <td style="text-align: left;"><%=list.get(i).getContent()%></td>
-                    <td style="text-align: right;"><%=list.get(i).getAnswer_date()%>
+                    <td style="text-align: left;"><%=list.get(i).getAnswer_content()%></td>
+                    <td style="text-align: right;"><%=list.get(i).getAnswer_date()%> <%=list.get(i).getAnswer_id()%>
                         <%
                             boolean hasPermission = permissions.get(i);
                             if (hasPermission == true) {
                         %>
-                            <a href="javascript:setEditMode('<%=list.get(i).getContent()%>', '<%=list.get(i).getId()%>');"
+                            <a href="javascript:setEditMode('<%=list.get(i).getAnswer_content()%>', '<%=list.get(i).getAnswer_id()%>');"
                                 class="btn">수정</a>
-                            <a href="../service/CommEdit.do?action=delete&commNum=<%=list.get(i).getAnswer_date()%>&id=<%=list.get(i).getId()%>&num=<%=inquiry_num%>"
+                            <a href="../service/AnswerEdit.do?action=delete&answerId=<%=list.get(i).getAnswer_id()%>&answerContent=<%=list.get(i).getAnswer_content()%>
+                            &num=<%=list.get(i).getInquiry_num()%>"
                                 class="btn">삭제</a>
                     </td>
                 </tr>
@@ -153,20 +154,23 @@ int inquiry_num = Integer.parseInt(num);
                     }
                 }
             }
+            }
+            
+            if (sessionID.equals("admin")) {
             %>
               <tr>
                 <td style="text-align: left; width: 80%;">
-                    <textarea type="text" class="form-control" placeholder="댓글을 입력하세요." id="commContent" name="commContent"
+                    <textarea type="text" class="form-control" placeholder="댓글을 입력하세요." id="answerContent" name="answerContent"
                         style="width: 100%;" maxlength="1024"></textarea>
                 </td>
                 <td style="text-align: center; vertical-align: middle;">
-                    <input type="hidden" id="inquiry_num" name="inquiry_num" value="<%=inquiry_num%>">
-                    <input type="hidden" id="commNum" name="commNum" value="">
-                    <input type="hidden" id="commAction" name="action" value="">
-                    <input type="hidden" id="commId" name="id" value="">
-                   <input type="submit" class="btn btn-sm" id="commSubmitButton" value="댓글입력">
+                    <input type="hidden" id="inquiry_num" name="inquiry_num" value="${dto.inquiry_num}">
+                    <input type="hidden" id="answerAction" name="action" value="">
+                    <input type="hidden" id="answerId" name="answerId" value="">
+                   <input type="submit" class="btn btn-sm" id="answerSubmitButton" value="댓글입력">
                 </td>
             </tr>
+            <% } %>
         </tbody>
     </table>
 </form>

@@ -98,9 +98,7 @@ public class ServiceWriteController extends HttpServlet {
 		dao.close();
 
 		if (result == 1) {
-			resp.sendRedirect("../service/ServiceView.do");
-
-//			System.out.println("게시판: " + internum + " 게시글 업로드 완료");
+			resp.sendRedirect("../service/ServiceList.do");
 		} else {
 			resp.sendRedirect("../service/ServiceWrite.jsp");
 			System.out.println("*** 문의글 업로드 실패 ***");
