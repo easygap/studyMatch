@@ -27,9 +27,9 @@ public class AnswerWriteController extends HttpServlet {
 		HttpSession session = req.getSession();
         Object userObject = session.getAttribute("user");
         String userId = null;
-        String num = req.getParameter("num");
+        String num = req.getParameter("inquiry_num");
         int inquiry_num = Integer.parseInt(num);
-        String content = req.getParameter("commContent");
+        String content = req.getParameter("answerContent");
         System.out.println("답변 inquiry_num 값 : " + inquiry_num);
         System.out.println("답변 내용 : " + content);
         
@@ -37,27 +37,28 @@ public class AnswerWriteController extends HttpServlet {
         	userId = userObject.toString();
             System.out.println("답변 작성 아이디 : " + userId);
         } else {
-        	resp.sendRedirect("../board/View.jsp?num=" + boardnum + "&interest=" + internum);
-            System.out.println("*** 댓글 작성 아이디 생성 실패 ***");
+        	resp.sendRedirect("../service/ServiceView.jsp?num=" + inquiry_num);
+            System.out.println("*** 답변 작성 아이디 생성 실패 ***");
         	return;
         }
 
-        dto.setId(userId);
-        dto.setContent(content);
+        dto.setAnswer_id(userId);
+        dto.setAnswer_content(content);
+        dto.setInquiry_num(inquiry_num);
         
         try {
-            int result = dao.insertComm(dto);
+            int result = dao.insertAnswer(dto);
 
             if (result == 1) {
-                req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-                System.out.println(boardnum + " 댓글 작성 및 DB 업로드 완료!");
+                req.getRequestDispatcher("../service/ServiceView.do?num=" + inquiry_num).forward(req, resp);
+                System.out.println(inquiry_num + " 답변 작성 및 DB 업로드 완료!");
             } else {
-                req.getRequestDispatcher("../board/view.do?num=" + boardnum + "&interest=" + internum).forward(req, resp);
-                System.out.println("*** 댓글 업로드 실패 ***");
+                req.getRequestDispatcher("../service/ServiceView.do?num=" + inquiry_num).forward(req, resp);
+                System.out.println("*** 답변 업로드 실패 ***");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("댓글 입력 서블릿 실행 실패");
+            System.out.println("답변 입력 서블릿 실행 실패");
         }
 		dao.close();
 	}

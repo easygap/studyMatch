@@ -14,7 +14,7 @@ public class ServiceDTO {
 	private java.sql.Date answer_date;
 	private String answer_content;
 	private String answer_id;
-	
+	private int answer_num;
 	
 	public int getInquiry_num() {
 		return inquiry_num;
@@ -55,6 +55,11 @@ public class ServiceDTO {
 	public String getAnswer_id() {
 		return answer_id;
 	}
+	public int getAnswer_num() {
+		return answer_num;
+	}
+	
+	
 	public void setInquiry_num(int inquiry_num) {
 		this.inquiry_num = inquiry_num;
 	}
@@ -93,6 +98,9 @@ public class ServiceDTO {
 	}
 	public void setAnswer_id(String answer_id) {
 		this.answer_id = answer_id;
+	}
+	public void setAnswer_num(int answer_num) {
+		this.answer_num = answer_num;
 	}
 
 }
