@@ -24,6 +24,8 @@ System.out.println(nick + " / " + phone + " / " + image);
 <meta charset="UTF-8">
 <link href="../css/Regist.css" rel="stylesheet"/>   
 <title>MyPage</title>
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <script src="
 https://cdn.jsdelivr.net/npm/verbal-expressions@1.0.2/dist/verbalexpressions.min.js
 "></script>

@@ -11,6 +11,8 @@ if(request.getParameter("address") != null)
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
 <link href="../css/MakeGroup.css" rel="stylesheet"/>                                                                 
 <title>그룹 생성</title>
 <script>
