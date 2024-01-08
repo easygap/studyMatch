@@ -69,12 +69,10 @@
 
 								// 카카오로그인 코드 확인
 								function loginWithKakao() {
-									Kakao.Auth
-											.login({
+									Kakao.Auth.login({
 												success : function(authObj) {
 													console.log(authObj); //access토큰
-													Kakao.Auth
-															.setAccessToken(authObj.access_token); // 토큰 값 저장
+													Kakao.Auth.setAccessToken(authObj.access_token); // 토큰 값 저장
 													getInfo();
 												},
 												fail : function(err) {
@@ -102,17 +100,12 @@
 
 								// 서버로 사용자 정보를 보내는 함수 
 								function sendUserInfoToServer(userInfo) {
-									console
-											.log(
-													"Sending User Information to Server:",
-													userInfo);
-									$
-											.ajax({
+									console.log("Sending User Information to Server:", userInfo);
+									$.ajax({
 												type : 'POST',
 												url : '../auth/KakaoLogin.do',
 												contentType : 'application/json; charset=utf-8',
-												data : JSON
-														.stringify({
+												data : JSON.stringify({
 															id : userInfo.id,
 															profile_nickname : userInfo.kakao_account.profile.nickname,
 															name : userInfo.kakao_account.name,
@@ -141,13 +134,13 @@
 												}
 											});
 								}
-function openPopup() {
-	var url = "KakaoPopup.jsp";
-	var name = "카카오 로그인 회원정보";
-	var option = "width=480, height=720, left=500, location=no, top=100, scrollbars=no";
-	window.open(url, name, option);
-}
-    </script>
+								function openPopup() {
+									var url = "KakaoPopup.jsp";
+									var name = "카카오 로그인 회원정보";
+									var option = "width=480, height=720, left=500, location=no, top=100, scrollbars=no";
+									window.open(url, name, option);
+									}
+								</script>
 						</fieldset>
 					</form>
 				</div>

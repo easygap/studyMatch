@@ -62,9 +62,9 @@ function validateForm() {
 					</div>
 					<select id="categorySelect" name="categorySelect" onchange="updateDetail()">
 						<option value="category">문의유형</option>
-						<option value="1">게시판</option>
-						<option value="2">회원/그룹</option>
-						<option value="3">기타문의</option>
+						<option value="게시판">게시판</option>
+						<option value="회원/그룹">회원/그룹</option>
+						<option value="기타문의">기타문의</option>
 					</select>
 					<select id="detailSelect" name="detailSelect"></select>
 					<script>
@@ -80,24 +80,24 @@ function validateForm() {
 
 							// 선택된 값에 따라 세부유형 옵션 추가
 							switch (selectedCategory) {
-							case "1":
-								detailSelect.add(new Option("어학", "101"));
-								detailSelect.add(new Option("개발자", "102"));
-								detailSelect.add(new Option("UIUX", "103"));
-								detailSelect.add(new Option("사무직", "104"));
-								detailSelect.add(new Option("금융", "105"));
-								detailSelect.add(new Option("자유게시판", "106"));
-								detailSelect.add(new Option("그룹게시판", "107"));
+							case "게시판":
+								detailSelect.add(new Option("어학", "어학"));
+								detailSelect.add(new Option("개발자", "개발자"));
+								detailSelect.add(new Option("UIUX", "UIUX"));
+								detailSelect.add(new Option("사무직", "사무직"));
+								detailSelect.add(new Option("금융", "금융"));
+								detailSelect.add(new Option("자유게시판", "자유게시판"));
+								detailSelect.add(new Option("그룹게시판", "그룹게시판"));
 								break;
-							case "2":
-								detailSelect.add(new Option("회원정보", "201"));
-								detailSelect.add(new Option("그룹정보", "202"));
+							case "회원/그룹":
+								detailSelect.add(new Option("회원정보", "회원정보"));
+								detailSelect.add(new Option("그룹정보", "그룹정보"));
 								break;
-							case "3":
-								detailSelect.add(new Option("오류신고", "301"));
-								detailSelect.add(new Option("회원신고", "302"));
-								detailSelect.add(new Option("건의사항", "303"));
-								detailSelect.add(new Option("제휴문의", "304"));
+							case "기타문의":
+								detailSelect.add(new Option("오류신고", "오류신고"));
+								detailSelect.add(new Option("회원신고", "회원신고"));
+								detailSelect.add(new Option("건의사항", "건의사항"));
+								detailSelect.add(new Option("제휴문의", "제휴문의"));
 								break;
 							}
 						}
@@ -120,7 +120,8 @@ function validateForm() {
 					</div>
 
 					<div class="mybtn">
-						<input type="reset" class="reset" value="RESET"> <input type="button" class="write" onclick="validateForm();" value="문의하기">
+						<input type="reset" class="reset" value="RESET"> 
+						<input type="button" class="write" onclick="validateForm();" value="문의하기">
 					</div>
 				</form>
 			</div>

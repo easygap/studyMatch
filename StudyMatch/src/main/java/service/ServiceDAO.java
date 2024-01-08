@@ -16,6 +16,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
+import model.BoardDTO;
 
 public class ServiceDAO extends DBConnPool {
 	DataSource dataSource;
@@ -72,6 +73,7 @@ public class ServiceDAO extends DBConnPool {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
+				dto.setInquiry_num(rs.getInt("inquiry_num"));
 				dto.setId(rs.getString("writer"));
 				dto.setTitle(rs.getString("title"));
 				dto.setContent(rs.getString("content"));
@@ -108,8 +110,8 @@ public class ServiceDAO extends DBConnPool {
 
 	// 답변 조회
 	public ArrayList<ServiceDTO> getList(int inquiry_num) {
-		String query = "SELECT answer_content, answer_date FROM inquiry_board "
-				+ "WHERE inquiry_num = ? ORDER BY answer_date DESC";
+		String query = "SELECT answer_content, answer_id, answer_date FROM inquiry_board "
+				+ "WHERE inquiry_num=? ORDER BY answer_date DESC";
 		ArrayList<ServiceDTO> list = new ArrayList<ServiceDTO>();
 		try {
 			psmt = con.prepareStatement(query);
@@ -119,7 +121,8 @@ public class ServiceDAO extends DBConnPool {
 			while (rs.next()) {
 				ServiceDTO dto = new ServiceDTO();
 				dto.setAnswer_content(rs.getString(1));
-				dto.setAnswer_date(rs.getDate(2));
+				dto.setAnswer_id(rs.getString(2));
+				dto.setAnswer_date(rs.getDate(3));
 
 				list.add(dto);
 			}
@@ -133,11 +136,13 @@ public class ServiceDAO extends DBConnPool {
 	// 게시글 목록
 	public List<ServiceDTO> selectList(Map<String, Object> map) {
 		List<ServiceDTO> bbs = new Vector<ServiceDTO>(); // 게시물 목록 담을 변수
-		String query = "SELECT * FROM inquiry_board";
-		if (map.get("searchWord") != null) {
-			query += " AND " + map.get("searchField") + " " + " LIKE '%" + map.get("searchWord") + "%' ";
-		}
-		query += "ORDER BY inquiry_num DESC";
+		 String query = "SELECT * FROM inquiry_board ";
+		    
+		    if (map.get("searchWord") != null) {
+		        query += " WHERE " + map.get("searchField") + " LIKE '%" + map.get("searchWord") + "%' ";
+		    }
+
+		    query += "ORDER BY inquiry_num DESC";
 
 		try {
 			psmt = con.prepareStatement(query);
@@ -180,11 +185,55 @@ public class ServiceDAO extends DBConnPool {
 		return totalCount;
 	}
 
+	// 게시물 수정
+	public String modifyNameIMG(int inquiry_num) {
+		String imgNameToDelete = null;
+		String query = "SELECT img FROM inquiry_board WHERE iquiry_num=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setInt(1, inquiry_num);
+			rs = psmt.executeQuery();
+			rs.next();
+			imgNameToDelete = rs.getString("IMG");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return imgNameToDelete;
+	}
+	
+	public int updateEdit(ServiceDTO dto) {
+		int result = 0;
+		String query = null;
+		try {
+			if (dto.getImg() != null) {
+				query = "UPDATE inquiry_board SET" + " title=?, content=?, img=?" + " WHERE inquiry_num=? ";
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, dto.getTitle());
+				psmt.setString(2, dto.getContent());
+				psmt.setString(3, dto.getImg());
+				psmt.setInt(4, dto.getInquiry_num());
+			} else {
+				query = "UPDATE inquiry_board SET" + " title=?, content=?" + " WHERE inquiry_num=? ";
+				psmt = con.prepareStatement(query);
+				psmt.setString(1, dto.getTitle());
+				psmt.setString(2, dto.getContent());
+				psmt.setInt(3, dto.getInquiry_num());
+			}
+
+			result = psmt.executeUpdate();
+			System.out.println(dto.getInquiry_num() + "번 문의글 수정 성공");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 문의글 수정 중 예외 발생 ***");
+		}
+		return result;
+	}
+	
 	// 게시물 삭제
 	public String deletePost(int inquiry_num) {
 		String filename = null;
 
-		String query1 = "SELECT img FROM board WHERE inquiry_num=?";
+		String query1 = "SELECT img FROM inquiry_board WHERE inquiry_num=?";
 
 		try {
 			psmt = con.prepareStatement(query1);
