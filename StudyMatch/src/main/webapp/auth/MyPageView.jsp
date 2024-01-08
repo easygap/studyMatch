@@ -210,7 +210,13 @@ function count_check(obj) {
 	
 								<tr>
 									<td class="MypageTd">ㆍ 관 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;심 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사</td>
+									<% if(interest1 != null && interest2 != null && interest3 != null){ %>
 									<td><input type="text" name="interestInfor" value="<%=interest1%> / <%=interest2%> / <%=interest3%>"  class="MypageInput" disabled></td>
+									<% } else if(interest1 != null && interest2 != null){ %>
+									<td><input type="text" name="interestInfor" value="<%=interest1%> / <%=interest2%>"  class="MypageInput" disabled></td>
+									<% } else if(interest1 != null) {%>
+									<td><input type="text" name="interestInfor" value="<%=interest1%>"  class="MypageInput" disabled></td>
+									<% } %>
 									<td class="MypageTd"></td>
 								</tr>
 	
