@@ -1,10 +1,14 @@
 package service;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import common.DBConnPool;
-import model.BoardDTO;
 
 public class ServiceDAO extends DBConnPool {
 	DataSource dataSource;
@@ -110,7 +113,7 @@ public class ServiceDAO extends DBConnPool {
 
 	// 답변 조회
 	public ArrayList<ServiceDTO> getList(int inquiry_num) {
-		String query = "SELECT answer_content, answer_id, answer_date FROM inquiry_board "
+		String query = "SELECT answer_content, answer_id, answer_date, inquiry_num FROM inquiry_board "
 				+ "WHERE inquiry_num=? ORDER BY answer_date DESC";
 		ArrayList<ServiceDTO> list = new ArrayList<ServiceDTO>();
 		try {
@@ -123,7 +126,7 @@ public class ServiceDAO extends DBConnPool {
 				dto.setAnswer_content(rs.getString(1));
 				dto.setAnswer_id(rs.getString(2));
 				dto.setAnswer_date(rs.getDate(3));
-
+				dto.setInquiry_num(rs.getInt(4));
 				list.add(dto);
 			}
 		} catch (Exception e) {
@@ -132,6 +135,98 @@ public class ServiceDAO extends DBConnPool {
 		}
 		return list;
 	}
+	
+	// 답변 작성
+	public int insertAnswer(ServiceDTO dto) {
+		int result = 0;
+		LocalDateTime localDateTime = LocalDateTime.now();
+		Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+		java.sql.Date sqlDate = new java.sql.Date(Date.from(instant).getTime());
+		String status = "답변완료";
+		String query = "UPDATE inquiry_board SET answer_status=?, answer_date=?, answer_content=?, answer_id=?"
+				+ " WHERE inquiry_num=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, status);
+			psmt.setDate(2, sqlDate);
+			psmt.setString(3, dto.getAnswer_content());
+			psmt.setString(4, dto.getAnswer_id());
+			psmt.setInt(5, dto.getInquiry_num());
+			result = psmt.executeUpdate();
+			System.out.println(date.format(now) + " [ " + dto.getInquiry_num() + " ] 답변 DB 업로드 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 답변 업데이트 중 예외 발생! ***");
+			result = 0;
+		}
+		return result;
+	}
+	
+	public ArrayList<String> checkId (int inquiry_num) {
+		ArrayList<String> answerIds = new ArrayList<>();
+		String query = "SELECT answer_id, answer_content FROM inquiry_board WHERE inquiry_num=?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setInt(1, inquiry_num);
+			rs = psmt.executeQuery();
+			
+			   while (rs.next()) {
+				   String answerId = rs.getString("answer_id");
+				   String answerContent = rs.getString("answer_content");
+		            answerIds.add(answerId);
+		            answerIds.add(answerContent);
+			   }
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("CommentDAO checkId 댓글 작성자, 번호 조회 중 예외 발생");
+		}
+		return answerIds;
+	}
+
+	// 답변 수정
+	public int updateAnswer (ServiceDTO dto) {
+		int result = 0;
+		LocalDateTime localDateTime = LocalDateTime.now();
+		Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
+		java.sql.Date sqlDate = new java.sql.Date(Date.from(instant).getTime());
+		
+		String query = "UPDATE inquiry_board SET answer_content=?, answer_date=? WHERE inquiry_num=?";
+
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, dto.getAnswer_content());
+			psmt.setDate(2, sqlDate);
+			psmt.setInt(3, dto.getInquiry_num());
+			result = psmt.executeUpdate();
+			System.out.println(dto.getInquiry_num() + " 번 문의 답변 수정 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 답변 수정 중 예외 발생 ***");
+		}
+		return result;
+	}
+	
+	// 답변 삭제
+	public void deleteAnswer (int inquiry_num) {
+		String status = "미답변";
+		String query = "UPDATE inquiry_board "
+				+ "SET answer_content=NULL, answer_date=NULL, answer_id=NULL, answer_status=? "
+				+ "WHERE inquiry_num=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, status);
+			psmt.setInt(2, inquiry_num);
+			psmt.executeUpdate();
+
+			System.out.println("답변 삭제 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("*** 답변 삭제 중 예외 발생 ***");
+		}
+	}
+	
 
 	// 게시글 목록
 	public List<ServiceDTO> selectList(Map<String, Object> map) {
