@@ -11,7 +11,7 @@ String studyAddress = (String)address;
 <html>
 <head>
     <meta charset="utf-8">
-    <title>키워드로 장소검색하고 목록으로 표출하기</title>
+    <title>스터디 카페 찾기</title>
     <!-- Favicon-->
 	<link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
     <style>
