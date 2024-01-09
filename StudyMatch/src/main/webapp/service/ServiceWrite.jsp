@@ -60,6 +60,7 @@ function validateForm() {
 							onchange="fileCheck(this)"
 							accept="image/gif, image/jpeg, image/png" id="ofile">
 					</div>
+					<br/>
 					<select id="categorySelect" name="categorySelect" onchange="updateDetail()">
 						<option value="category">문의유형</option>
 						<option value="게시판">게시판</option>
@@ -102,7 +103,9 @@ function validateForm() {
 							}
 						}
 					</script>
-
+					
+					<br/><br/>
+					
 					<div class="mb-3">
 						<input type="text"
 							class="form-control" name="title" id="title"
